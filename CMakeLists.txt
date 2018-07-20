@@ -3,7 +3,7 @@
 # Author  : Vincent STEHLY--CALISTO (Ardhele)
 # See     : https://vincencalisto.com
 
-PROJECT               (OOM-Engine)
+PROJECT               (OOM-Engine CXX)
 CMAKE_MINIMUM_REQUIRED(VERSION 3.1)
 
 # C++ standard to draft C++20
@@ -16,8 +16,9 @@ SET(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/Bin")
 # -O3     > AGRESSIVE optimization
 # -s      > stripping ALL
 # -static > Bundles gcc runtime into the .exe
+SET(CMAKE_C_FLAGS_RELEASE          "-O3 -s")
 SET(CMAKE_CXX_FLAGS_RELEASE        "-O3 -s")
-SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "-static")
+SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "-static -mwindows")
 
 # Include / Lib directories
 LINK_DIRECTORIES   (${CMAKE_SOURCE_DIR}/Lib)
