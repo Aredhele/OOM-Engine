@@ -20,8 +20,8 @@ GLuint SShaderCompiler::CreateProgram(const char* p_shader_name,
     GLuint vertex_shader_id   = glCreateShader(GL_VERTEX_SHADER);
     GLuint fragment_shader_id = glCreateShader(GL_FRAGMENT_SHADER);
 
-    if(!CompileShader(p_shader_name, p_vertex_shader,   vertex_shader_id) ||
-       !CompileShader(p_shader_name, p_fragment_shader, fragment_shader_id))
+    if(!CompileShader(p_shader_name, "vertex  ",   p_vertex_shader,   vertex_shader_id) ||
+       !CompileShader(p_shader_name, "fragment", p_fragment_shader, fragment_shader_id))
     {
         SLogger::LogWaring("Shader errors occurred, some materials could be disabled.");
     }
@@ -57,13 +57,13 @@ GLuint SShaderCompiler::CreateProgram(const char* p_shader_name,
     return program_id;
 }
 
-bool SShaderCompiler::CompileShader(const char* p_shader_name,
+bool SShaderCompiler::CompileShader(const char* p_shader_name, const char* p_shader_type,
                                     const char* p_shader, GLuint shader_id)
 {
     GLint compile_result  = GL_FALSE;
     int   info_log_lenght = 0;
 
-    SLogger::LogInfo("Compiling shader %s ...", p_shader_name);
+    SLogger::LogInfo("Compiling %s shader %s ...", p_shader_type, p_shader_name);
     glShaderSource (shader_id, 1, &p_shader, nullptr);
     glCompileShader(shader_id);
 

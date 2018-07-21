@@ -17,7 +17,7 @@ class SShaderCompiler
 public:
 
     static GLuint CreateProgram(const char* p_shader_name, const char* p_vertex_shader, const char* p_fragment_shader);
-    static bool   CompileShader(const char* p_shader_name, const char* p_shader, GLuint shader_id);
+    static bool   CompileShader(const char* p_shader_name, const char* p_shader_type, const char* p_shader, GLuint shader_id);
 };
 
 }
