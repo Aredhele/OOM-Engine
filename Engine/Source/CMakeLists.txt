@@ -8,8 +8,11 @@ CMAKE_MINIMUM_REQUIRED(VERSION 3.1)
 
 # Getting sources and headers
 FILE(GLOB_RECURSE ENGINE_SOURCES *.cpp)
-FILE(GLOB_RECURSE ENGINE_HEADERS *.hpp *.h *.inl)
+FILE(GLOB_RECURSE ENGINE_HEADERS
+        ${CMAKE_SOURCE_DIR}/Header/*.hpp
+        ${CMAKE_SOURCE_DIR}/Header/*.h
+        ${CMAKE_SOURCE_DIR}/Header/*.inl)
 
 ADD_DEFINITIONS      (-DGLEW_STATIC)
 ADD_EXECUTABLE       (OOM-Engine ${ENGINE_SOURCES} ${ENGINE_HEADERS})
-TARGET_LINK_LIBRARIES(OOM-Engine glfw3 glew32 opengl32 soundio)
+TARGET_LINK_LIBRARIES(OOM-Engine glfw3 glew32 opengl32 dsound winmm dxguid)

@@ -1,10 +1,10 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
+#include "CEngine.hpp"
 
 int main()
 {
-    glfwInit();
-    glewInit();
-
-    return 0;
+    Oom::CEngine engine;
+    engine.Initialize();
+    engine.Release();
 }
