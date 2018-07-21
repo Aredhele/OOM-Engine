@@ -8,6 +8,8 @@
 #include "CEngine.hpp"
 #include "Core/Debug/SLogger.hpp"
 #include "Render/Shader/SShaderCompiler.hpp"
+#include "Glm/glm.hpp"
+#include "Glm/ext.hpp"
 
 namespace Oom
 {
@@ -112,6 +114,54 @@ static const GLfloat g_color_buffer_data[] = {
         0.982f,  0.099f,  0.879f
 };
 
+glm::tvec3<double> last_mouse(0.0);
+const float m_speed = 5.0f;
+const float m_sensitivity = 0.001f;
+float m_speedCoefficient = 2.f;
+
+void UpdateCamera(GLFWwindow* p_window, CCamera* p_camera, float dt)
+{
+    glm::tvec3<double> mouse;
+    glm::tvec3<double> deltaMouse;
+    glm::tvec3<double> deltaCharacter;
+    glfwGetCursorPos(p_window, &mouse.x, &mouse.y);
+
+    deltaMouse = mouse - last_mouse;
+    glm::vec2 mousePos(mouse.x, mouse.y);
+    glm::vec2 windowSize(1600.0f, 900.0f);
+    glm::vec2 windowCenter(windowSize.x / 2, windowSize.y / 2);
+
+    float maxMousePosRadius = glm::min(windowSize.x, windowSize.y) / 2.0f;
+    if (glm::distance(mousePos, windowCenter) > maxMousePosRadius)
+    {
+        // Re-center the mouse
+        glfwSetCursorPos(p_window, windowCenter.x, windowCenter.y);
+        last_mouse.x = windowCenter.x;
+        last_mouse.y = windowCenter.y;
+    }
+    else
+    {
+        last_mouse.x = mousePos.x;
+        last_mouse.y = mousePos.y;
+    }
+    //
+
+    // Keyboard Inputs
+    int yDirection  =  (glfwGetKey(p_window,    GLFW_KEY_W)       == GLFW_PRESS);
+    yDirection      -= (glfwGetKey(p_window,    GLFW_KEY_S)       == GLFW_PRESS);
+
+    int xDirection  =  (glfwGetKey(p_window,    GLFW_KEY_D)       == GLFW_PRESS);
+    xDirection      -= (glfwGetKey(p_window,    GLFW_KEY_A)       == GLFW_PRESS);
+    //
+
+    m_speedCoefficient = 1.0f;
+
+    p_camera->Rotate    (static_cast<float>(-deltaMouse.x * m_sensitivity));
+    p_camera->RotateUp  (static_cast<float>(-deltaMouse.y * m_sensitivity));
+    p_camera->Translate( (p_camera->GetDirection() * yDirection + p_camera->GetRight() * xDirection) * dt * m_speed * m_speedCoefficient );
+}
+
+
 void CEngine::Run()
 {
     // Getting GLFW window
@@ -209,14 +259,18 @@ void CEngine::Run()
         // Processing events
         glfwPollEvents();
 
+
         // Fixed granularity
         while(lag >= delta_time)
         {
             // TODO
 
+
             lag -= delta_time;
         }
 
+        UpdateCamera(p_handle, &camera, delta_time);
+        MVP = camera.GetProjectionMatrix() * camera.GetViewMatrix() * glm::mat4(1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         glUseProgram(cg_program);
         glUniformMatrix4fv(MatrixID, 1, GL_FALSE, &MVP[0][0]);
@@ -229,7 +283,6 @@ void CEngine::Run()
 
         mp_renderer->Render();
         glfwSwapBuffers(p_handle);
-
     }
 }
 
