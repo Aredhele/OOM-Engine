@@ -10,4 +10,8 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
+// Enables glm extensions
+// Useful for rotate vectors
+#define GLM_ENABLE_EXPERIMENTAL
+
 #endif // !OOM_ENGINE_CONFIG_HPP__
