@@ -42,5 +42,8 @@ void CRenderer::Render()
     // TODO
 }
 
+CWindow* CRenderer::GetWindow()
+{ return mp_window; }
+
 }
 

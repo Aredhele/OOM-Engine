@@ -16,9 +16,10 @@ class CRenderer
 {
 public:
 
-    bool Initialize();
-    void Release   ();
-    void Render    ();
+    bool     Initialize();
+    void     Release   ();
+    void     Render    ();
+    CWindow* GetWindow ();
 
 private:
 

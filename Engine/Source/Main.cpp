@@ -5,6 +5,8 @@
 int main()
 {
     Oom::CEngine engine;
+
     engine.Initialize();
+    engine.Run();
     engine.Release();
 }

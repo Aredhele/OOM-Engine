@@ -34,7 +34,35 @@ void CEngine::Release()
 
 void CEngine::Run()
 {
-    // TODO
+    // Getting GLFW window
+    GLFWwindow* p_handle = mp_renderer->GetWindow()->GetHandle();
+
+    double lag        = 0.0;
+    double previous   = glfwGetTime();
+    double delta_time = 1.0 / 60.0;
+
+    while (glfwWindowShouldClose(p_handle) == 0 &&
+           glfwGetKey(p_handle, GLFW_KEY_ESCAPE) != GLFW_PRESS)
+    {
+        double current = glfwGetTime();
+        double elapsed = current - previous;
+        previous       = current;
+
+        lag += elapsed;
+
+        // Processing events
+        glfwPollEvents();
+
+        // Fixed granularity
+        while(lag >= delta_time)
+        {
+            // TODO
+
+            lag -= delta_time;
+        }
+
+        mp_renderer->Render();
+    }
 }
 
 }
