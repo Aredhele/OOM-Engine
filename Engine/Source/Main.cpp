@@ -2,11 +2,11 @@
 #include <GLFW/glfw3.h>
 #include "CEngine.hpp"
 #include "Render/CCamera.hpp"
+#include <Core/Debug/SLogger.hpp>
 
 int main()
 {
     Oom::CEngine engine;
-
     engine.Initialize();
     engine.Run();
     engine.Release();
