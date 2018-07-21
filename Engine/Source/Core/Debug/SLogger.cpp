@@ -9,14 +9,16 @@
 
 #include "Core/Debug/SLogger.hpp"
 
-#define __VA_LOG(FILE, ENGINE, LEVEL, FORMAT) \
-    va_list  argList;                         \
-    va_start(argList, FORMAT);                \
-        fprintf (FILE, ENGINE);               \
-        fprintf (FILE, LEVEL);                \
-        vfprintf(FILE, FORMAT, argList);      \
-        fprintf (FILE, "\n");                 \
-    va_end  (argList);                        \
+#ifndef NDEBUG
+#   define __VA_LOG(FILE, ENGINE, LEVEL, FORMAT) \
+        va_list  argList;                        \
+        va_start(argList, FORMAT);               \
+            fprintf (FILE, ENGINE);              \
+            fprintf (FILE, LEVEL);               \
+            vfprintf(FILE, FORMAT, argList);     \
+            fprintf (FILE, "\n");                \
+        va_end  (argList);
+#endif
 
 namespace Oom
 {
