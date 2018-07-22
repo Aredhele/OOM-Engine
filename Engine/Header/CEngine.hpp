@@ -43,6 +43,9 @@ public:
     static CGameObject*				 FindWithTag			(const CString& tag);
     static std::vector<CGameObject*> FindGameObjectsWithTag (const CString& tag);
 
+    template <class T> static inline T*   AllocateComponent();
+    template <class T> static inline void ReleaseComponent (T* p_component);
+
 private:
 
     void BehaviorUpdate  (GLFWwindow* p_window, float delta_time);
@@ -60,5 +63,7 @@ private:
 };
 
 }
+
+#include "CEngine.inl"
 
 #endif // !OOM_ENGINE_C_ENGINE_HPP__

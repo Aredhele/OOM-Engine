@@ -4,6 +4,9 @@
 /// \package    CGameObject
 /// \author     Vincent STEHLY--CALISTO
 
+#include "CEngine.hpp"
+#include "Core/Standard/StringID.hpp"
+
 namespace Oom
 {
 
@@ -37,10 +40,14 @@ T* CGameObject::AddComponent(void)
     // Static check
     static_assert(std::is_base_of<IComponent, T>::value);
 
-    // 1 - Engine allocation
-    // 2 - Add component to go
+    T* p_component = CEngine::AllocateComponent<T>();
+    p_component->m_component_id = DSID(typeid(T).name());
+    p_component->mp_transform   = &m_transform;
+    p_component->mp_game_object = this;
 
-    return nullptr;
+    m_components.push_back(p_component);
+
+    return p_component;
 }
 
 template<class T>
