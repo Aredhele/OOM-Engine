@@ -18,17 +18,40 @@
 #include <Core/Standard/CString.hpp>
 
 // Components
+#include "Composite/CGameObject.hpp"
 #include "Composite/Component/CBehavior.hpp"
 #include "Composite/Component/CTransform.hpp"
+
+// Built-in
+#include "Built-in/Script/S_Camera.hpp"
+#include "Built-in/Script/S_CameraController.hpp"
+
+using namespace Oom;
 
 namespace Sdk
 {
 
-void               SetMousePosition     (const glm::vec2& position);
-glm::tvec3<double> GetMousePosition     ();
-glm::vec2          GetWindowSize        ();
-bool               IsKeyPressed         (int key_code);
-bool               IsKeyReleased        (int key_code);
+    namespace Mouse
+    {
+        void               SetMousePosition(const glm::vec2& position);
+        glm::tvec3<double> GetMousePosition();
+    }
+
+    namespace Window
+    {
+        glm::vec2 GetWindowSize();
+    }
+
+    namespace Input
+    {
+        bool IsKeyPressed  (int key_code);
+        bool IsKeyReleased (int key_code);
+    }
+
+    namespace GameObject
+    {
+        CGameObject* CreateCamera();
+    }
 
 }
 

@@ -17,8 +17,8 @@
 
 /* virtual */ void S_CameraController::Update()
 {
-    glm::vec2          windowSize = Sdk::GetWindowSize();
-    glm::tvec3<double> mouse      = Sdk::GetMousePosition();
+    glm::vec2          windowSize = Sdk::Window::GetWindowSize();
+    glm::tvec3<double> mouse      = Sdk::Mouse::GetMousePosition();
     glm::tvec3<double> deltaMouse;
 
     deltaMouse = mouse - m_last_mouse_position;
@@ -30,7 +30,7 @@
     if (glm::distance(mousePos, windowCenter) > maxMousePosRadius)
     {
         // Re-center the mouse
-        Sdk::SetMousePosition(windowCenter);
+        Sdk::Mouse::SetMousePosition(windowCenter);
         m_last_mouse_position.x = windowCenter.x;
         m_last_mouse_position.y = windowCenter.y;
     }
@@ -41,14 +41,14 @@
     }
 
     // Keyboard Inputs
-    int y_direction   = (Sdk::IsKeyPressed(GLFW_KEY_W)) ? 1 : 0;
-        y_direction  -= (Sdk::IsKeyPressed(GLFW_KEY_S)) ? 1 : 0;
-    int x_direction   = (Sdk::IsKeyPressed(GLFW_KEY_D)) ? 1 : 0;
-        x_direction  -= (Sdk::IsKeyPressed(GLFW_KEY_A)) ? 1 : 0;
+    int y_direction   = (Sdk::Input::IsKeyPressed(GLFW_KEY_W)) ? 1 : 0;
+        y_direction  -= (Sdk::Input::IsKeyPressed(GLFW_KEY_S)) ? 1 : 0;
+    int x_direction   = (Sdk::Input::IsKeyPressed(GLFW_KEY_D)) ? 1 : 0;
+        x_direction  -= (Sdk::Input::IsKeyPressed(GLFW_KEY_A)) ? 1 : 0;
 
     auto angleX = static_cast<float>(-deltaMouse.x * m_sensitivity);
     auto angleY = static_cast<float>(-deltaMouse.y * m_sensitivity);
-    float speed_coefficient = (Sdk::IsKeyPressed(GLFW_KEY_LEFT_SHIFT)) ? m_run_speed_multiplier : 1.0f;
+    float speed_coefficient = (Sdk::Input::IsKeyPressed(GLFW_KEY_LEFT_SHIFT)) ? m_run_speed_multiplier : 1.0f;
 
     mp_transform->RotateAround(mp_transform->GetForward(), mp_transform->GetUp(),    angleX);
     mp_transform->RotateAround(mp_transform->GetForward(), mp_transform->GetRight(), angleY);
