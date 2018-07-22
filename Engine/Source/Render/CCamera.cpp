@@ -45,7 +45,7 @@ void CCamera::LookAt(const glm::vec3& target)
     UpdateVectors();
 }
 
-void CCamera::Translate(const glm::vec3 &translation)
+void CCamera::Translate(const glm::vec3& translation)
 {
     m_position += translation;
     m_look_at  += translation;

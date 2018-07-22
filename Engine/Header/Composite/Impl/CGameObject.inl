@@ -8,6 +8,30 @@ namespace Oom
 {
 
 template<class T>
+T* CGameObject::GetComponent(void)
+{
+    // Static check
+    static_assert(std::is_base_of<IComponent, T>::value);
+
+    // 1 - Component lookup
+    // 2 - Gathers the first component
+
+    return nullptr;
+}
+
+template<class T>
+std::vector<T*> CGameObject::GetComponents(void)
+{
+    // Static check
+    static_assert(std::is_base_of<IComponent, T>::value);
+
+    // 1 - Component lookup
+    // 2 - Gathers all components
+
+    return std::vector<T*>();
+}
+
+template<class T>
 T* CGameObject::AddComponent(void)
 {
     // Static check
@@ -39,30 +63,6 @@ void CGameObject::RemoveComponents(void)
     // 1 - Component lookup
     // 2 - Removes the component
     // 3 - Engine deallocation
-}
-
-template<class T>
-T* CGameObject::GetComponent(void)
-{
-    // Static check
-    static_assert(std::is_base_of<IComponent, T>::value);
-
-    // 1 - Component lookup
-    // 2 - Gathers the first component
-
-    return nullptr;
-}
-
-template<class T>
-std::vector<T*> CGameObject::GetComponents(void)
-{
-    // Static check
-    static_assert(std::is_base_of<IComponent, T>::value);
-
-    // 1 - Component lookup
-    // 2 - Gathers all components
-
-    return std::vector<T*>();
 }
 
 }

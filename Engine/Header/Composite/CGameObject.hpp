@@ -32,7 +32,7 @@ public:
 public:
 
     template <class T> inline T *				GetComponent			(/* void */);
-    template <class T> inline std::vector<T*>   GetComponents			(/* void */);
+    template <class T> inline std::vector<T*>  GetComponents			(/* void */);
     template <class T> inline T *				AddComponent			(/* void */);
     template <class T> inline void				RemoveComponent			(/* void */);
     template <class T> inline void				RemoveComponents		(/* void */);
@@ -45,7 +45,10 @@ private:
 
 private:
 
-    std::vector<IComponent*> m_components;
+    friend class CTransform;
+
+    CTransform                m_transform;
+    std::vector<IComponent* > m_components;
 };
 
 }
