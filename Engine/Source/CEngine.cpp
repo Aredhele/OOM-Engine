@@ -246,7 +246,7 @@ void CEngine::Run()
             (void*)0
     );
 
-
+    glfwSetInputMode(p_handle, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
     while (glfwWindowShouldClose(p_handle) == 0 &&
            glfwGetKey(p_handle, GLFW_KEY_ESCAPE) != GLFW_PRESS)
     {
@@ -264,13 +264,13 @@ void CEngine::Run()
         while(lag >= delta_time)
         {
             // TODO
-
+            UpdateCamera(p_handle, &camera, delta_time);
+            MVP = camera.GetProjectionMatrix() * camera.GetViewMatrix() * glm::mat4(1.0f);
 
             lag -= delta_time;
         }
 
-        UpdateCamera(p_handle, &camera, delta_time);
-        MVP = camera.GetProjectionMatrix() * camera.GetViewMatrix() * glm::mat4(1.0f);
+
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         glUseProgram(cg_program);
         glUniformMatrix4fv(MatrixID, 1, GL_FALSE, &MVP[0][0]);
