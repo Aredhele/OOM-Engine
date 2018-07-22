@@ -50,9 +50,11 @@ T* CGameObject::AddComponent(void)
     static_assert(std::is_base_of<IComponent, T>::value);
 
     IComponent* p_component = CEngine::AllocateComponent<T>();
-    p_component->m_component_id = DSID(typeid(T).name());
-    p_component->mp_transform   = &m_transform;
-    p_component->mp_game_object = this;
+    p_component->m_component_id               = DSID(typeid(T).name());
+    p_component->mp_transform                 = &m_transform;
+    p_component->mp_game_object               = this;
+    p_component->mp_transform->mp_game_object = this;
+    p_component->mp_transform->mp_parent      = m_transform.mp_parent;
 
     m_components.push_back(p_component);
 

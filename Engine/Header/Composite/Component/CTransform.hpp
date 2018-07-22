@@ -29,8 +29,8 @@ public:
     // Properties
     uint32_t            GetChildCount       () const;
     uint32_t            GetHierarchyCount   () const;
-    const CTransform&   GetParent           () const;
-    const CTransform&   GetRoot             () const;
+    CTransform*         GetParent           ();
+    CTransform*         GetRoot             ();
     const glm::vec3&    GetUp               () const;
     const glm::vec3&    GetRight            () const;
     const glm::vec3&    GetForward          () const;
@@ -65,7 +65,7 @@ public:
     void                Rotate          (float x, float y, float z);
     void                Rotate          (const glm::vec3& point);
     void                RotateAround    (const glm::vec3& point, const glm::vec3& axis, float angle);
-    void                SetParent       (CTransform& parent);
+    void                SetParent       (CTransform* parent);
     void                Translate       (float x, float y, float z);
     void                Translate       (const glm::vec3& translation);
 
@@ -89,6 +89,7 @@ private:
 
 private:
 
+    friend class CEngine;
     friend class CGameObject;
 
     CTransform*  mp_parent      = nullptr;

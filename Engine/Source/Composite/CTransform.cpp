@@ -38,14 +38,14 @@ uint32_t CTransform::GetHierarchyCount() const
     return hierarchy_count;
 }
 
-const CTransform& CTransform::GetParent() const
+CTransform* CTransform::GetParent()
 {
-    return *mp_parent;
+    return mp_parent;
 }
 
-const CTransform& CTransform::GetRoot() const
+CTransform* CTransform::GetRoot()
 {
-    return (mp_parent) ? mp_parent->GetRoot() : *this;
+    return (mp_parent) ? mp_parent->GetRoot() : this;
 }
 
 const glm::vec3& CTransform::GetUp() const
@@ -204,7 +204,7 @@ void CTransform::RotateAround(const glm::vec3& point, const glm::vec3& axis, flo
     UpdateVectors();
 }
 
-void CTransform::SetParent(CTransform& parent)
+void CTransform::SetParent(CTransform* parent)
 {
     if(mp_parent)
     {
@@ -220,8 +220,8 @@ void CTransform::SetParent(CTransform& parent)
         }
     }
 
-    mp_parent = &parent;
-    parent.m_children.push_back(this);
+    mp_parent = parent;
+    parent->m_children.push_back(this);
 }
 
 void CTransform::Translate(float x, float y, float z)
@@ -232,6 +232,7 @@ void CTransform::Translate(float x, float y, float z)
 void CTransform::Translate(const glm::vec3& translation)
 {
     m_position += translation;
+    m_forward  += translation;
     UpdateVectors();
 }
 

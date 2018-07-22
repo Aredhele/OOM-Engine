@@ -9,7 +9,10 @@
 
 /* virtual */ void S_CameraController::Start()
 {
-    // TODO
+    m_speed                = 8.0f;
+    m_sensitivity          = 0.001f;
+    m_run_speed_multiplier = 2.0f;
+    m_last_mouse_position  = glm::tvec3<double>(0.0f);
 }
 
 /* virtual */ void S_CameraController::Update()
@@ -38,11 +41,10 @@
     }
 
     // Keyboard Inputs
-    int yDirection  =  (Sdk::IsKeyPressed(GLFW_KEY_W)) ? 1 : 0;
-    yDirection      -= (Sdk::IsKeyPressed(GLFW_KEY_S)) ? 1 : 0;
-
-    int xDirection  =  (Sdk::IsKeyPressed(GLFW_KEY_D)) ? 1 : 0;
-    xDirection      -= (Sdk::IsKeyPressed(GLFW_KEY_A)) ? 1 : 0;
+    int y_direction   = (Sdk::IsKeyPressed(GLFW_KEY_W)) ? 1 : 0;
+        y_direction  -= (Sdk::IsKeyPressed(GLFW_KEY_S)) ? 1 : 0;
+    int x_direction   = (Sdk::IsKeyPressed(GLFW_KEY_D)) ? 1 : 0;
+        x_direction  -= (Sdk::IsKeyPressed(GLFW_KEY_A)) ? 1 : 0;
 
     auto angleX = static_cast<float>(-deltaMouse.x * m_sensitivity);
     auto angleY = static_cast<float>(-deltaMouse.y * m_sensitivity);
@@ -50,8 +52,7 @@
 
     mp_transform->RotateAround(mp_transform->GetForward(), mp_transform->GetUp(),    angleX);
     mp_transform->RotateAround(mp_transform->GetForward(), mp_transform->GetRight(), angleY);
-    mp_transform->Translate  ((mp_transform->GetForward() * (float)yDirection + mp_transform->GetRight()) * 0.016f * m_speed * speed_coefficient);
-
+    mp_transform->Translate  ((mp_transform->GetLocalOrientation() * (float)y_direction + mp_transform->GetRight() * (float)x_direction) * 0.016f * m_speed * speed_coefficient);
 }
 
 float S_CameraController::GetSpeed() const

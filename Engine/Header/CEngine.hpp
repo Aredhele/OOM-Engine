@@ -33,7 +33,7 @@ public:
 
     // Game objects
     static CGameObject*              Instantiate            ();
-    static CGameObject*              Instantiate            (CTransform& parent );
+    static CGameObject*              Instantiate            (CTransform* parent);
     static CGameObject*              Instantiate            (const glm::vec3& position);
     static CGameObject*              Instantiate            (const glm::vec3& position, const glm::vec3& scale);
     static CGameObject*              Instantiate            (const glm::vec3& position, const glm::vec3& scale, const glm::vec3& orientation);
@@ -59,7 +59,7 @@ private:
 
     void        GameObjectUpdate(GLFWwindow* p_window, float delta_time);
     void        BehaviorUpdate  (GLFWwindow* p_window, float delta_time);
-    static void BehaviorAwake   (CBehavior* p_behavior);
+    void        BehaviorRegister(CBehavior* p_behavior);
 
     template <class T> static inline T*   AllocateComponent();
     template <class T> static inline void ReleaseComponent (T* p_component);

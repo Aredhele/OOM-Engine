@@ -42,7 +42,7 @@ public:
         inline void                     RemoveComponents        (/* void */);
 
     static CGameObject*                 Instantiate             ();
-    static CGameObject*                 Instantiate             (CTransform& parent);
+    static CGameObject*                 Instantiate             (CTransform* parent);
     static CGameObject*                 Instantiate             (const glm::vec3& position);
     static CGameObject*                 Instantiate             (const glm::vec3& position, const glm::vec3& scale);
     static CGameObject*                 Instantiate             (const glm::vec3& position, const glm::vec3& scale, const glm::vec3& orientation);
@@ -68,7 +68,7 @@ private:
     friend class CTransform;
 
              CGameObject();
-    explicit CGameObject(CTransform& parent);
+    explicit CGameObject(CTransform* parent);
              CGameObject(const glm::vec3& position, const glm::vec3& scale, const glm::vec3& orientation);
 
     void __DestroyMessage ();

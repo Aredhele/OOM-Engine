@@ -24,8 +24,8 @@ public:
 
     // Properties
     const CString&      GetTag        () const;
-    const CTransform&   GetTransform  () const;
-          CGameObject*  GetGameObject () const;
+          CTransform*   GetTransform  ();
+          CGameObject*  GetGameObject ();
     bool                IsEnabled     () const;
     void                SetTag        (const CString& tag);
     void                SetTag        (CString&& tag);
@@ -43,7 +43,7 @@ public:
     // template <class T> inline std::vector<T*>          GetComponents			(/* void */);
 
     static CGameObject*                 Instantiate             ();
-    static CGameObject*                 Instantiate             (CTransform& parent);
+    static CGameObject*                 Instantiate             (CTransform* parent);
     static CGameObject*                 Instantiate             (const glm::vec3& position);
     static CGameObject*                 Instantiate             (const glm::vec3& position, const glm::vec3& scale);
     static CGameObject*                 Instantiate             (const glm::vec3& position, const glm::vec3& scale, const glm::vec3& orientation);
@@ -53,7 +53,8 @@ public:
 
 protected:
 
-    // Properties
+    friend class CEngine;
+
     CString      m_tag;
     CTransform*  mp_transform   = nullptr;
     CGameObject* mp_game_object = nullptr;

@@ -16,12 +16,12 @@ const CString& IComponent::GetTag() const
     return m_tag;
 }
 
-const CTransform& IComponent::GetTransform() const
+CTransform* IComponent::GetTransform()
 {
-    return *mp_transform;
+    return mp_transform;
 }
 
-CGameObject* IComponent::GetGameObject() const
+CGameObject* IComponent::GetGameObject() //const
 {
     return mp_game_object;
 }
@@ -73,7 +73,7 @@ CGameObject* IComponent::Instantiate()
 { return CEngine::Instantiate(); }
 
 /* static */
-CGameObject* IComponent::Instantiate(CTransform& parent)
+CGameObject* IComponent::Instantiate(CTransform* parent)
 { return CEngine::Instantiate(parent); }
 
 /* static */

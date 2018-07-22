@@ -15,7 +15,7 @@ CGameObject::CGameObject()
     // None
 }
 
-CGameObject::CGameObject(CTransform& parent)
+CGameObject::CGameObject(CTransform* parent)
 {
     m_tag             = "Default";
     m_is_active       = true;
@@ -23,8 +23,8 @@ CGameObject::CGameObject(CTransform& parent)
     m_destroy_delay   = 0.0f;
     m_destroy_elapsed = 0.0f;
 
-    m_transform.mp_game_object = this;
     m_transform.SetParent(parent);
+    m_transform.mp_game_object = this;
 }
 
 CGameObject::CGameObject(const glm::vec3& position, const glm::vec3& scale, const glm::vec3& orientation)
@@ -39,6 +39,7 @@ CGameObject::CGameObject(const glm::vec3& position, const glm::vec3& scale, cons
     m_transform.SetLocalPosition(position);
     m_transform.SetLocalOrientation(orientation);
 
+    m_transform.mp_parent      = nullptr;
     m_transform.mp_game_object = this;
 }
 
@@ -108,7 +109,7 @@ CGameObject* CGameObject::Instantiate()
 { return CEngine::Instantiate(); }
 
 /* static */
-CGameObject* CGameObject::Instantiate(CTransform& parent)
+CGameObject* CGameObject::Instantiate(CTransform* parent)
 { return CEngine::Instantiate(parent); }
 
 /* static */
