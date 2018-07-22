@@ -23,7 +23,7 @@ public:
     // Properties
     const CString&      GetTag        () const;
     const CTransform&   GetTransform  () const;
-    const CGameObject&  GetGameObject () const;
+          CGameObject*  GetGameObject () const;
 
     void SetTag (const CString& tag);
     void SetTag (CString&& tag);
@@ -39,6 +39,8 @@ protected:
     CString      m_tag;
     CTransform*  mp_transform   = nullptr;
     CGameObject* mp_game_object = nullptr;
+
+    // TODO : enabled
 
 protected:
 

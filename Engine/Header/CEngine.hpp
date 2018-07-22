@@ -8,6 +8,8 @@
 #define OOM_ENGINE_C_ENGINE_HPP__
 
 #include <vector>
+#include <GLM/glm.hpp>
+
 #include "Render/CRenderer.hpp"
 #include "Core/Standard/CString.hpp"
 
@@ -40,6 +42,11 @@ public:
     static CGameObject*				 Find					(const CString& name);
     static CGameObject*				 FindWithTag			(const CString& tag);
     static std::vector<CGameObject*> FindGameObjectsWithTag (const CString& tag);
+
+private:
+
+    void BehaviorUpdate  (GLFWwindow* p_window, float delta_time);
+    void GameObjectUpdate(GLFWwindow* p_window, float delta_time);
 
 private:
 

@@ -38,6 +38,7 @@ void CBehavior::__Awake()
 void CBehavior::__Start()
 {
     Start();
+    m_first_update = false;
 }
 
 void CBehavior::__Update()

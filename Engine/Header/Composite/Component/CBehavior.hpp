@@ -36,7 +36,10 @@ private:
 
 private:
 
-    bool m_is_enabled = true;
+    friend class CEngine;
+
+    bool m_is_enabled  = true;
+    bool m_first_update = true;
 };
 
 }

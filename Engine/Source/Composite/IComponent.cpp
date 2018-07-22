@@ -21,9 +21,9 @@ const CTransform& IComponent::GetTransform() const
     return *mp_transform;
 }
 
-const CGameObject& IComponent::GetGameObject() const
+CGameObject* IComponent::GetGameObject() const
 {
-    return *mp_game_object;
+    return mp_game_object;
 }
 
 void IComponent::SetTag(const CString& tag)

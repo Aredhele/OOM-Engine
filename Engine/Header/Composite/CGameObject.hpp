@@ -26,8 +26,9 @@ public:
     // Properties
     const CString& GetTag () const;
 
-    void SetTag (const CString& tag);
-    void SetTag (CString&& tag);
+    void SetTag     (const CString& tag);
+    void SetTag     (CString&& tag);
+    void SetActive  (bool active);
 
 public:
 
@@ -41,7 +42,10 @@ private:
 
     // Properties
     CString m_tag;
-    bool    m_is_active = true;
+    bool    m_is_active;
+    bool    m_is_detroyed;
+    float   m_destroy_delay;
+    float   m_destroy_elapsed;
 
 private:
 
@@ -51,6 +55,10 @@ private:
              CGameObject();
     explicit CGameObject(const CTransform& parent);
              CGameObject(const glm::vec3& position, const glm::vec3& scale, const glm::vec3& orientation);
+
+    void __DestroyMessage ();
+    void __EnableMessage  ();
+    void __DisableMessage ();
 
 private:
 
