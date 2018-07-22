@@ -32,7 +32,7 @@ public:
 public:
 
     static CGameObject*              Instantiate            ();
-    static CGameObject*              Instantiate            (const CTransform& parent );
+    static CGameObject*              Instantiate            (CTransform& parent );
     static CGameObject*              Instantiate            (const glm::vec3& position);
     static CGameObject*              Instantiate            (const glm::vec3& position, const glm::vec3& scale);
     static CGameObject*              Instantiate            (const glm::vec3& position, const glm::vec3& scale, const glm::vec3& orientation);

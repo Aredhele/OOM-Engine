@@ -19,17 +19,20 @@ CTransform::CTransform()
     m_up       = glm::vec3(0.0f, 0.0f, 1.0f);
     m_right    = glm::vec3(1.0f, 0.0f, 0.0f);
     m_forward  = glm::vec3(0.0f, 1.0f, 0.0f);
+
+    mp_parent      = nullptr;
+    mp_game_object = nullptr;
 }
 
 uint32_t CTransform::GetChildCount() const
 {
-    return static_cast<uint32_t>(m_childrens.size());
+    return static_cast<uint32_t>(m_children.size());
 }
 
 uint32_t CTransform::GetHierarchyCount() const
 {
     uint32_t hierarchy_count = 0;
-    for(const auto& transform : m_childrens)
+    for(const auto& transform : m_children)
         hierarchy_count += transform->GetHierarchyCount();
 
     return hierarchy_count;
@@ -164,7 +167,7 @@ const CTransform* CTransform::Find(const CString& name)
         return this;
 
     // Else, a child
-    for(const auto& transform : m_childrens)
+    for(const auto& transform : m_children)
     {
         const CTransform* p_transform = transform->Find(name);
 
@@ -201,9 +204,24 @@ void CTransform::RotateAround(const glm::vec3& point, const glm::vec3& axis, flo
     UpdateVectors();
 }
 
-void CTransform::SetParent(const CTransform& parent)
+void CTransform::SetParent(CTransform& parent)
 {
-    mp_parent = &parent.mp_game_object->m_transform;
+    if(mp_parent)
+    {
+        for(auto i = 0; i < mp_parent->m_children.size(); ++i)
+        {
+            if(mp_parent->m_children[i] == this)
+            {
+                mp_parent->m_children[i] = mp_parent->m_children.back();
+                mp_parent->m_children.pop_back();
+
+                break;
+            }
+        }
+    }
+
+    mp_parent = &parent;
+    parent.m_children.push_back(this);
 }
 
 void CTransform::Translate(float x, float y, float z)
@@ -228,6 +246,11 @@ void CTransform::UpdateVectors()
     m_right = glm::normalize(m_right);
     m_up    = glm::cross    (m_right, m_orientation);
     m_up    = glm::normalize(m_up);
+}
+
+std::vector<CTransform*>& CTransform::GetChildren()
+{
+    return m_children;
 }
 
 }

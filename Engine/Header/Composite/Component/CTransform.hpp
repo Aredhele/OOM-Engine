@@ -24,7 +24,7 @@ public:
 
     CTransform();
 
-private:
+public:
 
     // Properties
     uint32_t            GetChildCount       () const;
@@ -65,9 +65,13 @@ public:
     void                Rotate          (float x, float y, float z);
     void                Rotate          (const glm::vec3& point);
     void                RotateAround    (const glm::vec3& point, const glm::vec3& axis, float angle);
-    void                SetParent       (const CTransform& parent);
+    void                SetParent       (CTransform& parent);
     void                Translate       (float x, float y, float z);
     void                Translate       (const glm::vec3& translation);
+
+public:
+
+    std::vector<CTransform*>& GetChildren();
 
 private:
 
@@ -85,10 +89,12 @@ private:
 
 private:
 
+    friend class CGameObject;
+
     CTransform*  mp_parent      = nullptr;
     CGameObject* mp_game_object = nullptr;
 
-    std::vector<CTransform*>    m_childrens;
+    std::vector<CTransform*>    m_children;
 };
 
 }

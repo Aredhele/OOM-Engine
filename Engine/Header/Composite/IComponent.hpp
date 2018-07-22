@@ -24,14 +24,17 @@ public:
     const CString&      GetTag        () const;
     const CTransform&   GetTransform  () const;
           CGameObject*  GetGameObject () const;
-
-    void SetTag (const CString& tag);
-    void SetTag (CString&& tag);
+    bool                IsEnabled     () const;
+    void                SetTag        (const CString& tag);
+    void                SetTag        (CString&& tag);
+    void                SetEnabled    (bool enabled);
 
 public:
 
     // Methods
-    // TODO
+    virtual void OnEnable  ();
+    virtual void OnDisable ();
+    virtual void OnDestroy ();
 
 protected:
 
@@ -39,12 +42,20 @@ protected:
     CString      m_tag;
     CTransform*  mp_transform   = nullptr;
     CGameObject* mp_game_object = nullptr;
-
-    // TODO : enabled
+    bool         m_is_enabled   = true;
 
 protected:
 
     uint32_t    m_component_id  = 0;
+
+private:
+
+    friend class CEngine;
+    friend class CGameObject;
+
+    void __DestroyMessage ();
+    void __EnableMessage  ();
+    void __DisableMessage ();
 };
 
 }

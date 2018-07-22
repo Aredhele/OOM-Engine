@@ -24,11 +24,14 @@ class CGameObject : public CObject
 public:
 
     // Properties
-    const CString& GetTag () const;
+    const CString& GetTag       () const;
+    bool           IsActive     () const;
+    CTransform&    GetTransform ();
 
     void SetTag     (const CString& tag);
     void SetTag     (CString&& tag);
     void SetActive  (bool active);
+
 
 public:
 
@@ -43,7 +46,7 @@ private:
     // Properties
     CString m_tag;
     bool    m_is_active;
-    bool    m_is_detroyed;
+    bool    m_is_destroyed;
     float   m_destroy_delay;
     float   m_destroy_elapsed;
 
@@ -53,7 +56,7 @@ private:
     friend class CTransform;
 
              CGameObject();
-    explicit CGameObject(const CTransform& parent);
+    explicit CGameObject(CTransform& parent);
              CGameObject(const glm::vec3& position, const glm::vec3& scale, const glm::vec3& orientation);
 
     void __DestroyMessage ();

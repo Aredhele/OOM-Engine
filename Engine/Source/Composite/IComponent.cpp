@@ -26,6 +26,11 @@ CGameObject* IComponent::GetGameObject() const
     return mp_game_object;
 }
 
+bool IComponent::IsEnabled() const
+{
+    return m_is_enabled;
+}
+
 void IComponent::SetTag(const CString& tag)
 {
     m_tag = tag;
@@ -34,6 +39,41 @@ void IComponent::SetTag(const CString& tag)
 void IComponent::SetTag(CString&& tag)
 {
     m_tag = static_cast<CString&&>(tag);
+}
+
+void IComponent::SetEnabled(bool enabled)
+{
+    if(m_is_enabled != enabled)
+    {
+        (enabled) ? OnEnable() : OnDisable();
+        m_is_enabled = enabled;
+    }
+}
+
+void IComponent::OnEnable()
+{ /* None */ }
+
+void IComponent::OnDisable()
+{ /* None */ }
+
+void IComponent::OnDestroy()
+{ /* None */ }
+
+void IComponent::__DestroyMessage()
+{
+    OnDestroy();
+}
+
+void IComponent::__EnableMessage()
+{
+    if(m_is_enabled)
+        OnEnable();
+}
+
+void IComponent::__DisableMessage()
+{
+    if(m_is_enabled)
+        OnDisable();
 }
 
 }

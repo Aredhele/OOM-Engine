@@ -19,9 +19,9 @@ public:
     virtual void Awake       ();
     virtual void Start       ();
     virtual void Update      ();
-    virtual void OnDestroy   ();
-    virtual void OnEnable    ();
-    virtual void OnDisable   ();
+            void OnDestroy   () override;
+            void OnEnable    () override;
+            void OnDisable   () override;
     virtual void OnDrawGizmos();
 
 private:
@@ -37,8 +37,6 @@ private:
 private:
 
     friend class CEngine;
-
-    bool m_is_enabled  = true;
     bool m_first_update = true;
 };
 
