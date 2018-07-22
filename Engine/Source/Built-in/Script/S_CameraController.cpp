@@ -9,8 +9,8 @@
 
 /* virtual */ void S_CameraController::Start()
 {
-    m_speed                = 8.0f;
-    m_sensitivity          = 0.001f;
+    m_speed                = 5.0f;
+    m_sensitivity          = 0.0008f;
     m_run_speed_multiplier = 2.0f;
     m_last_mouse_position  = glm::tvec3<double>(0.0f);
 }

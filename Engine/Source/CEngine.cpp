@@ -4,7 +4,6 @@
 /// \package    Engine
 /// \author     Vincent STEHLY--CALISTO
 
-#include <Render/CCamera.hpp>
 #include "CEngine.hpp"
 #include "Core/Debug/SLogger.hpp"
 #include "Render/Shader/SShaderCompiler.hpp"
