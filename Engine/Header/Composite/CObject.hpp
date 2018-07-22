@@ -16,7 +16,13 @@ class CObject
 {
 public:
 
-    CString name;
+    void           SetName (const CString& name);
+    void           SetName (CString&& name);
+    const CString& GetName () const;
+
+private:
+
+    CString m_name;
 };
 
 }
