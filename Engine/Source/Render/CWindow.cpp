@@ -67,4 +67,12 @@ void CWindow::Release()
 GLFWwindow* CWindow::GetHandle()
 { return mp_window; }
 
+glm::vec2 CWindow::GetWindowSize()
+{
+    int x = 0, y = 0;
+    glfwGetWindowSize(mp_window, &x, &y);
+
+    return glm::vec2(x, y);
+}
+
 }

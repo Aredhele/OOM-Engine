@@ -258,4 +258,34 @@ void CEngine::BehaviorAwake(CBehavior* p_behavior)
     p_behavior->Awake();
 }
 
+/* static */ void CEngine::SetMousePosition(const glm::vec2 &position)
+{
+    glfwSetCursorPos(sp_instance->mp_renderer->GetWindow()->GetHandle(),
+                     position.x, position.y);
+}
+
+/* static */ glm::tvec3<double> CEngine::GetMousePosition()
+{
+    glm::tvec3<double> mouse;
+    glfwGetCursorPos(sp_instance->mp_renderer->GetWindow()->GetHandle(),
+                     &mouse.x, &mouse.y);
+
+    return mouse;
+}
+
+/* static */ glm::vec2 CEngine::GetWindowSize()
+{
+    return sp_instance->mp_renderer->GetWindow()->GetWindowSize();
+}
+
+/* static */ bool CEngine::IsKeyPressed(int key_code)
+{
+    return (glfwGetKey(sp_instance->mp_renderer->GetWindow()->GetHandle(), key_code) == GLFW_PRESS);
+}
+
+/* static */ bool CEngine::IsKeyReleased(int key_code)
+{
+    return (glfwGetKey(sp_instance->mp_renderer->GetWindow()->GetHandle(), key_code) == GLFW_RELEASE);
+}
+
 }

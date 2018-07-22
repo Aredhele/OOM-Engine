@@ -31,6 +31,7 @@ public:
 
 public:
 
+    // Game objects
     static CGameObject*              Instantiate            ();
     static CGameObject*              Instantiate            (CTransform& parent );
     static CGameObject*              Instantiate            (const glm::vec3& position);
@@ -43,15 +44,25 @@ public:
     static CGameObject*				 FindWithTag			(const CString& tag);
     static std::vector<CGameObject*> FindGameObjectsWithTag (const CString& tag);
 
-    template <class T> static inline T*   AllocateComponent();
-    template <class T> static inline void ReleaseComponent (T* p_component);
+public:
 
-    static void BehaviorAwake(CBehavior* p_behavior);
+    // Tools
+    static void               SetMousePosition  (const glm::vec2& position);
+    static glm::tvec3<double> GetMousePosition  ();
+    static glm::vec2          GetWindowSize     ();
+    static bool               IsKeyPressed      (int key_code);
+    static bool               IsKeyReleased     (int key_code);
 
 private:
 
-    void BehaviorUpdate  (GLFWwindow* p_window, float delta_time);
-    void GameObjectUpdate(GLFWwindow* p_window, float delta_time);
+    friend class CGameObject;
+
+    void        GameObjectUpdate(GLFWwindow* p_window, float delta_time);
+    void        BehaviorUpdate  (GLFWwindow* p_window, float delta_time);
+    static void BehaviorAwake   (CBehavior* p_behavior);
+
+    template <class T> static inline T*   AllocateComponent();
+    template <class T> static inline void ReleaseComponent (T* p_component);
 
 private:
 
