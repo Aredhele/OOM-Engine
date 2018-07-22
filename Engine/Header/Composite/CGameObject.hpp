@@ -40,6 +40,7 @@ public:
     template <class T> inline T *				AddComponent			(/* void */);
     template <class T> inline void				RemoveComponent			(/* void */);
     template <class T> inline void				RemoveComponents		(/* void */);
+        inline void             RemoveComponents        (/* void */);
 
 private:
 

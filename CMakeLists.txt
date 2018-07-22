@@ -16,8 +16,8 @@ SET(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/Bin")
 # -O3     > AGRESSIVE optimization
 # -s      > stripping ALL
 # -static > Bundles gcc runtime into the .exe
-SET(CMAKE_C_FLAGS_RELEASE          "-O3")
-SET(CMAKE_CXX_FLAGS_RELEASE        "-O3")
+SET(CMAKE_C_FLAGS_RELEASE          "-O3 -s")
+SET(CMAKE_CXX_FLAGS_RELEASE        "-O3 -s")
 SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "-static -mwindows")
 
 # Include / Lib directories

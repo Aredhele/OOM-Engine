@@ -113,7 +113,7 @@ void CEngine::GameObjectUpdate(GLFWwindow* p_window, float delta_time)
 
         // The go is being destroyed
         if(p_game_object->m_is_destroyed &&
-                p_game_object->m_destroy_delay != 0.0f)
+           p_game_object->m_destroy_delay != 0.0f)
         {
             p_game_object->m_destroy_elapsed += delta_time;
             if(p_game_object->m_destroy_elapsed >=

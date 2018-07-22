@@ -81,6 +81,8 @@ void CGameObject::__DestroyMessage()
 {
     for(IComponent* p_component : m_components)
         p_component->__DestroyMessage();
+
+    m_components.clear();
 }
 
 void CGameObject::__EnableMessage()

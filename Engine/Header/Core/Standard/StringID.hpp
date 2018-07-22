@@ -7,7 +7,6 @@
 #define OOM_ENGINE_STRING_ID_HPP__
 
 #include <cstdint>
-#include <iostream>
 
 /// \namespace  impl
 namespace impl

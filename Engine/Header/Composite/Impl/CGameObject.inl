@@ -16,8 +16,12 @@ T* CGameObject::GetComponent(void)
     // Static check
     static_assert(std::is_base_of<IComponent, T>::value);
 
-    // 1 - Component lookup
-    // 2 - Gathers the first component
+    uint32_t id = DSID(typeid(T).name());
+    for(auto i = 0; i < m_components.size(); ++i)
+    {
+        if(m_components[i]->m_component_id == id)
+           return m_components[i];
+    }
 
     return nullptr;
 }
@@ -26,12 +30,17 @@ template<class T>
 std::vector<T*> CGameObject::GetComponents(void)
 {
     // Static check
+    std::vector<T*> components;
     static_assert(std::is_base_of<IComponent, T>::value);
 
-    // 1 - Component lookup
-    // 2 - Gathers all components
+    uint32_t id = DSID(typeid(T).name());
+    for(auto i = 0; i < m_components.size(); ++i)
+    {
+        if(m_components[i]->m_component_id == id)
+            components.push_back(m_components[i]);
+    }
 
-    return std::vector<T*>();
+    return components;
 }
 
 template<class T>
@@ -56,9 +65,17 @@ void CGameObject::RemoveComponent(void)
     // Static check
     static_assert(std::is_base_of<IComponent, T>::value);
 
-    // 1 - Component lookup
-    // 2 - Removes the component
-    // 3 - Engine deallocation
+    uint32_t id = DSID(typeid(T).name());
+    for(auto i = 0; i < m_components.size(); ++i)
+    {
+        if(m_components[i]->m_component_id == id)
+        {
+            m_components[i]->__DestroyMessage();
+            m_components[i] = m_components.back();
+            m_components.pop_back();
+            break;
+        }
+    }
 }
 
 template<class T>
@@ -67,9 +84,28 @@ void CGameObject::RemoveComponents(void)
     // Static check
     static_assert(std::is_base_of<IComponent, T>::value);
 
-    // 1 - Component lookup
-    // 2 - Removes the component
-    // 3 - Engine deallocation
+    uint32_t id = DSID(typeid(T).name());
+    for(auto i = 0; i < m_components.size(); /* no increment */ )
+    {
+        if(m_components[i]->m_component_id == id)
+        {
+            m_components[i]->__DestroyMessage();
+            m_components[i] = m_components.back();
+            m_components.pop_back();
+        }
+        else
+        {
+            i++;
+        }
+    }
+}
+
+void CGameObject::RemoveComponents(void)
+{
+    for(auto* p_component : m_components)
+        p_component->__DestroyMessage();
+
+    m_components.clear();
 }
 
 }
