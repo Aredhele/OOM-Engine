@@ -60,20 +60,47 @@ void IComponent::OnDestroy()
 { /* None */ }
 
 void IComponent::__DestroyMessage()
-{
-    OnDestroy();
-}
+{ OnDestroy(); }
 
 void IComponent::__EnableMessage()
-{
-    if(m_is_enabled)
-        OnEnable();
-}
+{ if(m_is_enabled)OnEnable(); }
 
 void IComponent::__DisableMessage()
-{
-    if(m_is_enabled)
-        OnDisable();
-}
+{ if(m_is_enabled) OnDisable(); }
+
+/* static */
+CGameObject* IComponent::Instantiate()
+{ return CEngine::Instantiate(); }
+
+/* static */
+CGameObject* IComponent::Instantiate(CTransform& parent)
+{ return CEngine::Instantiate(parent); }
+
+/* static */
+CGameObject* IComponent::Instantiate(const glm::vec3& position)
+{ return CEngine::Instantiate(position); }
+
+/* static */
+CGameObject*
+IComponent::Instantiate(const glm::vec3& position, const glm::vec3& scale)
+{ return CEngine::Instantiate(position, scale); }
+
+/* static */
+CGameObject*
+IComponent::Instantiate(const glm::vec3& position, const glm::vec3& scale,
+                        const glm::vec3 &orientation)
+{ return CEngine::Instantiate(position, scale, orientation); }
+
+/* static */
+void IComponent::Destroy(CGameObject* p_game_object)
+{ CEngine::Destroy(p_game_object); }
+
+/* static */
+void IComponent::Destroy(CGameObject* p_game_object, float delay)
+{ CEngine::Destroy(p_game_object, delay); }
+
+/* static */
+void IComponent::DestroyImmediate(CGameObject* p_game_object)
+{ CEngine::DestroyImmediate(p_game_object); }
 
 }

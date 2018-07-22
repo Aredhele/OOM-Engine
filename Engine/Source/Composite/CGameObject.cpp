@@ -103,4 +103,52 @@ void CGameObject::__DisableMessage()
         p_transform->GetGameObject()->__DisableMessage();
 }
 
+/* static */
+CGameObject* CGameObject::Instantiate()
+{ return CEngine::Instantiate(); }
+
+/* static */
+CGameObject* CGameObject::Instantiate(CTransform& parent)
+{ return CEngine::Instantiate(parent); }
+
+/* static */
+CGameObject* CGameObject::Instantiate(const glm::vec3& position)
+{ return CEngine::Instantiate(position); }
+
+/* static */
+CGameObject*
+CGameObject::Instantiate(const glm::vec3& position, const glm::vec3& scale)
+{ return CEngine::Instantiate(position, scale); }
+
+/* static */
+CGameObject*
+CGameObject::Instantiate(const glm::vec3& position, const glm::vec3& scale,
+                         const glm::vec3& orientation)
+{ return CEngine::Instantiate(position, scale, orientation); }
+
+/* static */
+void CGameObject::Destroy(CGameObject* p_game_object)
+{ CEngine::Destroy(p_game_object); }
+
+/* static */
+void CGameObject::Destroy(CGameObject* p_game_object, float delay)
+{ CEngine::Destroy(p_game_object, delay); }
+
+/* static */
+void CGameObject::DestroyImmediate(CGameObject* p_game_object)
+{ CEngine::DestroyImmediate(p_game_object); }
+
+/* static */
+CGameObject* CGameObject::Find(const CString& name)
+{ return CEngine::Find(name); }
+
+/* static */
+CGameObject* CGameObject::FindWithTag(const CString& tag)
+{ return CEngine::FindWithTag(tag); }
+
+/* static */
+std::vector<CGameObject*>
+CGameObject::FindGameObjectsWithTag(const CString& tag)
+{ return CEngine::FindGameObjectsWithTag(tag); }
+
 }

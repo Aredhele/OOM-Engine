@@ -7,6 +7,8 @@
 #ifndef OOM_ENGINE_I_COMPONENT_HPP__
 #define OOM_ENGINE_I_COMPONENT_HPP__
 
+#include <vector>
+#include <GLM/glm.hpp>
 #include "Composite/CObject.hpp"
 
 namespace Oom
@@ -36,6 +38,19 @@ public:
     virtual void OnDisable ();
     virtual void OnDestroy ();
 
+    // Useful ?
+    // template <class T> inline T *				      GetComponent			(/* void */);
+    // template <class T> inline std::vector<T*>          GetComponents			(/* void */);
+
+    static CGameObject*                 Instantiate             ();
+    static CGameObject*                 Instantiate             (CTransform& parent);
+    static CGameObject*                 Instantiate             (const glm::vec3& position);
+    static CGameObject*                 Instantiate             (const glm::vec3& position, const glm::vec3& scale);
+    static CGameObject*                 Instantiate             (const glm::vec3& position, const glm::vec3& scale, const glm::vec3& orientation);
+    static void						    Destroy				    (CGameObject* p_game_object);
+    static void						    Destroy				    (CGameObject* p_game_object, float delay);
+    static void						    DestroyImmediate		(CGameObject* p_game_object);
+
 protected:
 
     // Properties
@@ -59,5 +74,7 @@ private:
 };
 
 }
+
+#include "Composite/Impl/IComponent.inl"
 
 #endif // !OOM_ENGINE_I_COMPONENT_HPP__
