@@ -253,4 +253,9 @@ void CEngine::GameObjectUpdate(GLFWwindow* p_window, float delta_time)
     return game_objects;
 }
 
+void CEngine::BehaviorAwake(CBehavior* p_behavior)
+{
+    p_behavior->Awake();
+}
+
 }

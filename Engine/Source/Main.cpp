@@ -2,11 +2,7 @@
 #include "Composite/CGameObject.hpp"
 #include "Composite/Component/CBehavior.hpp"
 
-class S_CameraController : public Oom::CBehavior
-{
-public:
-
-};
+class S_CameraController : public Oom::CBehavior {};
 
 int main()
 {
@@ -16,8 +12,6 @@ int main()
 
     auto*   p_game_object  = Oom::CEngine::Instantiate();
     auto* p_cam_controller = p_game_object->AddComponent<S_CameraController>();
-
-
 
     engine.Run();
     engine.Release();

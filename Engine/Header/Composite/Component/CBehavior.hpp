@@ -16,6 +16,9 @@ class CBehavior : public IComponent
 {
 public:
 
+    CBehavior(const CBehavior& behavior)           = delete;
+    CBehavior(      CBehavior&& behavior) noexcept = delete;
+
     virtual void Awake       ();
     virtual void Start       ();
     virtual void Update      ();
@@ -24,9 +27,14 @@ public:
             void OnDisable   () override;
     virtual void OnDrawGizmos();
 
+protected:
+
+    friend class CEngine;
+    CBehavior() = default;
+
 private:
 
-    void __Awake        ();
+    void __Awake        (CBehavior* p_behavior);
     void __Start        ();
     void __Update       ();
     void __OnDestroy    ();
@@ -36,7 +44,6 @@ private:
 
 private:
 
-    friend class CEngine;
     bool m_first_update = true;
 };
 

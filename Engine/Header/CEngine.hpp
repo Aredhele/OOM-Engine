@@ -46,6 +46,8 @@ public:
     template <class T> static inline T*   AllocateComponent();
     template <class T> static inline void ReleaseComponent (T* p_component);
 
+    static void BehaviorAwake(CBehavior* p_behavior);
+
 private:
 
     void BehaviorUpdate  (GLFWwindow* p_window, float delta_time);

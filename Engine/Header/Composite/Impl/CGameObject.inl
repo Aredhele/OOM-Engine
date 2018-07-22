@@ -40,14 +40,14 @@ T* CGameObject::AddComponent(void)
     // Static check
     static_assert(std::is_base_of<IComponent, T>::value);
 
-    T* p_component = CEngine::AllocateComponent<T>();
+    IComponent* p_component = CEngine::AllocateComponent<T>();
     p_component->m_component_id = DSID(typeid(T).name());
     p_component->mp_transform   = &m_transform;
     p_component->mp_game_object = this;
 
     m_components.push_back(p_component);
 
-    return p_component;
+    return (T*)p_component;
 }
 
 template<class T>

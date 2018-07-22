@@ -16,8 +16,10 @@ inline T* CEngine::AllocateComponent()
     static_assert(std::is_default_constructible<T>::value);
 
     // Behavior
-    T* p_behavior = new T();
-    return p_behavior;
+    T* p_component = new T();
+    BehaviorAwake(p_component);
+
+    return p_component;
 }
 
 template<>
