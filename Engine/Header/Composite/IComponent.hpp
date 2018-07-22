@@ -33,14 +33,14 @@ public:
     // Methods
     // TODO
 
-private:
+protected:
 
     // Properties
     CString      m_tag;
     CTransform*  mp_transform   = nullptr;
     CGameObject* mp_game_object = nullptr;
 
-private:
+protected:
 
     uint32_t    m_component_id  = 0;
 };

@@ -52,8 +52,10 @@ private:
     void SetWorldScale       (float x, float y, float z);
     void SetWorldPosition    (const glm::vec3& position);
     void SetWorldPosition    (float x, float y, float z);
-    void SetWorldOrientation (const glm::vec3& orientation); // local to matrix world
+    void SetWorldOrientation (const glm::vec3& orientation);
     void SetWorldOrientation (float x, float y, float z);
+
+    // TODO : Local to matrix world
 
 public:
 

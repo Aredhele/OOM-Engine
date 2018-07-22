@@ -9,6 +9,22 @@
 namespace Oom
 {
 
+CGameObject::CGameObject()
+: CGameObject(glm::vec3(0.0f), glm::vec3(1.0f), glm::vec3(0.0f))
+{
+    // None
+}
+
+CGameObject::CGameObject(const CTransform& parent)
+{
+    // None
+}
+
+CGameObject::CGameObject(const glm::vec3& position, const glm::vec3& scale, const glm::vec3& orientation)
+{
+    // None
+}
+
 const CString& CGameObject::GetTag() const
 {
     return m_tag;

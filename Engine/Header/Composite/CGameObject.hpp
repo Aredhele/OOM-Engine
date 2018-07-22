@@ -14,7 +14,7 @@
 
 // Components
 #include "Composite/IComponent.hpp"
-#include "Composite/CTransform.hpp"
+#include "Composite/Component/CTransform.hpp"
 
 namespace Oom
 {
@@ -45,7 +45,14 @@ private:
 
 private:
 
+    friend class CEngine;
     friend class CTransform;
+
+             CGameObject();
+    explicit CGameObject(const CTransform& parent);
+             CGameObject(const glm::vec3& position, const glm::vec3& scale, const glm::vec3& orientation);
+
+private:
 
     CTransform                m_transform;
     std::vector<IComponent* > m_components;

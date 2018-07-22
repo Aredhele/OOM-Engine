@@ -11,8 +11,15 @@
 #include "Glm/glm.hpp"
 #include "Glm/ext.hpp"
 
+// Keep
+#include "Composite/CGameObject.hpp"
+#include "Composite/Component/CBehavior.hpp"
+#include "Composite/Component/CTransform.hpp"
+
 namespace Oom
 {
+
+/* static */ CEngine* CEngine::sp_instance = nullptr;
 
 bool CEngine::Initialize()
 {
@@ -20,6 +27,9 @@ bool CEngine::Initialize()
 
     mp_renderer = new CRenderer();
     mp_renderer->Initialize();
+
+    // Static instance initialization
+    sp_instance = this;
 
     SLogger::LogInfo("Oom-Engine initialized.");
     return true;
@@ -31,7 +41,9 @@ void CEngine::Release()
 
     mp_renderer->Release();
     delete mp_renderer;
+
     mp_renderer = nullptr;
+    sp_instance = nullptr;
 
     SLogger::LogInfo("Oom-Engine released.");
 }
@@ -284,6 +296,86 @@ void CEngine::Run()
         mp_renderer->Render();
         glfwSwapBuffers(p_handle);
     }
+}
+
+CGameObject* CEngine::Instantiate(/* void */)
+{
+    return Instantiate(glm::vec3(0.0f), glm::vec3(1.0f), glm::vec3(0.0f));
+}
+
+CGameObject* CEngine::Instantiate(const CTransform& parent)
+{
+    auto* p_game_object = new CGameObject(parent);
+    sp_instance->m_game_objects.push_back(p_game_object);
+
+    return p_game_object;
+}
+
+CGameObject* CEngine::Instantiate(const glm::vec3& position)
+{
+    return Instantiate((position), glm::vec3(0.0f), glm::vec3(0.0f));
+}
+
+CGameObject* CEngine::Instantiate(const glm::vec3& position, const glm::vec3& scale)
+{
+    return Instantiate((position), glm::vec3(0.0f), glm::vec3(0.0f));
+}
+
+CGameObject* CEngine::Instantiate(const glm::vec3& position, const glm::vec3& scale, const glm::vec3& orientation)
+{
+    auto* p_game_object = new CGameObject(position, scale, orientation);
+    sp_instance->m_game_objects.push_back(p_game_object);
+
+    return p_game_object;
+}
+
+void CEngine::Destroy(CGameObject* p_game_object)
+{
+    // p_game_object->Destroy();
+}
+
+void CEngine::Destroy(CGameObject* p_game_object, float delay)
+{
+    // p_game_object->Destroy(delay);
+}
+
+void CEngine::DestroyImmediate(CGameObject* p_game_object)
+{
+    // p_game_object->Destroy();
+}
+
+CGameObject* CEngine::Find(const CString& name)
+{
+    for(auto* p_game_object : sp_instance->m_game_objects)
+    {
+        if(p_game_object->GetName() == name)
+            return p_game_object;
+    }
+
+    return nullptr;
+}
+
+CGameObject* CEngine::FindWithTag(const CString& tag)
+{
+    for(auto* p_game_object : sp_instance->m_game_objects)
+    {
+        if(p_game_object->GetTag() == tag)
+            return p_game_object;
+    }
+
+    return nullptr;
+}
+
+std::vector<CGameObject*> CEngine::FindGameObjectsWithTag(const CString& tag)
+{
+    std::vector<CGameObject*> game_objects;
+    for(auto* p_game_object : sp_instance->m_game_objects)
+    {
+        if(p_game_object->GetTag() == tag)
+            game_objects.push_back(p_game_object);
+    }
+
+    return game_objects;
 }
 
 }

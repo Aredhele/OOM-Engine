@@ -4,11 +4,8 @@
 /// \package    Composite
 /// \author     Vincent STEHLY--CALISTO
 
-
-
-#include "Composite/CTransform.hpp"
 #include "Composite/CGameObject.hpp"
-
+#include "Composite/Component/CTransform.hpp"
 
 namespace Oom
 {
