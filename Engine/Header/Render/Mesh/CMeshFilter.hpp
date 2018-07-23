@@ -13,7 +13,7 @@
 namespace Oom
 {
 
-class MeshFilter : public IComponent
+class CMeshFilter : public IComponent
 {
 public:
 

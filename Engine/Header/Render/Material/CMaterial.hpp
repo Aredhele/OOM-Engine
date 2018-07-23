@@ -7,7 +7,6 @@
 #ifndef OOM_ENGINE_C_MATERIAL_HPP__
 #define OOM_ENGINE_C_MATERIAL_HPP__
 
-#include "Resource/CShader.hpp"
 #include "Composite/IComponent.hpp"
 #include "Render/Shader/SShaderManager.hpp"
 

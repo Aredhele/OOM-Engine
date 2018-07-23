@@ -9,10 +9,10 @@
 namespace Oom
 {
 
-CMesh& MeshFilter::GetMesh()
+CMesh& CMeshFilter::GetMesh()
 { return m_mesh; }
 
-const CMesh& MeshFilter::GetMesh() const
+const CMesh& CMeshFilter::GetMesh() const
 { return m_mesh; }
 
 }
