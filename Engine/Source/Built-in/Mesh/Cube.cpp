@@ -6,7 +6,7 @@
 
 #include "Built-in/Mesh/Cube.hpp"
 
-const float g_vertex_buffer_data[108] =
+const float g_cube_vertex_buffer_data[108] =
 {
     -1.0f, -1.0f, -1.0f, -1.0f, -1.0f,  1.0f, -1.0f,  1.0f,  1.0f,
      1.0f,  1.0f, -1.0f, -1.0f, -1.0f, -1.0f, -1.0f,  1.0f, -1.0f,
@@ -22,7 +22,7 @@ const float g_vertex_buffer_data[108] =
      1.0f,  1.0f,  1.0f, -1.0f,  1.0f,  1.0f,  1.0f, -1.0f,  1.0f
 };
 
-const float g_color_buffer_data[108] =
+const float g_cube_color_buffer_data[108] =
 {
         0.583f,  0.771f,  0.014f, 0.609f,  0.115f,  0.436f,
         0.327f,  0.483f,  0.844f, 0.822f,  0.569f,  0.201f,
