@@ -15,7 +15,7 @@
 #include <GLM/glm.hpp>
 
 // Standard types
-#include <Core/Standard/CString.hpp>
+#include "Core/Standard/CString.hpp"
 
 // Components
 // Generic
@@ -59,8 +59,12 @@ namespace Sdk
 
     namespace GameObject
     {
+        CGameObject* CreateEmpty();
         CGameObject* CreateCamera();
         CGameObject* CreateCube();
+        CGameObject* CreateParticleSystem();
+        CGameObject* CreateDirectionalLight();
+        CGameObject* CreatePointLight();
     }
 
     namespace Debug

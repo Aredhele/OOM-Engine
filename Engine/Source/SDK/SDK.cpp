@@ -48,6 +48,10 @@ namespace Sdk
     // GameObject specific functions
     namespace GameObject
     {
+        CGameObject* CreateEmpty() {
+            return CEngine::Instantiate();
+        }
+
         CGameObject* CreateCamera() {
             CGameObject* p_camera_object = CEngine::Instantiate();
             p_camera_object->AddComponent<S_Camera>();
@@ -55,12 +59,20 @@ namespace Sdk
             return p_camera_object;
         }
 
-        // TODO
-        CGameObject* CreateCamera() {
-            CGameObject* p_camera_object = CEngine::Instantiate();
-            p_camera_object->AddComponent<S_Camera>();
+        CGameObject* CreateCube() {
+            return CEngine::Instantiate();
+        }
 
-            return p_camera_object;
+        CGameObject* CreateParticleSystem() {
+            return CEngine::Instantiate();
+        }
+
+        CGameObject* CreateDirectionalLight() {
+            return CEngine::Instantiate();
+        }
+
+        CGameObject* CreatePointLight() {
+            return CEngine::Instantiate();
         }
     }
 
