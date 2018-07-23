@@ -4,7 +4,7 @@
 /// \package    Resource
 /// \author     Vincent STEHLY--CALISTO
 
-#include "Resource/CBound.hpp"
+#include "Util/CBound.hpp"
 
 namespace Oom
 {

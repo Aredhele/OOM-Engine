@@ -7,15 +7,22 @@
 #ifndef OOM_ENGINE_C_MESH_FILTER_HPP__
 #define OOM_ENGINE_C_MESH_FILTER_HPP__
 
-#include "Composite/Component/CBehavior.hpp"
+#include "Resource/CMesh.hpp"
+#include "Composite/IComponent.hpp"
 
 namespace Oom
 {
 
-class MeshFilter : public CBehavior
+class MeshFilter : public IComponent
 {
 public:
 
+          CMesh& GetMesh();
+    const CMesh& GetMesh() const;
+
+private:
+
+    CMesh m_mesh;
 };
 
 }
