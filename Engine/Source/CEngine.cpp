@@ -49,7 +49,7 @@ void CEngine::Release()
     SLogger::LogInfo("Oom-Engine released.");
 }
 
-static const GLfloat g_vertex_buffer_data[] = {
+static const float g_vertex_buffer_data[] = {
         -1.0f,-1.0f,-1.0f, // triangle 1 : begin
         -1.0f,-1.0f, 1.0f,
         -1.0f, 1.0f, 1.0f, // triangle 1 : end
