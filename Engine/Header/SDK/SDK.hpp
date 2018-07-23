@@ -18,9 +18,18 @@
 #include <Core/Standard/CString.hpp>
 
 // Components
+// Generic
 #include "Composite/CGameObject.hpp"
 #include "Composite/Component/CBehavior.hpp"
 #include "Composite/Component/CTransform.hpp"
+
+// Graphic
+#include "Render/Mesh/CMeshFilter.hpp"
+#include "Render/Mesh/CMeshRenderer.hpp"
+#include "Render/Material/CMaterial.hpp"
+
+// Resources
+#include "Resource/CMesh.hpp"
 
 // Built-in
 #include "Built-in/Script/S_Camera.hpp"
@@ -51,6 +60,7 @@ namespace Sdk
     namespace GameObject
     {
         CGameObject* CreateCamera();
+        CGameObject* CreateCube();
     }
 
     namespace Debug

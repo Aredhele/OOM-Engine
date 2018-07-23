@@ -10,12 +10,18 @@
 #include <vector>
 #include <GLM/glm.hpp>
 #include "Util/CBound.hpp"
+#include "Render/Config.hpp"
 
 namespace Oom
 {
 
 class CMesh
 {
+public:
+
+     CMesh();
+    ~CMesh();
+
 public:
 
     bool HasUVs     ()  const;
@@ -40,12 +46,20 @@ public:
     void SetUVs         (std::vector<glm::vec2>&& uvs);
     void SetIndices     (const uint32_t* p_indices, uint32_t count);
     void SetIndices     (const std::vector<uint32_t>& indices);
-    void SetIndices      (std::vector<uint32_t>&& indices);
+    void SetIndices     (std::vector<uint32_t>&& indices);
 
 public:
 
     void ComputeBounds  ();
     void ComputeNormals ();
+
+private:
+
+    void UploadVertices ();
+    void UploadNormals  ();
+    void UploadColors   ();
+    void UploadUVs      ();
+    void UploadIndices  ();
 
 private:
 
@@ -55,6 +69,15 @@ private:
     std::vector<glm::vec3> m_colors;
     std::vector<glm::vec2> m_uvs;
     std::vector<uint32_t>  m_indices;
+
+private:
+
+    GLuint m_vao;
+    GLuint m_vbo_uv;
+    GLuint m_vbo_index;
+    GLuint m_vbo_color;
+    GLuint m_vbo_normal;
+    GLuint m_vbo_vertex;
 };
 
 }

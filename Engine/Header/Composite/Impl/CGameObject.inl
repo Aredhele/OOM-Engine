@@ -20,7 +20,7 @@ T* CGameObject::GetComponent(void)
     for(auto i = 0; i < m_components.size(); ++i)
     {
         if(m_components[i]->m_component_id == id)
-           return m_components[i];
+           return (T*)m_components[i];
     }
 
     return nullptr;

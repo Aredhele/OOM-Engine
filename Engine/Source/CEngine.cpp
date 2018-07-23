@@ -16,6 +16,12 @@
 #include "Composite/Component/CTransform.hpp"
 #include "Built-in/Script/S_Camera.hpp"
 #include "Built-in/Script/S_CameraController.hpp"
+#include "Render/Mesh/CMeshFilter.hpp"
+
+// Keep²
+#include "Render/CRenderer.hpp"
+#include "Render/Mesh/CMeshFilter.hpp"
+#include "Render/Mesh/CMeshRenderer.hpp"
 
 namespace Oom
 {
@@ -153,6 +159,8 @@ void CEngine::Run()
     S_Camera* p_camera_component            = p_camera->AddComponent<S_Camera>();
     S_CameraController* p_camera_controller = p_camera->AddComponent<S_CameraController>();
 
+    p_camera->AddComponent<CMeshFilter>();
+
     // Test
     const char* vshader =
             "#version 330 core\n"
@@ -278,6 +286,12 @@ void CEngine::BehaviorUpdate(GLFWwindow* p_window, float delta_time)
             p_behavior->__Update();
         }
     }
+}
+
+void CEngine::BehaviorRegister(CBehavior* p_behavior)
+{
+    p_behavior->Awake();
+    m_behaviors.push_back(p_behavior);
 }
 
 void CEngine::GameObjectUpdate(GLFWwindow* p_window, float delta_time)
@@ -430,12 +444,6 @@ void CEngine::GameObjectUpdate(GLFWwindow* p_window, float delta_time)
     return game_objects;
 }
 
-void CEngine::BehaviorRegister(CBehavior* p_behavior)
-{
-    p_behavior->Awake();
-    m_behaviors.push_back(p_behavior);
-}
-
 /* static */ void CEngine::SetMousePosition(const glm::vec2 &position)
 {
     glfwSetCursorPos(sp_instance->mp_renderer->GetWindow()->GetHandle(),
@@ -464,6 +472,67 @@ void CEngine::BehaviorRegister(CBehavior* p_behavior)
 /* static */ bool CEngine::IsKeyReleased(int key_code)
 {
     return (glfwGetKey(sp_instance->mp_renderer->GetWindow()->GetHandle(), key_code) == GLFW_RELEASE);
+}
+
+CTransform* CEngine::AllocateTransform()
+{
+    return new CTransform();
+}
+
+CMaterial* CEngine::AllocateMaterial()
+{
+    return new CMaterial();
+}
+
+CMeshFilter* CEngine::AllocateMeshFilter()
+{
+    return new CMeshFilter();
+}
+
+CMeshRenderer* CEngine::AllocateMeshRenderer()
+{
+    // TODO register in graphic engine
+    return new CMeshRenderer();
+}
+
+void CEngine::ReleaseBehavior(CBehavior* p_behavior)
+{
+    p_behavior->Awake();
+    m_behaviors.push_back(p_behavior);
+
+    for(auto i = 0; i < m_behaviors.size(); ++i)
+    {
+        if(m_behaviors[i] == p_behavior)
+        {
+            m_behaviors[i] = m_behaviors.back();
+            m_behaviors.pop_back();
+
+            break;
+        }
+    }
+
+    delete p_behavior;
+}
+
+void CEngine::ReleaseTransform(CTransform* p_transform)
+{
+    delete p_transform;
+}
+
+void CEngine::ReleaseMaterial(CMaterial* p_material)
+{
+    delete p_material;
+}
+
+void CEngine::ReleaseMeshFilter(CMeshFilter* p_mesh_filter)
+{
+    delete p_mesh_filter;
+}
+
+void CEngine::ReleaseMeshRenderer(CMeshRenderer* p_mesh_renderer)
+{
+    // TODO : Delete from renderer
+    delete p_mesh_renderer;
 }
 
 }

@@ -10,8 +10,7 @@
 #include <vector>
 #include <GLM/glm.hpp>
 
-#include "Render/CRenderer.hpp"
-#include "Core/Standard/CString.hpp"
+#include "Render/Config.hpp"
 
 namespace Oom
 {
@@ -20,6 +19,16 @@ namespace Oom
 class CBehavior;
 class CTransform;
 class CGameObject;
+
+// Components
+// Graphics
+class CMaterial;
+class CMeshFilter;
+class CMeshRenderer;
+
+// Engines
+class CString;
+class CRenderer;
 
 class CEngine
 {
@@ -63,6 +72,20 @@ private:
 
     template <class T> static inline T*   AllocateComponent();
     template <class T> static inline void ReleaseComponent (T* p_component);
+
+private:
+
+    // Factories
+    CTransform*    AllocateTransform    ();
+    CMaterial*     AllocateMaterial     ();
+    CMeshFilter*   AllocateMeshFilter   ();
+    CMeshRenderer* AllocateMeshRenderer ();
+
+    void ReleaseBehavior        (CBehavior*     p_behavior);
+    void ReleaseTransform       (CTransform*    p_transform);
+    void ReleaseMaterial        (CMaterial*     p_material);
+    void ReleaseMeshFilter      (CMeshFilter*   p_mesh_filter);
+    void ReleaseMeshRenderer    (CMeshRenderer* p_mesh_renderer);
 
 private:
 

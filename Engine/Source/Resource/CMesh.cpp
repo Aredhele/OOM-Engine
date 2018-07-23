@@ -9,6 +9,31 @@
 namespace Oom
 {
 
+CMesh::CMesh()
+{
+    m_vao        = 0;
+    m_vbo_uv     = 0;
+    m_vbo_index  = 0;
+    m_vbo_color  = 0;
+    m_vbo_normal = 0;
+
+    glGenVertexArrays(1, &m_vao);
+}
+
+CMesh::~CMesh()
+{
+    glBindVertexArray(m_vao);
+
+    glDeleteBuffers(1, &m_vbo_uv);
+    glDeleteBuffers(1, &m_vbo_color);
+    glDeleteBuffers(1, &m_vbo_index);
+    glDeleteBuffers(1, &m_vbo_normal);
+    glDeleteBuffers(1, &m_vbo_vertex);
+    glDeleteVertexArrays(1, &m_vao);
+
+    glBindVertexArray(0);
+}
+
 bool CMesh::HasUVs() const
 { return !m_uvs.empty();      }
 
@@ -33,18 +58,22 @@ void CMesh::SetVertices(const float* p_vertices, uint32_t count)
                                 p_vertices[i + 1],
                                 p_vertices[i + 2]);
     }
+
+    UploadVertices();
 }
 
 void CMesh::SetVertices(const std::vector<glm::vec3>& vertices)
 {
     m_vertices.clear();
     m_vertices.insert(m_vertices.end(), vertices.begin(), vertices.end());
+    UploadVertices();
 }
 
 void CMesh::SetVertices(std::vector<glm::vec3>&& vertices)
 {
     m_vertices.clear();
     m_vertices = static_cast<std::vector<glm::vec3>&&>(vertices);
+    UploadVertices();
 }
 
 void CMesh::SetNormals(const float* p_normals, uint32_t count)
@@ -139,6 +168,91 @@ void CMesh::ComputeBounds()
 void CMesh::ComputeNormals()
 {
     // TODO
+}
+
+void CMesh::UploadVertices()
+{
+    glBindVertexArray(m_vao);
+
+    if(m_vbo_vertex != 0)
+    {
+        glDeleteBuffers(1, &m_vbo_vertex);
+        m_vbo_vertex = 0;
+    }
+
+    glGenBuffers(1, &m_vbo_vertex);
+    glBindBuffer(GL_ARRAY_BUFFER, m_vbo_vertex);
+    glBufferData(GL_ARRAY_BUFFER, m_vertices.size() * sizeof(glm::vec3), m_vertices.data(), GL_STATIC_DRAW);
+
+    glBindVertexArray(0);
+}
+
+void CMesh::UploadNormals()
+{
+    glBindVertexArray(m_vao);
+
+    if(m_vbo_normal != 0)
+    {
+        glDeleteBuffers(1, &m_vbo_normal);
+        m_vbo_normal = 0;
+    }
+
+    glGenBuffers(1, &m_vbo_normal);
+    glBindBuffer(GL_ARRAY_BUFFER, m_vbo_normal);
+    glBufferData(GL_ARRAY_BUFFER, m_normals.size() * sizeof(glm::vec3), m_normals.data(), GL_STATIC_DRAW);
+
+    glBindVertexArray(0);
+}
+
+void CMesh::UploadColors()
+{
+    glBindVertexArray(m_vao);
+
+    if(m_vbo_color != 0)
+    {
+        glDeleteBuffers(1, &m_vbo_color);
+        m_vbo_color = 0;
+    }
+
+    glGenBuffers(1, &m_vbo_color);
+    glBindBuffer(GL_ARRAY_BUFFER, m_vbo_color);
+    glBufferData(GL_ARRAY_BUFFER, m_colors.size() * sizeof(glm::vec3), m_colors.data(), GL_STATIC_DRAW);
+
+    glBindVertexArray(0);
+}
+
+void CMesh::UploadUVs()
+{
+    glBindVertexArray(m_vao);
+
+    if(m_vbo_uv != 0)
+    {
+        glDeleteBuffers(1, &m_vbo_uv);
+        m_vbo_uv = 0;
+    }
+
+    glGenBuffers(1, &m_vbo_uv);
+    glBindBuffer(GL_ARRAY_BUFFER, m_vbo_uv);
+    glBufferData(GL_ARRAY_BUFFER, m_uvs.size() * sizeof(glm::vec2), m_uvs.data(), GL_STATIC_DRAW);
+
+    glBindVertexArray(0);
+}
+
+void CMesh::UploadIndices()
+{
+    glBindVertexArray(m_vao);
+
+    if(m_vbo_index != 0)
+    {
+        glDeleteBuffers(1, &m_vbo_index);
+        m_vbo_index = 0;
+    }
+
+    glGenBuffers(1, &m_vbo_index);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_vbo_index);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, m_indices.size() * sizeof(uint32_t), m_indices.data(), GL_STATIC_DRAW);
+
+    glBindVertexArray(0);
 }
 
 }

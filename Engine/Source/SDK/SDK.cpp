@@ -54,6 +54,14 @@ namespace Sdk
 
             return p_camera_object;
         }
+
+        // TODO
+        CGameObject* CreateCamera() {
+            CGameObject* p_camera_object = CEngine::Instantiate();
+            p_camera_object->AddComponent<S_Camera>();
+
+            return p_camera_object;
+        }
     }
 
     namespace Debug
