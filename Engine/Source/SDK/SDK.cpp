@@ -4,8 +4,11 @@
 /// \package    SDK
 /// \author     Vincent STEHLY--CALISTO
 
+#include <cstdarg>
 #include "SDK/SDK.hpp"
 #include "CEngine.hpp"
+
+#include "Core/Debug/SLogger.hpp"
 
 namespace Sdk
 {
@@ -13,11 +16,11 @@ namespace Sdk
     namespace Mouse
     {
         void SetMousePosition(const glm::vec2 &position) {
-            Oom::CEngine::SetMousePosition(position);
+            CEngine::SetMousePosition(position);
         }
 
         glm::tvec3<double> GetMousePosition() {
-            return Oom::CEngine::GetMousePosition();
+            return CEngine::GetMousePosition();
         }
 
     }
@@ -26,7 +29,7 @@ namespace Sdk
     namespace Window
     {
         glm::vec2 GetWindowSize() {
-            return Oom::CEngine::GetWindowSize();
+            return CEngine::GetWindowSize();
         }
     }
 
@@ -34,11 +37,11 @@ namespace Sdk
     namespace Input
     {
         bool IsKeyPressed(int key_code) {
-            return Oom::CEngine::IsKeyPressed(key_code);
+            return CEngine::IsKeyPressed(key_code);
         }
 
         bool IsKeyReleased(int key_code) {
-            return Oom::CEngine::IsKeyReleased(key_code);
+            return CEngine::IsKeyReleased(key_code);
         }
     }
 
@@ -50,6 +53,37 @@ namespace Sdk
             p_camera_object->AddComponent<S_Camera>();
 
             return p_camera_object;
+        }
+    }
+
+    namespace Debug
+    {
+        void LogUser(const char* szFormat, ...) {
+            va_list  argList;
+                va_start(argList, szFormat);
+                SLogger::LogUser(szFormat, argList);
+            va_end  (argList);
+        }
+
+        void LogInfo(const char* szFormat, ...) {
+            va_list  argList;
+                va_start(argList, szFormat);
+                SLogger::LogInfo(szFormat, argList);
+            va_end  (argList);
+        }
+
+        void LogWaring(const char* szFormat, ...) {
+            va_list  argList;
+                va_start(argList, szFormat);
+                SLogger::LogWaring(szFormat, argList);
+            va_end  (argList);
+        }
+
+        void LogError(const char* szFormat, ...) {
+            va_list  argList;
+                va_start(argList, szFormat);
+                SLogger::LogError(szFormat, argList);
+            va_end  (argList);
         }
     }
 }

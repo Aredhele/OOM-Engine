@@ -53,6 +53,13 @@ namespace Sdk
         CGameObject* CreateCamera();
     }
 
+    namespace Debug
+    {
+        void LogUser  (const char * szFormat, ...);
+        void LogInfo  (const char * szFormat, ...);
+        void LogWaring(const char * szFormat, ...);
+        void LogError (const char * szFormat, ...);
+    }
 }
 
 #endif // !OOM_ENGINE_SDK_HPP__
