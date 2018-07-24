@@ -56,7 +56,7 @@ void CRenderer::Render()
 {
     mp_window->Clear();
 
-    // Get the camera
+    // Getting the camera
     CGameObject* p_camera = CEngine::FindWithTag("MainCamera");
 
     if(!p_camera)

@@ -396,68 +396,17 @@ void CEngine::Run()
 
             // p_cube->GetTransform().Translate(glm::vec3(1.0f, 0.0f, 0.0f) * delta_time);
             // p_cube_1->GetTransform().SetLocalScale(p_cube_1->GetTransform().GetLocalScale() + glm::vec3(0.1 * delta_time, 0.1f * delta_time, 0.0f));
-            //p_cube_1->GetTransform().Rotate       (0.00f, 0.001f, 0.0f);
+            // p_cube_1->GetTransform().Rotate       (0.00f, 0.001f, 0.0f);
             // p_cube_2->GetTransform().Translate    (glm::vec3(1.0f, 0.0f, 0.0f) * sin(glfwGetTime()) * delta_time);
             // p_cube_3->GetTransform().SetLocalScale(p_cube_3->GetTransform().GetLocalScale() + glm::vec3(0.2f) * delta_time * sin(glfwGetTime()));
 
-
-            BehaviorUpdate(p_handle,   static_cast<float>(delta_time));
+            BehaviorUpdate  (p_handle, static_cast<float>(delta_time));
             GameObjectUpdate(p_handle, static_cast<float>(delta_time));
-            MVP_1 = p_camera_component->GetProjectionMatrix() * p_camera_component->GetViewMatrix() * p_cube_1->GetTransform().GetLocalToWorldMatrix();
-            MVP_2 = p_camera_component->GetProjectionMatrix() * p_camera_component->GetViewMatrix() * p_cube_2->GetTransform().GetLocalToWorldMatrix();
-            MVP_3 = p_camera_component->GetProjectionMatrix() * p_camera_component->GetViewMatrix() * p_cube_3->GetTransform().GetLocalToWorldMatrix();
 
             lag -= delta_time;
         }
 
-//        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-      /*  glUseProgram(p_material->GetShader());
-        p_material->SetMatrix("MVP", MVP_1);
-        glUseProgram(p_material->GetShader());
-
-        glBindVertexArray(p_mesh_filter->GetMesh().m_vao);
-        glEnableVertexAttribArray(0);
-        glEnableVertexAttribArray(1);
-
-        glDrawArrays(GL_TRIANGLES, 0, 36);
-        glDisableVertexAttribArray(0);
-
-        glUseProgram(p_material_2->GetShader());
-        p_material_2->SetMatrix("MVP", MVP_2);
-        glUseProgram(p_material_2->GetShader());
-
-        glBindVertexArray(p_mesh_filter_2->GetMesh().m_vao);
-        glEnableVertexAttribArray(0);
-        glEnableVertexAttribArray(1);
-
-        glDrawArrays(GL_TRIANGLES, 0, 36);
-        glDisableVertexAttribArray(0);
-
-        glUseProgram(p_material_3->GetShader());
-        p_material_3->SetMatrix("MVP", MVP_3);
-        glUseProgram(p_material_3->GetShader());
-
-        glBindVertexArray(p_mesh_filter_3->GetMesh().m_vao);
-        glEnableVertexAttribArray(0);
-        glEnableVertexAttribArray(1);
-
-        glDrawArrays(GL_TRIANGLES, 0, 36);
-        glDisableVertexAttribArray(0);
-
-
-
-       /* glUseProgram(cg_program);
-        glUniformMatrix4fv(MatrixID, 1, GL_FALSE, &MVP[0][0]);
-
-        glBindVertexArray(VertexArrayID);
-        glEnableVertexAttribArray(0);
-        glEnableVertexAttribArray(1);
-        glDrawArrays(GL_TRIANGLES, 0, 12*3);
-        glDisableVertexAttribArray(0);*/
-
         mp_renderer->Render();
-        //glfwSwapBuffers(p_handle);
     }
 }
 

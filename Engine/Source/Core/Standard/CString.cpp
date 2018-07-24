@@ -397,12 +397,12 @@ bool operator== (const CString& lhs, const CString& rhs)
 
 bool operator== (const char* lhs, const CString& rhs)
 {
-    return (strlen(lhs) == rhs.Size()) ? (bool)memcmp(lhs, rhs.Data(), rhs.Size()) : false;
+    return (strlen(lhs) == rhs.Size()) ? (memcmp(lhs, rhs.Data(), rhs.Size())  == 0) : false;
 }
 
 bool operator== (const CString& lhs, const char* rhs)
 {
-    return (lhs.Size() == strlen(rhs)) ? (bool)memcmp(lhs.Data(), rhs, lhs.Size()) : false;
+    return (lhs.Size() == strlen(rhs)) ? (memcmp(lhs.Data(), rhs, lhs.Size()) == 0) : false;
 }
 
 bool operator!= (const CString& lhs, const CString& rhs)
