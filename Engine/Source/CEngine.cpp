@@ -12,8 +12,6 @@
 #include "Resource/CMesh.hpp"
 #include "QU3E/q3.h"
 
-
-
 // Keep
 #include "Composite/CGameObject.hpp"
 #include "Composite/Component/CBehavior.hpp"
@@ -29,6 +27,7 @@
 #include "Render/Renderer/CMeshRenderer.hpp"
 #include "Render/Shader/SShaderManager.hpp"
 #include "Render/Material/CMaterial.hpp"
+#include "Physics/CPhysicWorld.hpp"
 
 namespace Oom
 {
@@ -41,6 +40,10 @@ bool CEngine::Initialize()
 
     mp_renderer = new CRenderer();
     mp_renderer->Initialize();
+
+    // TODO : Delta time customisable ?
+    mp_physic_world = new CPhysicWorld();
+    mp_physic_world->Initialize(1.0f / 60.0f);
 
     // Static instance initialization
     sp_instance = this;

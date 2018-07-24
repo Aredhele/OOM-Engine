@@ -19,21 +19,20 @@ class IRenderer;
 class CRenderer
 {
 public:
+    CWindow* GetWindow ();
+
+private:
+    friend class CEngine;
+    friend class IRenderer;
 
     bool     Initialize();
     void     Release   ();
     void     Render    ();
-    CWindow* GetWindow ();
-
-private:
-
-    friend class IRenderer;
 
     static void RegisterRenderer   (IRenderer* p_renderer);
     static void UnregisterRenderer (IRenderer* p_renderer);
 
 private:
-
     CWindow*                 mp_window = nullptr;
     std::vector<IRenderer*>  m_renderers;
 

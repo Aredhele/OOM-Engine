@@ -37,7 +37,7 @@ std::vector<T*> CGameObject::GetComponents(void)
     for(auto i = 0; i < m_components.size(); ++i)
     {
         if(m_components[i]->m_component_id == id)
-            components.push_back(m_components[i]);
+            components.push_back((T*)m_components[i]);
     }
 
     return components;
@@ -50,7 +50,6 @@ T* CGameObject::AddComponent(void)
     static_assert(std::is_base_of<IComponent, T>::value);
 
     IComponent* p_component = new T();
-    p_component->_Register();
 
     p_component->m_component_id               = DSID(typeid(T).name());
     p_component->mp_transform                 = &m_transform;
@@ -58,6 +57,7 @@ T* CGameObject::AddComponent(void)
     p_component->mp_transform->mp_game_object = this;
     p_component->mp_transform->mp_parent      = m_transform.mp_parent;
 
+    p_component->_Register();
     m_components.push_back(p_component);
 
     return (T*)p_component;
