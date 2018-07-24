@@ -75,4 +75,14 @@ glm::vec2 CWindow::GetWindowSize()
     return glm::vec2(x, y);
 }
 
+void CWindow::Clear()
+{
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+}
+
+void CWindow::Display()
+{
+    glfwSwapBuffers(mp_window);
+}
+
 }

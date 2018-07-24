@@ -25,8 +25,8 @@
 
 // Graphic
 #include "Render/Mesh/CMeshFilter.hpp"
-#include "Render/Mesh/CMeshRenderer.hpp"
 #include "Render/Material/CMaterial.hpp"
+#include "Render/Renderer/CMeshRenderer.hpp"
 
 // Resources
 #include "Resource/CMesh.hpp"

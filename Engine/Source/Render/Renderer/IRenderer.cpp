@@ -5,7 +5,11 @@
 /// \author     Vincent STEHLY--CALISTO
 
 #include "Composite/CGameObject.hpp"
+
+#include "Render/CRenderer.hpp"
+#include "Render/Mesh/CMeshFilter.hpp"
 #include "Render/Renderer/IRenderer.hpp"
+#include "Render/Material/CMaterial.hpp"
 
 namespace Oom
 {
@@ -28,6 +32,16 @@ CMaterial* IRenderer::GetAttachedMaterial()
 void IRenderer::SetVisible(bool visible)
 {
     m_is_visible = true;
+}
+
+/* virtual */ void IRenderer::_Register()
+{
+    CRenderer::RegisterRenderer(this);
+}
+
+/* virtual */ void IRenderer::_Destroy()
+{
+    CRenderer::UnregisterRenderer(this);
 }
 
 }

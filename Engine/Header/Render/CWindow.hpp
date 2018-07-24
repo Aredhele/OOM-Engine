@@ -22,6 +22,9 @@ public:
     GLFWwindow* GetHandle    ();
     glm::vec2   GetWindowSize();
 
+    void        Clear       ();
+    void        Display     ();
+
 private:
 
     GLFWwindow* mp_window = nullptr;

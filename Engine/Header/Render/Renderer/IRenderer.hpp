@@ -32,6 +32,11 @@ public:
 
     void         SetVisible             (bool visible);
 
+protected:
+
+    void _Register() final;
+    void _Destroy () final;
+
 private:
 
     bool m_is_visible;

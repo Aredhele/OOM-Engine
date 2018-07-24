@@ -7,13 +7,14 @@
 #ifndef OOM_ENGINE_C_RENDERER_HPP__
 #define OOM_ENGINE_C_RENDERER_HPP__
 
-#include "Render/CWindow.hpp"
+#include <vector>
 
 namespace Oom
 {
 
 // Forward declaration
-// class CMeshRenderer;
+class CWindow;
+class IRenderer;
 
 class CRenderer
 {
@@ -26,7 +27,15 @@ public:
 
 private:
 
-    CWindow* mp_window = nullptr;
+    friend class IRenderer;
+
+    static void RegisterRenderer   (IRenderer* p_renderer);
+    static void UnregisterRenderer (IRenderer* p_renderer);
+
+private:
+
+    CWindow*                 mp_window = nullptr;
+    std::vector<IRenderer*>  m_renderers;
 
 private:
 

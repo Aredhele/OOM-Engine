@@ -24,11 +24,13 @@ public:
 
 public:
 
-    bool HasUVs     ()  const;
-    bool HasColor   ()  const;
-    bool HasNormals ()  const;
-    bool HasVertices()  const;
-    bool HasIndices ()  const;
+    bool        HasUVs           ()  const;
+    bool        HasColor         ()  const;
+    bool        HasNormals       ()  const;
+    bool        HasVertices      ()  const;
+    bool        HasIndices       ()  const;
+    GLuint      GetVAO           ()  const;
+    uint32_t    GetVerticesCount ()  const;
 
 public:
 

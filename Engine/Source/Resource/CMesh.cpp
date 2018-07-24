@@ -49,6 +49,12 @@ bool CMesh::HasVertices() const
 bool CMesh::HasIndices() const
 { return !m_indices.empty();  }
 
+GLuint CMesh::GetVAO() const
+{ return m_vao; }
+
+uint32_t CMesh::GetVerticesCount() const
+{ return static_cast<uint32_t>(m_vertices.size()); }
+
 void CMesh::SetVertices(const float* p_vertices, uint32_t count)
 {
     m_vertices.clear();

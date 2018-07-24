@@ -392,7 +392,7 @@ CString operator+ (char lhs, const CString& rhs)
 
 bool operator== (const CString& lhs, const CString& rhs)
 {
-    return (lhs.Size() == rhs.Size()) ? (bool)memcmp(lhs.Data(), rhs.Data(), lhs.Size()) : false;
+    return (lhs.Size() == rhs.Size()) ? (memcmp(lhs.Data(), rhs.Data(), lhs.Size()) == 0) : false;
 }
 
 bool operator== (const char* lhs, const CString& rhs)

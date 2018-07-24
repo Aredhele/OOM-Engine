@@ -17,11 +17,6 @@ class CMeshRenderer : public IRenderer
 public:
     void Draw(const glm::mat4 &projection_matrix,
               const glm::mat4 &view_matrix       ) override;
-
-protected:
-
-    void _Register() override;
-    void _Destroy () override;
 };
 
 }

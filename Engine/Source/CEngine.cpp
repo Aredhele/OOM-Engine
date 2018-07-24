@@ -23,9 +23,12 @@
 #include "Render/Mesh/CMeshFilter.hpp"
 
 // Keep²
+#include "Render/CWindow.hpp"
 #include "Render/CRenderer.hpp"
 #include "Render/Mesh/CMeshFilter.hpp"
-#include "Render/Mesh/CMeshRenderer.hpp"
+#include "Render/Renderer/CMeshRenderer.hpp"
+#include "Render/Shader/SShaderManager.hpp"
+#include "Render/Material/CMaterial.hpp"
 
 namespace Oom
 {
@@ -187,6 +190,7 @@ void CEngine::Run()
     CGameObject* p_camera                   = Instantiate();
     S_Camera* p_camera_component            = p_camera->AddComponent<S_Camera>();
     S_CameraController* p_camera_controller = p_camera->AddComponent<S_CameraController>();
+    p_camera->SetTag("MainCamera");
 
     // Test
     const char* vshader =
@@ -206,7 +210,7 @@ void CEngine::Run()
             "void main(){"
             "color = fragmentColor;}";
 
-    SShaderManager::RegisterShader(EShaderType::Test, "Default", vshader, fshader);
+    SShaderManager::RegisterShader(SShaderManager::EShaderType::Test, "Default", vshader, fshader);
 
 
 
@@ -225,7 +229,7 @@ void CEngine::Run()
     auto* p_mesh_renderer = p_cube_1->AddComponent<CMeshRenderer>();
 
     p_material->SetMatrix("MVP", MVP_1);
-    p_material->SetShader(EShaderType::Test);
+    p_material->SetShader(SShaderManager::EShaderType::Test);
     p_mesh_filter->GetMesh().SetVertices(g_vertex_buffer_data, 108);
     p_mesh_filter->GetMesh().SetColors  (g_color_buffer_data,  108);
 
@@ -406,9 +410,9 @@ void CEngine::Run()
             lag -= delta_time;
         }
 
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+//        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        glUseProgram(p_material->GetShader());
+      /*  glUseProgram(p_material->GetShader());
         p_material->SetMatrix("MVP", MVP_1);
         glUseProgram(p_material->GetShader());
 
@@ -453,7 +457,7 @@ void CEngine::Run()
         glDisableVertexAttribArray(0);*/
 
         mp_renderer->Render();
-        glfwSwapBuffers(p_handle);
+        //glfwSwapBuffers(p_handle);
     }
 }
 
