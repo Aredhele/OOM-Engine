@@ -276,4 +276,16 @@ glm::mat4 CTransform::GetLocalToWorldMatrix() const
     return model;
 }
 
+/*
+glm::vec3 direction = m_forward;
+direction -= m_position;
+direction  = glm::normalize(direction);
+
+m_up    = glm::vec3     (0.0f, 0.0f, 1.0f);
+m_right = glm::cross    (direction, m_up);
+m_right = glm::normalize(m_right);
+m_up    = glm::cross    (m_right, direction);
+m_up    = glm::normalize(m_up);
+ */
+
 }

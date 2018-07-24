@@ -10,6 +10,10 @@
 #include "Glm/glm.hpp"
 #include "Glm/ext.hpp"
 #include "Resource/CMesh.hpp"
+#include "QU3E/q3.h"
+
+
+
 // Keep
 #include "Composite/CGameObject.hpp"
 #include "Composite/Component/CBehavior.hpp"
@@ -135,6 +139,34 @@ static const GLfloat g_color_buffer_data[] = {
 
 #include "Built-in/Script/S_Camera.hpp"
 #include "Built-in/Script/S_CameraController.hpp"
+#include <GLM/gtx/quaternion.hpp>
+glm::vec3 MatrixToEulerAngles(const glm::mat3& matrix)
+{
+    glm::vec3 ret(0.0f);
+    glm::mat4 m(matrix);
+    glm::extractEulerAngleXYX(m, ret.x, ret.z, ret.y);
+    return ret;
+
+    /*float sy = static_cast<float>(sqrt(matrix[0][0] * matrix[0][0] + matrix[1][0] * matrix[1][0]));
+
+    bool singular = sy < 1e-6; // If
+
+    float x, y, z;
+    if (!singular)
+    {
+        x = static_cast<float>(atan2(matrix[2][1], matrix[2][2]));
+        y = static_cast<float>(atan2(-matrix[2][0] , sy));
+        z = static_cast<float>(atan2(matrix[1][0] , matrix[0][0]));
+    }
+    else
+    {
+        x = static_cast<float>(atan2(-matrix[1][2] , matrix[1][1]));
+        y = static_cast<float>(atan2(-matrix[2][0] , sy));
+        z = 0;
+    }
+
+    return glm::vec3(x, z, y);*/
+}
 
 void CEngine::Run()
 {
@@ -180,7 +212,7 @@ void CEngine::Run()
 
     GLuint cg_program = Oom::SShaderCompiler::CreateProgram("Default", vshader, fshader);
 
-    p_camera->GetTransform().SetWorldPosition(5.0f, 2.0f, 6.0f);
+    p_camera->GetTransform().SetWorldPosition(8.0f, 4.0f, 10.0f);
     glm::mat4 MVP_1 = p_camera_component->GetProjectionMatrix() * p_camera_component->GetViewMatrix() * glm::mat4(1.0f);
     glm::mat4 MVP_2 = p_camera_component->GetProjectionMatrix() * p_camera_component->GetViewMatrix() * glm::mat4(1.0f);
     glm::mat4 MVP_3 = p_camera_component->GetProjectionMatrix() * p_camera_component->GetViewMatrix() * glm::mat4(1.0f);
@@ -220,15 +252,57 @@ void CEngine::Run()
     p_mesh_filter_3->GetMesh().SetVertices(g_vertex_buffer_data, 108);
     p_mesh_filter_3->GetMesh().SetColors  (g_color_buffer_data,  108);
 
-    p_cube_2->GetTransform().SetLocalPosition( 2.0f, 2.0f, 0.0f);
-    p_cube_3->GetTransform().SetLocalPosition(-3.0f, 3.0f, 1.0f);
+    p_cube_1->GetTransform().SetLocalPosition(glm::vec3(.0f));
+    p_cube_1->GetTransform().SetLocalScale(glm::vec3(7.0f, 7.0f, 0.1f));
+    p_cube_2->GetTransform().SetLocalPosition(glm::vec3(0.0f, 0.0f, 0.5f));
+    p_cube_3->GetTransform().SetLocalPosition(glm::vec3(0.6f, 0.4f, 7.0f));
 
-    p_cube_3->GetTransform().SetParent(&p_cube_2->GetTransform());
+    q3Scene scene(1.0f / 60.0f);
+    q3BodyDef body_def_1;
+    q3BodyDef body_def_2;
+    q3BodyDef body_def_3;
 
+    body_def_2.position.y = 0.5f;
+    body_def_3.position.x = 0.6f;
+    body_def_3.position.y = 7.0f;
+    body_def_3.position.z = 0.4f;
 
+    body_def_1.bodyType = eStaticBody;
+    body_def_2.bodyType = eStaticBody;
+    body_def_3.bodyType = eDynamicBody;
+    q3Body* body_1 = scene.CreateBody(body_def_1);
+    q3Body* body_2 = scene.CreateBody(body_def_2);
+    q3Body* body_3 = scene.CreateBody(body_def_3);
 
+    q3BoxDef box_def_1;
+    q3BoxDef box_def_2;
+    q3BoxDef box_def_3;
+    box_def_1.SetRestitution(0);
+    box_def_2.SetRestitution(0);
+    box_def_3.SetRestitution(0);
 
+    // 1
+    q3Transform localSpace;
+    q3Identity (localSpace);
+    box_def_1.Set(localSpace, q3Vec3(7.0f, 0.0f, 7.0f));
 
+    // 2
+    q3Identity (localSpace);
+    // localSpace.position.x = p_cube_2->GetTransform().GetLocalPosition().x;
+    // localSpace.position.y = p_cube_2->GetTransform().GetLocalPosition().z;
+    // localSpace.position.z = p_cube_2->GetTransform().GetLocalPosition().y;
+    box_def_2.Set(localSpace, q3Vec3(1.0f, 1.0f, 1.0f));
+
+    // 3
+    q3Identity (localSpace);
+    // localSpace.position.x = p_cube_3->GetTransform().GetLocalPosition().x;
+    // localSpace.position.y = p_cube_3->GetTransform().GetLocalPosition().z;
+    // localSpace.position.z = p_cube_3->GetTransform().GetLocalPosition().y;
+    box_def_3.Set(localSpace, q3Vec3(1.0f, 1.0f, 1.0f));
+
+    body_1->AddBox(box_def_1);
+    body_2->AddBox(box_def_2);
+    body_3->AddBox(box_def_3);
 
 
 
@@ -272,6 +346,13 @@ void CEngine::Run()
     );
 
 
+
+
+
+
+
+
+
     glfwSetInputMode(p_handle, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
     while (glfwWindowShouldClose(p_handle) == 0 &&
            glfwGetKey(p_handle, GLFW_KEY_ESCAPE) != GLFW_PRESS)
@@ -289,14 +370,31 @@ void CEngine::Run()
         // Processing events
         glfwPollEvents();
 
+
+
         // Fixed granularity
         while(lag >= delta_time)
         {
-           // p_cube->GetTransform().Translate(glm::vec3(1.0f, 0.0f, 0.0f) * delta_time);
-            //p_cube_1->GetTransform().SetLocalScale(p_cube_1->GetTransform().GetLocalScale() + glm::vec3(0.1 * delta_time, 0.1f * delta_time, 0.0f));
-            p_cube_1->GetTransform().Rotate       (0.00f, 0.001f, 0.0f);
-            p_cube_2->GetTransform().Translate    (glm::vec3(1.0f, 0.0f, 0.0f) * sin(glfwGetTime()) * delta_time);
-            p_cube_3->GetTransform().SetLocalScale(p_cube_3->GetTransform().GetLocalScale() + glm::vec3(0.2f) * delta_time * sin(glfwGetTime()));
+            scene.Step();
+
+            //p_camera->GetTransform().LookAt(p_cube_1->GetTransform());
+
+            p_cube_1->GetTransform().SetLocalPosition(body_1->GetTransform().position.x, body_1->GetTransform().position.z, body_1->GetTransform().position.y);
+            p_cube_2->GetTransform().SetLocalPosition(body_2->GetTransform().position.x, body_2->GetTransform().position.z, body_2->GetTransform().position.y);
+            p_cube_3->GetTransform().SetLocalPosition(body_3->GetTransform().position.x, body_3->GetTransform().position.z, body_3->GetTransform().position.y);
+
+            q3Mat3 rotation = body_3->GetTransform().rotation;
+            glm::mat3 mat(rotation[0][0], rotation[0][1], rotation[0][2],
+                          rotation[1][0], rotation[1][1], rotation[1][2],
+                          rotation[2][0], rotation[2][1], rotation[2][2]);
+
+            // p_cube_3->GetTransform().SetTest(glm::mat4(mat));
+
+            // p_cube->GetTransform().Translate(glm::vec3(1.0f, 0.0f, 0.0f) * delta_time);
+            // p_cube_1->GetTransform().SetLocalScale(p_cube_1->GetTransform().GetLocalScale() + glm::vec3(0.1 * delta_time, 0.1f * delta_time, 0.0f));
+            //p_cube_1->GetTransform().Rotate       (0.00f, 0.001f, 0.0f);
+            // p_cube_2->GetTransform().Translate    (glm::vec3(1.0f, 0.0f, 0.0f) * sin(glfwGetTime()) * delta_time);
+            // p_cube_3->GetTransform().SetLocalScale(p_cube_3->GetTransform().GetLocalScale() + glm::vec3(0.2f) * delta_time * sin(glfwGetTime()));
 
 
             BehaviorUpdate(p_handle,   static_cast<float>(delta_time));

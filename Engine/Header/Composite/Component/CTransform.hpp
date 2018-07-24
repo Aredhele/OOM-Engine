@@ -58,7 +58,6 @@ public:
     void SetWorldOrientation (const glm::vec3& orientation);
     void SetWorldOrientation (float x, float y, float z);
 
-
 public:
 
     // Methods

@@ -12,6 +12,9 @@
 namespace Oom
 {
 
+// Forward declaration
+// class CMeshRenderer;
+
 class CRenderer
 {
 public:
