@@ -4,6 +4,7 @@
 /// \package    Composite
 /// \author     Vincent STEHLY--CALISTO
 
+
 #include "Composite/CGameObject.hpp"
 #include "Composite/Component/CTransform.hpp"
 
@@ -98,7 +99,7 @@ void CTransform::SetLocalScale(float x, float y, float z)
     SetLocalScale(glm::vec3(x, y, z));
 }
 
-void CTransform::SetLocalScale(const glm::vec3 &scale)
+void CTransform::SetLocalScale(const glm::vec3& scale)
 {
     m_scale = scale;
 }
@@ -193,6 +194,7 @@ void CTransform::Rotate(float x, float y, float z)
 void CTransform::Rotate(const glm::vec3& point)
 {
     m_orientation += point;
+    m_test += point;
     UpdateVectors();
 }
 
@@ -252,6 +254,26 @@ void CTransform::UpdateVectors()
 std::vector<CTransform*>& CTransform::GetChildren()
 {
     return m_children;
+}
+
+/* virtual */ void CTransform::_Register()
+{
+    // None
+}
+
+/* virtual */ void CTransform::_Destroy()
+{
+    // None
+}
+
+glm::mat4 CTransform::GetLocalToWorldMatrix() const
+{
+    glm::mat4 model(1.0f);
+    model  = glm::orientate4(m_test);
+    model *= glm::translate (model, GetWorldPosition());
+    model *= glm::scale     (model, m_scale);
+
+    return model;
 }
 
 }

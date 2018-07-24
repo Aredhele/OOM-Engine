@@ -49,7 +49,9 @@ T* CGameObject::AddComponent(void)
     // Static check
     static_assert(std::is_base_of<IComponent, T>::value);
 
-    IComponent* p_component = CEngine::AllocateComponent<T>();
+    IComponent* p_component = new T();
+    p_component->_Register();
+
     p_component->m_component_id               = DSID(typeid(T).name());
     p_component->mp_transform                 = &m_transform;
     p_component->mp_game_object               = this;
@@ -72,9 +74,14 @@ void CGameObject::RemoveComponent(void)
     {
         if(m_components[i]->m_component_id == id)
         {
+            IComponent* p_component =  m_components[i];
+
             m_components[i]->__DestroyMessage();
             m_components[i] = m_components.back();
             m_components.pop_back();
+
+            p_component->_Destroy();
+            delete p_component;
             break;
         }
     }
@@ -91,9 +98,14 @@ void CGameObject::RemoveComponents(void)
     {
         if(m_components[i]->m_component_id == id)
         {
+            T* p_component =  m_components[i];
+
             m_components[i]->__DestroyMessage();
             m_components[i] = m_components.back();
             m_components.pop_back();
+
+            p_component->_Destroy();
+            delete p_component;
         }
         else
         {
@@ -105,7 +117,12 @@ void CGameObject::RemoveComponents(void)
 void CGameObject::RemoveComponents(void)
 {
     for(auto* p_component : m_components)
+    {
         p_component->__DestroyMessage();
+        p_component->_Destroy();
+
+        delete p_component;
+    }
 
     m_components.clear();
 }

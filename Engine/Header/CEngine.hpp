@@ -9,6 +9,7 @@
 
 #include <vector>
 #include <GLM/glm.hpp>
+#include <Composite/Component/CBehavior.hpp>
 
 #include "Render/Config.hpp"
 
@@ -16,15 +17,10 @@ namespace Oom
 {
 
 // Forward declaration
+// Basic   components
 class CBehavior;
 class CTransform;
 class CGameObject;
-
-// Components
-// Graphics
-class CMaterial;
-class CMeshFilter;
-class CMeshRenderer;
 
 // Engines
 class CString;
@@ -64,28 +60,14 @@ public:
 
 private:
 
+    friend class CBehavior;
     friend class CGameObject;
 
     void        GameObjectUpdate(GLFWwindow* p_window, float delta_time);
     void        BehaviorUpdate  (GLFWwindow* p_window, float delta_time);
-    void        BehaviorRegister(CBehavior* p_behavior);
 
-    template <class T> static inline T*   AllocateComponent();
-    template <class T> static inline void ReleaseComponent (T* p_component);
-
-private:
-
-    // Factories
-    CTransform*    AllocateTransform    ();
-    CMaterial*     AllocateMaterial     ();
-    CMeshFilter*   AllocateMeshFilter   ();
-    CMeshRenderer* AllocateMeshRenderer ();
-
-    void ReleaseBehavior        (CBehavior*     p_behavior);
-    void ReleaseTransform       (CTransform*    p_transform);
-    void ReleaseMaterial        (CMaterial*     p_material);
-    void ReleaseMeshFilter      (CMeshFilter*   p_mesh_filter);
-    void ReleaseMeshRenderer    (CMeshRenderer* p_mesh_renderer);
+    static void RegisterBehavior   (CBehavior* p_behavior);
+    static void UnregisterBehavior (CBehavior* p_behavior);
 
 private:
 
@@ -99,7 +81,5 @@ private:
 };
 
 }
-
-#include "CEngine.inl"
 
 #endif // !OOM_ENGINE_C_ENGINE_HPP__

@@ -107,4 +107,14 @@ void CMaterial::SetMatrix(const char* p_name, const glm::mat4 &matrix4)
     glUseProgram(0);
 }
 
+/* virtual */ void CMaterial::_Register()
+{
+    // None
+}
+
+/* virtual */ void CMaterial::_Destroy()
+{
+    // None
+}
+
 }

@@ -13,7 +13,9 @@
 #include "Composite/IComponent.hpp"
 
 #include <GLM/glm.hpp>
+#include <GLM/ext.hpp>
 #include <GLM/gtx/rotate_vector.hpp>
+#include <GLM/gtc/matrix_transform.hpp>
 
 namespace Oom
 {
@@ -27,19 +29,20 @@ public:
 public:
 
     // Properties
-    uint32_t            GetChildCount       () const;
-    uint32_t            GetHierarchyCount   () const;
-    CTransform*         GetParent           ();
-    CTransform*         GetRoot             ();
-    const glm::vec3&    GetUp               () const;
-    const glm::vec3&    GetRight            () const;
-    const glm::vec3&    GetForward          () const;
-    const glm::vec3&    GetLocalPosition    () const;
-    const glm::vec3&    GetLocalScale       () const;
-    const glm::vec3&    GetLocalOrientation () const;
-          glm::vec3     GetWorldPosition    () const;
-          glm::vec3     GetWorldScale       () const;
-          glm::vec3     GetWorldOrientation () const;
+    uint32_t            GetChildCount         () const;
+    uint32_t            GetHierarchyCount     () const;
+    CTransform*         GetParent             ();
+    CTransform*         GetRoot               ();
+    const glm::vec3&    GetUp                 () const;
+    const glm::vec3&    GetRight              () const;
+    const glm::vec3&    GetForward            () const;
+    const glm::vec3&    GetLocalPosition      () const;
+    const glm::vec3&    GetLocalScale         () const;
+    const glm::vec3&    GetLocalOrientation   () const;
+          glm::vec3     GetWorldPosition      () const;
+          glm::vec3     GetWorldScale         () const;
+          glm::vec3     GetWorldOrientation   () const;
+          glm::mat4     GetLocalToWorldMatrix () const;
 
     void SetLocalScale       (const glm::vec3& scale);
     void SetLocalScale       (float x, float y, float z);
@@ -55,7 +58,6 @@ public:
     void SetWorldOrientation (const glm::vec3& orientation);
     void SetWorldOrientation (float x, float y, float z);
 
-    // TODO : Local to matrix world
 
 public:
 
@@ -73,6 +75,11 @@ public:
 
     std::vector<CTransform*>& GetChildren();
 
+protected:
+
+    void _Register() final;
+    void _Destroy () final;
+
 private:
 
     void                UpdateVectors   ();
@@ -82,6 +89,7 @@ private:
     glm::vec3 m_position;
     glm::vec3 m_scale;
     glm::vec3 m_orientation;
+    glm::vec3 m_test;
 
     glm::vec3 m_up;
     glm::vec3 m_right;

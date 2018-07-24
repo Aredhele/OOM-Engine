@@ -7,4 +7,6 @@ int main()
     engine.Initialize();
     engine.Run();
     engine.Release();
+
+     return 0;
 }

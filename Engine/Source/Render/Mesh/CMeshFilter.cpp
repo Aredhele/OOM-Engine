@@ -15,5 +15,11 @@ CMesh& CMeshFilter::GetMesh()
 const CMesh& CMeshFilter::GetMesh() const
 { return m_mesh; }
 
+void CMeshFilter::_Register()
+{ /* None */ }
+
+void CMeshFilter::_Destroy()
+{ /* None */ }
+
 }
 

@@ -16,9 +16,12 @@ namespace Oom
 class CMeshFilter : public IComponent
 {
 public:
-
           CMesh& GetMesh();
     const CMesh& GetMesh() const;
+
+protected:
+    void _Register() override;
+    void _Destroy() override;
 
 private:
 

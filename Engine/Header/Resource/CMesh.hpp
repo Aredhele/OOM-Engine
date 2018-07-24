@@ -72,6 +72,9 @@ private:
 
 private:
 
+    // TMP
+    friend class CEngine;
+
     GLuint m_vao;
     GLuint m_vbo_uv;
     GLuint m_vbo_index;

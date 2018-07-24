@@ -23,6 +23,13 @@ public:
     GLuint              GetShader       () const;
     EShaderType         GetShaderType   () const;
     const glm::vec3&    GetColor        () const;
+
+protected:
+    void _Register() override;
+
+    void _Destroy() override;
+
+public:
     bool                HasProperty     (const char* p_name) const;
 
 public:

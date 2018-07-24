@@ -9,7 +9,7 @@
 #include "Render/Shader/SShaderCompiler.hpp"
 #include "Glm/glm.hpp"
 #include "Glm/ext.hpp"
-
+#include "Resource/CMesh.hpp"
 // Keep
 #include "Composite/CGameObject.hpp"
 #include "Composite/Component/CBehavior.hpp"
@@ -145,9 +145,6 @@ void CEngine::Run()
     double previous   = glfwGetTime();
     double delta_time = 1.0 / 60.0;
 
-
-
-
     glEnable   (GL_DEPTH_TEST);
     glDepthFunc(GL_LESS);
     glEnable   (GL_CULL_FACE);
@@ -159,13 +156,11 @@ void CEngine::Run()
     S_Camera* p_camera_component            = p_camera->AddComponent<S_Camera>();
     S_CameraController* p_camera_controller = p_camera->AddComponent<S_CameraController>();
 
-    p_camera->AddComponent<CMeshFilter>();
-
     // Test
     const char* vshader =
             "#version 330 core\n"
             "layout(location = 0) in vec3 model;\n"
-            "layout(location = 1) in vec3 vertexColor;\n"
+            "layout(location = 1) in vec3 vertexColor;\n" // location = 1
             "out vec3 fragmentColor;\n"
             "uniform mat4 MVP;\n"
             "void main(){"
@@ -179,13 +174,66 @@ void CEngine::Run()
             "void main(){"
             "color = fragmentColor;}";
 
+    SShaderManager::RegisterShader(EShaderType::Test, "Default", vshader, fshader);
+
+
+
     GLuint cg_program = Oom::SShaderCompiler::CreateProgram("Default", vshader, fshader);
 
     p_camera->GetTransform().SetWorldPosition(5.0f, 2.0f, 6.0f);
-    glm::mat4 MVP = p_camera_component->GetProjectionMatrix() * p_camera_component->GetViewMatrix() * glm::mat4(1.0f);
+    glm::mat4 MVP_1 = p_camera_component->GetProjectionMatrix() * p_camera_component->GetViewMatrix() * glm::mat4(1.0f);
+    glm::mat4 MVP_2 = p_camera_component->GetProjectionMatrix() * p_camera_component->GetViewMatrix() * glm::mat4(1.0f);
+    glm::mat4 MVP_3 = p_camera_component->GetProjectionMatrix() * p_camera_component->GetViewMatrix() * glm::mat4(1.0f);
+
+
+    CGameObject* p_cube_1 = Instantiate();
+
+    auto* p_material      = p_cube_1->AddComponent<CMaterial>();
+    auto* p_mesh_filter   = p_cube_1->AddComponent<CMeshFilter>();
+    auto* p_mesh_renderer = p_cube_1->AddComponent<CMeshRenderer>();
+
+    p_material->SetMatrix("MVP", MVP_1);
+    p_material->SetShader(EShaderType::Test);
+    p_mesh_filter->GetMesh().SetVertices(g_vertex_buffer_data, 108);
+    p_mesh_filter->GetMesh().SetColors  (g_color_buffer_data,  108);
+
+    CGameObject* p_cube_2 = Instantiate();
+
+    auto* p_material_2      = p_cube_2->AddComponent<CMaterial>();
+    auto* p_mesh_filter_2   = p_cube_2->AddComponent<CMeshFilter>();
+    auto* p_mesh_renderer_2 = p_cube_2->AddComponent<CMeshRenderer>();
+
+    p_material_2->SetMatrix("MVP", MVP_2);
+    p_material_2->SetShader(EShaderType::Test);
+    p_mesh_filter_2->GetMesh().SetVertices(g_vertex_buffer_data, 108);
+    p_mesh_filter_2->GetMesh().SetColors  (g_color_buffer_data,  108);
+
+
+    CGameObject* p_cube_3 = Instantiate();
+
+    auto* p_material_3      = p_cube_3->AddComponent<CMaterial>();
+    auto* p_mesh_filter_3   = p_cube_3->AddComponent<CMeshFilter>();
+    auto* p_mesh_renderer_3 = p_cube_3->AddComponent<CMeshRenderer>();
+
+    p_material_3->SetMatrix("MVP", MVP_3);
+    p_material_3->SetShader(EShaderType::Test);
+    p_mesh_filter_3->GetMesh().SetVertices(g_vertex_buffer_data, 108);
+    p_mesh_filter_3->GetMesh().SetColors  (g_color_buffer_data,  108);
+
+    p_cube_2->GetTransform().SetLocalPosition( 2.0f, 2.0f, 0.0f);
+    p_cube_3->GetTransform().SetLocalPosition(-3.0f, 3.0f, 1.0f);
+
+    p_cube_3->GetTransform().SetParent(&p_cube_2->GetTransform());
+
+
+
+
+
+
+
 
     GLuint MatrixID = static_cast<GLuint>(glGetUniformLocation(cg_program, "MVP"));
-    glUniformMatrix4fv(MatrixID, 1, GL_FALSE, &MVP[0][0]);
+    glUniformMatrix4fv(MatrixID, 1, GL_FALSE, &MVP_1[0][0]);
 
     GLuint VertexArrayID;
     glGenVertexArrays(1, &VertexArrayID);
@@ -244,22 +292,67 @@ void CEngine::Run()
         // Fixed granularity
         while(lag >= delta_time)
         {
+           // p_cube->GetTransform().Translate(glm::vec3(1.0f, 0.0f, 0.0f) * delta_time);
+            //p_cube_1->GetTransform().SetLocalScale(p_cube_1->GetTransform().GetLocalScale() + glm::vec3(0.1 * delta_time, 0.1f * delta_time, 0.0f));
+            p_cube_1->GetTransform().Rotate       (0.00f, 0.001f, 0.0f);
+            p_cube_2->GetTransform().Translate    (glm::vec3(1.0f, 0.0f, 0.0f) * sin(glfwGetTime()) * delta_time);
+            p_cube_3->GetTransform().SetLocalScale(p_cube_3->GetTransform().GetLocalScale() + glm::vec3(0.2f) * delta_time * sin(glfwGetTime()));
+
+
             BehaviorUpdate(p_handle,   static_cast<float>(delta_time));
             GameObjectUpdate(p_handle, static_cast<float>(delta_time));
-            MVP = p_camera_component->GetProjectionMatrix() * p_camera_component->GetViewMatrix() * glm::mat4(1.0f);
+            MVP_1 = p_camera_component->GetProjectionMatrix() * p_camera_component->GetViewMatrix() * p_cube_1->GetTransform().GetLocalToWorldMatrix();
+            MVP_2 = p_camera_component->GetProjectionMatrix() * p_camera_component->GetViewMatrix() * p_cube_2->GetTransform().GetLocalToWorldMatrix();
+            MVP_3 = p_camera_component->GetProjectionMatrix() * p_camera_component->GetViewMatrix() * p_cube_3->GetTransform().GetLocalToWorldMatrix();
 
             lag -= delta_time;
         }
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        glUseProgram(cg_program);
+
+        glUseProgram(p_material->GetShader());
+        p_material->SetMatrix("MVP", MVP_1);
+        glUseProgram(p_material->GetShader());
+
+        glBindVertexArray(p_mesh_filter->GetMesh().m_vao);
+        glEnableVertexAttribArray(0);
+        glEnableVertexAttribArray(1);
+
+        glDrawArrays(GL_TRIANGLES, 0, 36);
+        glDisableVertexAttribArray(0);
+
+        glUseProgram(p_material_2->GetShader());
+        p_material_2->SetMatrix("MVP", MVP_2);
+        glUseProgram(p_material_2->GetShader());
+
+        glBindVertexArray(p_mesh_filter_2->GetMesh().m_vao);
+        glEnableVertexAttribArray(0);
+        glEnableVertexAttribArray(1);
+
+        glDrawArrays(GL_TRIANGLES, 0, 36);
+        glDisableVertexAttribArray(0);
+
+        glUseProgram(p_material_3->GetShader());
+        p_material_3->SetMatrix("MVP", MVP_3);
+        glUseProgram(p_material_3->GetShader());
+
+        glBindVertexArray(p_mesh_filter_3->GetMesh().m_vao);
+        glEnableVertexAttribArray(0);
+        glEnableVertexAttribArray(1);
+
+        glDrawArrays(GL_TRIANGLES, 0, 36);
+        glDisableVertexAttribArray(0);
+
+
+
+       /* glUseProgram(cg_program);
         glUniformMatrix4fv(MatrixID, 1, GL_FALSE, &MVP[0][0]);
 
         glBindVertexArray(VertexArrayID);
         glEnableVertexAttribArray(0);
         glEnableVertexAttribArray(1);
         glDrawArrays(GL_TRIANGLES, 0, 12*3);
-        glDisableVertexAttribArray(0);
+        glDisableVertexAttribArray(0);*/
 
         mp_renderer->Render();
         glfwSwapBuffers(p_handle);
@@ -274,6 +367,7 @@ void CEngine::BehaviorUpdate(GLFWwindow* p_window, float delta_time)
     {
         CBehavior* p_behavior = m_behaviors[i];
 
+        // TODO : Root is not a valid reference
         CTransform* root = p_behavior->GetTransform()->GetRoot();
         CGameObject* go = root->mp_game_object;
 
@@ -286,12 +380,6 @@ void CEngine::BehaviorUpdate(GLFWwindow* p_window, float delta_time)
             p_behavior->__Update();
         }
     }
-}
-
-void CEngine::BehaviorRegister(CBehavior* p_behavior)
-{
-    p_behavior->Awake();
-    m_behaviors.push_back(p_behavior);
 }
 
 void CEngine::GameObjectUpdate(GLFWwindow* p_window, float delta_time)
@@ -474,65 +562,24 @@ void CEngine::GameObjectUpdate(GLFWwindow* p_window, float delta_time)
     return (glfwGetKey(sp_instance->mp_renderer->GetWindow()->GetHandle(), key_code) == GLFW_RELEASE);
 }
 
-CTransform* CEngine::AllocateTransform()
+/* static */ void CEngine::RegisterBehavior(CBehavior* p_behavior)
 {
-    return new CTransform();
+    sp_instance->m_behaviors.push_back(p_behavior);
 }
 
-CMaterial* CEngine::AllocateMaterial()
+/* static */ void CEngine::UnregisterBehavior(CBehavior* p_behavior)
 {
-    return new CMaterial();
-}
+    std::vector<CBehavior*>& behaviors = sp_instance->m_behaviors;
 
-CMeshFilter* CEngine::AllocateMeshFilter()
-{
-    return new CMeshFilter();
-}
-
-CMeshRenderer* CEngine::AllocateMeshRenderer()
-{
-    // TODO register in graphic engine
-    return new CMeshRenderer();
-}
-
-void CEngine::ReleaseBehavior(CBehavior* p_behavior)
-{
-    p_behavior->Awake();
-    m_behaviors.push_back(p_behavior);
-
-    for(auto i = 0; i < m_behaviors.size(); ++i)
+    for(auto i = 0; i < behaviors.size(); ++i)
     {
-        if(m_behaviors[i] == p_behavior)
+        if(behaviors[i] == p_behavior)
         {
-            m_behaviors[i] = m_behaviors.back();
-            m_behaviors.pop_back();
-
+            behaviors[i] = behaviors.back();
+            behaviors.pop_back();
             break;
         }
     }
-
-    delete p_behavior;
-}
-
-void CEngine::ReleaseTransform(CTransform* p_transform)
-{
-    delete p_transform;
-}
-
-void CEngine::ReleaseMaterial(CMaterial* p_material)
-{
-    delete p_material;
-}
-
-void CEngine::ReleaseMeshFilter(CMeshFilter* p_mesh_filter)
-{
-    delete p_mesh_filter;
-}
-
-void CEngine::ReleaseMeshRenderer(CMeshRenderer* p_mesh_renderer)
-{
-    // TODO : Delete from renderer
-    delete p_mesh_renderer;
 }
 
 }

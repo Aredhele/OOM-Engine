@@ -22,4 +22,14 @@ CMaterial* CMeshRenderer::GetAttachedMaterial()
 void CMeshRenderer::SetVisible(bool visible)
 { m_is_visible = visible; }
 
+/* static */ void CMeshRenderer::_Register()
+{
+    // TODO
+}
+
+/* static */ void CMeshRenderer::_Destroy()
+{
+    // TODO
+}
+
 }

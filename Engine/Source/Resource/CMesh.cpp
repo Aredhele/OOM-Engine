@@ -85,18 +85,21 @@ void CMesh::SetNormals(const float* p_normals, uint32_t count)
                                p_normals[i + 1],
                                p_normals[i + 2]);
     }
+    UploadNormals();
 }
 
 void CMesh::SetNormals(const std::vector<glm::vec3>& normals)
 {
     m_normals.clear();
     m_normals.insert(m_normals.end(), normals.begin(), normals.end());
+    UploadNormals();
 }
 
 void CMesh::SetNormals(std::vector<glm::vec3>&& normals)
 {
     m_normals.clear();
     m_normals = static_cast<std::vector<glm::vec3>&&>(normals);
+    UploadNormals();
 }
 
 void CMesh::SetColors(const float* p_colors, uint32_t count)
@@ -108,18 +111,21 @@ void CMesh::SetColors(const float* p_colors, uint32_t count)
                               p_colors[i + 1],
                               p_colors[i + 2]);
     }
+    UploadColors();
 }
 
 void CMesh::SetColors(const std::vector<glm::vec3>& colors)
 {
     m_colors.clear();
     m_colors.insert(m_colors.end(), colors.begin(), colors.end());
+    UploadColors();
 }
 
 void CMesh::SetColors(std::vector<glm::vec3>&& colors)
 {
     m_colors.clear();
     m_colors = static_cast<std::vector<glm::vec3>&&>(colors);
+    UploadColors();
 }
 
 void CMesh::SetUVs(const float* p_uvs, uint32_t count)
@@ -127,18 +133,21 @@ void CMesh::SetUVs(const float* p_uvs, uint32_t count)
     m_uvs.clear();
     for(uint32_t i = 0; i < count; i += 2)
         m_uvs.emplace_back(p_uvs[i + 0], p_uvs[i + 1]);
+    UploadUVs();
 }
 
 void CMesh::SetUVs(const std::vector<glm::vec2>& uvs)
 {
     m_uvs.clear();
     m_uvs.insert(m_uvs.end(), uvs.begin(), uvs.end());
+    UploadUVs();
 }
 
 void CMesh::SetUVs(std::vector<glm::vec2>&& uvs)
 {
     m_uvs.clear();
     m_uvs = static_cast<std::vector<glm::vec2>&&>(uvs);
+    UploadUVs();
 }
 
 void CMesh::SetIndices(const uint32_t* p_indices, uint32_t count)
@@ -146,18 +155,21 @@ void CMesh::SetIndices(const uint32_t* p_indices, uint32_t count)
     m_indices.clear();
     for(uint32_t i = 0; i < count; ++i)
         m_indices.push_back(p_indices[i]);
+    UploadIndices();
 }
 
 void CMesh::SetIndices(const std::vector<uint32_t>& indices)
 {
     m_indices.clear();
     m_indices.insert(m_indices.end(), indices.begin(), indices.end());
+    UploadIndices();
 }
 
 void CMesh::SetIndices(std::vector<uint32_t>&& indices)
 {
     m_indices.clear();
     m_indices = static_cast<std::vector<uint32_t>&&>(indices);
+    UploadIndices();
 }
 
 void CMesh::ComputeBounds()
@@ -183,6 +195,7 @@ void CMesh::UploadVertices()
     glGenBuffers(1, &m_vbo_vertex);
     glBindBuffer(GL_ARRAY_BUFFER, m_vbo_vertex);
     glBufferData(GL_ARRAY_BUFFER, m_vertices.size() * sizeof(glm::vec3), m_vertices.data(), GL_STATIC_DRAW);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void *) nullptr);
 
     glBindVertexArray(0);
 }
@@ -200,6 +213,7 @@ void CMesh::UploadNormals()
     glGenBuffers(1, &m_vbo_normal);
     glBindBuffer(GL_ARRAY_BUFFER, m_vbo_normal);
     glBufferData(GL_ARRAY_BUFFER, m_normals.size() * sizeof(glm::vec3), m_normals.data(), GL_STATIC_DRAW);
+    glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 0, (void *) nullptr);
 
     glBindVertexArray(0);
 }
@@ -216,7 +230,8 @@ void CMesh::UploadColors()
 
     glGenBuffers(1, &m_vbo_color);
     glBindBuffer(GL_ARRAY_BUFFER, m_vbo_color);
-    glBufferData(GL_ARRAY_BUFFER, m_colors.size() * sizeof(glm::vec3), m_colors.data(), GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, m_colors.size() * sizeof(glm::vec3), &m_colors[0], GL_STATIC_DRAW);
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, (void *) nullptr);
 
     glBindVertexArray(0);
 }
@@ -234,6 +249,7 @@ void CMesh::UploadUVs()
     glGenBuffers(1, &m_vbo_uv);
     glBindBuffer(GL_ARRAY_BUFFER, m_vbo_uv);
     glBufferData(GL_ARRAY_BUFFER, m_uvs.size() * sizeof(glm::vec2), m_uvs.data(), GL_STATIC_DRAW);
+    glVertexAttribPointer(3, 2, GL_FLOAT, GL_FALSE, 0, (void *) nullptr);
 
     glBindVertexArray(0);
 }

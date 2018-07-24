@@ -53,7 +53,10 @@ public:
 
 protected:
 
-    friend class CEngine;
+    virtual void _Register () = 0;
+    virtual void _Destroy  () = 0;
+
+protected:
 
     CString      m_tag;
     CTransform*  mp_transform   = nullptr;

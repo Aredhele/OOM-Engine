@@ -4,6 +4,7 @@
 /// \package    Composite/Component
 /// \author     Vincent STEHLY--CALISTO
 
+#include "CEngine.hpp"
 #include "Composite/Component/CBehavior.hpp"
 
 namespace Oom
@@ -64,6 +65,16 @@ void CBehavior::__OnDisable()
 void CBehavior::__OnDrawGizmos()
 {
     OnDrawGizmos();
+}
+
+/* virtual */ void CBehavior::_Register()
+{
+    CEngine::RegisterBehavior(this);
+}
+
+/* virtual */ void CBehavior::_Destroy()
+{
+    CEngine::UnregisterBehavior(this);
 }
 
 }
