@@ -15,6 +15,26 @@
 #include "Built-in/Shader/Shader.hpp"
 #include "Built-in/Script/S_Camera.hpp"
 
+void GLAPIENTRY GLErrorCallback(
+    GLenum source,
+    GLenum type,
+    GLuint id,
+    GLenum severity,
+    GLsizei length,
+    const GLchar* message,
+    const void* userParam)
+{
+    if(severity == 0x9146)
+    {
+        int a;
+        a++;
+    }
+
+    fprintf(stderr, "GL CALLBACK: %s type = 0x%x, severity = 0x%x, message = %s\n",
+             (type == GL_DEBUG_TYPE_ERROR ? "** GL ERROR **" : "" ),
+              type, severity, message );
+}
+
 namespace Oom
 {
 
@@ -38,8 +58,18 @@ bool CRenderer::Initialize()
 
     glEnable   (GL_MULTISAMPLE);
 
+    // Enables debug callback
+    glEnable              (GL_DEBUG_OUTPUT);
+    glDebugMessageCallback(GLErrorCallback, 0);
+
     // Registering shader
-    SShaderManager::RegisterShader(SShaderManager::EShaderType::Test, "Default", g_default_vertex_shader, g_default_fragment_shader);
+    SShaderManager::RegisterShader(SShaderManager::EShaderType::Test, "Default",
+                                   g_default_vertex_shader,
+                                   g_default_fragment_shader);
+
+    SShaderManager::RegisterShader(SShaderManager::EShaderType::UnlitTexture, "UnlitTexture",
+                                   g_unlit_texture_vertex_shader,
+                                   g_unlit_texture_fragment_shader);
 
     SLogger::LogInfo("Renderer initialization.");
     return true;

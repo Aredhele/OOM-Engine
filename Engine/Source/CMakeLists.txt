@@ -17,7 +17,7 @@ ADD_DEFINITIONS      (-DGLEW_STATIC)
 ADD_EXECUTABLE       (OOM-Engine ${ENGINE_SOURCES} ${ENGINE_HEADERS})
 ADD_CUSTOM_TARGET    (Copy_resources)
 ADD_DEPENDENCIES     (OOM-Engine Copy_resources)
-TARGET_LINK_LIBRARIES(OOM-Engine glfw3 glew32 opengl32 qu3e)
+TARGET_LINK_LIBRARIES(OOM-Engine glfw3 glew32 opengl32 qu3e Windowscodecs)
 
 ADD_CUSTOM_COMMAND(TARGET Copy_resources PRE_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/Engine/Resources ${CMAKE_SOURCE_DIR}/Bin/Resources

@@ -10,6 +10,7 @@
 
 // Import
 #include "Import/CMeshImporter"
+#include "Import/CTextureImporter.hpp"
 
 // Debug
 #include "Core/Debug/SLogger.hpp"
@@ -113,6 +114,10 @@ namespace Sdk
 
     namespace Import
     {
+        GLuint ImportTexture(const char* p_path) {
+            return CTextureImporter::ImportTexture(p_path);
+        }
+
         std::vector<CGameObject*> ImportMesh(const char* p_path) {
             return CMeshImporter::ImportFromObj(p_path);
         }

@@ -30,19 +30,64 @@ void Oom::CMeshRenderer::Draw(const glm::mat4& projection_matrix,
     // Computing the MVP matrix
     glm::mat4 MVP = projection_matrix * view_matrix * mp_transform->GetLocalToWorldMatrix();
 
+    GLenum err = glGetError();
+    if(err != GL_NO_ERROR)
+    {
+        SLogger::LogError("ERROR GL");
+    }
+
     glUseProgram(p_material->GetShader());
     p_material->SetMatrix("MVP", MVP);
-    glUseProgram(p_material->GetShader());
 
+    if(err != GL_NO_ERROR)
+    {
+        SLogger::LogError("ERROR GL");
+    }
+
+    glActiveTexture   (GL_TEXTURE0);
+    glBindTexture     (GL_TEXTURE_2D, p_material->GetTexture());
+
+    if(err != GL_NO_ERROR)
+    {
+        SLogger::LogError("ERROR GL");
+    }
+
+    // Bind VAO
     glBindVertexArray(p_mesh_filter->GetMesh().GetVAO());
-    if(p_mesh_filter->GetMesh().HasVertices())
+
+    if(err != GL_NO_ERROR)
+    {
+        SLogger::LogError("ERROR GL");
+    }
+
+   /* if(p_mesh_filter->GetMesh().HasVertices())
         glEnableVertexAttribArray(0);
 
-    if(p_mesh_filter->GetMesh().HasColor())
+    if(p_mesh_filter->GetMesh().HasNormals())
         glEnableVertexAttribArray(1);
 
+    if(p_mesh_filter->GetMesh().HasUVs())
+        glEnableVertexAttribArray(2);
+
+    if(p_mesh_filter->GetMesh().HasColor())
+        glEnableVertexAttribArray(3);*/
+
+    glEnableVertexAttribArray(0);
+    glEnableVertexAttribArray(1);
+
+    if(err != GL_NO_ERROR)
+    {
+        SLogger::LogError("ERROR GL");
+    }
+
+    auto count = p_mesh_filter->GetMesh().GetVerticesCount();
     glDrawArrays(GL_TRIANGLES, 0, p_mesh_filter->GetMesh().GetVerticesCount());
     glDisableVertexAttribArray(0);
+
+    if(err != GL_NO_ERROR)
+    {
+        SLogger::LogError("ERROR GL");
+    }
 }
 
 }

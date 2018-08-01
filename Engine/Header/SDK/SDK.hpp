@@ -77,6 +77,7 @@ namespace Sdk
 
     namespace Import
     {
+        GLuint ImportTexture(const char* p_path);
         std::vector<CGameObject*> ImportMesh(const char* p_path);
     }
 }

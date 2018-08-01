@@ -19,7 +19,8 @@ public:
 
     enum EShaderType
     {
-        Test
+        Test,
+        UnlitTexture,
     };
 
     struct SPair

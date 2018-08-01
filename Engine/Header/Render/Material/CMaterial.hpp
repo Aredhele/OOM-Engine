@@ -17,19 +17,15 @@ namespace Oom
 
 class CMaterial : public IComponent
 {
+
 public:
 
+    void                SetTexture      (GLuint texture);
     void                SetShader       (EShaderType shader_type);
     GLuint              GetShader       () const;
+    GLuint              GetTexture      () const;
     EShaderType         GetShaderType   () const;
     const glm::vec3&    GetColor        () const;
-
-protected:
-    void _Register() override;
-
-    void _Destroy() override;
-
-public:
     bool                HasProperty     (const char* p_name) const;
 
 public:
@@ -43,11 +39,15 @@ public:
     void SetVector      (const char* p_name, const glm::vec4& vector);
     void SetMatrix      (const char* p_name, const glm::mat4& matrix4);
 
-    // TODO : textures
+protected:
+
+    void _Register() override;
+    void _Destroy () override;
 
 private:
 
     glm::vec3   m_color;
+    GLuint      m_texture;
     GLuint      m_program;
     EShaderType m_shader_type;
 };

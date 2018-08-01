@@ -9,5 +9,7 @@
 
 extern const char g_default_vertex_shader  [];
 extern const char g_default_fragment_shader[];
+extern const char g_unlit_texture_vertex_shader   [];
+extern const char g_unlit_texture_fragment_shader [];
 
 #endif // !OOM_ENGINE_SHADER_HPP__
