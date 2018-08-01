@@ -38,7 +38,7 @@ bool CWindow::Initialize(int width, int height, const char* p_name)
         Release();
         return false;
     }
-
+    
     glfwMakeContextCurrent(mp_window);
     glewExperimental = 1;
     if (glewInit()  != GLEW_OK)

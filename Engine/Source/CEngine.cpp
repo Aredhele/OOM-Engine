@@ -78,7 +78,6 @@ void CEngine::Run()
     // Setting up the scene
     LoadScene();
 
-    glfwSetInputMode(p_handle, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
     while (glfwWindowShouldClose(p_handle) == 0 &&
            glfwGetKey(p_handle, GLFW_KEY_ESCAPE) != GLFW_PRESS)
     {

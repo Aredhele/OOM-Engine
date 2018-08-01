@@ -1,0 +1,31 @@
+/// \file       CMeshImporter
+/// \date       01/08/2018
+/// \project    OOM-Engine
+/// \package    Import
+/// \author     Vincent STEHLY--CALISTO
+
+#ifndef OOM_ENGINE_C_MESH_IMPORTER_HPP__
+#define OOM_ENGINE_C_MESH_IMPORTER_HPP__
+
+#include <cstdio>
+
+namespace Oom
+{
+
+// Forward declaration
+class CGameObject;
+
+class CMeshImporter
+{
+public:
+
+    static std::vector<CGameObject*> ImportFromObj(const char* p_path);
+
+private:
+
+    static CGameObject* ImportObj(FILE* file_descriptor, char* current_line);
+};
+
+}
+
+#endif // !OOM_ENGINE_C_MESH_IMPORTER_HPP__

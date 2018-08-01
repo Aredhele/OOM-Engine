@@ -7,9 +7,12 @@
 #include "Render/CWindow.hpp"
 #include "Render/CRenderer.hpp"
 #include "Render/Renderer/IRenderer.hpp"
+#include "Render/Shader/SShaderManager.hpp"
 
 #include "Core/Debug/SLogger.hpp"
 #include "Composite/CGameObject.hpp"
+
+#include "Built-in/Shader/Shader.hpp"
 #include "Built-in/Script/S_Camera.hpp"
 
 namespace Oom
@@ -34,6 +37,9 @@ bool CRenderer::Initialize()
     glFrontFace(GL_CCW);
 
     glEnable   (GL_MULTISAMPLE);
+
+    // Registering shader
+    SShaderManager::RegisterShader(SShaderManager::EShaderType::Test, "Default", g_default_vertex_shader, g_default_fragment_shader);
 
     SLogger::LogInfo("Renderer initialization.");
     return true;

@@ -9,13 +9,12 @@
 const char g_default_vertex_shader[] =
         "#version 330 core\n"
         "layout(location = 0) in vec3 model;\n"
-        "layout(location = 1) in vec3 vertexColor;\n"
+        //"layout(location = 1) in vec3 vertexColor;\n"
         "out vec3 fragmentColor;\n"
         "uniform mat4 MVP;\n"
         "void main(){"
         "gl_Position =  MVP * vec4(model,1);"
-        "fragmentColor = vertexColor;}";
-
+        "fragmentColor = vec3(1.0f, 0.0f, 0.4f);}";
 
 const char g_default_fragment_shader[] =
         "#version 330 core\n"

@@ -74,6 +74,11 @@ namespace Sdk
         void LogWaring(const char * szFormat, ...);
         void LogError (const char * szFormat, ...);
     }
+
+    namespace Import
+    {
+        std::vector<CGameObject*> ImportMesh(const char* p_path);
+    }
 }
 
 #endif // !OOM_ENGINE_SDK_HPP__

@@ -35,8 +35,11 @@ void Oom::CMeshRenderer::Draw(const glm::mat4& projection_matrix,
     glUseProgram(p_material->GetShader());
 
     glBindVertexArray(p_mesh_filter->GetMesh().GetVAO());
-    if(p_mesh_filter->GetMesh().HasVertices()) glEnableVertexAttribArray(0);
-    if(p_mesh_filter->GetMesh().HasColor())    glEnableVertexAttribArray(1);
+    if(p_mesh_filter->GetMesh().HasVertices())
+        glEnableVertexAttribArray(0);
+
+    if(p_mesh_filter->GetMesh().HasColor())
+        glEnableVertexAttribArray(1);
 
     glDrawArrays(GL_TRIANGLES, 0, p_mesh_filter->GetMesh().GetVerticesCount());
     glDisableVertexAttribArray(0);

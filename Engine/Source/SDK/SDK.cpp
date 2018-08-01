@@ -8,6 +8,10 @@
 #include "SDK/SDK.hpp"
 #include "CEngine.hpp"
 
+// Import
+#include "Import/CMeshImporter"
+
+// Debug
 #include "Core/Debug/SLogger.hpp"
 
 namespace Sdk
@@ -104,6 +108,13 @@ namespace Sdk
                 va_start(argList, szFormat);
                 SLogger::LogError(szFormat, argList);
             va_end  (argList);
+        }
+    }
+
+    namespace Import
+    {
+        std::vector<CGameObject*> ImportMesh(const char* p_path) {
+            return CMeshImporter::ImportFromObj(p_path);
         }
     }
 }
