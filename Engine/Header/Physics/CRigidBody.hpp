@@ -64,8 +64,8 @@ protected:
 
 private:
 
+    friend class CBoxCollider;
     q3Body* mp_body = nullptr;
-
 };
 
 }

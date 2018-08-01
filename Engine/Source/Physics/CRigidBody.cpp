@@ -14,6 +14,7 @@
 
 #include "Physics/CRigidBody.hpp"
 #include "Physics/CPhysicWorld.hpp"
+#include "Physics/CBoxCollider.hpp"
 
 namespace Oom
 {
@@ -49,15 +50,27 @@ namespace Oom
     mp_body = p_scene->CreateBody(body_def);
 
     // Check if the game object has a collider
-    std::vector<CRigidBody*> colliders = mp_game_object->GetComponents<CRigidBody>();
+    std::vector<CBoxCollider*> colliders = mp_game_object->GetComponents<CBoxCollider>();
 
-    // TODO : Add collider
+    for(CBoxCollider* p_collider : colliders)
+    {
+        if(p_collider->IsEnabled())
+            p_collider->OnBodyAttached();
+    }
 
     CPhysicWorld::RegisterBody(this);
 }
 
 /* virtual */ void CRigidBody::_Destroy()
 {
+    std::vector<CBoxCollider*> colliders = mp_game_object->GetComponents<CBoxCollider>();
+
+    for(CBoxCollider* p_collider : colliders)
+    {
+        if(p_collider->IsEnabled())
+            p_collider->OnBodyAttached();
+    }
+
     // Destroy the body
     if(mp_body)
     {

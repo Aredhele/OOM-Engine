@@ -26,7 +26,7 @@ T* CGameObject::GetComponent(void)
     return nullptr;
 }
 
-template<class T>
+template<class T>   
 std::vector<T*> CGameObject::GetComponents(void)
 {
     // Static check
@@ -57,8 +57,8 @@ T* CGameObject::AddComponent(void)
     p_component->mp_transform->mp_game_object = this;
     p_component->mp_transform->mp_parent      = m_transform.mp_parent;
 
-    p_component->_Register();
     m_components.push_back(p_component);
+    p_component->_Register();
 
     return (T*)p_component;
 }

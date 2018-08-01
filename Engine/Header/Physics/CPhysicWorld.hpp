@@ -25,6 +25,7 @@ private:
 
     friend class CEngine;
     friend class CRigidBody;
+    friend class CBoxCollider;
 
     bool Initialize (float delta_time);
     void Release    ();

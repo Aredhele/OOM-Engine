@@ -26,6 +26,8 @@ bool CPhysicWorld::Initialize(float delta_time)
 
     SLogger::LogInfo("Physic world : Delta = %f ms - Gravity = %f", delta_time, -9.81f);
     SLogger::LogInfo("Physic world initialization.");
+
+    return true;
 }
 
 void CPhysicWorld::Release()
