@@ -54,8 +54,6 @@ void CRenderer::Release()
 
 void CRenderer::Render()
 {
-    mp_window->Clear();
-
     // Getting the camera
     CGameObject* p_camera = CEngine::FindWithTag("MainCamera");
 
@@ -73,6 +71,8 @@ void CRenderer::Render()
         SLogger::LogWaring("There is no script attached to the camera.");
         return;
     }
+
+    mp_window->Clear(p_camera_script->GetClearColor());
 
     // Getting matrix
     const glm::mat4& view       = p_camera_script->GetViewMatrix();

@@ -22,7 +22,7 @@ public:
     GLFWwindow* GetHandle    ();
     glm::vec2   GetWindowSize();
 
-    void        Clear       ();
+    void        Clear       (const glm::vec3& clear_color);
     void        Display     ();
 
 private:

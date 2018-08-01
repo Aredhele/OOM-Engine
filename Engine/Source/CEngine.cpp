@@ -28,6 +28,7 @@
 #include "Render/Shader/SShaderManager.hpp"
 #include "Render/Material/CMaterial.hpp"
 #include "Physics/CPhysicWorld.hpp"
+#include "Hook.hpp"
 
 namespace Oom
 {
@@ -65,115 +66,6 @@ void CEngine::Release()
     SLogger::LogInfo("Oom-Engine released.");
 }
 
-static const float g_vertex_buffer_data[] = {
-        -1.0f,-1.0f,-1.0f, // triangle 1 : begin
-        -1.0f,-1.0f, 1.0f,
-        -1.0f, 1.0f, 1.0f, // triangle 1 : end
-        1.0f, 1.0f,-1.0f, // triangle 2 : begin
-        -1.0f,-1.0f,-1.0f,
-        -1.0f, 1.0f,-1.0f, // triangle 2 : end
-        1.0f,-1.0f, 1.0f,
-        -1.0f,-1.0f,-1.0f,
-        1.0f,-1.0f,-1.0f,
-        1.0f, 1.0f,-1.0f,
-        1.0f,-1.0f,-1.0f,
-        -1.0f,-1.0f,-1.0f,
-        -1.0f,-1.0f,-1.0f,
-        -1.0f, 1.0f, 1.0f,
-        -1.0f, 1.0f,-1.0f,
-        1.0f,-1.0f, 1.0f,
-        -1.0f,-1.0f, 1.0f,
-        -1.0f,-1.0f,-1.0f,
-        -1.0f, 1.0f, 1.0f,
-        -1.0f,-1.0f, 1.0f,
-        1.0f,-1.0f, 1.0f,
-        1.0f, 1.0f, 1.0f,
-        1.0f,-1.0f,-1.0f,
-        1.0f, 1.0f,-1.0f,
-        1.0f,-1.0f,-1.0f,
-        1.0f, 1.0f, 1.0f,
-        1.0f,-1.0f, 1.0f,
-        1.0f, 1.0f, 1.0f,
-        1.0f, 1.0f,-1.0f,
-        -1.0f, 1.0f,-1.0f,
-        1.0f, 1.0f, 1.0f,
-        -1.0f, 1.0f,-1.0f,
-        -1.0f, 1.0f, 1.0f,
-        1.0f, 1.0f, 1.0f,
-        -1.0f, 1.0f, 1.0f,
-        1.0f,-1.0f, 1.0f
-};
-
-static const GLfloat g_color_buffer_data[] = {
-        0.583f,  0.771f,  0.014f,
-        0.609f,  0.115f,  0.436f,
-        0.327f,  0.483f,  0.844f,
-        0.822f,  0.569f,  0.201f,
-        0.435f,  0.602f,  0.223f,
-        0.310f,  0.747f,  0.185f,
-        0.597f,  0.770f,  0.761f,
-        0.559f,  0.436f,  0.730f,
-        0.359f,  0.583f,  0.152f,
-        0.483f,  0.596f,  0.789f,
-        0.559f,  0.861f,  0.639f,
-        0.195f,  0.548f,  0.859f,
-        0.014f,  0.184f,  0.576f,
-        0.771f,  0.328f,  0.970f,
-        0.406f,  0.615f,  0.116f,
-        0.676f,  0.977f,  0.133f,
-        0.971f,  0.572f,  0.833f,
-        0.140f,  0.616f,  0.489f,
-        0.997f,  0.513f,  0.064f,
-        0.945f,  0.719f,  0.592f,
-        0.543f,  0.021f,  0.978f,
-        0.279f,  0.317f,  0.505f,
-        0.167f,  0.620f,  0.077f,
-        0.347f,  0.857f,  0.137f,
-        0.055f,  0.953f,  0.042f,
-        0.714f,  0.505f,  0.345f,
-        0.783f,  0.290f,  0.734f,
-        0.722f,  0.645f,  0.174f,
-        0.302f,  0.455f,  0.848f,
-        0.225f,  0.587f,  0.040f,
-        0.517f,  0.713f,  0.338f,
-        0.053f,  0.959f,  0.120f,
-        0.393f,  0.621f,  0.362f,
-        0.673f,  0.211f,  0.457f,
-        0.820f,  0.883f,  0.371f,
-        0.982f,  0.099f,  0.879f
-};
-
-#include "Built-in/Script/S_Camera.hpp"
-#include "Built-in/Script/S_CameraController.hpp"
-#include <GLM/gtx/quaternion.hpp>
-glm::vec3 MatrixToEulerAngles(const glm::mat3& matrix)
-{
-    glm::vec3 ret(0.0f);
-    glm::mat4 m(matrix);
-    glm::extractEulerAngleXYX(m, ret.x, ret.z, ret.y);
-    return ret;
-
-    /*float sy = static_cast<float>(sqrt(matrix[0][0] * matrix[0][0] + matrix[1][0] * matrix[1][0]));
-
-    bool singular = sy < 1e-6; // If
-
-    float x, y, z;
-    if (!singular)
-    {
-        x = static_cast<float>(atan2(matrix[2][1], matrix[2][2]));
-        y = static_cast<float>(atan2(-matrix[2][0] , sy));
-        z = static_cast<float>(atan2(matrix[1][0] , matrix[0][0]));
-    }
-    else
-    {
-        x = static_cast<float>(atan2(-matrix[1][2] , matrix[1][1]));
-        y = static_cast<float>(atan2(-matrix[2][0] , sy));
-        z = 0;
-    }
-
-    return glm::vec3(x, z, y);*/
-}
-
 void CEngine::Run()
 {
     // Getting GLFW window
@@ -183,191 +75,13 @@ void CEngine::Run()
     double previous   = glfwGetTime();
     double delta_time = 1.0 / 60.0;
 
-    glEnable   (GL_DEPTH_TEST);
-    glDepthFunc(GL_LESS);
-    glEnable   (GL_CULL_FACE);
-    glCullFace (GL_BACK);
-    glFrontFace(GL_CCW);
-    glEnable   (GL_MULTISAMPLE);
-
-    CGameObject* p_camera                   = Instantiate();
-    S_Camera* p_camera_component            = p_camera->AddComponent<S_Camera>();
-    S_CameraController* p_camera_controller = p_camera->AddComponent<S_CameraController>();
-    p_camera->SetTag("MainCamera");
-
-    // Test
-    const char* vshader =
-            "#version 330 core\n"
-            "layout(location = 0) in vec3 model;\n"
-            "layout(location = 1) in vec3 vertexColor;\n" // location = 1
-            "out vec3 fragmentColor;\n"
-            "uniform mat4 MVP;\n"
-            "void main(){"
-            "gl_Position =  MVP * vec4(model,1);"
-            "fragmentColor = vertexColor;}";
-
-    const char* fshader =
-            "#version 330 core\n"
-            "out vec3 color;\n"
-            "in vec3 fragmentColor;\n"
-            "void main(){"
-            "color = fragmentColor;}";
-
-    SShaderManager::RegisterShader(SShaderManager::EShaderType::Test, "Default", vshader, fshader);
-
-
-
-    GLuint cg_program = Oom::SShaderCompiler::CreateProgram("Default", vshader, fshader);
-
-    p_camera->GetTransform().SetWorldPosition(8.0f, 4.0f, 10.0f);
-    glm::mat4 MVP_1 = p_camera_component->GetProjectionMatrix() * p_camera_component->GetViewMatrix() * glm::mat4(1.0f);
-    glm::mat4 MVP_2 = p_camera_component->GetProjectionMatrix() * p_camera_component->GetViewMatrix() * glm::mat4(1.0f);
-    glm::mat4 MVP_3 = p_camera_component->GetProjectionMatrix() * p_camera_component->GetViewMatrix() * glm::mat4(1.0f);
-
-
-    CGameObject* p_cube_1 = Instantiate();
-
-    auto* p_material      = p_cube_1->AddComponent<CMaterial>();
-    auto* p_mesh_filter   = p_cube_1->AddComponent<CMeshFilter>();
-    auto* p_mesh_renderer = p_cube_1->AddComponent<CMeshRenderer>();
-
-    p_material->SetMatrix("MVP", MVP_1);
-    p_material->SetShader(SShaderManager::EShaderType::Test);
-    p_mesh_filter->GetMesh().SetVertices(g_vertex_buffer_data, 108);
-    p_mesh_filter->GetMesh().SetColors  (g_color_buffer_data,  108);
-
-    CGameObject* p_cube_2 = Instantiate();
-
-    auto* p_material_2      = p_cube_2->AddComponent<CMaterial>();
-    auto* p_mesh_filter_2   = p_cube_2->AddComponent<CMeshFilter>();
-    auto* p_mesh_renderer_2 = p_cube_2->AddComponent<CMeshRenderer>();
-
-    p_material_2->SetMatrix("MVP", MVP_2);
-    p_material_2->SetShader(EShaderType::Test);
-    p_mesh_filter_2->GetMesh().SetVertices(g_vertex_buffer_data, 108);
-    p_mesh_filter_2->GetMesh().SetColors  (g_color_buffer_data,  108);
-
-
-    CGameObject* p_cube_3 = Instantiate();
-
-    auto* p_material_3      = p_cube_3->AddComponent<CMaterial>();
-    auto* p_mesh_filter_3   = p_cube_3->AddComponent<CMeshFilter>();
-    auto* p_mesh_renderer_3 = p_cube_3->AddComponent<CMeshRenderer>();
-
-    p_material_3->SetMatrix("MVP", MVP_3);
-    p_material_3->SetShader(EShaderType::Test);
-    p_mesh_filter_3->GetMesh().SetVertices(g_vertex_buffer_data, 108);
-    p_mesh_filter_3->GetMesh().SetColors  (g_color_buffer_data,  108);
-
-    p_cube_1->GetTransform().SetLocalPosition(glm::vec3(.0f));
-    p_cube_1->GetTransform().SetLocalScale(glm::vec3(7.0f, 7.0f, 0.1f));
-    p_cube_2->GetTransform().SetLocalPosition(glm::vec3(0.0f, 0.0f, 0.5f));
-    p_cube_3->GetTransform().SetLocalPosition(glm::vec3(0.6f, 0.4f, 7.0f));
-
-    q3Scene scene(1.0f / 60.0f);
-    q3BodyDef body_def_1;
-    q3BodyDef body_def_2;
-    q3BodyDef body_def_3;
-
-    body_def_2.position.y = 0.5f;
-    body_def_3.position.x = 0.6f;
-    body_def_3.position.y = 7.0f;
-    body_def_3.position.z = 0.4f;
-
-    body_def_1.bodyType = eStaticBody;
-    body_def_2.bodyType = eStaticBody;
-    body_def_3.bodyType = eDynamicBody;
-    q3Body* body_1 = scene.CreateBody(body_def_1);
-    q3Body* body_2 = scene.CreateBody(body_def_2);
-    q3Body* body_3 = scene.CreateBody(body_def_3);
-
-    q3BoxDef box_def_1;
-    q3BoxDef box_def_2;
-    q3BoxDef box_def_3;
-    box_def_1.SetRestitution(0);
-    box_def_2.SetRestitution(0);
-    box_def_3.SetRestitution(0);
-
-    // 1
-    q3Transform localSpace;
-    q3Identity (localSpace);
-    box_def_1.Set(localSpace, q3Vec3(7.0f, 0.0f, 7.0f));
-
-    // 2
-    q3Identity (localSpace);
-    // localSpace.position.x = p_cube_2->GetTransform().GetLocalPosition().x;
-    // localSpace.position.y = p_cube_2->GetTransform().GetLocalPosition().z;
-    // localSpace.position.z = p_cube_2->GetTransform().GetLocalPosition().y;
-    box_def_2.Set(localSpace, q3Vec3(1.0f, 1.0f, 1.0f));
-
-    // 3
-    q3Identity (localSpace);
-    // localSpace.position.x = p_cube_3->GetTransform().GetLocalPosition().x;
-    // localSpace.position.y = p_cube_3->GetTransform().GetLocalPosition().z;
-    // localSpace.position.z = p_cube_3->GetTransform().GetLocalPosition().y;
-    box_def_3.Set(localSpace, q3Vec3(1.0f, 1.0f, 1.0f));
-
-    body_1->AddBox(box_def_1);
-    body_2->AddBox(box_def_2);
-    body_3->AddBox(box_def_3);
-
-
-
-    GLuint MatrixID = static_cast<GLuint>(glGetUniformLocation(cg_program, "MVP"));
-    glUniformMatrix4fv(MatrixID, 1, GL_FALSE, &MVP_1[0][0]);
-
-    GLuint VertexArrayID;
-    glGenVertexArrays(1, &VertexArrayID);
-    glBindVertexArray(VertexArrayID);
-
-    GLuint vertexbuffer;
-    glGenBuffers(1, &vertexbuffer);
-    glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(g_vertex_buffer_data), g_vertex_buffer_data, GL_STATIC_DRAW);
-
-    GLuint colorbuffer;
-    glGenBuffers(1, &colorbuffer);
-    glBindBuffer(GL_ARRAY_BUFFER, colorbuffer);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(g_color_buffer_data), g_color_buffer_data, GL_STATIC_DRAW);
-
-    glEnableVertexAttribArray(0);
-    glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
-    glVertexAttribPointer(
-            0,
-            3,
-            GL_FLOAT,
-            GL_FALSE,
-            0,
-            (void*)0
-    );
-
-    glEnableVertexAttribArray(1);
-    glBindBuffer(GL_ARRAY_BUFFER, colorbuffer);
-    glVertexAttribPointer(
-            1,
-            3,
-            GL_FLOAT,
-            GL_FALSE,
-            0,
-            (void*)0
-    );
-
-
-
-
-
-
-
-
+    // Setting up the scene
+    LoadScene();
 
     glfwSetInputMode(p_handle, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
     while (glfwWindowShouldClose(p_handle) == 0 &&
            glfwGetKey(p_handle, GLFW_KEY_ESCAPE) != GLFW_PRESS)
     {
-
-        glm::vec3 m_clearColor = p_camera_component->GetClearColor();
-        glClearColor(m_clearColor.x, m_clearColor.y, m_clearColor.z, 1.0f);
-
         double current = glfwGetTime();
         double elapsed = current - previous;
         previous       = current;
@@ -377,32 +91,9 @@ void CEngine::Run()
         // Processing events
         glfwPollEvents();
 
-
-
         // Fixed granularity
         while(lag >= delta_time)
         {
-            scene.Step();
-
-            //p_camera->GetTransform().LookAt(p_cube_1->GetTransform());
-
-            p_cube_1->GetTransform().SetLocalPosition(body_1->GetTransform().position.x, body_1->GetTransform().position.z, body_1->GetTransform().position.y);
-            p_cube_2->GetTransform().SetLocalPosition(body_2->GetTransform().position.x, body_2->GetTransform().position.z, body_2->GetTransform().position.y);
-            p_cube_3->GetTransform().SetLocalPosition(body_3->GetTransform().position.x, body_3->GetTransform().position.z, body_3->GetTransform().position.y);
-
-            q3Mat3 rotation = body_3->GetTransform().rotation;
-            glm::mat3 mat(rotation[0][0], rotation[0][1], rotation[0][2],
-                          rotation[1][0], rotation[1][1], rotation[1][2],
-                          rotation[2][0], rotation[2][1], rotation[2][2]);
-
-            // p_cube_3->GetTransform().SetTest(glm::mat4(mat));
-
-            // p_cube->GetTransform().Translate(glm::vec3(1.0f, 0.0f, 0.0f) * delta_time);
-            // p_cube_1->GetTransform().SetLocalScale(p_cube_1->GetTransform().GetLocalScale() + glm::vec3(0.1 * delta_time, 0.1f * delta_time, 0.0f));
-            // p_cube_1->GetTransform().Rotate       (0.00f, 0.001f, 0.0f);
-            // p_cube_2->GetTransform().Translate    (glm::vec3(1.0f, 0.0f, 0.0f) * sin(glfwGetTime()) * delta_time);
-            // p_cube_3->GetTransform().SetLocalScale(p_cube_3->GetTransform().GetLocalScale() + glm::vec3(0.2f) * delta_time * sin(glfwGetTime()));
-
             BehaviorUpdate  (p_handle, static_cast<float>(delta_time));
             GameObjectUpdate(p_handle, static_cast<float>(delta_time));
 

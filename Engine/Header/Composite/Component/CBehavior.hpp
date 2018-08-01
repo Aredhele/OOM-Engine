@@ -24,15 +24,12 @@ public:
     virtual void Update      ();
             void OnDestroy   () override;
             void OnEnable    () override;
+            void OnDisable   () override;
+    virtual void OnDrawGizmos();
 
 protected:
     void _Register() override;
-
     void _Destroy() override;
-
-public:
-    void OnDisable   () override;
-    virtual void OnDrawGizmos();
 
 protected:
 

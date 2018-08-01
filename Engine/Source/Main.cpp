@@ -1,3 +1,8 @@
+/// \file       Main.cpp
+/// \date       01/08/2018
+/// \project    OOM-Engine
+/// \author     Vincent STEHLY--CALISTO
+
 #include "CEngine.hpp"
 
 int main()
@@ -8,5 +13,5 @@ int main()
     engine.Run();
     engine.Release();
 
-     return 0;
+    return 0;
 }
