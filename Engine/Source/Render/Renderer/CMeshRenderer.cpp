@@ -33,6 +33,7 @@ void Oom::CMeshRenderer::Draw(SRenderData& render_data)
 
     glBindVertexArray(p_mesh_filter->GetMesh().GetVAO());
     glEnableVertexAttribArray(0); // Vertices
+    glEnableVertexAttribArray(1); // Normals
     glEnableVertexAttribArray(2); // UVs
 
     glDrawArrays(GL_TRIANGLES, 0, p_mesh_filter->GetMesh().GetVerticesCount());

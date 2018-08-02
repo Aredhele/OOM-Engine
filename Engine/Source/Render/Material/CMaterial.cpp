@@ -6,6 +6,7 @@
 
 #include "Render/Material/CMaterial.hpp"
 #include "Render/Shader/CShaderText.hpp"
+#include "Render/Shader/CShaderStandard.hpp"
 #include "Render/Shader/CShaderUnlitLine.hpp"
 #include "Render/Shader/CShaderUnlitColor.hpp"
 #include "Render/Shader/CShaderUnlitTexture.hpp"
@@ -33,6 +34,7 @@ void CMaterial::SetShader(EShaderType shader_type)
     switch (shader_type)
     {
         case SShaderManager::Text:             mp_shader = new CShaderText();             break;
+        case SShaderManager::Standard:         mp_shader = new CShaderStandard();         break;
         case SShaderManager::UnlitLine:        mp_shader = new CShaderUnlitLine();        break;
         case SShaderManager::UnlitColor:       mp_shader = new CShaderUnlitColor();       break;
         case SShaderManager::UnlitTexture:     mp_shader = new CShaderUnlitTexture();     break;

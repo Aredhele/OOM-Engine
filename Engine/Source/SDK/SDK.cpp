@@ -84,11 +84,17 @@ namespace Sdk
         }
 
         CGameObject* CreateDirectionalLight() {
-            return CEngine::Instantiate();
+            CGameObject* p_light_object = CEngine::Instantiate();
+            p_light_object->AddComponent<S_DirectionalLight>();
+
+            return p_light_object;
         }
 
         CGameObject* CreatePointLight() {
-            return CEngine::Instantiate();
+            CGameObject* p_light_object = CEngine::Instantiate();
+            p_light_object->AddComponent<S_PointLight>();
+
+            return p_light_object;
         }
 
         CGameObject* CreateText() {

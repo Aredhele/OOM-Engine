@@ -326,4 +326,7 @@ void CEngine::GameObjectUpdate(GLFWwindow* p_window, float delta_time)
     }
 }
 
+/* static */ const std::vector<CGameObject*>& CEngine::GetAllGameObjects()
+{ return sp_instance->m_game_objects; }
+
 }

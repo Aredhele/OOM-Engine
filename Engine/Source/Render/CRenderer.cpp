@@ -14,6 +14,8 @@
 #include "Composite/CGameObject.hpp"
 
 #include "Built-in/Script/S_Camera.hpp"
+#include "Built-in/Script/S_PointLight.hpp"
+#include "Built-in/Script/S_DirectionalLight.hpp"
 
 void GLAPIENTRY GLErrorCallback(
     GLenum source,
@@ -67,6 +69,11 @@ bool CRenderer::Initialize()
         "Text",
         "Resources/Shader/Text/TextVertexShader.glsl",
         "Resources/Shader/Text/TextFragmentShader.glsl");
+
+    SShaderManager::RegisterShader(SShaderManager::EShaderType::Standard,
+        "Standard",
+        "Resources/Shader/Standard/StandardVertexShader.glsl",
+        "Resources/Shader/Standard/StandardFragmentShader.glsl");
 
     SShaderManager::RegisterShader(SShaderManager::EShaderType::UnlitLine,
         "UnlitLine",
@@ -135,10 +142,37 @@ void CRenderer::Render()
     render_data.V = view;
     render_data.P = projection;
 
+    // Gathering all point lights
+    auto game_objects = CEngine::GetAllGameObjects();
+
+    for(auto* p_game_object : game_objects)
+    {
+        const auto point_behaviors = p_game_object->GetComponents<S_PointLight>();
+        const auto direc_behaviors = p_game_object->GetComponent<S_DirectionalLight>();
+
+        auto size = point_behaviors.size();
+        for(auto i = 0; i < size; ++i)
+        {
+            render_data.point_lights.push_back({
+                point_behaviors[i]->GetRange(),
+                point_behaviors[i]->GetIntensity(),
+                point_behaviors[i]->GetColor(),
+                p_game_object->GetTransform().GetWorldPosition()});
+        }
+
+        if(direc_behaviors != nullptr)
+        {
+            render_data.directional.m_ambient_color     = direc_behaviors->GetAmbientColor();
+            render_data.directional.m_light_color       = direc_behaviors->GetLightColor();
+            render_data.directional.m_direction         = direc_behaviors->GetDirection();
+            render_data.directional.m_ambient_intensity = direc_behaviors->GetAmbientIntensity();
+            render_data.directional.m_light_intensity   = direc_behaviors->GetLightIntensity();
+        }
+    }
+
     // Forward rendering
     for(auto* p_renderer : m_renderers)
     {
-        // TODO : Lighting
         if(p_renderer->IsVisible())
             p_renderer->Draw(render_data);
     }

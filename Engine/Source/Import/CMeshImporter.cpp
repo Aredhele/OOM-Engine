@@ -166,7 +166,7 @@ CGameObject* CMeshImporter::ImportObj(FILE* file_descriptor, char* current_line)
 
             if(texture_id != 0)
             {
-                p_material->SetShader (EShaderType::UnlitTexture);
+                p_material->SetShader (EShaderType::Standard);
                 p_material->SetTexture(texture_id);
             }
         }

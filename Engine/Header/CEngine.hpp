@@ -50,6 +50,9 @@ public:
     static CGameObject*				 FindWithTag			(const CString& tag);
     static std::vector<CGameObject*> FindGameObjectsWithTag (const CString& tag);
 
+    static
+    const std::vector<CGameObject*>& GetAllGameObjects();
+
 public:
 
     // Tools

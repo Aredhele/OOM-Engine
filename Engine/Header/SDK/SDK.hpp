@@ -35,6 +35,8 @@
 // Built-in
 #include "Built-in/Script/S_Text.hpp"
 #include "Built-in/Script/S_Camera.hpp"
+#include "Built-in/Script/S_PointLight.hpp"
+#include "Built-in/Script/S_DirectionalLight.hpp"
 #include "Built-in/Script/S_CameraController.hpp"
 
 using namespace Oom;
@@ -46,6 +48,7 @@ namespace Sdk
     {
         void               SetMousePosition(const glm::vec2& position);
         glm::tvec3<double> GetMousePosition();
+        // TODO : Hide / show window
     }
 
     namespace Window

@@ -20,6 +20,7 @@ public:
     enum EShaderType
     {
         Text,
+        Standard,
         UnlitLine,
         UnlitColor,
         UnlitTexture,
