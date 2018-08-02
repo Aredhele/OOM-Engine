@@ -4,9 +4,9 @@
 out vec3 color;
 
 // Uniform
-uniform vec3 lineColor;
+uniform vec3 line_color;
 
 void main()
 {
-    color = lineColor;
+    color = line_color;
 }

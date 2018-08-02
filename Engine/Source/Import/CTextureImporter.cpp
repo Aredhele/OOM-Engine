@@ -25,24 +25,30 @@ GLuint Oom::CTextureImporter::ImportTexture(const char* p_path)
         return 0;
     }
 
-    unsigned char header[16];
+    properties.width  = 0;
+    properties.height = 0;
 
-    fseek(p_file, 0, SEEK_SET);
-    fread(header, 1, 16, p_file);
+    fseek(p_file, 0, SEEK_END);
+    auto image_size = static_cast<size_t>(ftell(p_file));
+    rewind(p_file);
 
-    properties.width  = 315; //static_cast<unsigned int>(Get16m(header + 5));
-    properties.height = 240; //static_cast<unsigned int>(Get16m(header + 3));
+    auto* p_image_data =   static_cast<unsigned char*>(malloc(image_size));
+    fread(p_image_data, 1, static_cast<size_t>(image_size), p_file);
+    fclose(p_file);
+
+    for(int i = 0; i < image_size; i += 2)
+    {
+        if(p_image_data[i] == 0xFF && p_image_data[i + 1] == 0xC0)
+        {
+            i += 5;
+            properties.height = p_image_data[i + 0] << 8 | p_image_data[i + 1]; // NOLINT
+            properties.width  = p_image_data[i + 2] << 8 | p_image_data[i + 3]; // NOLINT
+            break;
+        }
+    }
 
     int decoded_size   = properties.width  * properties.height * 3;
     properties.pBuffer = static_cast<unsigned char*>(malloc(static_cast<size_t>(decoded_size)));
-
-    fseek(p_file, 0, SEEK_END);
-    int image_size = ftell(p_file);
-    rewind(p_file);
-
-    auto* p_image_data =   static_cast<unsigned char*>(malloc(static_cast<size_t>(image_size)));
-    fread(p_image_data, 1, static_cast<size_t>(image_size), p_file);
-    fclose(p_file);
 
     if(!W32DecodeJPG(static_cast<unsigned int>(image_size),   p_image_data,
                      static_cast<unsigned int>(decoded_size), properties))
@@ -68,14 +74,7 @@ GLuint Oom::CTextureImporter::BindTexture(const Oom::CTextureImporter::TexturePr
 
     glGenTextures(1, &texture_id);
     glBindTexture(GL_TEXTURE_2D, texture_id);
-
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, properties.width, properties.height, 0, GL_RGB, GL_UNSIGNED_BYTE, properties.pBuffer);
-    glHint      (GL_GENERATE_MIPMAP_HINT, GL_NICEST);
-
-    // glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    // glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-    // glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-    // glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glTexImage2D (GL_TEXTURE_2D, 0, GL_RGB, properties.width, properties.height, 0, GL_BGR, GL_UNSIGNED_BYTE, properties.pBuffer);
 
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST_MIPMAP_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
@@ -189,11 +188,6 @@ bool CTextureImporter::W32DecodeJPG(unsigned int encoded_size, unsigned char* p_
     p_lock->Release();
 
     return true;
-}
-
-int CTextureImporter::Get16m(const unsigned char* p_data)
-{
-    return (p_data[0] << 8) | (p_data)[1]; // NOLINT
 }
 
 }

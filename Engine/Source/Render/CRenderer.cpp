@@ -12,7 +12,6 @@
 #include "Core/Debug/SLogger.hpp"
 #include "Composite/CGameObject.hpp"
 
-#include "Built-in/Shader/Shader.hpp"
 #include "Built-in/Script/S_Camera.hpp"
 
 void GLAPIENTRY GLErrorCallback(
@@ -30,9 +29,9 @@ void GLAPIENTRY GLErrorCallback(
         a++;
     }
 
-    fprintf(stderr, "GL CALLBACK: %s type = 0x%x, severity = 0x%x, message = %s\n",
-             (type == GL_DEBUG_TYPE_ERROR ? "** GL ERROR **" : "" ),
-              type, severity, message );
+ fprintf(stderr, "GL CALLBACK: %s type = 0x%x, severity = 0x%x, message = %s\n",
+          (type == GL_DEBUG_TYPE_ERROR ? "** GL ERROR **" : "" ),
+           type, severity, message );
 }
 
 namespace Oom
@@ -60,16 +59,28 @@ bool CRenderer::Initialize()
 
     // Enables debug callback
     glEnable              (GL_DEBUG_OUTPUT);
-    glDebugMessageCallback(GLErrorCallback, 0);
+    glDebugMessageCallback(GLErrorCallback, nullptr);
 
-    // Registering shader
-    SShaderManager::RegisterShader(SShaderManager::EShaderType::Test, "Default",
-                                   g_default_vertex_shader,
-                                   g_default_fragment_shader);
+    // Registering unlit shaders
+    SShaderManager::RegisterShader(SShaderManager::EShaderType::UnlitLine,
+        "UnlitLine",
+        "Resources/Shader/Unlit/UnlitLineVertexShader.glsl",
+        "Resources/Shader/Unlit/UnlitLineFragmentShader.glsl");
 
-    SShaderManager::RegisterShader(SShaderManager::EShaderType::UnlitTexture, "UnlitTexture",
-                                   g_unlit_texture_vertex_shader,
-                                   g_unlit_texture_fragment_shader);
+    SShaderManager::RegisterShader(SShaderManager::EShaderType::UnlitColor,
+        "UnlitColor",
+        "Resources/Shader/Unlit/UnlitColorVertexShader.glsl",
+        "Resources/Shader/Unlit/UnlitColorFragmentShader.glsl");
+
+    SShaderManager::RegisterShader(SShaderManager::EShaderType::UnlitTexture,
+        "UnlitTexture",
+        "Resources/Shader/Unlit/UnlitTextureVertexShader.glsl",
+        "Resources/Shader/Unlit/UnlitTextureFragmentShader.glsl");
+
+    SShaderManager::RegisterShader(SShaderManager::EShaderType::UnlitTransparent,
+        "UnlitTransparent",
+        "Resources/Shader/Unlit/UnlitTransparentVertexShader.glsl",
+        "Resources/Shader/Unlit/UnlitTransparentFragmentShader.glsl");
 
     SLogger::LogInfo("Renderer initialization.");
     return true;

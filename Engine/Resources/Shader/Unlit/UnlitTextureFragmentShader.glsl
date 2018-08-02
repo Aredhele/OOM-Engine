@@ -6,10 +6,10 @@ in vec2 UV;
 // Out
 out vec3 color;
 
-// Uniforms
-uniform sampler2D textureSampler;
+// Uniform
+uniform sampler2D texture_sampler;
 
 void main()
 {
-    color = texture(textureSampler, UV).rgb;
+    color = texture(texture_sampler, UV).rgb;
 }

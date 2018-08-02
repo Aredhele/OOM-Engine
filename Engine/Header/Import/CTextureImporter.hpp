@@ -33,7 +33,6 @@ private:
                              unsigned int decoded_size, TextureProperty& properties);
 
     static GLuint BindTexture (const TextureProperty& properties);
-    static int    Get16m       (const unsigned char* p_data);
 };
 
 }

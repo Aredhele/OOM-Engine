@@ -107,13 +107,13 @@ CGameObject* CMeshImporter::ImportObj(FILE* file_descriptor, char* current_line)
                 vertices.push_back(_vertices[index[3] - 1]);
                 vertices.push_back(_vertices[index[6] - 1]);
 
-                normals.push_back(_normals[index[1] - 1]);
-                normals.push_back(_normals[index[4] - 1]);
-                normals.push_back(_normals[index[7] - 1]);
+                uvs.push_back(_uvs[index[1] - 1]);
+                uvs.push_back(_uvs[index[4] - 1]);
+                uvs.push_back(_uvs[index[7] - 1]);
 
-                uvs.push_back(_uvs[index[2] - 1]);
-                uvs.push_back(_uvs[index[5] - 1]);
-                uvs.push_back(_uvs[index[8] - 1]);
+                normals.push_back(_normals[index[2] - 1]);
+                normals.push_back(_normals[index[5] - 1]);
+                normals.push_back(_normals[index[8] - 1]);
             }
             else
             {
@@ -142,7 +142,7 @@ CGameObject* CMeshImporter::ImportObj(FILE* file_descriptor, char* current_line)
         auto* p_mesh_renderer = p_game_object->AddComponent<CMeshRenderer>();
         auto* p_mesh_filter   = p_game_object->AddComponent<CMeshFilter>();
 
-        p_material->SetShader(EShaderType::Test);
+        p_material->SetShader(EShaderType::UnlitTexture);
         p_mesh_filter->GetMesh().SetVertices(std::move(vertices));
         p_mesh_filter->GetMesh().SetNormals (std::move(normals));
 

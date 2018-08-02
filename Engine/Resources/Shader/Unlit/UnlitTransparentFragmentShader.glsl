@@ -7,21 +7,17 @@ in vec2 UV;
 out vec3 color;
 
 // Uniforms
-uniform sampler2D colorTexture;
+uniform sampler2D texture_sampler;
 
 void main()
 {
-    // Samples the texture to check the transparency
-    vec2 correctUV = vec2(UV.x, 1.0 - UV.y);
-    vec4 rgba       = texture(colorTexture, correctUV);
+    vec2 correct_uv = vec2(UV.x, 1.0 - UV.y);
+    vec4 rgba       = texture(texture_sampler, correct_uv);
 
-    // If the pixel is fully white, the fragment is transparent
     if(rgba.a != 1.0f)
     {
-        // Drops the fragment
         discard;
     }
 
-    // Otherwise it's a regular color
     color = rgba.rgb;
 }
