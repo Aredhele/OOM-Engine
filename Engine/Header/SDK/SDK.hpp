@@ -61,6 +61,7 @@ namespace Sdk
     {
         CGameObject* CreateEmpty();
         CGameObject* CreateCamera();
+        CGameObject* CreateFreeCamera();
         CGameObject* CreateCube();
         CGameObject* CreateParticleSystem();
         CGameObject* CreateDirectionalLight();

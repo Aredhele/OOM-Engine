@@ -12,10 +12,6 @@
 
 void LoadScene()
 {
-    // TODO : make the camera creation easier
-    CGameObject* p_camera = Sdk::GameObject::CreateCamera();
-    p_camera->AddComponent<S_CameraController>();
-    p_camera->SetTag("MainCamera");
-
+    Sdk::GameObject::CreateFreeCamera();
     Sdk::Import::ImportMesh("Resources/Mesh/Cube.obj");
 }

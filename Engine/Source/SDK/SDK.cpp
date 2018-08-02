@@ -58,10 +58,22 @@ namespace Sdk
         }
 
         CGameObject* CreateCamera() {
+
+            bool b_first_camera = (CEngine::FindWithTag("MainCamera") == nullptr);
+
             CGameObject* p_camera_object = CEngine::Instantiate();
             p_camera_object->AddComponent<S_Camera>();
+            p_camera_object->SetTag(b_first_camera ? "MainCamera" : "");
 
             return p_camera_object;
+        }
+
+        CGameObject* CreateFreeCamera() {
+
+            CGameObject* p_camera = CreateCamera();
+            p_camera->AddComponent<S_CameraController>();
+
+            return p_camera;
         }
 
         CGameObject* CreateCube() {
