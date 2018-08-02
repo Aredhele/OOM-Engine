@@ -2,16 +2,16 @@
 
 // In
 layout(location = 0) in vec3 vertex;
-layout(location = 1) in vec3 vertex_color;
+layout(location = 1) in vec3 vertexColor;
 
 // Out
-out vec3 Fragment_color;
+out vec3 fragmentColor;
 
-// Uniform
+// Uniforms
 uniform mat4 MVP;
 
 void main()
 {
-    gl_Position    =  MVP * vec4(vertex, 1.0f);
-    Fragment_color = vertex_color;
+    gl_Position   =  MVP * vec4(vertex, 1.0f);
+    fragmentColor = vertexColor;
 }

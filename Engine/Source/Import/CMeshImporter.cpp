@@ -155,7 +155,7 @@ CGameObject* CMeshImporter::ImportObj(FILE* file_descriptor, char* current_line)
         auto* p_mesh_filter   = p_game_object->AddComponent<CMeshFilter>();
 
         p_material->SetShader(EShaderType::UnlitColor);
-        p_material->SetColor("", glm::vec3(1.0f));
+        // p_material->SetColor("", glm::vec3(1.0f)); TODO
 
         p_mesh_filter->GetMesh().SetVertices(std::move(vertices));
         p_mesh_filter->GetMesh().SetNormals (std::move(normals));

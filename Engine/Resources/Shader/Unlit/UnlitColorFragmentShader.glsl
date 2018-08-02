@@ -1,12 +1,12 @@
 #version 330 core
 
 // In
-in vec3 Fragment_color;
+in vec3 fragmentColor;
 
 // Out
 out vec3 color;
 
 void main()
 {
-    color = Fragment_color;
+    color = fragmentColor;
 }
