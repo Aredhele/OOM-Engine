@@ -15,9 +15,10 @@ void LoadScene()
 {
     Sdk::GameObject::CreateFreeCamera();
     Sdk::Import::ImportMesh("Resources/Mesh/Cube.obj");
+    Sdk::Import::ImportMesh("Resources/Mesh/Environment_01.obj");
 
     CGameObject* go = Sdk::GameObject::CreateText();
     auto* p_text    = go->GetComponent<S_Text>();
 
-    p_text->Set("hello, world", glm::vec2(730.0f, 580.0f), 100, glm::vec3(0.3f));
+    p_text->Set("OOM-Engine v0.1", glm::vec2(00.0f, 850.0f), 50, glm::vec3(0.3f));
 }

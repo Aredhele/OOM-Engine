@@ -100,7 +100,7 @@ namespace Sdk
 
             auto* p_material = p_text_object->AddComponent<CMaterial>();
             p_material->SetShader(EShaderType::Text);
-            p_material->SetTexture(CTextureImporter::ImportTexture("Resources/Texture/FontL.png"));
+            p_material->SetTexture(CTextureImporter::ImportTexture("Resources/Texture/Font.png"));
 
             return p_text_object;
         }

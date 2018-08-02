@@ -14,7 +14,7 @@ void main()
 {
 	color = texture2D(textureSampler, UV).rgb;
 
-    float threshold = 0.2f;
+    float threshold = 0.4f;
 	if(color.x <= threshold && color.y <= threshold && color.z <= threshold)
 	{
 	    discard;
