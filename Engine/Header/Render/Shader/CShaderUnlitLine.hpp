@@ -16,12 +16,11 @@ class CShaderUnlitLine : public IShader
 {
 public:
 
+    CShaderUnlitLine();
+
     void Begin(const SRenderData& render_data) final;
     void End  ()                               final;
 
-protected:
-
-    GLuint m_shaderID = 0;
 };
 
 }

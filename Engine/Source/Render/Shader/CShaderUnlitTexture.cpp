@@ -9,14 +9,24 @@
 namespace Oom
 {
 
+CShaderUnlitTexture::CShaderUnlitTexture()
+{
+    m_shader_id = SShaderManager::GetProgram(EShaderType::UnlitTexture);
+}
+
 void CShaderUnlitTexture::Begin(const SRenderData& render_data)
 {
-    // TODO
+    BindShader();
+    SetMatrix("MVP", render_data.MVP);
+
+    glActiveTexture   (GL_TEXTURE0);
+    glBindTexture     (GL_TEXTURE_2D, m_texture_id);
 }
 
 void CShaderUnlitTexture::End()
 {
-    // TODO
+    UnbindShader();
+    glBindVertexArray(0);
 }
 
 }

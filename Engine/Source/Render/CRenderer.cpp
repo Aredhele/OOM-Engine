@@ -7,6 +7,7 @@
 #include "Render/CWindow.hpp"
 #include "Render/CRenderer.hpp"
 #include "Render/Renderer/IRenderer.hpp"
+#include "Render/Shader/SRenderData.hpp"
 #include "Render/Shader/SShaderManager.hpp"
 
 #include "Core/Debug/SLogger.hpp"
@@ -125,9 +126,17 @@ void CRenderer::Render()
     const glm::mat4& view       = p_camera_script->GetViewMatrix();
     const glm::mat4& projection = p_camera_script->GetProjectionMatrix();
 
+    SRenderData render_data;
+    render_data.V = view;
+    render_data.P = projection;
+
     // Forward rendering
     for(auto* p_renderer : m_renderers)
-        p_renderer->Draw(projection, view);
+    {
+        // TODO : Lighting
+        if(p_renderer->IsVisible())
+            p_renderer->Draw(render_data);
+    }
 
     mp_window->Display();
 }

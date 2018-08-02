@@ -8,6 +8,7 @@
 #define OOM_ENGINE_C_MATERIAL_HPP__
 
 #include "Composite/IComponent.hpp"
+#include "Render/Shader/IShader.hpp"
 #include "Render/Shader/SShaderManager.hpp"
 
 using EShaderType = Oom::SShaderManager::EShaderType;
@@ -15,18 +16,19 @@ using EShaderType = Oom::SShaderManager::EShaderType;
 namespace Oom
 {
 
+/// \brief This is only a proxy for the shader class
 class CMaterial : public IComponent
 {
-
 public:
 
+    void                BindShader      ();
+    void                UnbindShader    ();
     void                SetTexture      (GLuint texture);
     void                SetShader       (EShaderType shader_type);
     GLuint              GetShader       () const;
     GLuint              GetTexture      () const;
     EShaderType         GetShaderType   () const;
     const glm::vec3&    GetColor        () const;
-    bool                HasProperty     (const char* p_name) const;
 
 public:
 
@@ -46,9 +48,14 @@ protected:
 
 private:
 
-    glm::vec3   m_color;
-    GLuint      m_texture;
-    GLuint      m_program;
+    friend class CMeshRenderer;
+
+    void Begin(const SRenderData& render_data);
+    void End  ();
+
+private:
+
+    IShader*    mp_shader = nullptr;
     EShaderType m_shader_type;
 };
 

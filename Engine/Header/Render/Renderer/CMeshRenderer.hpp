@@ -15,8 +15,7 @@ namespace Oom
 class CMeshRenderer : public IRenderer
 {
 public:
-    void Draw(const glm::mat4 &projection_matrix,
-              const glm::mat4 &view_matrix       ) override;
+    void Draw(SRenderData& render_data) final;
 };
 
 }

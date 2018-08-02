@@ -9,6 +9,12 @@
 namespace Oom
 {
 
+CShaderUnlitColor::CShaderUnlitColor()
+{
+    m_shader_id = SShaderManager::GetProgram(EShaderType::UnlitColor);
+}
+
+
 void CShaderUnlitColor::Begin(const SRenderData& render_data)
 {
     // TODO

@@ -9,6 +9,11 @@
 namespace Oom
 {
 
+CShaderUnlitLine::CShaderUnlitLine()
+{
+    m_shader_id = SShaderManager::GetProgram(EShaderType::UnlitLine);
+}
+
 void CShaderUnlitLine::Begin(const SRenderData& render_data)
 {
     // TODO

@@ -8,6 +8,7 @@
 #define OOM_ENGINE_I_RENDERER_HPP__
 
 #include "Composite/IComponent.hpp"
+#include "Render/Shader/SRenderData.hpp"
 
 namespace Oom
 {
@@ -26,7 +27,7 @@ public:
 
 public:
 
-    virtual void Draw(const glm::mat4& projection_matrix, const glm::mat4& view_matrix) = 0;
+    virtual void Draw(SRenderData& render_data) = 0;
 
 public:
 

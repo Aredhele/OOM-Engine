@@ -16,12 +16,10 @@ class CShaderUnlitTexture : public IShader
 {
 public:
 
+    CShaderUnlitTexture();
+
     void Begin(const SRenderData& render_data) final;
     void End  ()                               final;
-
-protected:
-
-    GLuint m_shaderID = 0;
 };
 
 }

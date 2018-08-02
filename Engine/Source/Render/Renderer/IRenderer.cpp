@@ -37,11 +37,13 @@ void IRenderer::SetVisible(bool visible)
 /* virtual */ void IRenderer::_Register()
 {
     CRenderer::RegisterRenderer(this);
+    m_is_visible = true;
 }
 
 /* virtual */ void IRenderer::_Destroy()
 {
     CRenderer::UnregisterRenderer(this);
+    m_is_visible = false;
 }
 
 }

@@ -14,10 +14,10 @@ namespace Oom
 
 struct SRenderData
 {
-    const glm::mat4& MVP;
-    const glm::mat4& M;
-    const glm::mat4& V;
-    const glm::mat4& P;
+    glm::mat4 MVP;
+    glm::mat4 M;
+    glm::mat4 V;
+    glm::mat4 P;
 };
 
 }

@@ -208,7 +208,7 @@ void CMesh::UploadVertices()
 
 void CMesh::UploadNormals()
 {
-   /* glBindVertexArray(m_vao);
+    glBindVertexArray(m_vao);
 
     if(m_vbo_normal != 0)
     {
@@ -220,24 +220,6 @@ void CMesh::UploadNormals()
     glBindBuffer(GL_ARRAY_BUFFER, m_vbo_normal);
     glBufferData(GL_ARRAY_BUFFER, m_normals.size() * sizeof(glm::vec3), m_normals.data(), GL_STATIC_DRAW);
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, (void *) nullptr);
-
-    glBindVertexArray(0);*/
-}
-
-void CMesh::UploadColors()
-{
-    glBindVertexArray(m_vao);
-
-    if(m_vbo_color != 0)
-    {
-        glDeleteBuffers(1, &m_vbo_color);
-        m_vbo_color = 0;
-    }
-
-    glGenBuffers(1, &m_vbo_color);
-    glBindBuffer(GL_ARRAY_BUFFER, m_vbo_color);
-    glBufferData(GL_ARRAY_BUFFER, m_colors.size() * sizeof(glm::vec3), &m_colors[0], GL_STATIC_DRAW);
-    glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, 0, (void *) nullptr);
 
     glBindVertexArray(0);
 }
@@ -255,7 +237,25 @@ void CMesh::UploadUVs()
     glGenBuffers(1, &m_vbo_uv);
     glBindBuffer(GL_ARRAY_BUFFER, m_vbo_uv);
     glBufferData(GL_ARRAY_BUFFER, m_uvs.size() * sizeof(glm::vec2), m_uvs.data(), GL_STATIC_DRAW);
-    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, (void *) nullptr);
+    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 0, (void *) nullptr);
+
+    glBindVertexArray(0);
+}
+
+void CMesh::UploadColors()
+{
+    glBindVertexArray(m_vao);
+
+    if(m_vbo_color != 0)
+    {
+        glDeleteBuffers(1, &m_vbo_color);
+        m_vbo_color = 0;
+    }
+
+    glGenBuffers(1, &m_vbo_color);
+    glBindBuffer(GL_ARRAY_BUFFER, m_vbo_color);
+    glBufferData(GL_ARRAY_BUFFER, m_colors.size() * sizeof(glm::vec3), &m_colors[0], GL_STATIC_DRAW);
+    glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, 0, (void *) nullptr);
 
     glBindVertexArray(0);
 }
