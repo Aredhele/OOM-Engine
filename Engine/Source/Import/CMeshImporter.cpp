@@ -4,10 +4,12 @@
 /// \package    Import
 /// \author     Vincent STEHLY--CALISTO
 
+
 #include "CEngine.hpp"
 #include "Import/CMeshImporter"
 #include "Core/Debug/SLogger.hpp"
 #include "Composite/CGameObject.hpp"
+#include "Import/CTextureImporter.hpp"
 
 #include "Render/Mesh/CMeshFilter.hpp"
 #include "Render/Material/CMaterial.hpp"
@@ -60,6 +62,8 @@ CGameObject* CMeshImporter::ImportObj(FILE* file_descriptor, char* current_line)
     std::vector<glm::vec3> normals;
     std::vector<glm::vec2> uvs;
 
+    GLuint texture_id = 0;
+
     // Getting the name
     char p_name[128] = {'\0'};
     sscanf(current_line, "o %s", p_name);
@@ -75,7 +79,15 @@ CGameObject* CMeshImporter::ImportObj(FILE* file_descriptor, char* current_line)
 
             break;
         }
-        if(p_buffer[0] == 'v' && p_buffer[1] == ' ')
+        else if(p_buffer[0] == 't')
+        {
+            char p_texture_name[128] = {'\0'};
+            sscanf(p_buffer, "t %s", p_texture_name);
+
+            CString path = CString("Resources/Texture/") + p_texture_name;
+            texture_id = CTextureImporter::ImportTexture(path.Data());
+        }
+        else if(p_buffer[0] == 'v' && p_buffer[1] == ' ')
         {
             glm::vec3 vertex;
             sscanf(p_buffer, "v %f %f %f", &vertex.x, &vertex.y, &vertex.z); // NOLINT
@@ -142,13 +154,21 @@ CGameObject* CMeshImporter::ImportObj(FILE* file_descriptor, char* current_line)
         auto* p_mesh_renderer = p_game_object->AddComponent<CMeshRenderer>();
         auto* p_mesh_filter   = p_game_object->AddComponent<CMeshFilter>();
 
-        p_material->SetShader(EShaderType::UnlitTexture);
+        p_material->SetShader(EShaderType::UnlitColor);
+        p_material->SetColor("", glm::vec3(1.0f));
+
         p_mesh_filter->GetMesh().SetVertices(std::move(vertices));
         p_mesh_filter->GetMesh().SetNormals (std::move(normals));
 
         if(!uvs.empty())
         {
             p_mesh_filter->GetMesh().SetUVs(std::move(uvs));
+
+            if(texture_id != 0)
+            {
+                p_material->SetShader (EShaderType::UnlitTexture);
+                p_material->SetTexture(texture_id);
+            }
         }
     }
 
