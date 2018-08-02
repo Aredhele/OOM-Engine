@@ -6,6 +6,7 @@
 
 #include <cstdio>
 #include <Wincodec.h>
+#include <Core/Standard/CString.hpp>
 
 #include "Core/Debug/SLogger.hpp"
 #include "Import/CTextureImporter.hpp"
@@ -36,16 +37,7 @@ GLuint Oom::CTextureImporter::ImportTexture(const char* p_path)
     fread(p_image_data, 1, static_cast<size_t>(image_size), p_file);
     fclose(p_file);
 
-    for(int i = 0; i < image_size; i += 2)
-    {
-        if(p_image_data[i] == 0xFF && p_image_data[i + 1] == 0xC0)
-        {
-            i += 5;
-            properties.height = p_image_data[i + 0] << 8 | p_image_data[i + 1]; // NOLINT
-            properties.width  = p_image_data[i + 2] << 8 | p_image_data[i + 3]; // NOLINT
-            break;
-        }
-    }
+    GetSize(p_path, static_cast<long>(image_size), p_image_data, properties.width, properties.height);
 
     int decoded_size   = properties.width  * properties.height * 3;
     properties.pBuffer = static_cast<unsigned char*>(malloc(static_cast<size_t>(decoded_size)));
@@ -138,7 +130,7 @@ bool CTextureImporter::W32DecodeJPG(unsigned int encoded_size, unsigned char* p_
     }
 
     if(format_converter->Initialize(frame_decode, GUID_WICPixelFormat24bppBGR, WICBitmapDitherTypeNone,
-                                   nullptr, 0.0f, WICBitmapPaletteTypeCustom) != S_OK)
+                                    nullptr, 0.0f, WICBitmapPaletteTypeCustom) != S_OK)
     {
         SLogger::LogError("Failed to initialize format converter");
         return false;
@@ -188,6 +180,56 @@ bool CTextureImporter::W32DecodeJPG(unsigned int encoded_size, unsigned char* p_
     p_lock->Release();
 
     return true;
+}
+
+void ReverseByte(unsigned char *start, int size)
+{
+    unsigned char *lo = start;
+    unsigned char *hi = start + size - 1;
+    unsigned char swap;
+
+    while (lo < hi)
+    {
+        swap = *lo;
+        *lo++ = *hi;
+        *hi-- = swap;
+    }
+}
+
+void CTextureImporter::GetSize(const char* fname, long fsize, unsigned char* data, unsigned int& x, unsigned int& y)
+{
+    // Supported format JPG and PNG
+    CString name      = fname;
+    CString extension;
+
+    for(uint32_t i = name.Size() - 1; i >= 0; --i)
+    {
+        if(name[i] == '.')
+            break;
+
+        extension += name[i];
+    }
+
+    if(extension == "gnp")
+    {
+        x = *(unsigned int *)&data[16];
+        y = *(unsigned int *)&data[20];
+        ReverseByte(reinterpret_cast<unsigned char*>(&x), 4);
+        ReverseByte(reinterpret_cast<unsigned char*>(&y), 4);
+    }
+    else if(extension == "gpj" || extension == "gepj")
+    {
+        for(int i = 0; i < fsize; i += 2)
+        {
+            if(data[i] == 0xFF && data[i + 1] == 0xC0)
+            {
+                i += 5;
+                y = data[i + 0] << 8 | data[i + 1]; // NOLINT
+                x = data[i + 2] << 8 | data[i + 3]; // NOLINT
+                break;
+            }
+        }
+    }
 }
 
 }

@@ -63,6 +63,11 @@ bool CRenderer::Initialize()
     glDebugMessageCallback(GLErrorCallback, nullptr);
 
     // Registering unlit shaders
+    SShaderManager::RegisterShader(SShaderManager::EShaderType::Text,
+        "Text",
+        "Resources/Shader/Text/TextVertexShader.glsl",
+        "Resources/Shader/Text/TextFragmentShader.glsl");
+
     SShaderManager::RegisterShader(SShaderManager::EShaderType::UnlitLine,
         "UnlitLine",
         "Resources/Shader/Unlit/UnlitLineVertexShader.glsl",

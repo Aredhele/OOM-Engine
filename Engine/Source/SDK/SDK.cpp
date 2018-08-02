@@ -27,7 +27,6 @@ namespace Sdk
         glm::tvec3<double> GetMousePosition() {
             return CEngine::GetMousePosition();
         }
-
     }
 
     // Window specific functions
@@ -90,6 +89,20 @@ namespace Sdk
 
         CGameObject* CreatePointLight() {
             return CEngine::Instantiate();
+        }
+
+        CGameObject* CreateText() {
+            CGameObject* p_text_object = CEngine::Instantiate();
+
+            p_text_object->AddComponent<S_Text>();
+            p_text_object->AddComponent<CMeshFilter>();
+            p_text_object->AddComponent<CTextRenderer>();
+
+            auto* p_material = p_text_object->AddComponent<CMaterial>();
+            p_material->SetShader(EShaderType::Text);
+            p_material->SetTexture(CTextureImporter::ImportTexture("Resources/Texture/FontL.png"));
+
+            return p_text_object;
         }
     }
 

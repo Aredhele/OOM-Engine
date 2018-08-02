@@ -5,6 +5,7 @@
 /// \author     Vincent STEHLY--CALISTO
 
 #include "Render/Material/CMaterial.hpp"
+#include "Render/Shader/CShaderText.hpp"
 #include "Render/Shader/CShaderUnlitLine.hpp"
 #include "Render/Shader/CShaderUnlitColor.hpp"
 #include "Render/Shader/CShaderUnlitTexture.hpp"
@@ -31,6 +32,7 @@ void CMaterial::SetShader(EShaderType shader_type)
 
     switch (shader_type)
     {
+        case SShaderManager::Text:             mp_shader = new CShaderText();             break;
         case SShaderManager::UnlitLine:        mp_shader = new CShaderUnlitLine();        break;
         case SShaderManager::UnlitColor:       mp_shader = new CShaderUnlitColor();       break;
         case SShaderManager::UnlitTexture:     mp_shader = new CShaderUnlitTexture();     break;
@@ -75,6 +77,9 @@ EShaderType CMaterial::GetShaderType() const
 
 const glm::vec3& CMaterial::GetColor() const
 { return mp_shader->GetColor(); }
+
+void CMaterial::SetColor(const glm::vec3 &color)
+{ mp_shader->SetColor(color); }
 
 void CMaterial::SetInt(const char* p_name, int data)
 { mp_shader->SetInt(p_name, data); }

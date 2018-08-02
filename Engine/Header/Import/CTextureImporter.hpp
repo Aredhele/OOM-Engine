@@ -33,6 +33,8 @@ private:
                              unsigned int decoded_size, TextureProperty& properties);
 
     static GLuint BindTexture (const TextureProperty& properties);
+    static void   GetSize     (const char* fname, long fsize,
+                               unsigned char* data, unsigned int& x, unsigned int& y);
 };
 
 }

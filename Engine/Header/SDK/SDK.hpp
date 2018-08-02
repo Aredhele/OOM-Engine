@@ -27,11 +27,13 @@
 #include "Render/Mesh/CMeshFilter.hpp"
 #include "Render/Material/CMaterial.hpp"
 #include "Render/Renderer/CMeshRenderer.hpp"
+#include "Render/Renderer/CTextRenderer.hpp"
 
 // Resources
 #include "Resource/CMesh.hpp"
 
 // Built-in
+#include "Built-in/Script/S_Text.hpp"
 #include "Built-in/Script/S_Camera.hpp"
 #include "Built-in/Script/S_CameraController.hpp"
 
@@ -66,6 +68,7 @@ namespace Sdk
         CGameObject* CreateParticleSystem();
         CGameObject* CreateDirectionalLight();
         CGameObject* CreatePointLight();
+        CGameObject* CreateText();
     }
 
     namespace Debug

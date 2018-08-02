@@ -4,17 +4,18 @@
 in vec2 UV;
 
 // Out
-out vec4 color;
+out vec3 color;
 
 // Uniforms
-uniform vec4      textColor;
+uniform vec3      textColor;
 uniform sampler2D textureSampler;
 
 void main()
 {
-	color = texture(textureSampler, UV);
+	color = texture2D(textureSampler, UV).rgb;
 
-	if(color.x == 0.0f && color.y == 0.0f && color.z == 0.0f)
+    float threshold = 0.2f;
+	if(color.x <= threshold && color.y <= threshold && color.z <= threshold)
 	{
 	    discard;
 	}

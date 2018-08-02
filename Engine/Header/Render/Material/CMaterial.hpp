@@ -32,6 +32,7 @@ public:
 
 public:
 
+    void SetColor       (const glm::vec3& color);
     void SetInt         (const char* p_name, int data);
     void SetFloat       (const char* p_name, float data);
     void SetColor       (const char* p_name, const glm::vec3& color);
@@ -49,6 +50,7 @@ protected:
 private:
 
     friend class CMeshRenderer;
+    friend class CTextRenderer;
 
     void Begin(const SRenderData& render_data);
     void End  ();
