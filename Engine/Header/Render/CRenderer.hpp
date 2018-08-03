@@ -28,6 +28,7 @@ private:
     bool     Initialize();
     void     Release   ();
     void     Render    ();
+    void     DrawGizmos(const glm::mat4& PV);
 
     static void RegisterRenderer   (IRenderer* p_renderer);
     static void UnregisterRenderer (IRenderer* p_renderer);

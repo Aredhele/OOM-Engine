@@ -9,6 +9,7 @@
 #include "Render/Renderer/IRenderer.hpp"
 #include "Render/Shader/SRenderData.hpp"
 #include "Render/Shader/SShaderManager.hpp"
+#include "Render/Gizmos/CGizmosManager.hpp"
 
 #include "Core/Debug/SLogger.hpp"
 #include "Composite/CGameObject.hpp"
@@ -16,6 +17,9 @@
 #include "Built-in/Script/S_Camera.hpp"
 #include "Built-in/Script/S_PointLight.hpp"
 #include "Built-in/Script/S_DirectionalLight.hpp"
+
+#include "Render/Gizmos/CGizmosPointLight.hpp"
+#include "Render/Gizmos/CGizmosDirectionalLight.hpp"
 
 void GLAPIENTRY GLErrorCallback(
     GLenum source,
@@ -32,9 +36,9 @@ void GLAPIENTRY GLErrorCallback(
         a++;
     }
 
- fprintf(stderr, "GL CALLBACK: %s type = 0x%x, severity = 0x%x, message = %s\n",
-          (type == GL_DEBUG_TYPE_ERROR ? "** GL ERROR **" : "" ),
-           type, severity, message );
+ //fprintf(stderr, "GL CALLBACK: %s type = 0x%x, severity = 0x%x, message = %s\n",
+//          (type == GL_DEBUG_TYPE_ERROR ? "** GL ERROR **" : "" ),
+  //         type, severity, message );
 }
 
 namespace Oom
@@ -95,6 +99,12 @@ bool CRenderer::Initialize()
         "Resources/Shader/Unlit/UnlitTransparentVertexShader.glsl",
         "Resources/Shader/Unlit/UnlitTransparentFragmentShader.glsl");
 
+    CGizmosManager::Initialize();
+    CGizmosManager::EnableGizmo(CGizmosManager::EGizmo::Axis);
+    CGizmosManager::EnableGizmo(CGizmosManager::EGizmo::Grid);
+    CGizmosManager::EnableGizmo(CGizmosManager::EGizmo::PointLight);
+    CGizmosManager::EnableGizmo(CGizmosManager::EGizmo::DirectionalLight);
+
     SLogger::LogInfo("Renderer initialization.");
     return true;
 }
@@ -102,6 +112,8 @@ bool CRenderer::Initialize()
 void CRenderer::Release()
 {
     SLogger::LogInfo("Releasing renderer.");
+
+    CGizmosManager::Shutdown();
 
     mp_window->Release();
     delete mp_window;
@@ -177,7 +189,34 @@ void CRenderer::Render()
             p_renderer->Draw(render_data);
     }
 
+    DrawGizmos(projection * view);
     mp_window->Display();
+}
+
+void CRenderer::DrawGizmos(const glm::mat4& PV)
+{
+    auto game_objects = CEngine::GetAllGameObjects();
+    for(auto* p_game_object : game_objects)
+    {
+        const auto point_behaviors = p_game_object->GetComponents<S_PointLight>();
+        const auto direc_behaviors = p_game_object->GetComponents<S_DirectionalLight>();
+
+        auto size = point_behaviors.size();
+        for(auto i = 0; i < size; ++i)
+        {
+            DrawPointLight(p_game_object->GetTransform().GetWorldPosition(), glm::vec3(1.0f),
+                           32, point_behaviors[i]->GetRange(), 1.0f);
+        }
+
+        size = direc_behaviors.size();
+        for(auto i = 0; i < size; ++i)
+        {
+            DrawDirectionalLight(p_game_object->GetTransform().GetWorldPosition(),
+                          direc_behaviors[i]->GetDirection(), glm::vec3(1.0f), 1.0f);
+        }
+    }
+
+    CGizmosManager::Draw(PV);
 }
 
 CWindow* CRenderer::GetWindow()

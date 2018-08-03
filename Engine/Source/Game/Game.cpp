@@ -31,10 +31,9 @@ void LoadScene()
     p_light->SetRange(1.0f);
     p_point->GetTransform().SetLocalPosition(glm::vec3(0.0f,0.0f, 2.0f));
 
-
     auto* p_directional = p_direc->GetComponent<S_DirectionalLight>();
-    p_directional->SetLightIntensity (0.1f);
-    p_directional->SetAmbientIntensity(0.1f);
+    p_directional->SetLightIntensity  (0.8f);
+    p_directional->SetAmbientIntensity(0.3f);
     p_directional->SetDirection       (glm::vec3(-0.4f, -0.1f, -0.8f));
     p_directional->SetLightColor      (glm::vec3(1.0f, 1.0f, 1.0f));
     p_directional->SetAmbientColor    (glm::vec3(1.0f, 1.0f, 1.0f));
