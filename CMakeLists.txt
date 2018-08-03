@@ -7,7 +7,8 @@ PROJECT               (OOM-Engine CXX)
 CMAKE_MINIMUM_REQUIRED(VERSION 3.1)
 
 # C++ standard to draft C++20
-ADD_DEFINITIONS(-std=c++2a -fconcepts)
+# ADD_DEFINITIONS(-std=c++2a -fconcepts)
+SET(CMAKE_CXX_STANDARD 17)
 
 # Settings
 SET(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/Bin")
@@ -16,8 +17,12 @@ SET(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/Bin")
 # -O3     > AGRESSIVE optimization
 # -s      > stripping ALL
 # -static > Bundles gcc runtime into the .exe
-SET(CMAKE_C_FLAGS_RELEASE          "-O3 -s")
-SET(CMAKE_CXX_FLAGS_RELEASE        "-O3 -s")
+# SET(CMAKE_C_FLAGS_RELEASE          "-O3 -s")
+# SET(CMAKE_CXX_FLAGS_RELEASE        "-O3 -s")
+# SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "-static -mwindows")
+
+SET(CMAKE_C_FLAGS_RELEASE          "/O1 /Os")
+SET(CMAKE_CXX_FLAGS_RELEASE        "/O1 /Os")
 SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "-static -mwindows")
 
 # Include / Lib directories

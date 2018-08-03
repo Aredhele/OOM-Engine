@@ -28,6 +28,7 @@
 #include "Render/Shader/SShaderManager.hpp"
 #include "Render/Material/CMaterial.hpp"
 #include "Physics/CPhysicWorld.hpp"
+#include "Audio/CAudioEngine.hpp"
 #include "Hook.hpp"
 
 namespace Oom
@@ -45,6 +46,10 @@ bool CEngine::Initialize()
     // TODO : Delta time customisable ?
     mp_physic_world = new CPhysicWorld();
     mp_physic_world->Initialize(1.0f / 60.0f);
+
+    mp_audio_engine = new CAudioEngine();
+    mp_audio_engine->Initialize();
+    CAudioEngine::Allocate3DListener();
 
     // Static instance initialization
     sp_instance = this;

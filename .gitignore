@@ -29,6 +29,11 @@
 *.exe
 *.out
 *.app
+Bin/
+
+# Visual
+.vs
+.idea
 
 # CLion
 cmake-build-debug

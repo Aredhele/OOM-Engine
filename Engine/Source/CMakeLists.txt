@@ -13,12 +13,15 @@ FILE(GLOB_RECURSE ENGINE_HEADERS
         ${CMAKE_SOURCE_DIR}/Header/*.h
         ${CMAKE_SOURCE_DIR}/Header/*.inl)
 
-ADD_DEFINITIONS      (-DGLEW_STATIC)
+ADD_DEFINITIONS      (-DGLEW_STATIC -DVC_EXTRALEAN -D_AFX_NO_MFC_CONTROLS_IN_DIALOGS)
 ADD_EXECUTABLE       (OOM-Engine ${ENGINE_SOURCES} ${ENGINE_HEADERS})
 ADD_CUSTOM_TARGET    (Copy_resources)
 ADD_DEPENDENCIES     (OOM-Engine Copy_resources)
-TARGET_LINK_LIBRARIES(OOM-Engine glfw3 glew32 opengl32 qu3e Windowscodecs)
+TARGET_LINK_LIBRARIES(OOM-Engine vcruntime ucrt msvcrt msvcprt glfw3 glew32 opengl32 qu3e Windowscodecs dxguid dsound)
 
 ADD_CUSTOM_COMMAND(TARGET Copy_resources PRE_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/Engine/Resources ${CMAKE_SOURCE_DIR}/Bin/Resources
         COMMENT "[INFO] Copying resource files ...")
+
+TARGET_COMPILE_OPTIONS(OOM-Engine PRIVATE "/GL /Oy /O1 /Os")
+set_property(TARGET OOM-Engine APPEND_STRING PROPERTY LINK_FLAGS " /DYNAMICBASE:NO /NODEFAULTLIB /OPT:REF /OPT:ICF /LTCG")

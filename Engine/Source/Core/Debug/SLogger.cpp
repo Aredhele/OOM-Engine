@@ -18,6 +18,8 @@
             vfprintf(FILE, FORMAT, argList);     \
             fprintf (FILE, "\n");                \
         va_end  (argList);
+#else
+#	define __VA_LOG(FILE, ENGINE, LEVEL, FORMAT)
 #endif
 
 namespace Oom

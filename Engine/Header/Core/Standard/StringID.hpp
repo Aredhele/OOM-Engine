@@ -27,17 +27,8 @@ constexpr const uint32_t STRING_HASH_KEY = 5381;
 /// \note   This function is tail recursive
 constexpr uint32_t hash_function(const char* pTail, uint32_t hash = STRING_HASH_KEY)
 {
-#if __cplusplus >= 201402L
-    while(*pTail != STRING_END_BYTE)
-    {
-        hash = (hash << STRING_BIT_SHIT) + hash + (int32_t)*pTail;
-        pTail++;
-    }
-    return hash;
-#elif __cplusplus >= 201103L
     return (pTail[0] == STRING_END_BYTE) ? hash :
            hash_function(pTail + 1, ((hash << STRING_BIT_SHIT) + hash) + (int32_t)*pTail);
-#endif
 }
 
 /// \brief  Binds the constexpr tail recursive function to a template parameter

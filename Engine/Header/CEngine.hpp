@@ -25,6 +25,7 @@ class CGameObject;
 // Engines
 class CString;
 class CRenderer;
+class CAudioEngine;
 class CPhysicWorld;
 
 class CEngine
@@ -81,6 +82,7 @@ private:
 
     CRenderer*                mp_renderer     = nullptr;
     CPhysicWorld*             mp_physic_world = nullptr;
+    CAudioEngine*             mp_audio_engine = nullptr;
 
     std::vector<CBehavior*  > m_behaviors;
     std::vector<CGameObject*> m_game_objects;
