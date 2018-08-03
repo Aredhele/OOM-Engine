@@ -25,6 +25,9 @@ public:
         UnlitColor,
         UnlitTexture,
         UnlitTransparent,
+
+        // Post processing
+        IdentityEffect,
     };
 
     struct SPair

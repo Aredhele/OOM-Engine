@@ -60,9 +60,6 @@ void CShaderStandard::Begin(const SRenderData& render_data)
         glUniform3f(locColor,     render_data.point_lights[nLight].color.x,    render_data.point_lights[nLight].color.y,    render_data.point_lights[nLight].color.z);
         glUniform3f(locPosition,  render_data.point_lights[nLight].position.x, render_data.point_lights[nLight].position.y, render_data.point_lights[nLight].position.z);
     }
-
-    glActiveTexture (GL_TEXTURE0);
-    glBindTexture   (GL_TEXTURE_2D, m_texture_id);
 }
 
 void CShaderStandard::End()

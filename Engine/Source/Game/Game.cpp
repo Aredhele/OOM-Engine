@@ -25,16 +25,20 @@ void LoadScene()
     auto* p_direc = Sdk::GameObject::CreateDirectionalLight();
     auto* p_point = Sdk::GameObject::CreatePointLight();
 
+
     auto* p_light = p_point->GetComponent<S_PointLight>();
     p_light->SetColor(glm::vec3(1.0f));
     p_light->SetIntensity(0.8f);
-    p_light->SetRange(1.0f);
-    p_point->GetTransform().SetLocalPosition(glm::vec3(0.0f,0.0f, 2.0f));
+    p_light->SetRange(25.0f);
+
+    p_point->GetTransform().SetLocalPosition(glm::vec3(0.0f,0.0f, 10.0f));
 
     auto* p_directional = p_direc->GetComponent<S_DirectionalLight>();
     p_directional->SetLightIntensity  (0.8f);
     p_directional->SetAmbientIntensity(0.3f);
-    p_directional->SetDirection       (glm::vec3(-0.4f, -0.1f, -0.8f));
+    p_directional->SetDirection       (glm::vec3(-0.6f, -0.1f, -0.1f));
     p_directional->SetLightColor      (glm::vec3(1.0f, 1.0f, 1.0f));
     p_directional->SetAmbientColor    (glm::vec3(1.0f, 1.0f, 1.0f));
+
+    p_direc->GetTransform().SetLocalPosition(glm::vec3(5.0f, 5.0f, 20.0f));
 }

@@ -8,6 +8,7 @@
 #define OOM_ENGINE_C_RENDERER_HPP__
 
 #include <vector>
+#include "Render/PostProcessing/CPostProcessingStack.hpp"
 
 namespace Oom
 {
@@ -36,6 +37,7 @@ private:
 private:
     CWindow*                 mp_window = nullptr;
     std::vector<IRenderer*>  m_renderers;
+    CPostProcessingStack     m_post_processing;
 
 private:
 

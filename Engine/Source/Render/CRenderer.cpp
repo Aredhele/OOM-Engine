@@ -18,6 +18,7 @@
 #include "Built-in/Script/S_PointLight.hpp"
 #include "Built-in/Script/S_DirectionalLight.hpp"
 
+#include "Render/Gizmos/CGizmosBox.hpp"
 #include "Render/Gizmos/CGizmosPointLight.hpp"
 #include "Render/Gizmos/CGizmosDirectionalLight.hpp"
 
@@ -37,8 +38,8 @@ void GLAPIENTRY GLErrorCallback(
     }
 
  //fprintf(stderr, "GL CALLBACK: %s type = 0x%x, severity = 0x%x, message = %s\n",
-//          (type == GL_DEBUG_TYPE_ERROR ? "** GL ERROR **" : "" ),
-  //         type, severity, message );
+ //         (type == GL_DEBUG_TYPE_ERROR ? "** GL ERROR **" : "" ),
+ //        type, severity, message );
 }
 
 namespace Oom
@@ -99,11 +100,23 @@ bool CRenderer::Initialize()
         "Resources/Shader/Unlit/UnlitTransparentVertexShader.glsl",
         "Resources/Shader/Unlit/UnlitTransparentFragmentShader.glsl");
 
+    // Post processing
+    SShaderManager::RegisterShader(SShaderManager::EShaderType::IdentityEffect,
+       "IdentityEffect",
+       "Resources/Shader/Effect/IdentityVertexShader.glsl",
+       "Resources/Shader/Effect/IdentityFragmentShader.glsl");
+
     CGizmosManager::Initialize();
+    CGizmosManager::EnableGizmo(CGizmosManager::EGizmo::Box);
     CGizmosManager::EnableGizmo(CGizmosManager::EGizmo::Axis);
     CGizmosManager::EnableGizmo(CGizmosManager::EGizmo::Grid);
     CGizmosManager::EnableGizmo(CGizmosManager::EGizmo::PointLight);
     CGizmosManager::EnableGizmo(CGizmosManager::EGizmo::DirectionalLight);
+
+    m_post_processing.Initialize();
+    m_post_processing.SetEffectActive(IPostEffect::EType::Identity, true);
+
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
     SLogger::LogInfo("Renderer initialization.");
     return true;
@@ -144,8 +157,6 @@ void CRenderer::Render()
         return;
     }
 
-    mp_window->Clear(p_camera_script->GetClearColor());
-
     // Getting matrix
     const glm::mat4& view       = p_camera_script->GetViewMatrix();
     const glm::mat4& projection = p_camera_script->GetProjectionMatrix();
@@ -182,6 +193,9 @@ void CRenderer::Render()
         }
     }
 
+    m_post_processing.OnPostProcessingBegin();
+    mp_window->Clear(p_camera_script->GetClearColor());
+
     // Forward rendering
     for(auto* p_renderer : m_renderers)
     {
@@ -190,6 +204,10 @@ void CRenderer::Render()
     }
 
     DrawGizmos(projection * view);
+
+    m_post_processing.OnPostProcessingRender();
+    m_post_processing.OnPostProcessingEnd();
+
     mp_window->Display();
 }
 
@@ -204,7 +222,7 @@ void CRenderer::DrawGizmos(const glm::mat4& PV)
         auto size = point_behaviors.size();
         for(auto i = 0; i < size; ++i)
         {
-            DrawPointLight(p_game_object->GetTransform().GetWorldPosition(), glm::vec3(1.0f),
+            DrawPointLight(p_game_object->GetTransform().GetWorldPosition(), glm::vec3(0.7f),
                            32, point_behaviors[i]->GetRange(), 1.0f);
         }
 
@@ -212,9 +230,11 @@ void CRenderer::DrawGizmos(const glm::mat4& PV)
         for(auto i = 0; i < size; ++i)
         {
             DrawDirectionalLight(p_game_object->GetTransform().GetWorldPosition(),
-                          direc_behaviors[i]->GetDirection(), glm::vec3(1.0f), 1.0f);
+                          direc_behaviors[i]->GetDirection(), glm::vec3(0.7f), 1.0f);
         }
     }
+
+    DrawBox(glm::vec3(0.0f), 2.0f, 2.0f, glm::vec3(0.0f, 0.0f, 1.0f));
 
     CGizmosManager::Draw(PV);
 }
