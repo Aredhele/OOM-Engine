@@ -111,24 +111,22 @@ void CPostProcessingStack::Initialize()
     }
 
     m_stack.push_back(new CIdentityEffect());
-    /*m_stack.push_back(new LightScattering());
-    m_stack.push_back(new DepthBuffer());
-    m_stack.push_back(new ShadowMap());
-    m_stack.push_back(new Mirror());
-    m_stack.push_back(new Fog());
-    m_stack.push_back(new Negative());
-    m_stack.push_back(new Sepia());
-    m_stack.push_back(new BoxBlur());
-    m_stack.push_back(new GaussianBlur());
-    m_stack.push_back(new Sharpen());
-    m_stack.push_back(new EdgeDetection());
-    m_stack.push_back(new GodRay());
-    m_stack.push_back(new Bloom());
-    m_stack.push_back(new Vignette());
-    m_stack.push_back(new DepthOfField());
-    m_stack.push_back(new FXAA());
-    m_stack.push_back(new Experimental1());
-    m_stack.push_back(new Experimental2());*/
+    // m_stack.push_back(new DepthBuffer());
+    // m_stack.push_back(new Mirror());
+    m_stack.push_back(new CFogEffect());
+    // m_stack.push_back(new Negative());
+    // m_stack.push_back(new Sepia());
+    // m_stack.push_back(new BoxBlur());
+    // m_stack.push_back(new GaussianBlur());
+    // m_stack.push_back(new Sharpen());
+    // m_stack.push_back(new EdgeDetection());
+    // m_stack.push_back(new GodRay());
+    // m_stack.push_back(new Bloom());
+    // m_stack.push_back(new Vignette());
+    // m_stack.push_back(new DepthOfField());
+    // m_stack.push_back(new FXAA());
+    // m_stack.push_back(new Experimental1());
+    // m_stack.push_back(new Experimental2());
 
     SLogger::LogInfo("Post-processing stack successfully initialized.");
 }

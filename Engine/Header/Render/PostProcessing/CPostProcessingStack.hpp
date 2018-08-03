@@ -12,6 +12,7 @@
 #include "Render/PostProcessing/IPostEffect.hpp"
 
 // Post effects
+#include "Render/PostProcessing/CFogEffect.hpp"
 #include "Render/PostProcessing/CIdentityEffect.hpp"
 
 namespace Oom

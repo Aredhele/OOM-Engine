@@ -101,10 +101,15 @@ bool CRenderer::Initialize()
         "Resources/Shader/Unlit/UnlitTransparentFragmentShader.glsl");
 
     // Post processing
+    SShaderManager::RegisterShader(SShaderManager::EShaderType::FogEffect,
+        "FogEffect",
+        "Resources/Shader/Effect/FogVertexShader.glsl",
+        "Resources/Shader/Effect/FogFragmentShader.glsl");
+
     SShaderManager::RegisterShader(SShaderManager::EShaderType::IdentityEffect,
-       "IdentityEffect",
-       "Resources/Shader/Effect/IdentityVertexShader.glsl",
-       "Resources/Shader/Effect/IdentityFragmentShader.glsl");
+        "IdentityEffect",
+        "Resources/Shader/Effect/IdentityVertexShader.glsl",
+        "Resources/Shader/Effect/IdentityFragmentShader.glsl");
 
     CGizmosManager::Initialize();
     CGizmosManager::EnableGizmo(CGizmosManager::EGizmo::Box);
@@ -114,6 +119,7 @@ bool CRenderer::Initialize()
     CGizmosManager::EnableGizmo(CGizmosManager::EGizmo::DirectionalLight);
 
     m_post_processing.Initialize();
+    m_post_processing.SetEffectActive(IPostEffect::EType::Fog,      true);
     m_post_processing.SetEffectActive(IPostEffect::EType::Identity, true);
 
     glBindFramebuffer(GL_FRAMEBUFFER, 0);

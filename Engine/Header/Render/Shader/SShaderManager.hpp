@@ -27,7 +27,8 @@ public:
         UnlitTransparent,
 
         // Post processing
-        IdentityEffect,
+        FogEffect,
+        IdentityEffect
     };
 
     struct SPair
