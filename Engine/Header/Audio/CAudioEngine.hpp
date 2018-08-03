@@ -28,6 +28,10 @@ private:
 
 private:
 
+	void CreateBuffer();
+
+private:
+
     friend class CEngine;
 
     bool Initialize();
@@ -38,7 +42,9 @@ private:
 
 private:
 
-    IDirectSound8* mp_direct_sound = nullptr;
+    IDirectSound8*         mp_direct_sound     = nullptr;
+	IDirectSoundBuffer*    mp_primary_buffer   = nullptr;
+	IDirectSound3DBuffer8* mp_secondary_buffer = nullptr;
 
     std::vector<CAudioSource3D*>   m_sources;
     std::vector<CAudioListener3D*> m_listeners;

@@ -104,6 +104,7 @@ void CEngine::Run()
             lag -= delta_time;
         }
 
+		mp_audio_engine->Update(delta_time);
         mp_renderer->Render();
     }
 }

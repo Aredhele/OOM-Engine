@@ -4,6 +4,7 @@
 /// \package    Renderer
 /// \author     Vincent STEHLY--CALISTO
 
+#include "Render/Config.hpp"
 #include "Render/CWindow.hpp"
 #include "Render/CRenderer.hpp"
 #include "Render/Renderer/IRenderer.hpp"
@@ -33,7 +34,7 @@ void GLAPIENTRY GLErrorCallback(
 {
     if(severity == 0x9146)
     {
-        int a;
+        int a = 0;
         a++;
     }
 

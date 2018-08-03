@@ -17,11 +17,17 @@ ADD_DEFINITIONS      (-DGLEW_STATIC -DVC_EXTRALEAN -D_AFX_NO_MFC_CONTROLS_IN_DIA
 ADD_EXECUTABLE       (OOM-Engine ${ENGINE_SOURCES} ${ENGINE_HEADERS})
 ADD_CUSTOM_TARGET    (Copy_resources)
 ADD_DEPENDENCIES     (OOM-Engine Copy_resources)
-TARGET_LINK_LIBRARIES(OOM-Engine vcruntime ucrt msvcrt msvcprt glfw3 glew32 opengl32 qu3e Windowscodecs dxguid dsound)
+
+IF(${CMAKE_BUILD_TYPE} MATCHES Debug)
+	TARGET_LINK_LIBRARIES(OOM-Engine glfw3d glew32d opengl32 qu3ed Windowscodecs dxguid dsound)
+ELSE()
+	TARGET_LINK_LIBRARIES(OOM-Engine vcruntime ucrt msvcrt msvcprt glfw3 glew32 opengl32 qu3e Windowscodecs dxguid dsound)
+	set_property(TARGET OOM-Engine APPEND_STRING PROPERTY LINK_FLAGS " /DYNAMICBASE:NO /NODEFAULTLIB /OPT:REF /OPT:ICF /LTCG")
+ENDIF()
 
 ADD_CUSTOM_COMMAND(TARGET Copy_resources PRE_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/Engine/Resources ${CMAKE_SOURCE_DIR}/Bin/Resources
         COMMENT "[INFO] Copying resource files ...")
 
-TARGET_COMPILE_OPTIONS(OOM-Engine PRIVATE "/GL /Oy /O1 /Os")
-set_property(TARGET OOM-Engine APPEND_STRING PROPERTY LINK_FLAGS " /DYNAMICBASE:NO /NODEFAULTLIB /OPT:REF /OPT:ICF /LTCG")
+# TARGET_COMPILE_OPTIONS(OOM-Engine PRIVATE " /GL /Oy /O1 /Os")
+	
