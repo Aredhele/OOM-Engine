@@ -101,10 +101,20 @@ bool CRenderer::Initialize()
         "Resources/Shader/Unlit/UnlitTransparentFragmentShader.glsl");
 
     // Post processing
+    SShaderManager::RegisterShader(SShaderManager::EShaderType::FXAA,
+        "FXAA",
+        "Resources/Shader/Effect/FXAAVertexShader.glsl",
+        "Resources/Shader/Effect/FXAAFragmentShader.glsl");
+
     SShaderManager::RegisterShader(SShaderManager::EShaderType::FogEffect,
         "FogEffect",
         "Resources/Shader/Effect/FogVertexShader.glsl",
         "Resources/Shader/Effect/FogFragmentShader.glsl");
+
+    SShaderManager::RegisterShader(SShaderManager::EShaderType::Vignette,
+        "Vignette",
+        "Resources/Shader/Effect/VignetteVertexShader.glsl",
+        "Resources/Shader/Effect/VignetteFragmentShader.glsl");
 
     SShaderManager::RegisterShader(SShaderManager::EShaderType::IdentityEffect,
         "IdentityEffect",
@@ -120,6 +130,8 @@ bool CRenderer::Initialize()
 
     m_post_processing.Initialize();
     m_post_processing.SetEffectActive(IPostEffect::EType::Fog,      true);
+    m_post_processing.SetEffectActive(IPostEffect::EType::FXAA,     true);
+    m_post_processing.SetEffectActive(IPostEffect::EType::Vignette, true);
     m_post_processing.SetEffectActive(IPostEffect::EType::Identity, true);
 
     glBindFramebuffer(GL_FRAMEBUFFER, 0);

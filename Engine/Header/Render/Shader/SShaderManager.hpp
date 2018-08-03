@@ -27,6 +27,8 @@ public:
         UnlitTransparent,
 
         // Post processing
+        FXAA,
+        Vignette,
         FogEffect,
         IdentityEffect
     };

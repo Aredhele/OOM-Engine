@@ -13,6 +13,8 @@
 
 // Post effects
 #include "Render/PostProcessing/CFogEffect.hpp"
+#include "Render/PostProcessing/CFXAAEffect.hpp"
+#include "Render/PostProcessing/CVignetteEffect.hpp"
 #include "Render/PostProcessing/CIdentityEffect.hpp"
 
 namespace Oom
