@@ -7,6 +7,7 @@
 #include <dsound.h>
 #include "Core/Debug/SLogger.hpp"
 #include "Audio/CAudioEngine.hpp"
+#include "Audio/CAudioDecoder.hpp"
 
 namespace Oom
 {

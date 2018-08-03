@@ -5,28 +5,26 @@
 /// \author     Vincent STEHLY--CALISTO
 
 #include "Audio/CWaveHeader.hpp"
-#include <minwinbase.h>
-#include <winnt.h>
 
 namespace Oom
 {
 
 CWaveHeader::CWaveHeader()
 {
-	// None
+	memset(this, 0x0, sizeof(*this));
 }
 
 CWaveHeader::CWaveHeader(unsigned long sample_rate, unsigned short bits_per_sample, unsigned short channels, unsigned long data_size)
 {
-	ZeroMemory(this, sizeof(*this));
+	memset(this, 0x0, sizeof(*this));
 
 	// Set Riff-Chunk
-	CopyMemory(m_riff_ID,   "RIFF", 4);
+	memcpy(m_riff_ID,   "RIFF", 4);
 	m_riff_size = data_size + 44;
-	CopyMemory(m_riff_type, "WAVE", 4);
+	memcpy(m_riff_type, "WAVE", 4);
 
 	// Set Fmt-Chunk
-	CopyMemory(m_fmt_ID, "fmt ", 4);
+	memcpy(m_fmt_ID, "fmt ", 4);
 	m_fmt_length          = 16;
 	m_fmt_format          = 1;
 	m_fmt_channels        = channels;
@@ -36,11 +34,11 @@ CWaveHeader::CWaveHeader(unsigned long sample_rate, unsigned short bits_per_samp
 	m_fmt_bits_per_sample = bits_per_sample;
 
 	// Set Data-Chunk
-	CopyMemory(m_data_ID, "data", 4);
+	memcpy(m_data_ID, "data", 4);
 	m_data_size = data_size;
 }
 
-bool CWaveHeader::ISWaveFile(FILE* p_wave_file)
+/* static */ bool CWaveHeader::ISWaveFile(FILE* p_wave_file)
 {
 	CWaveHeader header;
 

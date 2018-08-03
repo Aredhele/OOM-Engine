@@ -22,7 +22,7 @@ CAudioBuffer::~CAudioBuffer()
 
 bool CAudioBuffer::LoadFromFile(const CString& path)
 {
-
+	return true;
 }
 
 }

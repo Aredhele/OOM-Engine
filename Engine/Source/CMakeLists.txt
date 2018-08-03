@@ -19,9 +19,9 @@ ADD_CUSTOM_TARGET    (Copy_resources)
 ADD_DEPENDENCIES     (OOM-Engine Copy_resources)
 
 IF(${CMAKE_BUILD_TYPE} MATCHES Debug)
-	TARGET_LINK_LIBRARIES(OOM-Engine glfw3d glew32d opengl32 qu3ed Windowscodecs dxguid dsound)
+	TARGET_LINK_LIBRARIES(OOM-Engine glfw3d glew32d opengl32 qu3ed Windowscodecs dxguid dsound vorbisd oggd)
 ELSE()
-	TARGET_LINK_LIBRARIES(OOM-Engine vcruntime ucrt msvcrt msvcprt glfw3 glew32 opengl32 qu3e Windowscodecs dxguid dsound)
+	TARGET_LINK_LIBRARIES(OOM-Engine vcruntime ucrt msvcrt msvcprt glfw3 glew32 opengl32 qu3e Windowscodecs dxguid dsound vorbis ogg)
 	set_property(TARGET OOM-Engine APPEND_STRING PROPERTY LINK_FLAGS " /DYNAMICBASE:NO /NODEFAULTLIB /OPT:REF /OPT:ICF /LTCG")
 ENDIF()
 
