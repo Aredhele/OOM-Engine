@@ -43,6 +43,8 @@ void CAudioListener3D::_Register()
 
     const glm::vec3 position = GetGameObject()->GetTransform().GetLocalPosition();
 	mp_listener->SetPosition(position.x, position.y, position.z, DS3D_IMMEDIATE);
+
+	CAudioEngine::RegisterCAudioListener3D(this);
 }
 
 void CAudioListener3D::_Destroy()
@@ -52,6 +54,8 @@ void CAudioListener3D::_Destroy()
 		mp_listener->Release();
 		mp_listener = nullptr;
 	}
+
+	CAudioEngine::UnregisterCAudioListener3D(this);
 }
 
 }

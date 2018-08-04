@@ -11,9 +11,12 @@
 
 #include "Import/CMeshImporter"
 
+
+CAudioBuffer buffer;
+
 void LoadScene()
 {
-    Sdk::GameObject::CreateFreeCamera();
+    auto* cam =Sdk::GameObject::CreateFreeCamera();
     Sdk::Import::ImportMesh("Resources/Mesh/Cube.obj");
     Sdk::Import::ImportMesh("Resources/Mesh/Environment_01.obj");
 
@@ -25,6 +28,17 @@ void LoadScene()
     auto* p_direc = Sdk::GameObject::CreateDirectionalLight();
     auto* p_point = Sdk::GameObject::CreatePointLight();
 
+	cam->AddComponent<CAudioListener3D>();
+	auto* p_source_go   = Sdk::GameObject::CreateAudioSource3D();
+
+
+	buffer.LoadFromFile("Resources/XMasMono.ogg");
+
+	auto* p_source = p_source_go->GetComponent<CAudioSource3D>();
+	p_source->SetAudioBuffer(&buffer);
+	p_source->SetMinDistance(5.0f);
+	p_source->SetMaxDistance(15.0f);
+	p_source->Play();
 
     auto* p_light = p_point->GetComponent<S_PointLight>();
     p_light->SetColor(glm::vec3(1.0f));

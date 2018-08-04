@@ -110,6 +110,20 @@ namespace Sdk
 
             return p_text_object;
         }
+
+		CGameObject* CreateAudioListener3D() {
+			CGameObject* p_listener = CEngine::Instantiate();
+			p_listener->AddComponent<CAudioListener3D>();
+
+			return p_listener;
+        }
+
+		CGameObject* CreateAudioSource3D()   {
+			CGameObject* p_source = CEngine::Instantiate();
+			p_source->AddComponent<CAudioSource3D>();
+
+			return p_source;
+        }
     }
 
     namespace Debug

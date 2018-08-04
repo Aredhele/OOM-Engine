@@ -71,15 +71,6 @@ void CAudioEngine::Release()
 
 void CAudioEngine::Update(float delta_time)
 {
-	// Getting the camera
-	CGameObject* p_camera = CEngine::FindWithTag("MainCamera");
-
-	if (!p_camera)
-	{
-		SLogger::LogWaring("No main camera found.");
-		return;
-	}
-
 #ifndef NDEBUG
 	DrawGizmos();
 #endif
@@ -95,11 +86,10 @@ void CAudioEngine::Update(float delta_time)
 	}
 
 	CAudioListener3D* p_listener = m_listeners[0];
-
-	HRESULT result = p_listener->mp_listener->SetPosition(
-		p_camera->GetTransform().GetLocalPosition().x,
-		p_camera->GetTransform().GetLocalPosition().z,
-		p_camera->GetTransform().GetLocalPosition().y, DS3D_IMMEDIATE);
+	HRESULT result  = p_listener->mp_listener->SetPosition(
+		p_listener->GetGameObject()->GetTransform().GetLocalPosition().x,
+		p_listener->GetGameObject()->GetTransform().GetLocalPosition().z,
+		p_listener->GetGameObject()->GetTransform().GetLocalPosition().y, DS3D_IMMEDIATE);
 
 	if(result != DS_OK)
 	{
@@ -107,12 +97,12 @@ void CAudioEngine::Update(float delta_time)
 	}
 
 	result = p_listener->mp_listener->SetOrientation(
-		p_camera->GetTransform().GetForward().x,
-		p_camera->GetTransform().GetForward().z,
-		p_camera->GetTransform().GetForward().y,
-		glm::normalize(p_camera->GetTransform().GetUp()).x,
-		glm::normalize(p_camera->GetTransform().GetUp()).z,
-		glm::normalize(p_camera->GetTransform().GetUp()).y,
+		p_listener->GetGameObject()->GetTransform().GetForward().x,
+		p_listener->GetGameObject()->GetTransform().GetForward().z,
+		p_listener->GetGameObject()->GetTransform().GetForward().y,
+		glm::normalize(p_listener->GetGameObject()->GetTransform().GetUp()).x,
+		glm::normalize(p_listener->GetGameObject()->GetTransform().GetUp()).z,
+		glm::normalize(p_listener->GetGameObject()->GetTransform().GetUp()).y,
 		DS3D_IMMEDIATE);
 
 	if (result != DS_OK)

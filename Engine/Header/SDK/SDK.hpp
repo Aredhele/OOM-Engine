@@ -29,8 +29,13 @@
 #include "Render/Renderer/CMeshRenderer.hpp"
 #include "Render/Renderer/CTextRenderer.hpp"
 
+// Audio
+#include "Audio/CAudioSource3D.hpp"
+#include "Audio/CAudioListener3D.hpp"
+
 // Resources
 #include "Resource/CMesh.hpp"
+#include "Audio/CAudioBuffer.hpp"
 
 // Built-in
 #include "Built-in/Script/S_Text.hpp"
@@ -72,6 +77,8 @@ namespace Sdk
         CGameObject* CreateDirectionalLight();
         CGameObject* CreatePointLight();
         CGameObject* CreateText();
+		CGameObject* CreateAudioListener3D();
+		CGameObject* CreateAudioSource3D();
     }
 
     namespace Debug
