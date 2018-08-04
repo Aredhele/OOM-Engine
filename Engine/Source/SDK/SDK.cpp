@@ -138,6 +138,14 @@ namespace Sdk
 			CRenderer::DisablePostProcessing();
 		}
 
+		void EnablePostEffect(EPostEffect effect) {
+			CRenderer::GetPostProcessingStack()->SetEffectActive(effect, true);
+		}
+
+		void DisablePostEffect(EPostEffect effect) {
+			CRenderer::GetPostProcessingStack()->SetEffectActive(effect, false);
+		}
+
 		CPostProcessingStack* GetPostProcessingStack() {
 			return CRenderer::GetPostProcessingStack();
 		}

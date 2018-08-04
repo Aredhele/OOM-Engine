@@ -56,7 +56,7 @@ CGizmosManager::CGizmosManager()
     m_array_map.push_back({EGizmo::DirectionalLight, false});
 
     // Initializes the grid
-    m_grid.Initialize(50, 4.0f, glm::vec3(0.4f, 0.4f, 0.4f));
+    m_grid.Initialize(50, 1.0f, glm::vec3(0.4f, 0.4f, 0.4f));
 }
 
 CGizmosManager::~CGizmosManager() // NOLINT

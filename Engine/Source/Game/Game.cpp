@@ -4,55 +4,51 @@
 /// \package    Game
 /// \author     Vincent STEHLY--CALISTO
 
-#include <Core/Debug/SLogger.hpp>
-#include <Import/CTextureImporter.hpp>
 #include "Hook.hpp"
 #include "SDK/SDK.hpp"
 
-#include "Import/CMeshImporter"
-
-
-CAudioBuffer buffer;
+CAudioBuffer buffer_1;
+CAudioBuffer buffer_2;
 
 void LoadScene()
 {
-    auto* cam =Sdk::GameObject::CreateFreeCamera();
-    Sdk::Import::ImportMesh("Resources/Mesh/Cube.obj");
-    Sdk::Import::ImportMesh("Resources/Mesh/Environment_01.obj");
+	// Settings
+	Sdk::Render::EnablePostProcessing();
+	Sdk::Render::EnablePostEffect(EPostEffect::FXAA);
 
-    CGameObject* go = Sdk::GameObject::CreateText();
-    auto* p_text    = go->GetComponent<S_Text>();
+	Sdk::Debug::EnableGizmo(EGizmo::Ray);
+	Sdk::Debug::EnableGizmo(EGizmo::Box);
+	Sdk::Debug::EnableGizmo(EGizmo::Axis);
+	Sdk::Debug::EnableGizmo(EGizmo::Line);
+	Sdk::Debug::EnableGizmo(EGizmo::Grid);
+	Sdk::Debug::EnableGizmo(EGizmo::AudioSource);
 
-    p_text->Set("OOM-Engine v0.1", glm::vec2(00.0f, 850.0f), 50, glm::vec3(0.3f));
+    Sdk::GameObject::CreateFreeCamera();
 
-    auto* p_direc = Sdk::GameObject::CreateDirectionalLight();
-    auto* p_point = Sdk::GameObject::CreatePointLight();
+	// Loads 2 sounds from a file
+	buffer_1.LoadFromFile("Resources/Music/Town-Academy.ogg");
+	buffer_2.LoadFromFile("Resources/Music/Town-Dungeon.ogg");
 
-	cam->AddComponent<CAudioListener3D>();
-	auto* p_source_go   = Sdk::GameObject::CreateAudioSource3D();
+	// Creates 2 game objets with audio source attatched
+	auto* p_source_1_go = Sdk::GameObject::CreateAudioSource3D();
+	auto* p_source_2_go = Sdk::GameObject::CreateAudioSource3D();
 
+	p_source_1_go->GetTransform().SetLocalPosition(-5.0f, 0.0f, 0.0f);
+	p_source_2_go->GetTransform().SetLocalPosition( 5.0f, 0.0f, 0.0f);
 
-	buffer.LoadFromFile("Resources/XMasMono.ogg");
+	// Gets the audio components
+	auto* p_source_1 = p_source_1_go->GetComponent<CAudioSource3D>();
+	auto* p_source_2 = p_source_2_go->GetComponent<CAudioSource3D>();
 
-	auto* p_source = p_source_go->GetComponent<CAudioSource3D>();
-	p_source->SetAudioBuffer(&buffer);
-	p_source->SetMinDistance(5.0f);
-	p_source->SetMaxDistance(15.0f);
-	p_source->Play();
+	// Gives to source the audio buffer resource
+	p_source_1->SetAudioBuffer(&buffer_1);
+	p_source_2->SetAudioBuffer(&buffer_2);
 
-    auto* p_light = p_point->GetComponent<S_PointLight>();
-    p_light->SetColor(glm::vec3(1.0f));
-    p_light->SetIntensity(0.8f);
-    p_light->SetRange(25.0f);
+	p_source_1->SetMinDistance( 2.0f);
+	p_source_1->SetMaxDistance(10.0f);
+	p_source_1->Play();
 
-    p_point->GetTransform().SetLocalPosition(glm::vec3(0.0f,0.0f, 10.0f));
-
-    auto* p_directional = p_direc->GetComponent<S_DirectionalLight>();
-    p_directional->SetLightIntensity  (0.8f);
-    p_directional->SetAmbientIntensity(0.3f);
-    p_directional->SetDirection       (glm::vec3(-0.6f, -0.1f, -0.1f));
-    p_directional->SetLightColor      (glm::vec3(1.0f, 1.0f, 1.0f));
-    p_directional->SetAmbientColor    (glm::vec3(1.0f, 1.0f, 1.0f));
-
-    p_direc->GetTransform().SetLocalPosition(glm::vec3(5.0f, 5.0f, 20.0f));
+	p_source_2->SetMinDistance( 2.0f);
+	p_source_2->SetMaxDistance(10.0f);
+	//p_source_2->Play();
 }

@@ -245,7 +245,7 @@ namespace Oom
 									}
 
 									for (auto i = 0; i < vi.channels * bout; ++i)
-										pcm_data.samples.push_back(convbuffer[i] * 1.2f);
+										pcm_data.samples.push_back(convbuffer[i]);
 
 									byteWritten += (bout * 2 * vi.channels);
 									vorbis_synthesis_read(&vd, bout);

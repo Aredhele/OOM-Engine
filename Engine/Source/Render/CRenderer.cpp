@@ -258,7 +258,7 @@ void CRenderer::DrawGizmos(const glm::mat4& PV)
         }
     }
 
-    DrawBox(glm::vec3(0.0f), 2.0f, 2.0f, glm::vec3(0.0f, 0.0f, 1.0f));
+    // DrawBox(glm::vec3(0.0f), 2.0f, 2.0f, glm::vec3(0.0f, 0.0f, 1.0f));
 
     CGizmosManager::Draw(PV);
 }

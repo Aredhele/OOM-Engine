@@ -46,13 +46,15 @@
 
 // Misc
 #include "Render/Gizmos/CGizmosManager.hpp"
+#include "Render/PostProcessing/IPostEffect.hpp"
 #include "Render/PostProcessing/CPostProcessingStack.hpp"
 
 // Namespace
 using namespace Oom;
 
 // Shorcuts
-using EGizmo = CGizmosManager::EGizmo;
+using EGizmo      = CGizmosManager::EGizmo;
+using EPostEffect = IPostEffect::EType;
 
 namespace Sdk
 {
@@ -93,6 +95,8 @@ namespace Sdk
     {
 		void					EnablePostProcessing	();
 		void					DisablePostProcessing	();
+		void					EnablePostEffect        (EPostEffect effect);
+		void					DisablePostEffect       (EPostEffect effect);
 		CPostProcessingStack*	GetPostProcessingStack	();
     }
 

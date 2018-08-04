@@ -19,7 +19,8 @@ CAudioBuffer::CAudioBuffer()
 
 CAudioBuffer::~CAudioBuffer()
 {
-	mp_secondary_buffer->Release();
+	if(mp_secondary_buffer)
+		mp_secondary_buffer->Release();
 }
 
 bool CAudioBuffer::LoadFromFile(const CString& path)
