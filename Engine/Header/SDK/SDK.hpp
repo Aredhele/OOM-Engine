@@ -44,7 +44,14 @@
 #include "Built-in/Script/S_DirectionalLight.hpp"
 #include "Built-in/Script/S_CameraController.hpp"
 
+// Misc
+#include "Render/Gizmos/CGizmosManager.hpp"
+
+// Namespace
 using namespace Oom;
+
+// Shorcuts
+using EGizmo = CGizmosManager::EGizmo;
 
 namespace Sdk
 {
@@ -87,6 +94,9 @@ namespace Sdk
         void LogInfo  (const char * szFormat, ...);
         void LogWaring(const char * szFormat, ...);
         void LogError (const char * szFormat, ...);
+
+		void EnableGizmo  (EGizmo type);
+		void DisableGizmo (EGizmo type);
     }
 
     namespace Import

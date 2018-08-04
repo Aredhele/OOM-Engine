@@ -70,8 +70,9 @@ namespace Sdk
         CGameObject* CreateFreeCamera() {
 
             CGameObject* p_camera = CreateCamera();
+			p_camera->AddComponent<CAudioListener3D>();
             p_camera->AddComponent<S_CameraController>();
-
+			
             return p_camera;
         }
 
@@ -155,6 +156,14 @@ namespace Sdk
                 SLogger::LogError(szFormat, argList);
             va_end  (argList);
         }
+
+	    void EnableGizmo(EGizmo type) {
+			CGizmosManager::EnableGizmo(type);
+	    }
+
+	    void DisableGizmo(EGizmo type) {
+			CGizmosManager::DisableGizmo(type);
+	    }
     }
 
     namespace Import

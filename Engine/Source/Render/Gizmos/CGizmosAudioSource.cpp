@@ -74,6 +74,34 @@ void DrawAudioSource(glm::vec3 const& position, float distance_min, float distan
 	// Adding last points
 	CGizmosManager::AddLine(pointsZ[0], pointsZ[pointsZ.size() - 1], glm::vec3(0.4f, 0.4f, 0.4f));
 	CGizmosManager::AddLine(pointsY[0], pointsY[pointsY.size() - 1], glm::vec3(0.4f, 0.4f, 0.4f));
+
+	// Small inner circle
+	pointsZ.clear();
+	pointsY.clear();
+	for (int nPoint = 0; nPoint < pointCount; ++nPoint)
+	{
+		float x1 = position.x + glm::cos(alpha * nPoint) * 0.3f;
+		float y1 = position.y + glm::sin(alpha * nPoint) * 0.3f;
+		float z1 = position.z;
+
+		float x2 = position.x;
+		float y2 = position.y + glm::sin(alpha * nPoint) * 0.3f;
+		float z2 = position.z + glm::cos(alpha * nPoint) * 0.3f;
+
+		pointsZ.emplace_back(x1, y1, z1);
+		pointsY.emplace_back(x2, y2, z2);
+
+		if (nPoint != 0)
+		{
+			CGizmosManager::AddLine(pointsZ[nPoint - 1], pointsZ[nPoint], glm::vec3(0.9f, 0.1f, 0.1f));
+			CGizmosManager::AddLine(pointsY[nPoint - 1], pointsY[nPoint], glm::vec3(0.9f, 0.1f, 0.1f));
+		}
+	}
+
+	// Adding last points
+	CGizmosManager::AddLine(pointsZ[0], pointsZ[pointsZ.size() - 1], glm::vec3(0.9f, 0.1f, 0.1f));
+	CGizmosManager::AddLine(pointsY[0], pointsY[pointsY.size() - 1], glm::vec3(0.9f, 0.1f, 0.1f));
+
 #endif
 }
 
