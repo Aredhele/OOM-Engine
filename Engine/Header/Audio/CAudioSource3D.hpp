@@ -20,6 +20,9 @@ class CAudioSource3D : public IComponent
 {
 public:
 
+	void Play  (bool must_loop = false);
+	void Stop  ();
+	void SetFrequency  (float pitch);
 	void SetMinDistance(float distance);
 	void SetMaxDistance(float distance);
 	void SetVolume     (uint32_t volume);

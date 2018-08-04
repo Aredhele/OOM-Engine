@@ -27,6 +27,7 @@ public:
 private:
 
 	friend class CAudioBuffer;
+	friend class CAudioSource3D;
 
 	unsigned char  m_riff_ID[4];		   ///< 'RIFF'
 	unsigned long  m_riff_size;			   ///< DataSize + 44
