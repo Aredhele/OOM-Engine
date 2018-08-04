@@ -131,6 +131,7 @@ bool CRenderer::Initialize()
     CGizmosManager::EnableGizmo(CGizmosManager::EGizmo::Axis);
     CGizmosManager::EnableGizmo(CGizmosManager::EGizmo::Grid);
     CGizmosManager::EnableGizmo(CGizmosManager::EGizmo::PointLight);
+	CGizmosManager::EnableGizmo(CGizmosManager::EGizmo::AudioSource);
     CGizmosManager::EnableGizmo(CGizmosManager::EGizmo::DirectionalLight);
 
     m_post_processing.Initialize();

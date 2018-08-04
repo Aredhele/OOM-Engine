@@ -14,6 +14,8 @@
 #include "Composite/CGameObject.hpp"
 #include "Built-in/Script/S_Camera.hpp"
 
+#include "Render/Gizmos/CGizmosAudioSource.hpp"
+
 namespace Oom
 {
 
@@ -175,7 +177,20 @@ void CAudioEngine::CreateBuffer()
 
 void CAudioEngine::DrawGizmos()
 {
+	// Updates source
+	for (CAudioSource3D* p_source : m_sources)
+	{
+		if (p_source->mp_source_3D_buffer)
+		{
+			D3DVALUE min = 0;
+			D3DVALUE max = 0;
 
+			p_source->mp_source_3D_buffer->GetMinDistance(&min);
+			p_source->mp_source_3D_buffer->GetMaxDistance(&max);
+
+			DrawAudioSource(p_source->GetTransform()->GetLocalPosition(), min, max, 30, 1.0f);
+		}
+	}
 }
 
 /* static */ IDirectSoundBuffer* CAudioEngine::GetPrimaryBuffer()
