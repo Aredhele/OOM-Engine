@@ -40,6 +40,8 @@ protected:
 	void _Destroy () final;
 
 private:
+
+	friend class CAudioEngine;
 	
 	CAudioBuffer*           mp_audio_buffer     = nullptr;
 	IDirectSound3DBuffer8*  mp_source_3D_buffer = nullptr;

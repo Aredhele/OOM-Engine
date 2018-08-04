@@ -43,10 +43,11 @@ bool CAudioEngine::Initialize()
     SLogger::LogInfo("Audio engine initialized.");
 
     sp_instance = this;
+	m_sources.clear();
+	m_listeners.clear();
 
     return true;
 }
-
 
 void CAudioEngine::Release()
 {
@@ -78,7 +79,53 @@ void CAudioEngine::Update(float delta_time)
 	}
 
 	// Getting listeners
-	// TODO
+	if(m_listeners.empty())
+	{
+		return;
+	}
+	else if(m_listeners.size() > 1)
+	{
+		SLogger::LogWaring("Too many listener in the scene.");
+	}
+
+	CAudioListener3D* p_listener = m_listeners[0];
+
+	HRESULT result = p_listener->mp_listener->SetPosition(
+		p_camera->GetTransform().GetLocalPosition().x,
+		p_camera->GetTransform().GetLocalPosition().z,
+		p_camera->GetTransform().GetLocalPosition().y, DS3D_IMMEDIATE);
+
+	if(result != DS_OK)
+	{
+		SLogger::LogError("Failed to move the listener.");
+	}
+
+	result = p_listener->mp_listener->SetOrientation(
+		p_camera->GetTransform().GetForward().x,
+		p_camera->GetTransform().GetForward().z,
+		p_camera->GetTransform().GetForward().y,
+		glm::normalize(p_camera->GetTransform().GetUp()).x,
+		glm::normalize(p_camera->GetTransform().GetUp()).z,
+		glm::normalize(p_camera->GetTransform().GetUp()).y,
+		DS3D_IMMEDIATE);
+
+	if (result != DS_OK)
+	{
+		SLogger::LogError("Failed to orientate the listener.");
+	}
+
+	// Updates source
+	for(CAudioSource3D* p_source : m_sources)
+	{
+		if(p_source->mp_source_3D_buffer)
+		{
+			p_source->mp_source_3D_buffer->SetPosition(
+				p_source->GetTransform()->GetLocalPosition().x,
+				p_source->GetTransform()->GetLocalPosition().z,
+				p_source->GetTransform()->GetLocalPosition().y,
+				DS3D_IMMEDIATE);
+		}
+	}
 }
 
 void CAudioEngine::CreateBuffer()
@@ -118,6 +165,8 @@ void CAudioEngine::CreateBuffer()
 		SLogger::LogError("Failed to set the format of the primary buffer");
 		return;
 	}
+
+	mp_primary_buffer->SetVolume(DSBVOLUME_MAX);
 }
 
 /* static */ IDirectSoundBuffer* CAudioEngine::GetPrimaryBuffer()

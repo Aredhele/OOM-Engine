@@ -28,6 +28,8 @@ protected:
 
 private:
 
+	friend class CAudioEngine;
+
     IDirectSound3DListener8* mp_listener = nullptr;
 };
 
