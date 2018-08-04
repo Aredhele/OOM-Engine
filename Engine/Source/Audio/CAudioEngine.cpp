@@ -5,9 +5,14 @@
 /// \author     Vincent STEHLY--CALISTO
 
 #include <dsound.h>
+
 #include "Core/Debug/SLogger.hpp"
 #include "Audio/CAudioEngine.hpp"
-#include "Audio/CAudioDecoder.hpp"
+#include "Audio/CAudioSource3D.hpp"
+#include "Audio/CAudioListener3D.hpp"
+
+#include "Composite/CGameObject.hpp"
+#include "Built-in/Script/S_Camera.hpp"
 
 namespace Oom
 {
@@ -26,7 +31,7 @@ bool CAudioEngine::Initialize()
         return false;
     }
 
-    result = mp_direct_sound->SetCooperativeLevel(GetDesktopWindow(), DSSCL_PRIORITY);
+	result = mp_direct_sound->SetCooperativeLevel(GetDesktopWindow(), DSSCL_PRIORITY);
 
     if(result != DS_OK)
     {
@@ -38,6 +43,7 @@ bool CAudioEngine::Initialize()
     SLogger::LogInfo("Audio engine initialized.");
 
     sp_instance = this;
+
     return true;
 }
 
@@ -62,6 +68,16 @@ void CAudioEngine::Release()
 
 void CAudioEngine::Update(float delta_time)
 {
+	// Getting the camera
+	CGameObject* p_camera = CEngine::FindWithTag("MainCamera");
+
+	if (!p_camera)
+	{
+		SLogger::LogWaring("No main camera found.");
+		return;
+	}
+
+	// Getting listeners
 	// TODO
 }
 
@@ -75,7 +91,7 @@ void CAudioEngine::CreateBuffer()
 	buffer_description.dwSize          = sizeof(DSBUFFERDESC);
 	buffer_description.dwFlags         = DSBCAPS_PRIMARYBUFFER | DSBCAPS_CTRLVOLUME | DSBCAPS_CTRL3D;
 	buffer_description.dwReserved      = 0;
-	buffer_description.lpwfxFormat     = NULL;
+	buffer_description.lpwfxFormat     = nullptr;
 	buffer_description.dwBufferBytes   = 0;
 	buffer_description.guid3DAlgorithm = GUID_NULL;
 
@@ -88,7 +104,6 @@ void CAudioEngine::CreateBuffer()
 	}
 
 	// Setup the format of the primary sound bufffer.
-	// In this case it is a .WAV file recorded at 44,100 samples per second in 16-bit stereo (cd audio format).
 	wave_format.wFormatTag      = WAVE_FORMAT_PCM;
 	wave_format.nSamplesPerSec  = 44100;
 	wave_format.wBitsPerSample  = 16;
@@ -105,26 +120,50 @@ void CAudioEngine::CreateBuffer()
 	}
 }
 
-/* static */ IDirectSound3DListener8* CAudioEngine::Allocate3DListener()
+/* static */ IDirectSoundBuffer* CAudioEngine::GetPrimaryBuffer()
 {
-	IDirectSound3DListener8* p_listener = nullptr;
+	return sp_instance->mp_primary_buffer;
+}
 
-	// Obtain a listener interface.
-	HRESULT result = sp_instance->mp_primary_buffer->QueryInterface(IID_IDirectSound3DListener8, (LPVOID*)&p_listener);
+/* static */ IDirectSound8* CAudioEngine::GetDirectSoundInterface()
+{
+	return sp_instance->mp_direct_sound;
+}
 
-	if (FAILED(result))
+/* static */ void CAudioEngine::RegisterCAudioSource3D(CAudioSource3D* p_source)
+{
+	sp_instance->m_sources.push_back(p_source);
+}
+
+/* static */ void CAudioEngine::RegisterCAudioListener3D(CAudioListener3D* p_listener)
+{
+	sp_instance->m_listeners.push_back(p_listener);
+}
+
+/* static */ void CAudioEngine::UnregisterCAudioSource3D(CAudioSource3D* p_source)
+{
+	for(auto i = 0; i < sp_instance->m_sources.size(); ++i)
 	{
-		SLogger::LogError("Failed to create the listener");
-		return nullptr;
+		if(sp_instance->m_sources[i] == p_source)
+		{
+			sp_instance->m_sources[i] = sp_instance->m_sources.back();
+			sp_instance->m_sources.pop_back();
+			break;
+		}
 	}
-
-	return p_listener;
 }
 
-/* static */ void Oom::CAudioEngine::Release3DListener(IDirectSound3DListener8* p_listener)
+/* static */ void CAudioEngine::UnregisterCAudioListener3D(CAudioListener3D* p_listener)
 {
-    // TODO
+	for (auto i = 0; i < sp_instance->m_listeners.size(); ++i)
+	{
+		if (sp_instance->m_listeners[i] == p_listener)
+		{
+			sp_instance->m_listeners[i] = sp_instance->m_listeners.back();
+			sp_instance->m_listeners.pop_back();
+			break;
+		}
+	}
 }
-
 
 }

@@ -7,6 +7,8 @@
 #ifndef OOM_ENGINE_C_RENDERER_HPP__
 #define OOM_ENGINE_C_RENDERER_HPP__
 
+// #include <Windows.h>
+
 #include <vector>
 #include "Render/PostProcessing/CPostProcessingStack.hpp"
 
@@ -25,14 +27,15 @@ public:
 private:
     friend class CEngine;
     friend class IRenderer;
+	friend class CAudioEngine;
 
     bool     Initialize();
     void     Release   ();
     void     Render    ();
     void     DrawGizmos(const glm::mat4& PV);
 
-    static void RegisterRenderer   (IRenderer* p_renderer);
-    static void UnregisterRenderer (IRenderer* p_renderer);
+    static void RegisterRenderer      (IRenderer* p_renderer);
+    static void UnregisterRenderer    (IRenderer* p_renderer);
 
 private:
     CWindow*                 mp_window = nullptr;

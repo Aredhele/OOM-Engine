@@ -13,8 +13,18 @@
 namespace Oom
 {
 	
+// Forward declaration
+class CAudioBuffer;
+
 class CAudioSource3D : public IComponent
 {
+public:
+
+	void SetMinDistance(float distance);
+	void SetMaxDistance(float distance);
+	void SetVolume     (uint32_t volume);
+	void SetAudioBuffer(CAudioBuffer* p_audio_buffer);
+
 public:
 
 	void OnEnable () final;
@@ -27,8 +37,9 @@ protected:
 	void _Destroy () final;
 
 private:
-
-	IDirectSound3DListener8 * mp_listener = nullptr;
+	
+	CAudioBuffer*           mp_audio_buffer     = nullptr;
+	IDirectSound3DBuffer8*  mp_source_3D_buffer = nullptr;
 };
 
 }

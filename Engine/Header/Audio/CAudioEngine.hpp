@@ -21,10 +21,16 @@ class CAudioEngine
 {
 private:
 
+	friend class CAudioBuffer;
+	friend class CAudioSource3D;
     friend class CAudioListener3D;
 
-    static IDirectSound3DListener8* Allocate3DListener();
-    static void                     Release3DListener (IDirectSound3DListener8* p_listener);
+	static IDirectSound8*			GetDirectSoundInterface   ();
+	static IDirectSoundBuffer*		GetPrimaryBuffer          ();
+	static void						RegisterCAudioSource3D    (CAudioSource3D*   p_source);
+	static void						RegisterCAudioListener3D  (CAudioListener3D* p_listener);
+	static void						UnregisterCAudioSource3D  (CAudioSource3D*   p_source);
+	static void						UnregisterCAudioListener3D(CAudioListener3D* p_listener);
 
 private:
 
@@ -42,9 +48,8 @@ private:
 
 private:
 
-    IDirectSound8*         mp_direct_sound     = nullptr;
-	IDirectSoundBuffer*    mp_primary_buffer   = nullptr;
-	IDirectSound3DBuffer8* mp_secondary_buffer = nullptr;
+    IDirectSound8*         mp_direct_sound        = nullptr;
+	IDirectSoundBuffer*    mp_primary_buffer      = nullptr;
 
     std::vector<CAudioSource3D*>   m_sources;
     std::vector<CAudioListener3D*> m_listeners;

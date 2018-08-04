@@ -8,6 +8,7 @@
 #define OOM_ENGINE_C_AUDIO_BUFFER_HPP__
 
 #include <dsound.h>
+#include "Audio/CPCMData.hpp"
 #include "Core/Standard/CString.hpp"
 
 namespace Oom
@@ -22,15 +23,14 @@ public:
 
 	bool LoadFromFile(const CString& path);
 	
-
 private:
 
 	friend class CAudioEngine;
 	friend class CAudioSource3D;
 
-	char*                mp_pcm          = nullptr;
-	IDirectSoundBuffer8* mp_sound_buffer = nullptr;
-};
+	CPCMData		       m_pcm_data;
+	IDirectSoundBuffer8*   mp_secondary_buffer;
+}; 
 
 }
 

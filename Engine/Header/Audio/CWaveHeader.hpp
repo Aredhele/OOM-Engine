@@ -26,6 +26,8 @@ public:
 
 private:
 
+	friend class CAudioBuffer;
+
 	unsigned char  m_riff_ID[4];		   ///< 'RIFF'
 	unsigned long  m_riff_size;			   ///< DataSize + 44
 	unsigned char  m_riff_type[4];		   ///< WAVE'

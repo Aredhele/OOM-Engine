@@ -49,7 +49,7 @@ bool CEngine::Initialize()
 
     mp_audio_engine = new CAudioEngine();
     mp_audio_engine->Initialize();
-    CAudioEngine::Allocate3DListener();
+
 
     // Static instance initialization
     sp_instance = this;
