@@ -7,6 +7,9 @@
 #include "Hook.hpp"
 #include "SDK/SDK.hpp"
 
+// User script
+#include "Game/S_CameraRotator.hpp"
+
 CAudioBuffer buffer_1;
 CAudioBuffer buffer_2;
 
@@ -23,8 +26,11 @@ void LoadScene()
 	Sdk::Debug::EnableGizmo(EGizmo::Grid);
 	Sdk::Debug::EnableGizmo(EGizmo::AudioSource);
 
-    Sdk::GameObject::CreateFreeCamera();
+    auto* p_camera = Sdk::GameObject::CreateFreeCamera();
 
+	p_camera->AddComponent<S_CameraRotator>();
+	p_camera->RemoveComponent<S_CameraController>();
+	
 	// Loads 2 sounds from a file
 	buffer_1.LoadFromFile("Resources/Music/Town-Academy.ogg");
 	buffer_2.LoadFromFile("Resources/Music/Town-Dungeon.ogg");
@@ -48,7 +54,7 @@ void LoadScene()
 	p_source_1->SetMaxDistance(10.0f);
 	p_source_1->Play();
 
-	p_source_2->SetMinDistance( 2.0f);
+	p_source_2->SetMinDistance( 3.0f);
 	p_source_2->SetMaxDistance(10.0f);
-	//p_source_2->Play();
+	p_source_2->Play();
 }

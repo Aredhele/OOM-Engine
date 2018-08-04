@@ -62,6 +62,8 @@ public:
 
     // Methods
     const CTransform*   Find            (const CString& name);
+	void				LookAt			(float x, float y, float z);
+	void				LookAt			(const glm::vec3& target);
     void                LookAt          (const CTransform& target);
     void                Rotate          (float x, float y, float z);
     void                Rotate          (const glm::vec3& point);

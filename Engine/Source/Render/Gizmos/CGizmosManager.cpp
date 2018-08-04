@@ -120,9 +120,9 @@ CGizmosManager::~CGizmosManager() // NOLINT
 {
     if(CGizmosManager::IsGizmoEnabled(EGizmo::Axis))
     {
-        AddLine(glm::vec3(-2.0f, -2.0f, 0.0f), glm::vec3(1000.0f, -2.0f,    0.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-        AddLine(glm::vec3(-2.0f, -2.0f, 0.0f), glm::vec3(-2.0f, 1000.0f,    0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-        AddLine(glm::vec3(-2.0f, -2.0f, 0.0f), glm::vec3(-2.0f,   -2.0f, 1000.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+        AddLine(glm::vec3(0.0f, 0.0f, 0.01f), glm::vec3(1000.0f, 0.0f,    0.01f), glm::vec3(1.0f, 0.0f, 0.0f));
+        AddLine(glm::vec3(0.0f, 0.0f, 0.01f), glm::vec3(0.0f, 1000.0f,    0.01f), glm::vec3(0.0f, 1.0f, 0.0f));
+        AddLine(glm::vec3(0.0f, 0.0f, 0.01f), glm::vec3(0.0f,   0.0f,   1000.0f),  glm::vec3(0.0f, 0.0f, 1.0f));
     }
 
     if(s_pInstance->m_vertexCount == 0)

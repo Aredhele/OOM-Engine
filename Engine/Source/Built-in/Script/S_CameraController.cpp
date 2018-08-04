@@ -26,7 +26,7 @@
     glm::vec2 mousePos    (mouse.x, mouse.y);
     glm::vec2 windowCenter(windowSize.x / 2, windowSize.y / 2);
 
-    float maxMousePosRadius = glm::min(windowSize.x, windowSize.y) / 2.0f;
+    float maxMousePosRadius = min(windowSize.x, windowSize.y) / 2.0f;
     if (glm::distance(mousePos, windowCenter) > maxMousePosRadius)
     {
         // Re-center the mouse

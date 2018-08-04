@@ -180,6 +180,17 @@ const CTransform* CTransform::Find(const CString& name)
     return nullptr;
 }
 
+void CTransform::LookAt(float x, float y, float z)
+{
+	LookAt(glm::vec3(x, y, z));
+}
+
+void CTransform::LookAt(const glm::vec3& target)
+{
+	m_forward = target;
+	UpdateVectors();
+}
+
 void CTransform::LookAt(const CTransform& target)
 {
     m_forward = target.m_position;
