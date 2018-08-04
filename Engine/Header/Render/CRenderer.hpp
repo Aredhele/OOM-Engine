@@ -24,6 +24,14 @@ class CRenderer
 public:
     CWindow* GetWindow ();
 
+public:
+
+	static void EnablePostProcessing  ();
+	static void DisablePostProcessing ();
+	static bool IsPostProcessingActive();
+
+	static CPostProcessingStack* GetPostProcessingStack();
+
 private:
     friend class CEngine;
     friend class IRenderer;
@@ -38,6 +46,8 @@ private:
     static void UnregisterRenderer    (IRenderer* p_renderer);
 
 private:
+
+	bool				     m_b_post_process;
     CWindow*                 mp_window = nullptr;
     std::vector<IRenderer*>  m_renderers;
     CPostProcessingStack     m_post_processing;

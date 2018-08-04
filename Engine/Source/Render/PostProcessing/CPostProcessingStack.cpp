@@ -125,8 +125,6 @@ void CPostProcessingStack::Initialize()
      m_stack.push_back(new CVignetteEffect());
     // m_stack.push_back(new DepthOfField());
      m_stack.push_back(new CFXAAEffect());
-    // m_stack.push_back(new Experimental1());
-    // m_stack.push_back(new Experimental2());
 
     SLogger::LogInfo("Post-processing stack successfully initialized.");
 }

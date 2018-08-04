@@ -7,6 +7,7 @@
 #include <cstdarg>
 #include "SDK/SDK.hpp"
 #include "CEngine.hpp"
+#include "Render/CRenderer.hpp"
 
 // Import
 #include "Import/CMeshImporter"
@@ -125,6 +126,21 @@ namespace Sdk
 
 			return p_source;
         }
+    }
+
+	namespace Render
+    {
+		void EnablePostProcessing() {
+			CRenderer::EnablePostProcessing();
+		}
+
+		void DisablePostProcessing() {
+			CRenderer::DisablePostProcessing();
+		}
+
+		CPostProcessingStack* GetPostProcessingStack() {
+			return CRenderer::GetPostProcessingStack();
+		}
     }
 
     namespace Debug

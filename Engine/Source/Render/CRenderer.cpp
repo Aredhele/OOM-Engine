@@ -56,8 +56,10 @@ bool CRenderer::Initialize()
 {
     SLogger::LogInfo("Renderer initialization.");
 
-    sp_instance = this;
-    mp_window   = new CWindow();
+    sp_instance      = this;
+	m_b_post_process = false;
+    mp_window        = new CWindow();
+
     mp_window->Initialize(1600, 900, "Oom-Engine"); //< TODO : Add option
 
     // OpenGL pipeline states
@@ -127,12 +129,7 @@ bool CRenderer::Initialize()
         "Resources/Shader/Effect/IdentityFragmentShader.glsl");
 
     CGizmosManager::Initialize();
-
     m_post_processing.Initialize();
-    m_post_processing.SetEffectActive(IPostEffect::EType::Fog,      true);
-    m_post_processing.SetEffectActive(IPostEffect::EType::FXAA,     true);
-    m_post_processing.SetEffectActive(IPostEffect::EType::Vignette, true);
-    m_post_processing.SetEffectActive(IPostEffect::EType::Identity, true);
 
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
@@ -211,7 +208,12 @@ void CRenderer::Render()
         }
     }
 
-    m_post_processing.OnPostProcessingBegin();
+	if(m_b_post_process)
+	{
+		// Only when the post processin is active !
+		m_post_processing.OnPostProcessingBegin();
+	}
+	
     mp_window->Clear(p_camera_script->GetClearColor());
 
     // Forward rendering
@@ -223,8 +225,12 @@ void CRenderer::Render()
 
     DrawGizmos(projection * view);
 
-    m_post_processing.OnPostProcessingRender();
-    m_post_processing.OnPostProcessingEnd();
+	if (m_b_post_process)
+	{
+		// Only when the post processin is active !
+		m_post_processing.OnPostProcessingRender();
+		m_post_processing.OnPostProcessingEnd();
+	}
 
     mp_window->Display();
 }
@@ -260,7 +266,6 @@ void CRenderer::DrawGizmos(const glm::mat4& PV)
 CWindow* CRenderer::GetWindow()
 { return mp_window; }
 
-
 /* static */ void Oom::CRenderer::RegisterRenderer(IRenderer* p_renderer)
 {
     sp_instance->m_renderers.push_back(p_renderer);
@@ -279,6 +284,26 @@ CWindow* CRenderer::GetWindow()
             break;
         }
     }
+}
+
+/* static */ void CRenderer::EnablePostProcessing()
+{
+	sp_instance->m_b_post_process = true;
+}
+
+/* static */ void CRenderer::DisablePostProcessing()
+{
+	sp_instance->m_b_post_process = false;
+}
+
+/* static */ bool CRenderer::IsPostProcessingActive()
+{
+	return sp_instance->m_b_post_process;
+}
+
+/* static */ CPostProcessingStack* CRenderer::GetPostProcessingStack()
+{
+	return &sp_instance->m_post_processing;
 }
 
 }

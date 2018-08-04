@@ -46,6 +46,7 @@
 
 // Misc
 #include "Render/Gizmos/CGizmosManager.hpp"
+#include "Render/PostProcessing/CPostProcessingStack.hpp"
 
 // Namespace
 using namespace Oom;
@@ -76,16 +77,23 @@ namespace Sdk
 
     namespace GameObject
     {
-        CGameObject* CreateEmpty();
-        CGameObject* CreateCamera();
-        CGameObject* CreateFreeCamera();
-        CGameObject* CreateCube();
-        CGameObject* CreateParticleSystem();
-        CGameObject* CreateDirectionalLight();
-        CGameObject* CreatePointLight();
-        CGameObject* CreateText();
-		CGameObject* CreateAudioListener3D();
-		CGameObject* CreateAudioSource3D();
+        CGameObject* CreateEmpty			();
+        CGameObject* CreateCamera			();
+        CGameObject* CreateFreeCamera		();
+        CGameObject* CreateCube				();
+        CGameObject* CreateParticleSystem	();
+        CGameObject* CreateDirectionalLight	();
+        CGameObject* CreatePointLight		();
+        CGameObject* CreateText				();
+		CGameObject* CreateAudioListener3D	();
+		CGameObject* CreateAudioSource3D	();
+    }
+
+	namespace Render
+    {
+		void					EnablePostProcessing	();
+		void					DisablePostProcessing	();
+		CPostProcessingStack*	GetPostProcessingStack	();
     }
 
     namespace Debug
