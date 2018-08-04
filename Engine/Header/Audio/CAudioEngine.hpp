@@ -35,6 +35,7 @@ private:
 private:
 
 	void CreateBuffer();
+	void DrawGizmos  ();
 
 private:
 

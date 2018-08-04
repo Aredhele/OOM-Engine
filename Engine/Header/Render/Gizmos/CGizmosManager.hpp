@@ -28,6 +28,7 @@ public:
         Grid,
         Cone,
         PointLight,
+		AudioSource,
         DirectionalLight
     };
 

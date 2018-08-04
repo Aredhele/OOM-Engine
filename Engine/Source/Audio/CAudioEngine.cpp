@@ -78,6 +78,10 @@ void CAudioEngine::Update(float delta_time)
 		return;
 	}
 
+#ifndef NDEBUG
+	DrawGizmos();
+#endif
+
 	// Getting listeners
 	if(m_listeners.empty())
 	{
@@ -167,6 +171,11 @@ void CAudioEngine::CreateBuffer()
 	}
 
 	mp_primary_buffer->SetVolume(DSBVOLUME_MAX);
+}
+
+void CAudioEngine::DrawGizmos()
+{
+
 }
 
 /* static */ IDirectSoundBuffer* CAudioEngine::GetPrimaryBuffer()
