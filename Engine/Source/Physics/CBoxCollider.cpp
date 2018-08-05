@@ -130,7 +130,7 @@ void CBoxCollider::SetLocalOrientation(const glm::vec3& orientation)
 	CreateBox ();
 }
 
-void CBoxCollider::IsSensor() const
+bool CBoxCollider::IsSensor() const
 {
 	return m_sensor;
 }

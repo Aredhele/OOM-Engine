@@ -18,55 +18,77 @@ namespace Oom
 class CRigidBody : public IComponent
 {
 public:
+
     enum EBodyType
     {
         Static,
         Dynamic,
         Kinematic,
-        Unknown
     };
 
-public:
+	bool      IsAwake				() const;
+	bool	  IsXLocked				() const;
+	bool	  IsYLocked				() const;
+	bool	  IsZLocked				() const;
+	float     GetMass				() const;
+	float     GetGravityScale		() const;
+	float	  GetLinearDamping		() const;
+	float	  GetAngularDamping		() const;
+	int32_t   GetLayers				() const;
     EBodyType GetBodyType           () const;
+	glm::vec3 GetPosition			() const;
+	glm::vec3 GetRotation			() const;
     glm::vec3 GetAngularVelocity    () const;
-    float     GetGravityScale       () const;
     glm::vec3 GetLinearVelocity     () const;
-    float     GetMass               () const;
-    bool      IsAwake               () const;
-    int32_t   GetLayers             () const;
-    glm::vec3 GetPosition           () const;
-    glm::vec3 GetRotation           () const;
 
-public:
-    void AddTorque                    (const glm::vec3& torque );
-    void AddLinearForce               (const glm::vec3& force  );
-    void AddLinearImpulse             (const glm::vec3& impulse);
-    void AddForceAtPosition           (const glm::vec3& force,   const glm::vec3& point);
-    void AddLinearImpulseAtPosition   (const glm::vec3& impulse, const glm::vec3& point);
-    void SetGravityScale              (float gravity_scale);
-    void SetLinearVelocity            (const glm::vec3& velocity);
-    void SetAngularVelocity           (const glm::vec3& velocity);
-	void SetBodyType                  (EBodyType body_type);
-    void SetLayers                    (int32_t layers);
-    void Sleep                        ();
-    void Awake                        ();
-    void SetPosition                  (const glm::vec3& position);
-    void SetRotation                  (const glm::vec3& rotation);
+	void Sleep						();
+	void Awake						();
+	void SetLockX					(bool lock);
+	void SetLockY					(bool lock);
+	void SetLockZ					(bool lock);
+	void SetLayers					(int32_t layers);
+	void SetBodyType				(EBodyType body_type);
+	void SetGravityScale			(float gravity_scale);
+	void SetLinearDamping			(const float damping);
+	void SetAngularDamping			(const float damping);
+	void SetPosition				(const glm::vec3& position);
+	void SetRotation				(const glm::vec3& rotation);
+    void SetLinearVelocity          (const glm::vec3& velocity);
+    void SetAngularVelocity         (const glm::vec3& velocity);
+	void AddTorque					(const glm::vec3& torque);
+	void AddLinearForce				(const glm::vec3& force);
+	void AddLinearImpulse			(const glm::vec3& impulse);
+	void AddForceAtPosition			(const glm::vec3& force, const glm::vec3& point);
+	void AddLinearImpulseAtPosition	(const glm::vec3& impulse, const glm::vec3& point);
 
-    // TODO : Add damping and a way to lock axis
-
-public:
+	// Component
     void OnEnable  () final;
     void OnDisable () final;
 
 protected:
+
     void _Register () final;
     void _Destroy  () final;
 
 private:
 
     friend class CBoxCollider;
-    q3Body* mp_body = nullptr;
+	void CreateBody ();
+	void DestroyBody();
+
+private:
+
+	q3Body*		mp_body;
+	bool		m_lock_x;
+	bool        m_lock_y;
+	bool		m_lock_z;
+	float		m_linear_damping;
+	float		m_gravity_scale;
+	float		m_angular_damping;
+	int32_t     m_layers;
+	EBodyType	m_body_type;
+	glm::vec3   m_linear_velocity;
+	glm::vec3   m_angular_velocity;
 };
 
 }

@@ -28,7 +28,7 @@ public:
 	void SetLocalPosition    (const glm::vec3& position);
 	void SetLocalOrientation (const glm::vec3& orientation);
 
-	void             IsSensor            () const;
+	bool             IsSensor            () const;
 	float            GetDensity          () const;
 	float            GetFriction         () const;
 	float            GetRestution        () const;
@@ -61,9 +61,9 @@ private:
 	float           m_density;
 	float           m_friction;
 	float           m_restitution;
-	const glm::vec3 m_extent;
-	const glm::vec3 m_local_position;
-	const glm::vec3 m_local_orientation;
+    glm::vec3       m_extent;
+    glm::vec3       m_local_position;
+    glm::vec3       m_local_orientation;
 };
 
 }
