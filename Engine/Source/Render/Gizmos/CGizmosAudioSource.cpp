@@ -13,7 +13,6 @@ namespace Oom
 
 void DrawAudioSource(glm::vec3 const& position, float distance_min, float distance_max, int resolution, float scale)
 {
-#ifndef NDEBUG
 	if (!CGizmosManager::IsGizmoEnabled(CGizmosManager::EGizmo::AudioSource))
 		return;
 
@@ -101,8 +100,6 @@ void DrawAudioSource(glm::vec3 const& position, float distance_min, float distan
 	// Adding last points
 	CGizmosManager::AddLine(pointsZ[0], pointsZ[pointsZ.size() - 1], glm::vec3(0.9f, 0.1f, 0.1f));
 	CGizmosManager::AddLine(pointsY[0], pointsY[pointsY.size() - 1], glm::vec3(0.9f, 0.1f, 0.1f));
-
-#endif
 }
 
 }

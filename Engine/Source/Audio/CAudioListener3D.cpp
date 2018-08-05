@@ -41,7 +41,7 @@ void CAudioListener3D::_Register()
 		return;
 	}
 
-    const glm::vec3 position = GetGameObject()->GetTransform().GetLocalPosition();
+    const glm::vec3 position = GetGameObject()->GetTransform().GetPosition();
 	mp_listener->SetPosition(position.x, position.y, position.z, DS3D_IMMEDIATE);
 
 	CAudioEngine::RegisterCAudioListener3D(this);

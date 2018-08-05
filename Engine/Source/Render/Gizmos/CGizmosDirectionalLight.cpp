@@ -13,7 +13,6 @@ namespace Oom
 
 void DrawDirectionalLight(glm::vec3 const& position, glm::vec3 const& direction, glm::vec3 const& color, float scale)
 {
-#ifndef NDEBUG
     if(!CGizmosManager::IsGizmoEnabled(CGizmosManager::EGizmo::DirectionalLight))
         return;
 
@@ -44,7 +43,6 @@ void DrawDirectionalLight(glm::vec3 const& position, glm::vec3 const& direction,
     CGizmosManager::AddLine(back,  left,   color);
 
     CGizmosManager::AddLine(arrowStart, arrowEnd, glm::vec3(0.8f, 0.0f, 0.0f));
-#endif
 }
 
 

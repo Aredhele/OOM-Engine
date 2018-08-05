@@ -5,6 +5,8 @@
 /// \author     Vincent STEHLY--CALISTO
 
 #include "SDK/SDK.hpp"
+
+#include "Render/Gizmos/CGizmosLine.hpp"
 #include "Built-in/Script/S_CameraController.hpp"
 
 /* virtual */ void S_CameraController::Start()
@@ -53,6 +55,10 @@
     mp_transform->RotateAround(mp_transform->GetForward(), mp_transform->GetUp(),    angleX);
     mp_transform->RotateAround(mp_transform->GetForward(), mp_transform->GetRight(), angleY);
     mp_transform->Translate  ((mp_transform->GetLocalOrientation() * (float)y_direction + mp_transform->GetRight() * (float)x_direction) * 0.016f * m_speed * speed_coefficient);
+
+	DrawLine(glm::vec3(0.0f), GetGameObject()->GetTransform().GetForward() * 3.0f, glm::vec3(1.0f, 0.0f, 0.0f));
+	DrawLine(glm::vec3(0.0f), GetGameObject()->GetTransform().GetRight()   * 3.0f, glm::vec3(0.0f, 1.0f, 0.0f));
+	DrawLine(glm::vec3(0.0f), GetGameObject()->GetTransform().GetUp()      * 3.0f, glm::vec3(0.0f, 0.0f, 1.0f));
 }
 
 float S_CameraController::GetSpeed() const

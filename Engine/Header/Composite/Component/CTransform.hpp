@@ -36,27 +36,17 @@ public:
     const glm::vec3&    GetUp                 () const;
     const glm::vec3&    GetRight              () const;
     const glm::vec3&    GetForward            () const;
-    const glm::vec3&    GetLocalPosition      () const;
-    const glm::vec3&    GetLocalScale         () const;
-    const glm::vec3&    GetLocalOrientation   () const;
-          glm::vec3     GetWorldPosition      () const;
-          glm::vec3     GetWorldScale         () const;
-          glm::vec3     GetWorldOrientation   () const;
+    const glm::vec3&    GetPosition           () const;
+    const glm::vec3&    GetScale              () const;
+    const glm::vec3&    GetOrientation        () const;
           glm::mat4     GetLocalToWorldMatrix () const;
 
-    void SetLocalScale       (const glm::vec3& scale);
-    void SetLocalScale       (float x, float y, float z);
-    void SetLocalPosition    (const glm::vec3& position);
-    void SetLocalPosition    (float x, float y, float z);
-    void SetLocalOrientation (const glm::vec3& orientation);
-    void SetLocalOrientation (float x, float y, float z);
-
-    void SetWorldScale       (const glm::vec3& scale);
-    void SetWorldScale       (float x, float y, float z);
-    void SetWorldPosition    (const glm::vec3& position);
-    void SetWorldPosition    (float x, float y, float z);
-    void SetWorldOrientation (const glm::vec3& orientation);
-    void SetWorldOrientation (float x, float y, float z);
+    void SetScale       (const glm::vec3& scale);
+    void SetScale       (float x, float y, float z);
+    void SetPosition    (const glm::vec3& position);
+    void SetPosition    (float x, float y, float z);
+    void SetOrientation (const glm::vec3& orientation);
+    void SetOrientation (float x, float y, float z);
 
 public:
 
@@ -71,10 +61,6 @@ public:
     void                SetParent       (CTransform* parent);
     void                Translate       (float x, float y, float z);
     void                Translate       (const glm::vec3& translation);
-
-public:
-
-    std::vector<CTransform*>& GetChildren();
 
 protected:
 
@@ -101,10 +87,7 @@ private:
     friend class CEngine;
     friend class CGameObject;
 
-    CTransform*  mp_parent      = nullptr;
     CGameObject* mp_game_object = nullptr;
-
-    std::vector<CTransform*>    m_children;
 };
 
 }

@@ -71,9 +71,7 @@ void CAudioEngine::Release()
 
 void CAudioEngine::Update(float delta_time)
 {
-#ifndef NDEBUG
 	DrawGizmos();
-#endif
 
 	// Getting listeners
 	if(m_listeners.empty())
@@ -87,9 +85,9 @@ void CAudioEngine::Update(float delta_time)
 
 	CAudioListener3D* p_listener = m_listeners[0];
 	HRESULT result  = p_listener->mp_listener->SetPosition(
-		p_listener->GetGameObject()->GetTransform().GetLocalPosition().x,
-		p_listener->GetGameObject()->GetTransform().GetLocalPosition().z,
-		p_listener->GetGameObject()->GetTransform().GetLocalPosition().y, DS3D_IMMEDIATE);
+		p_listener->GetGameObject()->GetTransform().GetPosition().x,
+		p_listener->GetGameObject()->GetTransform().GetPosition().z,
+		p_listener->GetGameObject()->GetTransform().GetPosition().y, DS3D_IMMEDIATE);
 
 	if(result != DS_OK)
 	{
@@ -116,9 +114,9 @@ void CAudioEngine::Update(float delta_time)
 		if(p_source->mp_source_3D_buffer)
 		{
 			p_source->mp_source_3D_buffer->SetPosition(
-				p_source->GetTransform()->GetLocalPosition().x,
-				p_source->GetTransform()->GetLocalPosition().z,
-				p_source->GetTransform()->GetLocalPosition().y,
+				p_source->GetTransform()->GetPosition().x,
+				p_source->GetTransform()->GetPosition().z,
+				p_source->GetTransform()->GetPosition().y,
 				DS3D_IMMEDIATE);
 		}
 	}
@@ -178,7 +176,7 @@ void CAudioEngine::DrawGizmos()
 			p_source->mp_source_3D_buffer->GetMinDistance(&min);
 			p_source->mp_source_3D_buffer->GetMaxDistance(&max);
 
-			DrawAudioSource(p_source->GetTransform()->GetLocalPosition(), min, max, 30, 1.0f);
+			DrawAudioSource(p_source->GetTransform()->GetPosition(), min, max, 30, 1.0f);
 		}
 	}
 }

@@ -28,8 +28,8 @@ void LoadScene()
 
     auto* p_camera = Sdk::GameObject::CreateFreeCamera();
 
-	p_camera->AddComponent<S_CameraRotator>();
-	p_camera->RemoveComponent<S_CameraController>();
+	// p_camera->AddComponent<S_CameraRotator>();
+	// p_camera->RemoveComponent<S_CameraController>();
 	
 	// Loads 2 sounds from a file
 	buffer_1.LoadFromFile("Resources/Music/Town-Academy.ogg");

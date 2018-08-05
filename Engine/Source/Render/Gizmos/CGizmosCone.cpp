@@ -19,8 +19,6 @@ namespace Oom
 {
 void DrawCone(glm::vec3 const& position, float radius,  float topRadius, float lenght, glm::vec3 const& color)
 {
-
-#ifndef NDEBUG
     if(!CGizmosManager::IsGizmoEnabled(CGizmosManager::EGizmo::Cone))
         return;
 
@@ -76,8 +74,6 @@ void DrawCone(glm::vec3 const& position, float radius,  float topRadius, float l
 
     CGizmosManager::AddLine(glm::vec3(position.x + glm::cos(M_PI + M_PI_2) * radius,    position.y + glm::sin(M_PI + M_PI_2) * radius,    position.z),
                           glm::vec3(position.x   + glm::cos(M_PI + M_PI_2) * topRadius, position.y + glm::sin(M_PI + M_PI_2) * topRadius, position.z + lenght), color);
-
-#endif
 }
 
 }

@@ -13,7 +13,6 @@ namespace Oom
 
 void DrawPointLight(glm::vec3 const& position, glm::vec3 const& color, int resolution, float range, float scale)
 {
-#ifndef NDEBUG
     if(!CGizmosManager::IsGizmoEnabled(CGizmosManager::EGizmo::PointLight))
         return;
 
@@ -85,7 +84,6 @@ void DrawPointLight(glm::vec3 const& position, glm::vec3 const& color, int resol
     CGizmosManager::AddLine(rayRightStart, rayRightEnd, color);
     CGizmosManager::AddLine(rayFrontStart, rayFrontEnd, color);
     CGizmosManager::AddLine(rayBackStart,  rayBackEnd,  color);
-#endif
 }
 
 }

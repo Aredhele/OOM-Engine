@@ -12,12 +12,10 @@ namespace Oom
 
 void DrawLine(glm::vec3 const& start, glm::vec3 const& end, glm::vec3 const& color)
 {
-#ifndef NDEBUG
     if(!CGizmosManager::IsGizmoEnabled(CGizmosManager::EGizmo::Line))
         return;
 
     CGizmosManager::AddLine(start, end, color);
-#endif
 }
 
 }

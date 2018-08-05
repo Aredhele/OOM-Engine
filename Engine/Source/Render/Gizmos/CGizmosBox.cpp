@@ -12,7 +12,6 @@ namespace Oom
 
 void DrawBox(glm::vec3 const& center, float width, float height, glm::vec3 const& color)
 {
-#ifndef NDEBUG
     if(!CGizmosManager::IsGizmoEnabled(CGizmosManager::EGizmo::Box))
         return;
 
@@ -42,7 +41,6 @@ void DrawBox(glm::vec3 const& center, float width, float height, glm::vec3 const
     CGizmosManager::AddLine(F, G, color);
     CGizmosManager::AddLine(G, H, color);
     CGizmosManager::AddLine(H, E, color);
-#endif
 }
 
 }

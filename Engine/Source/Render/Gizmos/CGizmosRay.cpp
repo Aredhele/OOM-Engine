@@ -12,12 +12,10 @@ namespace Oom
 
 void DrawRay(glm::vec3 const& start, glm::vec3 const& dir, glm::vec3 const& color)
 {
-#ifndef NDEBUG
     if(!CGizmosManager::IsGizmoEnabled(CGizmosManager::EGizmo::Ray))
         return;
 
     CGizmosManager::AddLine(start, start + dir, color);
-#endif
 }
 
 }
