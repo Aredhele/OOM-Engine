@@ -195,7 +195,7 @@ void CRenderer::Render()
                 point_behaviors[i]->GetRange(),
                 point_behaviors[i]->GetIntensity(),
                 point_behaviors[i]->GetColor(),
-                p_game_object->GetTransform().GetWorldPosition()});
+                p_game_object->GetTransform().GetPosition()});
         }
 
         if(direc_behaviors != nullptr)
@@ -246,14 +246,14 @@ void CRenderer::DrawGizmos(const glm::mat4& PV)
         auto size = point_behaviors.size();
         for(auto i = 0; i < size; ++i)
         {
-            DrawPointLight(p_game_object->GetTransform().GetWorldPosition(), glm::vec3(0.7f),
+            DrawPointLight(p_game_object->GetTransform().GetPosition(), glm::vec3(0.7f),
                            32, point_behaviors[i]->GetRange(), 1.0f);
         }
 
         size = direc_behaviors.size();
         for(auto i = 0; i < size; ++i)
         {
-            DrawDirectionalLight(p_game_object->GetTransform().GetWorldPosition(),
+            DrawDirectionalLight(p_game_object->GetTransform().GetPosition(),
                           direc_behaviors[i]->GetDirection(), glm::vec3(0.7f), 1.0f);
         }
     }

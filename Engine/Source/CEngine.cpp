@@ -7,8 +7,8 @@
 #include "CEngine.hpp"
 #include "Core/Debug/SLogger.hpp"
 #include "Render/Shader/SShaderCompiler.hpp"
-#include "Glm/glm.hpp"
-#include "Glm/ext.hpp"
+#include <Glm/glm.hpp>
+#include <Glm/ext.hpp>
 #include "Resource/CMesh.hpp"
 #include "QU3E/q3.h"
 
@@ -116,13 +116,10 @@ void CEngine::BehaviorUpdate(GLFWwindow* p_window, float delta_time)
     for(uint32_t i = 0; i < behavior_count; ++i)
     {
         CBehavior* p_behavior = m_behaviors[i];
-
-        // TODO : Root is not a valid reference
-        CTransform* root = p_behavior->GetTransform()->GetRoot();
-        CGameObject* go = root->mp_game_object;
+		CGameObject* p_go     = p_behavior->GetGameObject();
 
         // We can update the behavior
-        if(p_behavior->m_is_enabled && go->IsActive())
+        if(p_behavior->m_is_enabled && p_go->IsActive())
         {
             if(p_behavior->m_first_update)
                 p_behavior->__Start();
@@ -206,46 +203,29 @@ void CEngine::GameObjectUpdate(GLFWwindow* p_window, float delta_time)
 /* static */ void CEngine::Destroy(CGameObject* p_game_object)
 {
     p_game_object->m_is_destroyed = true;
-
-    for(CTransform* p_transform : p_game_object->GetTransform().GetChildren())
-        Destroy(p_transform->GetGameObject());
 }
 
 /* static */ void CEngine::Destroy(CGameObject* p_game_object, float delay)
 {
-    p_game_object->m_is_destroyed   = true;
+    p_game_object->m_is_destroyed  = true;
     p_game_object->m_destroy_delay = delay;
-
-    for(CTransform* p_transform : p_game_object->GetTransform().GetChildren())
-        Destroy(p_transform->GetGameObject(), delay);
 }
 
 /* static */ void CEngine::DestroyImmediate(CGameObject* p_game_object)
 {
-    std::vector<CGameObject*> destroy_list(1, p_game_object);
-    for(CTransform* p_transform : p_game_object->GetTransform().GetChildren())
-        destroy_list.push_back(p_transform->GetGameObject());
+	for (auto i = 0; i < sp_instance->m_game_objects.size(); ++i)
+	{
+		if (sp_instance->m_game_objects[i] == p_game_object)
+		{
+			p_game_object->__DestroyMessage();
 
-    auto go_count = static_cast<uint32_t>(sp_instance->m_game_objects.size());
-    for(uint32_t n_go = 0; n_go < go_count; /* no increment */ )
-    {
-        if(!destroy_list.empty() && sp_instance->m_game_objects[n_go] == destroy_list.back())
-        {
-            destroy_list.back()->__DestroyMessage();
+			sp_instance->m_game_objects[i] = sp_instance->m_game_objects.back();
+			sp_instance->m_game_objects.pop_back();
 
-            sp_instance->m_game_objects[n_go] = sp_instance->m_game_objects.back();
-            sp_instance->m_game_objects.pop_back();
-
-            delete destroy_list.back();
-            destroy_list.pop_back();
-
-            go_count = static_cast<uint32_t>(sp_instance->m_game_objects.size());
-        }
-        else
-        {
-            n_go++;
-        }
-    }
+			delete p_game_object;
+			return;
+		}
+	}
 }
 
 /* static */ CGameObject* CEngine::Find(const CString& name)

@@ -29,10 +29,6 @@ public:
 public:
 
     // Properties
-    uint32_t            GetChildCount         () const;
-    uint32_t            GetHierarchyCount     () const;
-    CTransform*         GetParent             ();
-    CTransform*         GetRoot               ();
     const glm::vec3&    GetUp                 () const;
     const glm::vec3&    GetRight              () const;
     const glm::vec3&    GetForward            () const;

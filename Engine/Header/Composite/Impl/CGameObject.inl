@@ -55,7 +55,6 @@ T* CGameObject::AddComponent(void)
     p_component->mp_transform                 = &m_transform;
     p_component->mp_game_object               = this;
     p_component->mp_transform->mp_game_object = this;
-    p_component->mp_transform->mp_parent      = m_transform.mp_parent;
 
     m_components.push_back(p_component);
     p_component->_Register();

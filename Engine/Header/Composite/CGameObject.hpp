@@ -34,13 +34,13 @@ public:
 
 public:
 
-    template <class T> inline T *				        GetComponent			(/* void */);
+    template <class T> inline T *		GetComponent			(/* void */);
     template <class T>
     inline std::vector<T*>              GetComponents			(/* void */);
-    template <class T> inline T *				        AddComponent			(/* void */);
-    template <class T> inline void				        RemoveComponent			(/* void */);
-    template <class T> inline void				        RemoveComponents		(/* void */);
-        inline void                     RemoveComponents        (/* void */);
+    template <class T> inline T *		AddComponent			(/* void */);
+    template <class T> inline void		RemoveComponent			(/* void */);
+    template <class T> inline void		RemoveComponents		(/* void */);
+    inline void                         RemoveComponents        (/* void */);
 
     static CGameObject*                 Instantiate             ();
     static CGameObject*                 Instantiate             (CTransform* parent);
