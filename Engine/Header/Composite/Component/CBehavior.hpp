@@ -42,7 +42,7 @@ protected:
 
 private:
 
-    void __Awake        (CBehavior* p_behavior);
+    void __Awake        ();
     void __Start        ();
     void __Update       ();
     void __OnDestroy    ();

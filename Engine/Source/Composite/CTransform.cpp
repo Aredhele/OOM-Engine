@@ -12,7 +12,8 @@ namespace Oom
 {
 
 CTransform::CTransform()
-{
+{ 
+	m_test         = glm::vec3(0.0f);
     m_scale        = glm::vec3(1.0f);
     m_position     = glm::vec3(0.0f);
     m_orientation  = glm::vec3(0.0f);

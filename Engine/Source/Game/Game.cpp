@@ -10,6 +10,7 @@
 
 // User script
 #include "Game/S_CameraRotator.hpp"
+#include "Physics/CRigidBody.hpp"
 
 // Temporary
 CAudioBuffer buffer_1;
@@ -93,6 +94,17 @@ void LoadDemoScenePhysics()
 	Sdk::Debug::EnableGizmo(EGizmo::Grid);
 	Sdk::Debug::EnableGizmo(EGizmo::AudioSource);
 
-	auto* p_camera = Sdk::GameObject::CreateFreeCamera();
+	Sdk::GameObject::CreateDirectionalLight();
 
+	auto* p_camera = Sdk::GameObject::CreateFreeCamera();
+	p_camera->GetTransform().SetPosition(4.0f, 4.0f, 4.0f);
+
+	auto* p_ground_go = Sdk::Import::ImportMesh("Resources/Mesh/Cube.obj")[0];
+	auto* p_physic_go = Sdk::Import::ImportMesh("Resources/Mesh/Cube.obj")[0];
+
+	p_ground_go->GetTransform().SetPosition(0.0f, 0.0f, 0.0f);
+	p_physic_go->GetTransform().SetPosition(0.0f, 0.0f, 5.0f);
+
+	auto* p_ground_body = p_ground_go->AddComponent<CRigidBody>();
+	auto* p_ground_box  = p_ground_go->AddComponent<CBoxCollider>();
 }
