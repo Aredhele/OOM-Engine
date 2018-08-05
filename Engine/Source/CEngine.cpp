@@ -29,7 +29,7 @@
 #include "Render/Material/CMaterial.hpp"
 #include "Physics/CPhysicWorld.hpp"
 #include "Audio/CAudioEngine.hpp"
-#include "Hook.hpp"
+#include "Scene/Hook.hpp"
 
 namespace Oom
 {

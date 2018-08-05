@@ -73,5 +73,17 @@ void LoadDemoSceneAudio()
 
 void LoadDemoScenePhysics()
 {
-	// TODO
+	// Settings
+	Sdk::Render::EnablePostProcessing();
+	Sdk::Render::EnablePostEffect(EPostEffect::FXAA);
+
+	Sdk::Debug::EnableGizmo(EGizmo::Ray);
+	Sdk::Debug::EnableGizmo(EGizmo::Box);
+	Sdk::Debug::EnableGizmo(EGizmo::Axis);
+	Sdk::Debug::EnableGizmo(EGizmo::Line);
+	Sdk::Debug::EnableGizmo(EGizmo::Grid);
+	Sdk::Debug::EnableGizmo(EGizmo::AudioSource);
+
+	auto* p_camera = Sdk::GameObject::CreateFreeCamera();
+
 }
