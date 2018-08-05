@@ -13,7 +13,21 @@
 CAudioBuffer buffer_1;
 CAudioBuffer buffer_2;
 
+void LoadSceneDarenn ();
+void LoadSceneVincent();
+
 void LoadScene()
+{
+	LoadSceneDarenn ();
+	LoadSceneVincent();
+}
+
+void LoadSceneDarenn()
+{
+
+}
+
+void LoadSceneVincent()
 {
 	// Settings
 	Sdk::Render::EnablePostProcessing();
@@ -26,11 +40,11 @@ void LoadScene()
 	Sdk::Debug::EnableGizmo(EGizmo::Grid);
 	Sdk::Debug::EnableGizmo(EGizmo::AudioSource);
 
-    auto* p_camera = Sdk::GameObject::CreateFreeCamera();
+	auto* p_camera = Sdk::GameObject::CreateFreeCamera();
 
-	p_camera->AddComponent<S_CameraRotator>();
+	p_camera->AddComponent   <S_CameraRotator>();
 	p_camera->RemoveComponent<S_CameraController>();
-	
+
 	// Loads 2 sounds from a file
 	buffer_1.LoadFromFile("Resources/Music/Town-Academy.ogg");
 	buffer_2.LoadFromFile("Resources/Music/Town-Dungeon.ogg");
@@ -40,7 +54,7 @@ void LoadScene()
 	auto* p_source_2_go = Sdk::GameObject::CreateAudioSource3D();
 
 	p_source_1_go->GetTransform().SetPosition(-5.0f, 0.0f, 0.0f);
-	p_source_2_go->GetTransform().SetPosition( 5.0f, 0.0f, 0.0f);
+	p_source_2_go->GetTransform().SetPosition(5.0f, 0.0f, 0.0f);
 
 	// Gets the audio components
 	auto* p_source_1 = p_source_1_go->GetComponent<CAudioSource3D>();
@@ -50,11 +64,11 @@ void LoadScene()
 	p_source_1->SetAudioBuffer(&buffer_1);
 	p_source_2->SetAudioBuffer(&buffer_2);
 
-	p_source_1->SetMinDistance( 2.0f);
+	p_source_1->SetMinDistance(2.0f);
 	p_source_1->SetMaxDistance(10.0f);
 	p_source_1->Play();
 
-	p_source_2->SetMinDistance( 3.0f);
+	p_source_2->SetMinDistance(3.0f);
 	p_source_2->SetMaxDistance(10.0f);
 	p_source_2->Play();
 }
