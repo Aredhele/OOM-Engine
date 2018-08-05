@@ -23,7 +23,6 @@ CGameObject::CGameObject(CTransform* parent)
     m_destroy_delay   = 0.0f;
     m_destroy_elapsed = 0.0f;
 
-    m_transform.SetParent(parent);
     m_transform.mp_game_object = this;
 }
 
@@ -35,11 +34,10 @@ CGameObject::CGameObject(const glm::vec3& position, const glm::vec3& scale, cons
     m_destroy_delay   = 0.0f;
     m_destroy_elapsed = 0.0f;
 
-    m_transform.SetLocalScale(scale);
-    m_transform.SetLocalPosition(position);
-    m_transform.SetLocalOrientation(orientation);
+    m_transform.SetScale(scale);
+    m_transform.SetPosition(position);
+    m_transform.SetOrientation(orientation);
 
-    m_transform.mp_parent      = nullptr;
     m_transform.mp_game_object = this;
 }
 
@@ -90,18 +88,12 @@ void CGameObject::__EnableMessage()
 {
     for(IComponent* p_component : m_components)
         p_component->__EnableMessage();
-
-    for(CTransform* p_transform : m_transform.GetChildren())
-        p_transform->GetGameObject()->__EnableMessage();
 }
 
 void CGameObject::__DisableMessage()
 {
     for(IComponent* p_component : m_components)
         p_component->__DisableMessage();
-
-    for(CTransform* p_transform : m_transform.GetChildren())
-        p_transform->GetGameObject()->__DisableMessage();
 }
 
 /* static */

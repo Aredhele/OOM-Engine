@@ -58,7 +58,6 @@ public:
     void                Rotate          (float x, float y, float z);
     void                Rotate          (const glm::vec3& point);
     void                RotateAround    (const glm::vec3& point, const glm::vec3& axis, float angle);
-    void                SetParent       (CTransform* parent);
     void                Translate       (float x, float y, float z);
     void                Translate       (const glm::vec3& translation);
 

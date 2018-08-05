@@ -79,10 +79,10 @@ void S_Camera::SetClippingPlaneFar(float far)
 
 void S_Camera::UpdateViewMatrix()
 {
-    Oom::CTransform& p_transform = mp_game_object->GetTransform();
+    const auto& p_transform = mp_game_object->GetTransform();
 
     m_view_matrix = glm::lookAt(
-            p_transform.GetWorldPosition(),
+            p_transform.GetPosition(),
             p_transform.GetForward(),
             p_transform.GetUp());
 }
