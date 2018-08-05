@@ -29,11 +29,13 @@
 *.exe
 *.out
 *.app
-Bin/
 
 # Visual
 .vs
 .idea
+Bin/
+Bin/
+
 
 # CLion
 cmake-build-debug
