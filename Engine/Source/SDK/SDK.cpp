@@ -16,6 +16,15 @@
 // Debug
 #include "Core/Debug/SLogger.hpp"
 
+// Gizmos
+#include "Render/Gizmos/CGizmosRay.hpp"
+#include "Render/Gizmos/CGizmosBox.hpp"
+#include "Render/Gizmos/CGizmosLine.hpp"
+#include "Render/Gizmos/CGizmosCone.hpp"
+#include "Render/Gizmos/CGizmosPointLight.hpp"
+#include "Render/Gizmos/CGizmosAudioSource.hpp"
+#include "Render/Gizmos/CGizmosDirectionalLight.hpp"
+
 namespace Sdk
 {
     // Mouse specific functions
@@ -187,6 +196,34 @@ namespace Sdk
 
 	    void DisableGizmo(EGizmo type) {
 			CGizmosManager::DisableGizmo(type);
+	    }
+
+	    void DrawRay(glm::vec3 const& start, glm::vec3 const& dir, glm::vec3 const& color) {
+			Oom::DrawRay(start, dir, color);
+	    }
+
+	    void DrawBox(glm::vec3 const& center, float width, float height, glm::vec3 const& color) {
+			Oom::DrawBox(center, width, height, color);
+	    }
+
+	    void DrawLine(glm::vec3 const& start, glm::vec3 const& end, glm::vec3 const& color) {
+			Oom::DrawLine(start, end, color);
+	    }
+
+	    void DrawCone(glm::vec3 const& position, float radius, float topRadius, float lenght, glm::vec3 const& color) {
+			Oom::DrawCone(position, radius, topRadius, lenght, color);
+	    }
+
+	    void DrawPointLight(glm::vec3 const& position, glm::vec3 const& color, int resolution, float range, float scale) {
+			Oom::DrawPointLight(position, color, resolution, range, scale);
+	    }
+
+	    void DrawAudioSource(glm::vec3 const& position, float distance_min, float distance_max, int resolution, float scale) {
+			Oom::DrawAudioSource(position, distance_min, distance_max, resolution, scale);
+	    }
+
+	    void DrawDirectionalLight(glm::vec3 const& position, glm::vec3 const& direction, glm::vec3 const& color, float scale) {
+			Oom::DrawDirectionalLight(position, direction, color, scale);
 	    }
     }
 

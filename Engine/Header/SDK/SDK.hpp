@@ -109,6 +109,14 @@ namespace Sdk
 
 		void EnableGizmo  (EGizmo type);
 		void DisableGizmo (EGizmo type);
+
+		void DrawRay			 (glm::vec3 const& start,    glm::vec3 const& dir, glm::vec3 const& color);
+		void DrawBox			 (glm::vec3 const& center,   float width, float height, glm::vec3 const& color);
+		void DrawLine			 (glm::vec3 const& start,    glm::vec3 const& end, glm::vec3 const& color);
+		void DrawCone			 (glm::vec3 const& position, float radius, float topRadius, float lenght, glm::vec3 const& color);
+		void DrawPointLight		 (glm::vec3 const& position, glm::vec3 const& color, int resolution, float range, float scale);
+		void DrawAudioSource     (glm::vec3 const& position, float distance_min, float distance_max, int resolution, float scale);
+		void DrawDirectionalLight(glm::vec3 const& position, glm::vec3 const& direction, glm::vec3 const& color, float scale);
     }
 
     namespace Import
