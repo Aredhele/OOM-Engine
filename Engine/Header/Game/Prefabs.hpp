@@ -2,6 +2,6 @@
 
 namespace Game::Prefabs {
 	
-	CGameObject* CreatePlayer();
+	CGameObject& CreatePlayer();
 
 }
