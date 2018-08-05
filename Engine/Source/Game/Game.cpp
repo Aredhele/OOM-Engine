@@ -4,30 +4,28 @@
 /// \package    Game
 /// \author     Vincent STEHLY--CALISTO
 
-#include "Hook.hpp"
 #include "SDK/SDK.hpp"
+#include "Scene/Hook.hpp"
+#include "Scene/CScene.hpp"
 
 // User script
 #include "Game/S_CameraRotator.hpp"
 
+// Temporary
 CAudioBuffer buffer_1;
 CAudioBuffer buffer_2;
 
-void LoadSceneDarenn ();
-void LoadSceneVincent();
-
 void LoadScene()
 {
-	LoadSceneDarenn ();
-	LoadSceneVincent();
+	CScene::LoadScene(CScene::EScene::DemoAudio);
 }
 
-void LoadSceneDarenn()
+void LoadGameScene()
 {
-
+	// TODO
 }
 
-void LoadSceneVincent()
+void LoadDemoSceneAudio()
 {
 	// Settings
 	Sdk::Render::EnablePostProcessing();
@@ -71,4 +69,9 @@ void LoadSceneVincent()
 	p_source_2->SetMinDistance(3.0f);
 	p_source_2->SetMaxDistance(10.0f);
 	p_source_2->Play();
+}
+
+void LoadDemoScenePhysics()
+{
+	// TODO
 }
