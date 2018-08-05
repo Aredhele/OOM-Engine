@@ -13,6 +13,7 @@ class S_DirectionalLight : public Oom::CBehavior
 {
 public:
 
+	void Awake () override;
     void Start () override;
     void Update() override;
 

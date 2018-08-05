@@ -36,9 +36,9 @@ void CBehavior::OnDisable()
 void CBehavior::OnDrawGizmos()
 { /* None */ }
 
-void CBehavior::__Awake(CBehavior* p_behavior)
+void CBehavior::__Awake()
 {
-    p_behavior->Awake();
+    Awake();
 }
 
 void CBehavior::__Start()

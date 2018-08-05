@@ -59,6 +59,11 @@ T* CGameObject::AddComponent(void)
     m_components.push_back(p_component);
     p_component->_Register();
 
+	if(dynamic_cast<CBehavior*>(p_component))
+	{
+		((CBehavior*)p_component)->Awake();
+	}
+
     return (T*)p_component;
 }
 

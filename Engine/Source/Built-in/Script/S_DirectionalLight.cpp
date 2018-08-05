@@ -6,6 +6,15 @@
 
 #include "Built-in/Script/S_DirectionalLight.hpp"
 
+/* virtual */ void S_DirectionalLight::Awake()
+{
+	SetLightIntensity  (0.8f);
+	SetAmbientIntensity(0.3f);
+	SetLightColor  (glm::vec3( 1.0f,  1.0f,  1.0f));
+	SetDirection   (glm::vec3(-0.5f, -0.5f, -0.5f));
+	SetAmbientColor(glm::vec3( 1.0f,  1.0f,  1.0f));
+}
+
 /* virtual */ void S_DirectionalLight::Start()
 {
    // None
