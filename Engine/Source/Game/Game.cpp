@@ -17,12 +17,21 @@ CAudioBuffer buffer_2;
 
 void LoadScene()
 {
-	CScene::LoadScene(CScene::EScene::DemoAudio);
+	CScene::LoadScene(CScene::EScene::Game);
 }
+
+#include "Game/Prefabs.hpp"
 
 void LoadGameScene()
 {
-	// TODO
+	Sdk::Debug::EnableGizmo(EGizmo::Ray);
+	Sdk::Debug::EnableGizmo(EGizmo::Box);
+	Sdk::Debug::EnableGizmo(EGizmo::Axis);
+	Sdk::Debug::EnableGizmo(EGizmo::Line);
+	Sdk::Debug::EnableGizmo(EGizmo::Grid);
+	Sdk::Debug::EnableGizmo(EGizmo::AudioSource);
+
+	auto& player = Game::Prefabs::CreatePlayer();
 }
 
 void LoadDemoSceneAudio()
