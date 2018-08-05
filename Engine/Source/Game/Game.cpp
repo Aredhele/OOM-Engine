@@ -10,7 +10,9 @@
 
 // User script
 #include "Game/S_CameraRotator.hpp"
-#include "Physics/CRigidBody.hpp"
+
+// Game include
+#include "Game/Prefabs.hpp"
 
 // Temporary
 CAudioBuffer buffer_1;
@@ -20,8 +22,6 @@ void LoadScene()
 {
 	CScene::LoadScene(CScene::EScene::DemoPhysics);
 }
-
-#include "Game/Prefabs.hpp"
 
 void LoadGameScene()
 {
@@ -103,8 +103,14 @@ void LoadDemoScenePhysics()
 	auto* p_physic_go = Sdk::Import::ImportMesh("Resources/Mesh/Cube.obj")[0];
 
 	p_ground_go->GetTransform().SetPosition(0.0f, 0.0f, 0.0f);
-	p_physic_go->GetTransform().SetPosition(0.0f, 0.0f, 5.0f);
+	p_physic_go->GetTransform().SetPosition(0.0f, 0.5f, 5.0f);
 
 	auto* p_ground_body = p_ground_go->AddComponent<CRigidBody>();
 	auto* p_ground_box  = p_ground_go->AddComponent<CBoxCollider>();
+
+	// Static body
+	p_ground_body->SetBodyType(CRigidBody::EBodyType::Static);
+
+	auto* p_physic_body = p_physic_go->AddComponent<CRigidBody>  ();
+	auto* p_physic_box  = p_physic_go->AddComponent<CBoxCollider>();
 }

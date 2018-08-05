@@ -50,11 +50,11 @@ void CPhysicWorld::Release()
 void CPhysicWorld::Update()
 {
     // Update body positions
-    for(auto* p_body : m_bodies)
+   /* for(auto* p_body : m_bodies)
     {
         // TODO : Rotation
         p_body->SetPosition(p_body->GetTransform()->GetPosition());
-    }
+    }*/
 
     mp_scene->Step();
 

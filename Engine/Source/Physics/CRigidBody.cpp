@@ -35,9 +35,9 @@ void CRigidBody::CreateBody()
 
 		switch(m_body_type)
 		{
-			case Static:     body_def.bodyType = eStaticBody;
-			case Dynamic:    body_def.bodyType = eDynamicBody;
-			case Kinematic:  body_def.bodyType = eKinematicBody;
+			case Static:     body_def.bodyType = eStaticBody;    break;
+			case Dynamic:    body_def.bodyType = eDynamicBody;   break;
+			case Kinematic:  body_def.bodyType = eKinematicBody; break;
 		}
 
 		body_def.position.x        = position.x;
@@ -148,7 +148,7 @@ bool CRigidBody::IsZLocked() const
 
 float CRigidBody::GetMass() const
 {
-	mp_body->GetMass();
+	return mp_body->GetMass();
 }
 
 float CRigidBody::GetGravityScale() const

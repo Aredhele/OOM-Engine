@@ -182,7 +182,7 @@ void Oom::CBoxCollider::_Register()
 	m_density           = 1.0f;
 	m_friction          = 0.4f;
 	m_restitution       = 0.2f;
-	m_extent            = glm::vec3(0.0f);
+	m_extent            = glm::vec3(1.0f);
 	m_local_position    = glm::vec3(0.0f);
 	m_local_orientation = glm::vec3(0.0f);
 

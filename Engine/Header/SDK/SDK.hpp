@@ -40,7 +40,7 @@
 // Physics
 #include "Physics/CCollision.hpp"
 #include "Physics/CRigidBody.hpp"
-#include "Physics/CRigidBody.hpp"
+#include "Physics/CBoxCollider.hpp"
 
 // Built-in
 #include "Built-in/Script/S_Text.hpp"
