@@ -26,6 +26,7 @@ void Oom::CBoxCollider::OnEnable()
 
         m_box_def.Set(local_space, q3Vec3(1.0f, 1.0f, 1.0f));
         mp_box = p_body->mp_body->AddBox(m_box_def);
+		mp_box->SetUserdata((void *)GetGameObject());
     }
 }
 
@@ -50,7 +51,7 @@ void Oom::CBoxCollider::_Register()
     m_box_def.SetDensity    (1.0f);
     m_box_def.SetFriction   (0.4f);
     m_box_def.SetSensor     (false);
-
+	
     q3Transform local_space;
     auto* p_body = GetGameObject()->GetComponent<CRigidBody>();
 
@@ -71,6 +72,7 @@ void Oom::CBoxCollider::_Register()
     if(p_body)
     {
         mp_box = p_body->mp_body->AddBox(m_box_def);
+		mp_box->SetUserdata((void *)GetGameObject());
     }
 }
 
@@ -99,6 +101,7 @@ void CBoxCollider::OnBodyAttached()
 
         m_box_def.Set(local_space, q3Vec3(1.0f, 1.0f, 1.0f));
         mp_box = p_body->mp_body->AddBox(m_box_def);
+		mp_box->SetUserdata((void *)GetGameObject());
     }
 }
 

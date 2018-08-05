@@ -14,6 +14,7 @@ namespace Oom
 
 // Forward declaration
 class CRigidBody;
+class CContactListener;
 
 class CPhysicWorld
 {
@@ -38,6 +39,8 @@ private:
 private:
 
     q3Scene*                    mp_scene     = nullptr;
+	CContactListener*			mp_listener  = nullptr;
+
     static CPhysicWorld*        sp_instance;
     std::vector<CRigidBody*>    m_bodies;
 };

@@ -8,6 +8,7 @@
 
 #include "Physics/CRigidBody.hpp"
 #include "Physics/CPhysicWorld.hpp"
+#include "Physics/CContactListener.hpp"
 
 #include "Core/Debug/SLogger.hpp"
 #include "Composite/Component/CTransform.hpp"
@@ -22,7 +23,10 @@ bool CPhysicWorld::Initialize(float delta_time)
     SLogger::LogInfo("Physic world initialization.");
 
     sp_instance = this;
-    mp_scene = new q3Scene(delta_time);
+    mp_scene    = new q3Scene(delta_time);
+	mp_listener = new CContactListener();
+
+	mp_scene->SetContactListener(mp_listener);
 
     SLogger::LogInfo("Physic world : Delta = %f ms - Gravity = %f", delta_time, -9.81f);
     SLogger::LogInfo("Physic world initialization.");

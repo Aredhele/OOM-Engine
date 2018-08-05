@@ -45,6 +45,7 @@ namespace Oom
     body_def.position.x = world_position.x;
     body_def.position.y = world_position.z;
     body_def.position.z = world_position.y;
+	body_def.userData   = (void*)GetGameObject();
 
     // TODO : Set rotation
     mp_body = p_scene->CreateBody(body_def);
@@ -86,7 +87,7 @@ namespace Oom
 CRigidBody::EBodyType CRigidBody::GetBodyType() const
 {
     int32_t flags = mp_body->GetFlags();
-
+	
     if(flags & eStaticBody)    return Static;    // NOLINT
     if(flags & eDynamicBody)   return Dynamic;   // NOLINT
     if(flags & eKinematicBody) return Kinematic; // NOLINT

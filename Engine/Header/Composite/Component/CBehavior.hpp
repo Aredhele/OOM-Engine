@@ -9,6 +9,9 @@
 
 #include "Composite/IComponent.hpp"
 
+// Forward declaration
+struct CCollision;
+
 namespace Oom
 {
 
@@ -19,13 +22,14 @@ public:
     CBehavior(const CBehavior& behavior)           = delete;
     CBehavior(      CBehavior&& behavior) noexcept = delete;
 
-    virtual void Awake       ();
-    virtual void Start       ();
-    virtual void Update      ();
-            void OnDestroy   () override;
-            void OnEnable    () override;
-            void OnDisable   () override;
-    virtual void OnDrawGizmos();
+    virtual void Awake            ();
+    virtual void Start            ();
+    virtual void Update           ();
+	virtual void OnCollisionEnter (const CCollision& collision);
+            void OnDestroy        () override;
+            void OnEnable         () override;
+            void OnDisable        () override;
+    virtual void OnDrawGizmos     ();
 
 protected:
     void _Register() override;

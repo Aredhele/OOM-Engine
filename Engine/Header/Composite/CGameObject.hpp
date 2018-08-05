@@ -19,6 +19,9 @@
 namespace Oom
 {
 
+// Forward declaration
+class CBehavior;
+
 class CGameObject : public CObject
 {
 public:
@@ -67,14 +70,16 @@ private:
 
     friend class CEngine;
     friend class CTransform;
+	friend class CContactListener;
 
              CGameObject();
     explicit CGameObject(CTransform* parent);
              CGameObject(const glm::vec3& position, const glm::vec3& scale, const glm::vec3& orientation);
 
-    void __DestroyMessage ();
-    void __EnableMessage  ();
-    void __DisableMessage ();
+    void                    __DestroyMessage ();
+    void                    __EnableMessage  ();
+    void                    __DisableMessage ();
+	std::vector<CBehavior*> __GetBehaviors   ();
 
 private:
 

@@ -125,6 +125,7 @@ void CEngine::BehaviorUpdate(GLFWwindow* p_window, float delta_time)
                 p_behavior->__Start();
 
             p_behavior->__Update();
+			p_behavior->OnDrawGizmos();
         }
     }
 }

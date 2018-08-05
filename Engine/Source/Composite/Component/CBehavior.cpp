@@ -5,6 +5,8 @@
 /// \author     Vincent STEHLY--CALISTO
 
 #include "CEngine.hpp"
+
+#include "Physics/CCollision.hpp"
 #include "Composite/Component/CBehavior.hpp"
 
 namespace Oom
@@ -17,6 +19,9 @@ void CBehavior::Start()
 { /* None */ }
 
 void CBehavior::Update()
+{ /* None */ }
+
+void CBehavior::OnCollisionEnter(const CCollision& collision)
 { /* None */ }
 
 void CBehavior::OnDestroy()

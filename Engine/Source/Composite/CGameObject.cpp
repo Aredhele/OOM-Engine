@@ -5,6 +5,7 @@
 /// \author     Vincent STEHLY--CALISTO
 
 #include "Composite/CGameObject.hpp"
+#include "Composite/Component/CBehavior.hpp"
 
 namespace Oom
 {
@@ -96,7 +97,23 @@ void CGameObject::__DisableMessage()
         p_component->__DisableMessage();
 }
 
-/* static */
+std::vector<CBehavior*> CGameObject::__GetBehaviors()
+{
+	std::vector<CBehavior*> behaviors;
+
+	for(IComponent* p_component : m_components)
+	{
+		CBehavior* p_behavior = nullptr;
+		if ((p_behavior = dynamic_cast<CBehavior*>(p_component)))
+		{
+			behaviors.push_back(p_behavior);
+		}
+	}
+
+	return behaviors;
+}
+
+	/* static */
 CGameObject* CGameObject::Instantiate()
 { return CEngine::Instantiate(); }
 
