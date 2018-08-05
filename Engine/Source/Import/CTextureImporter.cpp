@@ -214,8 +214,8 @@ void CTextureImporter::GetSize(const char* fname, long fsize, unsigned char* dat
     {
         x = *(unsigned int *)&data[16];
         y = *(unsigned int *)&data[20];
-        ReverseByte(reinterpret_cast<unsigned char*>(&x), 4);
-        ReverseByte(reinterpret_cast<unsigned char*>(&y), 4);
+        ReverseByte(reinterpret_cast<unsigned char*>(&x), 4); // Network order to host order
+        ReverseByte(reinterpret_cast<unsigned char*>(&y), 4); // Network order to host order
     }
     else if(extension == "gpj" || extension == "gepj")
     {

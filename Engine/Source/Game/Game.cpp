@@ -39,8 +39,8 @@ void LoadScene()
 	auto* p_source_1_go = Sdk::GameObject::CreateAudioSource3D();
 	auto* p_source_2_go = Sdk::GameObject::CreateAudioSource3D();
 
-	p_source_1_go->GetTransform().SetLocalPosition(-5.0f, 0.0f, 0.0f);
-	p_source_2_go->GetTransform().SetLocalPosition( 5.0f, 0.0f, 0.0f);
+	p_source_1_go->GetTransform().SetPosition(-5.0f, 0.0f, 0.0f);
+	p_source_2_go->GetTransform().SetPosition( 5.0f, 0.0f, 0.0f);
 
 	// Gets the audio components
 	auto* p_source_1 = p_source_1_go->GetComponent<CAudioSource3D>();

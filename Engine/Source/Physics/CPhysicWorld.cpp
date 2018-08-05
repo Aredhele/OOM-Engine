@@ -49,7 +49,7 @@ void CPhysicWorld::Update()
     for(auto* p_body : m_bodies)
     {
         // TODO : Rotation
-        p_body->SetPosition(p_body->GetTransform()->GetWorldPosition());
+        p_body->SetPosition(p_body->GetTransform()->GetPosition());
     }
 
     mp_scene->Step();
@@ -58,7 +58,7 @@ void CPhysicWorld::Update()
     for(auto* p_body : m_bodies)
     {
         // TODO : Rotation
-        glm::vec3 translation = p_body->GetPosition() - p_body->GetTransform()->GetWorldPosition();
+        glm::vec3 translation = p_body->GetPosition() - p_body->GetTransform()->GetPosition();
         p_body->GetTransform()->Translate(translation);
     }
 }

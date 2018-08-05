@@ -39,7 +39,7 @@ namespace Oom
     q3BodyDef body_def;
 
     // Getting the transform
-    glm::vec3 world_position = mp_transform->GetWorldPosition();
+    glm::vec3 world_position = mp_transform->GetPosition();
 
     body_def.bodyType   = eDynamicBody;
     body_def.position.x = world_position.x;

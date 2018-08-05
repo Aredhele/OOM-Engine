@@ -10,7 +10,7 @@
 /* virtual */ void S_CameraRotator::Start()
 {
 	GetTransform()->LookAt(0.0f, 0.0f, 0.0f);
-	GetTransform()->SetLocalPosition(5.0f, 5.0f, 3.0f);
+	GetTransform()->SetPosition(5.0f, 5.0f, 3.0f);
 }
 
 /* virtual */ void S_CameraRotator::Update()
