@@ -36,7 +36,7 @@ namespace Oom
     // Allocating the q3body
     // TODO : Make a method to recreate the body
     q3Scene*  p_scene = CPhysicWorld::GetScene();
-    q3BodyDef body_def;
+	q3BodyDef body_def {};
 
     // Getting the transform
     glm::vec3 world_position = mp_transform->GetPosition();
@@ -49,6 +49,13 @@ namespace Oom
 
     // TODO : Set rotation
     mp_body = p_scene->CreateBody(body_def);
+
+	q3BoxDef boxDef; 
+	q3Transform localSpace; 
+	q3Identity(localSpace);
+		
+	boxDef.Set(localSpace, q3Vec3(1.0, 1.0, 1.0));
+	mp_body->AddBox(boxDef);
 
     // Check if the game object has a collider
     std::vector<CBoxCollider*> colliders = mp_game_object->GetComponents<CBoxCollider>();
@@ -189,6 +196,11 @@ void CRigidBody::SetLinearVelocity(const glm::vec3& velocity)
 void CRigidBody::SetAngularVelocity(const glm::vec3& velocity)
 {
     mp_body->SetAngularVelocity(q3Vec3(velocity.x, velocity.z, velocity.y));
+}
+
+void CRigidBody::SetBodyType(EBodyType body_type)
+{
+
 }
 
 void CRigidBody::SetLayers(int32_t layers)

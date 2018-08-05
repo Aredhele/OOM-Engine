@@ -46,6 +46,7 @@ public:
     void SetGravityScale              (float gravity_scale);
     void SetLinearVelocity            (const glm::vec3& velocity);
     void SetAngularVelocity           (const glm::vec3& velocity);
+	void SetBodyType                  (EBodyType body_type);
     void SetLayers                    (int32_t layers);
     void Sleep                        ();
     void Awake                        ();

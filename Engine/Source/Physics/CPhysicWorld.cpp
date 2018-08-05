@@ -62,7 +62,7 @@ void CPhysicWorld::Update()
     for(auto* p_body : m_bodies)
     {
         // TODO : Rotation
-        glm::vec3 translation = p_body->GetPosition() - p_body->GetTransform()->GetPosition();
+        const glm::vec3 translation = p_body->GetPosition() - p_body->GetTransform()->GetPosition();
         p_body->GetTransform()->Translate(translation);
     }
 }

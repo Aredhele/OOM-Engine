@@ -18,7 +18,7 @@ CAudioBuffer buffer_2;
 
 void LoadScene()
 {
-	CScene::LoadScene(CScene::EScene::Game);
+	CScene::LoadScene(CScene::EScene::DemoPhysics);
 }
 
 void LoadGameScene()
@@ -97,5 +97,5 @@ void LoadDemoScenePhysics()
 	p_physic_go->GetTransform().SetPosition(0.0f, 0.0f, 5.0f);
 
 	auto* p_ground_body = p_ground_go->AddComponent<CRigidBody>();
-	auto* p_ground_box  = p_ground_go->AddComponent<CBoxCollider>();
+	//auto* p_ground_box  = p_ground_go->AddComponent<CBoxCollider>();
 }

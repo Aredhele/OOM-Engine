@@ -102,9 +102,11 @@ void CEngine::Run()
             GameObjectUpdate(p_handle, static_cast<float>(delta_time));
 
             lag -= delta_time;
+
+			mp_physic_world->Update();
+			mp_audio_engine->Update(delta_time);
         }
 
-		mp_audio_engine->Update(delta_time);
         mp_renderer->Render();
     }
 }
