@@ -39,10 +39,28 @@ public:
     void             SetClippingPlaneNear (float near);
     void             SetClippingPlaneFar  (float far);
 
+	// TMP
+	void				LookAt      (float x, float y, float z);
+	void				LookAt      (const glm::vec3& target);
+	void                Rotate      (float x, float y, float z);
+	void                Rotate      (const glm::vec3& point);
+	void                RotateAround(const glm::vec3& point, const glm::vec3& axis, float angle);
+	void                Translate   (float x, float y, float z);
+	void                Translate   (const glm::vec3& translation);
+	const glm::vec3&    GetUp() const;
+	const glm::vec3&    GetRight() const;
+	const glm::vec3&    GetForward() const;
+	const glm::vec3&    GetPosition() const;
+	const glm::vec3&    GetScale() const;
+	const glm::vec3&    GetOrientation() const;
+
 private:
 
     void UpdateViewMatrix();
     void UpdateProjectionMatrix();
+
+	// Update vector
+	void UpdateVector();
 
 private:
 
@@ -54,6 +72,16 @@ private:
 
     glm::mat4       m_view_matrix;
     glm::mat4       m_projection_matrix;
+
+	// TMP
+	glm::vec3 m_position;
+	glm::vec3 m_scale;
+	glm::vec3 m_orientation;
+	glm::vec3 m_test;
+
+	glm::vec3 m_up;
+	glm::vec3 m_right;
+	glm::vec3 m_forward;
 };
 
 #endif // !OOM_ENGINE_S_CAMERA_HPP__

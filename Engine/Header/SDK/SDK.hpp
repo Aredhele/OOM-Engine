@@ -14,6 +14,9 @@
 // Third party
 #include <GLM/glm.hpp>
 
+// Tim
+#include "CTime.hpp"
+
 // Standard types
 #include "Core/Standard/CString.hpp"
 
@@ -33,16 +36,22 @@
 #include "Audio/CAudioSource3D.hpp"
 #include "Audio/CAudioListener3D.hpp"
 
-// Resources
-#include "Resource/CMesh.hpp"
-#include "Audio/CAudioBuffer.hpp"
-
 // Physics
 #include "Physics/CCollision.hpp"
 #include "Physics/CRigidBody.hpp"
 #include "Physics/CBoxCollider.hpp"
 
+// Resources
+#include "Resource/CMesh.hpp"
+#include "Audio/CAudioBuffer.hpp"
+
 // Built-in
+// Test
+#include "Built-in/Script/S_Scale.hpp"
+#include "Built-in/Script/S_Rotate.hpp"
+#include "Built-in/Script/S_Translate.hpp"
+
+// User
 #include "Built-in/Script/S_Text.hpp"
 #include "Built-in/Script/S_Camera.hpp"
 #include "Built-in/Script/S_PointLight.hpp"

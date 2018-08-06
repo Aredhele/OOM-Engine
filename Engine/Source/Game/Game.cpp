@@ -126,10 +126,30 @@ void LoadDemoTransformation()
 	Sdk::GameObject::CreateDirectionalLight();
 
 	auto* p_camera = Sdk::GameObject::CreateFreeCamera();
-	p_camera->GetTransform().SetPosition(4.0f, 4.0f, 4.0f);
+	//p_camera->GetTransform().SetPosition(4.0f, 4.0f, 4.0f);
 
 	auto* p_scale_go       = Sdk::Import::ImportMesh("Resources/Mesh/Cube.obj")[0];
-	auto* p_rotate_go      = Sdk::Import::ImportMesh("Resources/Mesh/Cube.obj")[0];
 	auto* p_translate_go   = Sdk::Import::ImportMesh("Resources/Mesh/Cube.obj")[0];
-	auto* p_composition_go = Sdk::Import::ImportMesh("Resources/Mesh/Cube.obj")[0];
+
+	auto* p_rotate_x_go = Sdk::Import::ImportMesh("Resources/Mesh/Cube.obj")[0];
+	auto* p_rotate_y_go = Sdk::Import::ImportMesh("Resources/Mesh/Cube.obj")[0];
+	auto* p_rotate_z_go = Sdk::Import::ImportMesh("Resources/Mesh/Cube.obj")[0];
+
+	p_scale_go->GetTransform().SetPosition    ( 5.0f, 0.0f, 0.0f);
+	p_rotate_x_go->GetTransform().SetPosition (-5.0f, 0.0f, 0.0f);
+	p_rotate_y_go->GetTransform().SetPosition (-5.0f, 2.0f, 0.0f);
+	p_rotate_z_go->GetTransform().SetPosition (-5.0f, 4.0f, 0.0f);
+	p_translate_go->GetTransform().SetPosition( 0.0f, 0.0f, 0.0f);
+
+	p_scale_go->AddComponent    <S_Scale>    ();
+	p_translate_go->AddComponent<S_Translate>();
+
+	// Setting up rotations
+	auto* p_component_x = p_rotate_x_go->AddComponent<S_Rotate>();
+	auto* p_component_y = p_rotate_y_go->AddComponent<S_Rotate>();
+	auto* p_component_z = p_rotate_z_go->AddComponent<S_Rotate>();
+
+	p_component_x->SetAxis(glm::vec3(1.0f, 0.0f, 0.0f));
+	p_component_y->SetAxis(glm::vec3(0.0f, 1.0f, 0.0f));
+	p_component_z->SetAxis(glm::vec3(0.0f, 0.0f, 1.0f));
 }

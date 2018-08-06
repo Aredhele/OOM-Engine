@@ -28,7 +28,7 @@
     glm::vec2 mousePos    (mouse.x, mouse.y);
     glm::vec2 windowCenter(windowSize.x / 2, windowSize.y / 2);
 
-    float maxMousePosRadius = min(windowSize.x, windowSize.y) / 2.0f;
+    float maxMousePosRadius = glm::min(windowSize.x, windowSize.y) / 2.0f;
     if (glm::distance(mousePos, windowCenter) > maxMousePosRadius)
     {
         // Re-center the mouse
@@ -52,9 +52,11 @@
     auto angleY = static_cast<float>(-deltaMouse.y * m_sensitivity);
     float speed_coefficient = (Sdk::Input::IsKeyPressed(GLFW_KEY_LEFT_SHIFT)) ? m_run_speed_multiplier : 1.0f;
 
-    mp_transform->RotateAround(mp_transform->GetForward(), mp_transform->GetUp(),    angleX);
-    mp_transform->RotateAround(mp_transform->GetForward(), mp_transform->GetRight(), angleY);
-    mp_transform->Translate  ((mp_transform->GetOrientation() * (float)y_direction + mp_transform->GetRight() * (float)x_direction) * 0.016f * m_speed * speed_coefficient);
+	auto* p_cam = GetGameObject()->GetComponent<S_Camera>();
+
+	p_cam->RotateAround(p_cam->GetForward(), p_cam->GetUp(),    angleX);
+	p_cam->RotateAround(p_cam->GetForward(), p_cam->GetRight(), angleY);
+	p_cam->Translate  ((p_cam->GetOrientation() * (float)y_direction + p_cam->GetRight() * (float)x_direction) * 0.016f * m_speed * speed_coefficient);
 }
 
 float S_CameraController::GetSpeed() const

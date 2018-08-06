@@ -99,6 +99,10 @@ void CEngine::Run()
         // Fixed granularity
         while(lag >= delta_time)
         {
+			// Updating the time manager
+			CTime::time      += delta_time;
+			CTime::delta_time = delta_time;
+
             BehaviorUpdate  (p_handle, static_cast<float>(delta_time));
             GameObjectUpdate(p_handle, static_cast<float>(delta_time));
 

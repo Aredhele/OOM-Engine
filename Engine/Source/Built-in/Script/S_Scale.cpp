@@ -4,8 +4,7 @@
 /// \package    Built-in/SCirpt
 /// \author     Vincent STEHLY--CALISTO
 
-#include "Built-in/Script/S_Scale.hpp"
-
+#include "SDK/SDK.hpp"
 
 /*virtual */ void S_Scale::Start()
 {
@@ -14,5 +13,5 @@
 
 /*virtual */ void S_Scale::Update()
 {
-	// None
+	GetTransform()->SetScale(glm::vec3(1.0f) + glm::vec3(1.0f) * glm::sin(CTime::time) * 0.6f);
 }

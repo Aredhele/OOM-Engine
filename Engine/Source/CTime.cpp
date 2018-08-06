@@ -6,4 +6,5 @@
 
 #include "CTime.hpp"
 
-/* static */ const float Oom::CTime::delta_time = 1.0f / 60.0f;
+/* static */ float Oom::CTime::time       = 0.0f;
+/* static */ float Oom::CTime::delta_time = 1.0f / 60.0f;

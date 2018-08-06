@@ -17,6 +17,16 @@ void S_Camera::Start()
     m_clipping_plane_near = 0.3f;
     m_clipping_plane_far  = 1000;
 
+	// TMP
+	m_test        = glm::vec3(0.0f);
+	m_scale       = glm::vec3(1.0f);
+	m_position    = glm::vec3(0.0f);
+	m_orientation = glm::vec3(0.0f);
+	m_up          = glm::vec3(0.0f, 0.0f, 1.0f);
+	m_right       = glm::vec3(1.0f, 0.0f, 0.0f);
+	m_forward     = glm::vec3(0.0f, 1.0f, 0.0f);
+	UpdateVector();
+
     UpdateViewMatrix();
     UpdateProjectionMatrix();
 }
@@ -79,12 +89,19 @@ void S_Camera::SetClippingPlaneFar(float far)
 
 void S_Camera::UpdateViewMatrix()
 {
-    const auto& p_transform = mp_game_object->GetTransform();
+    //const auto& p_transform = mp_game_object->GetTransform();
+	UpdateVector();
 
-    m_view_matrix = glm::lookAt(
+	// TMP
+	m_view_matrix = glm::lookAt(
+		m_position,
+		m_forward,
+		m_up);
+
+   /* m_view_matrix = glm::lookAt(
             p_transform.GetPosition(),
-            p_transform.GetForward(),
-            p_transform.GetUp());
+            p_transform.GetForward()
+            p_transform.GetUp());*/
 }
 
 void S_Camera::UpdateProjectionMatrix()
@@ -94,4 +111,86 @@ void S_Camera::UpdateProjectionMatrix()
             16.0f / 9.0f,
             m_clipping_plane_near,
             m_clipping_plane_far);
+}
+
+/// TMP
+void S_Camera::LookAt(float x, float y, float z)
+{
+	LookAt(glm::vec3(x, y, z));
+}
+
+void S_Camera::LookAt(const glm::vec3& target)
+{
+	m_forward = target;
+	UpdateVector();
+}
+
+void S_Camera::Rotate(float x, float y, float z)
+{
+	Rotate(glm::vec3(x, y, z));
+}
+
+void S_Camera::Rotate(const glm::vec3& point)
+{
+	m_orientation += point;
+	m_test += point;
+	UpdateVector();
+}
+
+void S_Camera::RotateAround(const glm::vec3& point, const glm::vec3& axis, float angle)
+{
+	m_forward -= m_position;
+	m_forward = glm::rotate(point, angle, axis);
+	m_forward += m_position;
+	UpdateVector();
+}
+
+void S_Camera::Translate(float x, float y, float z)
+{
+	Translate(glm::vec3(x, y, z));
+}
+
+void S_Camera::Translate(const glm::vec3& translation)
+{
+	m_position += translation;
+	m_forward += translation;
+	UpdateVector();
+}
+
+const glm::vec3& S_Camera::GetUp() const
+{
+	return m_up;
+}
+
+const glm::vec3& S_Camera::GetRight() const
+{
+	return m_right;
+}
+
+const glm::vec3& S_Camera::GetForward() const
+{
+	return m_forward;
+}
+
+const glm::vec3& S_Camera::GetPosition() const
+{
+	return m_position;
+}
+
+const glm::vec3& S_Camera::GetOrientation() const
+{
+	return m_orientation;
+}
+
+void S_Camera::UpdateVector()
+{
+	m_orientation = m_forward;
+	m_orientation -= m_position;
+	m_orientation = glm::normalize(m_orientation);
+
+	m_up = glm::vec3(0.0f, 0.0f, 1.0f);
+	m_right = glm::cross(m_orientation, m_up);
+	m_right = glm::normalize(m_right);
+	m_up = glm::cross(m_right, m_orientation);
+	m_up = glm::normalize(m_up);
 }

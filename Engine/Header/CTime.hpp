@@ -14,10 +14,10 @@ class CTime
 {
 public:
 
-	static const float delta_time;
-
+	static float time;
+	static float delta_time;
 };
 
 }
 
-#ifndef ! //OOM_ENGINE_CTIME_HPP__
+#endif // !OOM_ENGINE_CTIME_HPP__
