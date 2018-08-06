@@ -17,7 +17,7 @@ CAudioBuffer buffer_2;
 
 void LoadScene()
 {
-	CScene::LoadScene(CScene::EScene::DemoTransformation);
+	CScene::LoadScene(CScene::EScene::DemoPhysics);
 }
 
 void LoadGameScene()

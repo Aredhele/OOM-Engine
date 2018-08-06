@@ -12,15 +12,15 @@ namespace Oom
 
 CTransform::CTransform()
 { 
-	m_test         = glm::vec3(0.0f);
+	mp_game_object = nullptr;
     m_scale        = glm::vec3(1.0f);
     m_position     = glm::vec3(0.0f);
     m_orientation  = glm::vec3(0.0f);
     m_up           = glm::vec3(0.0f, 0.0f, 1.0f);
     m_right        = glm::vec3(1.0f, 0.0f, 0.0f);
     m_forward      = glm::vec3(0.0f, 1.0f, 0.0f);
-    mp_game_object = nullptr;
-
+	m_look_at      = glm::vec3(0.0f, 1.0f, 0.0f);
+   
 	UpdateVectors();
 }
 
@@ -72,7 +72,7 @@ void CTransform::SetPosition(float x, float y, float z)
 void CTransform::SetPosition(const glm::vec3& position)
 {
     m_position = position;
-    UpdateVectors();
+  //  UpdateVectors();
 }
 
 void CTransform::SetOrientation(float x, float y, float z)
@@ -82,9 +82,8 @@ void CTransform::SetOrientation(float x, float y, float z)
 
 void CTransform::SetOrientation(const glm::vec3& orientation)
 {
-	m_test        = orientation;
     m_orientation = orientation;
-    UpdateVectors();
+   // UpdateVectors();
 }
 
 void CTransform::LookAt(float x, float y, float z)
@@ -94,14 +93,14 @@ void CTransform::LookAt(float x, float y, float z)
 
 void CTransform::LookAt(const glm::vec3& target)
 {
-	m_forward = target;
-	UpdateVectors();
+	m_look_at = target;
+	//UpdateVectors();
 }
 
 void CTransform::LookAt(const CTransform& target)
 {
-    m_forward = target.m_position;
-    UpdateVectors();
+	m_look_at = target.m_position;
+  //  UpdateVectors();
 }
 
 void CTransform::Rotate(float x, float y, float z)
@@ -109,11 +108,10 @@ void CTransform::Rotate(float x, float y, float z)
     Rotate(glm::vec3(x, y, z));
 }
 
-void CTransform::Rotate(const glm::vec3& point)
+void CTransform::Rotate(const glm::vec3& rotation)
 {
-    m_orientation += point;
-    m_test        += point;
-    UpdateVectors();
+    m_orientation += rotation;
+  //  UpdateVectors();
 }
 
 void CTransform::RotateAround(const glm::vec3& point, const glm::vec3& axis, float angle)
@@ -121,7 +119,7 @@ void CTransform::RotateAround(const glm::vec3& point, const glm::vec3& axis, flo
     m_forward -= m_position;
     m_forward  = glm::rotate(point, angle, axis);
     m_forward += m_position;
-    UpdateVectors();
+  //  UpdateVectors();
 }
 
 void CTransform::Translate(float x, float y, float z)
@@ -133,7 +131,7 @@ void CTransform::Translate(const glm::vec3& translation)
 {
     m_position += translation;
     m_forward  += translation;
-    UpdateVectors();
+  //  UpdateVectors();
 }
 
 void CTransform::UpdateVectors()
@@ -161,26 +159,12 @@ void CTransform::UpdateVectors()
 
 glm::mat4 CTransform::GetLocalToWorldMatrix() const
 {
-	// Identity matrix
-    glm::mat4 model(1.0f);
+	const glm::mat4 translation_matrix = glm::translate (m_position);
+	const glm::mat4 rotation_matrix    = glm::orientate4(m_orientation);
+	const glm::mat4 scale_maxtrix      = glm::scale     (m_scale);
 
-    model  = glm::orientate4(m_test);
-    model *= glm::translate (model, GetPosition());
-    model *= glm::scale     (model, m_scale);
-
-    return model;
+	// The order is IMPORTANT
+    return translation_matrix * rotation_matrix * scale_maxtrix;
 }
-
-/*
-	glm::vec3 direction = m_forward;
-	direction -= m_position;
-	direction  = glm::normalize(direction);
-
-	m_up    = glm::vec3     (0.0f, 0.0f, 1.0f);
-	m_right = glm::cross    (direction, m_up);
-	m_right = glm::normalize(m_right);
-	m_up    = glm::cross    (m_right, direction);
-	m_up    = glm::normalize(m_up);
- */
 
 }

@@ -52,7 +52,7 @@ public:
 	void				LookAt			(const glm::vec3& target);
     void                LookAt          (const CTransform& target);
     void                Rotate          (float x, float y, float z);
-    void                Rotate          (const glm::vec3& point);
+    void                Rotate          (const glm::vec3& rotation);
     void                RotateAround    (const glm::vec3& point, const glm::vec3& axis, float angle);
     void                Translate       (float x, float y, float z);
     void                Translate       (const glm::vec3& translation);
@@ -71,11 +71,11 @@ private:
     glm::vec3 m_position;
     glm::vec3 m_scale;
     glm::vec3 m_orientation;
-    glm::vec3 m_test;
 
     glm::vec3 m_up;
     glm::vec3 m_right;
     glm::vec3 m_forward;
+	glm::vec3 m_look_at;
 
 private:
 

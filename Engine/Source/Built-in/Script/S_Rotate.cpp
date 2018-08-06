@@ -13,7 +13,7 @@
 
 /*virtual */ void S_Rotate::Update()
 {
-	GetTransform()->Rotate(m_axis * 10.0f * CTime::delta_time);
+	GetTransform()->Rotate(m_axis * 1.0f * CTime::delta_time);
 }
 
 void S_Rotate::SetAxis(const glm::vec3& axis)
