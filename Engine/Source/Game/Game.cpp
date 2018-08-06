@@ -129,8 +129,11 @@ void LoadDemoScreenSpaceUI()
 {
 	Sdk::Debug::EnableGizmo(EGizmo::Axis);
 	Sdk::Debug::EnableGizmo(EGizmo::Grid);
+	Sdk::Debug::EnableGizmo(EGizmo::Transform);
 
 	Sdk::GameObject::CreateFreeCamera();
+
+	auto* p_sprite_go = Sdk::GameObject::CreateUISprite();
 }
 
 void LoadDemoTransformation()

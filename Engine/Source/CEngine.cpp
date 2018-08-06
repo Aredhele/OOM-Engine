@@ -33,6 +33,7 @@
 #include "CTime.hpp"
 #include "Render/Gizmos/CGizmosManager.hpp"
 #include "Render/Gizmos/CGizmosBox.hpp"
+#include "Render/Gizmos/CGizmosTransform.hpp"
 #include "SDK/SDK.hpp"
 #include "Render/Gizmos/CGizmosRay.hpp"
 
@@ -149,13 +150,11 @@ void CEngine::GameObjectUpdate(GLFWwindow* p_window, float delta_time)
     {
         CGameObject* p_game_object = m_game_objects[n_go];
 
-		if(CGizmosManager::IsGizmoEnabled(CGizmosManager::EGizmo::Transform))
-		{
-			DrawBox(p_game_object->GetTransform().GetTarget(), 0.2f, 0.2f, glm::vec3(0.0f, 0.0f, 1.0f));
-			DrawRay(p_game_object->GetTransform().GetPosition(), p_game_object->GetTransform().GetUp()      * 5.0f, glm::vec3(0.0f, 0.0f, 1.0f));
-			DrawRay(p_game_object->GetTransform().GetPosition(), p_game_object->GetTransform().GetRight()   * 5.0f, glm::vec3(1.0f, 0.0f, 0.0f));
-			DrawRay(p_game_object->GetTransform().GetPosition(), p_game_object->GetTransform().GetForward() * 5.0f, glm::vec3(0.0f, 1.0f, 0.0f));
-		}
+		auto& p_transform = p_game_object->GetTransform();
+		DrawTransform(
+			p_transform.GetPosition(), p_transform.GetUp(), 
+			p_transform.GetRight(),    p_transform.GetForward(), 
+			p_transform.GetTarget());
 
         // The go is being destroyed
         if(p_game_object->m_is_destroyed &&
