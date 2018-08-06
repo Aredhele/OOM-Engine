@@ -19,9 +19,7 @@ CTransform::CTransform()
     m_up           = glm::vec3(0.0f, 0.0f, 1.0f);
     m_right        = glm::vec3(1.0f, 0.0f, 0.0f);
     m_forward      = glm::vec3(0.0f, 1.0f, 0.0f);
-	m_look_at      = glm::vec3(0.0f, 1.0f, 0.0f);
-   
-	UpdateVectors();
+	m_target       = glm::vec3(0.0f, 5.0f, 0.0f);
 }
 
 const glm::vec3& CTransform::GetUp() const
@@ -37,6 +35,11 @@ const glm::vec3& CTransform::GetRight() const
 const glm::vec3 &CTransform::GetForward() const 
 {
     return m_forward;
+}
+
+const glm::vec3& CTransform::GetTarget() const
+{
+	return m_target;
 }
 
 const glm::vec3& CTransform::GetPosition() const 
@@ -71,8 +74,7 @@ void CTransform::SetPosition(float x, float y, float z)
 
 void CTransform::SetPosition(const glm::vec3& position)
 {
-    m_position = position;
-  //  UpdateVectors();
+	Translate(position - m_position);
 }
 
 void CTransform::SetOrientation(float x, float y, float z)
@@ -82,8 +84,10 @@ void CTransform::SetOrientation(float x, float y, float z)
 
 void CTransform::SetOrientation(const glm::vec3& orientation)
 {
+	const glm::vec3 old = m_orientation;
     m_orientation = orientation;
-   // UpdateVectors();
+
+	RotateTarget(m_orientation - old);
 }
 
 void CTransform::LookAt(float x, float y, float z)
@@ -91,16 +95,24 @@ void CTransform::LookAt(float x, float y, float z)
 	LookAt(glm::vec3(x, y, z));
 }
 
-void CTransform::LookAt(const glm::vec3& target)
-{
-	m_look_at = target;
-	//UpdateVectors();
-}
-
 void CTransform::LookAt(const CTransform& target)
 {
-	m_look_at = target.m_position;
-  //  UpdateVectors();
+	LookAt(target.m_position);
+}
+
+void CTransform::LookAt(const glm::vec3& target)
+{
+	glm::vec3 a = glm::normalize(target   - m_position);
+	glm::vec3 b = glm::normalize(m_target - m_position);
+
+	const auto quaternion = glm::rotation(b, a);
+	const glm::vec3 euler = glm::eulerAngles(quaternion);
+
+	m_orientation.x += euler.x;
+	m_orientation.y += euler.z;
+	m_orientation.z += euler.y;
+
+	RotateTarget(euler);
 }
 
 void CTransform::Rotate(float x, float y, float z)
@@ -110,17 +122,22 @@ void CTransform::Rotate(float x, float y, float z)
 
 void CTransform::Rotate(const glm::vec3& rotation)
 {
-    m_orientation += rotation;
-  //  UpdateVectors();
+	m_orientation.x += rotation.x;
+	m_orientation.y += rotation.z;
+	m_orientation.z += rotation.y;
+
+	RotateTarget (rotation);
 }
 
 void CTransform::RotateAround(const glm::vec3& point, const glm::vec3& axis, float angle)
 {
+	const glm::vec3 old = m_position;
+
 	m_position -= point;
 	m_position  = glm::rotate(m_position, angle, axis);
 	m_position += point;
 
-	// UpdateVectors(); ?
+	TranslateTarget(m_position - old);
 }
 
 void CTransform::Translate(float x, float y, float z)
@@ -131,21 +148,32 @@ void CTransform::Translate(float x, float y, float z)
 void CTransform::Translate(const glm::vec3& translation)
 {
     m_position += translation;
-    m_forward  += translation;
-  //  UpdateVectors();
+
+	TranslateTarget(translation);
 }
 
-void CTransform::UpdateVectors()
+void CTransform::RotateTarget(const glm::vec3& rotation)
 {
-    m_orientation  = m_forward;
-    m_orientation -= m_position;
-    m_orientation  = glm::normalize(m_orientation);
+	m_target -= m_position;
+	m_target  = glm::rotateX(m_target, rotation.x);
+	m_target  = glm::rotateY(m_target, rotation.y);
+	m_target  = glm::rotateZ(m_target, rotation.z);
+	m_target += m_position;
 
-    m_up    = glm::vec3     (0.0f, 0.0f, 1.0f);
-    m_right = glm::cross    (m_orientation, m_up);
-    m_right = glm::normalize(m_right);
-    m_up    = glm::cross    (m_right, m_orientation);
-    m_up    = glm::normalize(m_up);
+	m_up      = glm::rotateX(m_up, rotation.x);
+	m_up      = glm::rotateY(m_up, rotation.y);
+	m_up      = glm::rotateZ(m_up, rotation.z);
+	m_right   = glm::rotateX(m_right, rotation.x);
+	m_right   = glm::rotateY(m_right, rotation.y);
+	m_right   = glm::rotateZ(m_right, rotation.z);
+	m_forward = glm::rotateX(m_forward, rotation.x);
+	m_forward = glm::rotateY(m_forward, rotation.y);
+	m_forward = glm::rotateZ(m_forward, rotation.z);	
+}
+
+void CTransform::TranslateTarget(const glm::vec3& translation)
+{
+	m_target += translation;
 }
 
 /* virtual */ void CTransform::_Register()

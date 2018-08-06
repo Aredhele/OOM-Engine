@@ -232,6 +232,8 @@ void CRenderer::Render()
 		m_post_processing.OnPostProcessingEnd();
 	}
 
+	CGizmosManager::Clear();
+
     mp_window->Display();
 }
 

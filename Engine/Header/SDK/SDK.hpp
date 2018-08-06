@@ -54,6 +54,7 @@
 // User
 #include "Built-in/Script/S_Text.hpp"
 #include "Built-in/Script/S_Camera.hpp"
+#include "Built-in/Script/S_LookAt.hpp"
 #include "Built-in/Script/S_PointLight.hpp"
 #include "Built-in/Script/S_CameraRotator.hpp"
 #include "Built-in/Script/S_DirectionalLight.hpp"

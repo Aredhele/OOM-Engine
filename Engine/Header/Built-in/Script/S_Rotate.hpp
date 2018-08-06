@@ -14,9 +14,11 @@ class S_Rotate : public Oom::CBehavior
 public:
 
 	// Behavior
-	void Awake   () override;
-	void Start   () override;
-	void Update  () override;
+	void Awake        () override;
+	void Start        () override;
+	void Update       () override;
+	void OnDrawGizmos () override;
+
 	void IsAround();
 	void SetAxis (const glm::vec3& axis);
 

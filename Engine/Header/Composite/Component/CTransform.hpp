@@ -32,6 +32,7 @@ public:
     const glm::vec3&    GetUp                 () const;
     const glm::vec3&    GetRight              () const;
     const glm::vec3&    GetForward            () const;
+	const glm::vec3&    GetTarget             () const;
     const glm::vec3&    GetPosition           () const;
     const glm::vec3&    GetScale              () const;
     const glm::vec3&    GetOrientation        () const;
@@ -64,7 +65,8 @@ protected:
 
 private:
 
-    void                UpdateVectors   ();
+	void				RotateTarget    (const glm::vec3& rotation);
+	void				TranslateTarget	(const glm::vec3& translation);
 
 private:
 
@@ -75,7 +77,7 @@ private:
     glm::vec3 m_up;
     glm::vec3 m_right;
     glm::vec3 m_forward;
-	glm::vec3 m_look_at;
+	glm::vec3 m_target;
 
 private:
 

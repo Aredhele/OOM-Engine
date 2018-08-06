@@ -135,18 +135,21 @@ void LoadDemoTransformation()
 	auto* p_rotate_y_go = Sdk::Import::ImportMesh("Resources/Mesh/Cube.obj")[0];
 	auto* p_rotate_z_go = Sdk::Import::ImportMesh("Resources/Mesh/Cube.obj")[0];
 	auto* p_around_z_go = Sdk::Import::ImportMesh("Resources/Mesh/Cube.obj")[0];
+	auto* p_look_at_go  = Sdk::Import::ImportMesh("Resources/Mesh/Cube.obj")[0];
 
-	p_scale_go->GetTransform().SetPosition    ( 5.0f, 0.0f, 0.0f);
-	p_rotate_x_go->GetTransform().SetPosition (-5.0f, 0.0f, 0.0f);
-	p_rotate_y_go->GetTransform().SetPosition (-5.0f, 3.0f, 0.0f);
-	p_rotate_z_go->GetTransform().SetPosition (-5.0f, 6.0f, 0.0f);
-	p_around_z_go->GetTransform().SetPosition ( 9.0f, 0.0f, 0.0f);
-	p_translate_go->GetTransform().SetPosition( 0.0f, 0.0f, 0.0f);
-
+	p_scale_go->GetTransform().SetPosition    (  0.0f,   0.0f,  8.0f);
+	p_look_at_go->GetTransform().SetPosition  (-12.0f, -12.0f,  0.0f);
+	p_rotate_x_go->GetTransform().SetPosition ( 12.0f,  12.0f,  0.0f);
+	p_rotate_y_go->GetTransform().SetPosition (-12.0f,  12.0f,  0.0f);
+	p_rotate_z_go->GetTransform().SetPosition ( 12.0f, -12.0f,  0.0f);
+	p_around_z_go->GetTransform().SetPosition (  9.0f,   0.0f,  0.0f);
+	p_translate_go->GetTransform().SetPosition(  0.0f,   0.0f,  0.0f);
+	
 	p_scale_go->AddComponent    <S_Scale>    ();
 	p_translate_go->AddComponent<S_Translate>();
 
 	// Setting up rotations
+	auto* p_look_at     = p_look_at_go->AddComponent <S_LookAt>();
 	auto* p_component_x = p_rotate_x_go->AddComponent<S_Rotate>();
 	auto* p_component_y = p_rotate_y_go->AddComponent<S_Rotate>();
 	auto* p_component_z = p_rotate_z_go->AddComponent<S_Rotate>();
@@ -157,4 +160,6 @@ void LoadDemoTransformation()
 	p_component_z->SetAxis(glm::vec3(0.0f, 0.0f, 1.0f));
 	p_component_a->SetAxis(glm::vec3(0.0f, 0.0f, 1.0f));
 	p_component_a->IsAround();
+
+	p_look_at->SetTarget(p_around_z_go);
 }
