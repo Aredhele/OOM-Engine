@@ -18,6 +18,11 @@ namespace Oom
 
 /* static */ CPhysicWorld* CPhysicWorld::sp_instance = nullptr;
 
+/* static */ void CPhysicWorld::RayCast(q3QueryCallback* p_callback, q3RaycastData* p_ray_cast_data)
+{
+	sp_instance->mp_scene->RayCast(p_callback, *p_ray_cast_data);
+}
+
 bool CPhysicWorld::Initialize(float delta_time)
 {
     SLogger::LogInfo("Physic world initialization.");
@@ -55,8 +60,6 @@ void CPhysicWorld::Update()
         // TODO : Rotation
         p_body->SetPosition(p_body->GetTransform()->GetPosition());
    }
-
-    mp_scene->Step();
 
     // Update GO positions
     for(auto* p_body : m_bodies)

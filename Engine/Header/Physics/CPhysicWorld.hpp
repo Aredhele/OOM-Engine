@@ -8,6 +8,8 @@
 #define OOM_ENGINE_C_PHYSIC_WORLD_HPP__
 
 class q3Scene;
+class q3RaycastData;
+class q3QueryCallback;
 
 namespace Oom
 {
@@ -20,7 +22,7 @@ class CPhysicWorld
 {
 public:
 
-    // TODO
+	static void RayCast(q3QueryCallback* p_callback, q3RaycastData* p_ray_cast_data);
 
 private:
 

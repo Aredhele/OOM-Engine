@@ -17,7 +17,7 @@ CAudioBuffer buffer_2;
 
 void LoadScene()
 {
-	CScene::LoadScene(CScene::EScene::DemoPhysics);
+	CScene::LoadScene(CScene::EScene::DemoTransformation);
 }
 
 void LoadGameScene()
@@ -99,6 +99,7 @@ void LoadDemoScenePhysics()
 
 	p_ground_go->GetTransform().SetPosition(0.0f, 0.0f, 0.0f);
 	p_physic_go->GetTransform().SetPosition(0.0f, 0.6f, 5.0f);
+	//p_ground_go->SetTag("Ground");
 
 	auto* p_ground_body = p_ground_go->AddComponent<CRigidBody>();
 	auto* p_ground_box  = p_ground_go->AddComponent<CBoxCollider>();
@@ -112,6 +113,9 @@ void LoadDemoScenePhysics()
 	auto* p_script      = p_physic_go->AddComponent<S_Collision>();
 
 	p_physic_box->SetExtent(glm::vec3(3.0f, 3.0f, 3.0f));
+
+	// Raycast test
+	// CRayCast Sdk::P
 }
 
 void LoadDemoTransformation()

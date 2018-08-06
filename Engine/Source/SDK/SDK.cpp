@@ -8,6 +8,7 @@
 #include "SDK/SDK.hpp"
 #include "CEngine.hpp"
 #include "Render/CRenderer.hpp"
+#include "Physics/CPhysicWorld.hpp"
 
 // Import
 #include "Import/CMeshImporter"
@@ -244,6 +245,16 @@ namespace Sdk
         std::vector<CGameObject*> ImportMesh(const char* p_path) {
             return CMeshImporter::ImportFromObj(p_path);
         }
+    }
+
+	namespace Physic
+    {
+		CRayCast RayCast(const glm::vec3& start, const glm::vec3& dir) {
+			CRayCast ray_cast(start, dir);
+			CPhysicWorld::RayCast(&ray_cast, &ray_cast.GetRayCastData());
+
+			return ray_cast;
+		}
     }
 }
 

@@ -65,6 +65,7 @@
 #include "Render/Gizmos/CGizmosManager.hpp"
 #include "Render/PostProcessing/IPostEffect.hpp"
 #include "Render/PostProcessing/CPostProcessingStack.hpp"
+#include "Physics/CRayCast.hpp"
 
 // Namespace
 using namespace Oom;
@@ -107,6 +108,11 @@ namespace Sdk
         CGameObject* CreateText				();
 		CGameObject* CreateAudioListener3D	();
 		CGameObject* CreateAudioSource3D	();
+    }
+
+	namespace Physic
+    {
+		CRayCast RayCast(const glm::vec3& start, const glm::vec3& dir);
     }
 
 	namespace Render
