@@ -31,6 +31,10 @@
 #include "Audio/CAudioEngine.hpp"
 #include "Scene/Hook.hpp"
 #include "CTime.hpp"
+#include "Render/Gizmos/CGizmosManager.hpp"
+#include "Render/Gizmos/CGizmosBox.hpp"
+#include "SDK/SDK.hpp"
+#include "Render/Gizmos/CGizmosRay.hpp"
 
 namespace Oom
 {
@@ -144,6 +148,14 @@ void CEngine::GameObjectUpdate(GLFWwindow* p_window, float delta_time)
     for(uint32_t n_go = 0; n_go < go_count; /* no increment */)
     {
         CGameObject* p_game_object = m_game_objects[n_go];
+
+		if(CGizmosManager::IsGizmoEnabled(CGizmosManager::EGizmo::Transform))
+		{
+			DrawBox(p_game_object->GetTransform().GetTarget(), 0.2f, 0.2f, glm::vec3(0.0f, 0.0f, 1.0f));
+			DrawRay(p_game_object->GetTransform().GetPosition(), p_game_object->GetTransform().GetUp()      * 5.0f, glm::vec3(0.0f, 0.0f, 1.0f));
+			DrawRay(p_game_object->GetTransform().GetPosition(), p_game_object->GetTransform().GetRight()   * 5.0f, glm::vec3(1.0f, 0.0f, 0.0f));
+			DrawRay(p_game_object->GetTransform().GetPosition(), p_game_object->GetTransform().GetForward() * 5.0f, glm::vec3(0.0f, 1.0f, 0.0f));
+		}
 
         // The go is being destroyed
         if(p_game_object->m_is_destroyed &&

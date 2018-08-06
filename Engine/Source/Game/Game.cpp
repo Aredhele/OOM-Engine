@@ -17,7 +17,7 @@ CAudioBuffer buffer_2;
 
 void LoadScene()
 {
-	CScene::LoadScene(CScene::EScene::DemoTransformation);
+	CScene::LoadScene(CScene::EScene::Game);
 }
 
 void LoadGameScene()
@@ -87,7 +87,7 @@ void LoadDemoScenePhysics()
 	Sdk::Debug::EnableGizmo(EGizmo::Axis);
 	Sdk::Debug::EnableGizmo(EGizmo::Line);
 	Sdk::Debug::EnableGizmo(EGizmo::Grid);
-	Sdk::Debug::EnableGizmo(EGizmo::AudioSource);
+	Sdk::Debug::EnableGizmo(EGizmo::Transform);
 
 	Sdk::GameObject::CreateDirectionalLight();
 
@@ -98,7 +98,7 @@ void LoadDemoScenePhysics()
 	auto* p_physic_go = Sdk::Import::ImportMesh("Resources/Mesh/Cube.obj")[0];
 
 	p_ground_go->GetTransform().SetPosition(0.0f, 0.0f, 0.0f);
-	p_physic_go->GetTransform().SetPosition(0.0f, 0.5f, 5.0f);
+	p_physic_go->GetTransform().SetPosition(0.6f, 0.6f, 5.0f);
 
 	auto* p_ground_body = p_ground_go->AddComponent<CRigidBody>();
 	auto* p_ground_box  = p_ground_go->AddComponent<CBoxCollider>();
@@ -109,6 +109,7 @@ void LoadDemoScenePhysics()
 	// Dynamic body (by default)
 	auto* p_physic_body = p_physic_go->AddComponent<CRigidBody>  ();
 	auto* p_physic_box  = p_physic_go->AddComponent<CBoxCollider>();
+	p_physic_box->SetExtent(glm::vec3(3.0f, 3.0f, 3.0f));
 }
 
 void LoadDemoTransformation()
@@ -121,12 +122,15 @@ void LoadDemoTransformation()
 	Sdk::Debug::EnableGizmo(EGizmo::Axis);
 	Sdk::Debug::EnableGizmo(EGizmo::Line);
 	Sdk::Debug::EnableGizmo(EGizmo::Grid);
-	Sdk::Debug::EnableGizmo(EGizmo::AudioSource);
+	Sdk::Debug::EnableGizmo(EGizmo::Transform);
 
 	Sdk::GameObject::CreateDirectionalLight();
 
-	auto* p_camera = Sdk::GameObject::CreateFreeCamera();
-	// p_camera->GetTransform().SetPosition(4.0f, 4.0f, 4.0f);
+	auto* p_camera_go = Sdk::GameObject::CreateFreeCamera();
+	auto* p_camera    = p_camera_go->GetComponent<S_Camera>();
+
+	p_camera->GetTransform()->SetPosition(30.0f, 30.0f, 30.0f);
+	p_camera->GetTransform()->LookAt(0.0f, 0.0f, 0.0f);
 
 	auto* p_scale_go       = Sdk::Import::ImportMesh("Resources/Mesh/Cube.obj")[0];
 	auto* p_translate_go   = Sdk::Import::ImportMesh("Resources/Mesh/Cube.obj")[0];

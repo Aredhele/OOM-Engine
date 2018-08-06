@@ -168,21 +168,6 @@ void CTransform::RotateTarget(const glm::vec3& rotation)
 	m_forward = glm::rotateX(m_forward, rotation.x);
 	m_forward = glm::rotateY(m_forward, rotation.y);
 	m_forward = glm::rotateZ(m_forward, rotation.z);
-
-	m_up      = glm::normalize(m_up);
-	m_right   = glm::normalize(m_right);
-	m_forward = glm::normalize(m_forward);
-
-	m_forward = m_target;
-	m_forward -= m_position;
-	m_forward = glm::normalize(m_forward);
-
-	m_up = glm::vec3(0.0f, 0.0f, 1.0f);
-	m_right = glm::cross(m_forward, m_up);
-	m_right = glm::normalize(m_right);
-
-	m_up = glm::cross(m_right, m_forward);
-	m_up = glm::normalize(m_up);
 }
 
 void CTransform::TranslateTarget(const glm::vec3& translation)
@@ -208,6 +193,21 @@ glm::mat4 CTransform::GetLocalToWorldMatrix() const
 
 	// The order is IMPORTANT
     return translation_matrix * rotation_matrix * scale_maxtrix;
+}
+
+void CTransform::SetUp(const glm::vec3& up)
+{
+	m_up = up;
+}
+
+void CTransform::SetRight(const glm::vec3& right)
+{
+	m_right = right;
+}
+
+void CTransform::SetForward(const glm::vec3& forward)
+{
+	m_forward = forward;
 }
 
 }

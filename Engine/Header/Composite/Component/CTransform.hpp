@@ -38,6 +38,9 @@ public:
     const glm::vec3&    GetOrientation        () const;
           glm::mat4     GetLocalToWorldMatrix () const;
 
+	void SetUp			(const glm::vec3& up);
+	void SetRight		(const glm::vec3& right);
+	void SetForward		(const glm::vec3& forward);
     void SetScale       (const glm::vec3& scale);
     void SetScale       (float x, float y, float z);
     void SetPosition    (const glm::vec3& position);

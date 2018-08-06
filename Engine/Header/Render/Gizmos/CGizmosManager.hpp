@@ -27,6 +27,7 @@ public:
         Axis,
         Grid,
         Cone,
+		Transform,
         PointLight,
 		AudioSource,
         DirectionalLight

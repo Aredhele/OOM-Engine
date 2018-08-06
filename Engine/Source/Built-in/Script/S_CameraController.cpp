@@ -57,6 +57,17 @@
 	p_cam->RotateAround(p_cam->GetForward(), p_cam->GetUp(),    angleX);
 	p_cam->RotateAround(p_cam->GetForward(), p_cam->GetRight(), angleY);
 	p_cam->Translate  ((p_cam->GetOrientation() * (float)y_direction + p_cam->GetRight() * (float)x_direction) * 0.016f * m_speed * speed_coefficient);
+
+	GetTransform()->SetPosition(p_cam->GetPosition());
+	
+	auto view_matrix = p_cam->GetViewMatrix();
+	glm::vec3 right  = glm::row(view_matrix, 0);
+	glm::vec3 up     = glm::row(view_matrix, 1);
+	glm::vec3 foward = glm::row(view_matrix, 2);
+
+	GetTransform()->SetUp(up);
+	GetTransform()->SetRight(right);
+	GetTransform()->SetForward(foward);
 }
 
 float S_CameraController::GetSpeed() const
