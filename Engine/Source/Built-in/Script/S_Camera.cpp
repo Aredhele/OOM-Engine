@@ -92,16 +92,15 @@ void S_Camera::UpdateViewMatrix()
     const auto& p_transform = mp_game_object->GetTransform();
 	UpdateVector();
 
-	// TMP
-	/*m_view_matrix = glm::lookAt(
+	m_view_matrix = glm::lookAt(
 		m_position,
 		m_forward,
-		m_up);*/
+		m_up);
 
-		m_view_matrix = glm::lookAt(
-            p_transform.GetPosition(),
-            p_transform.GetTarget(),
-            p_transform.GetUp());
+	/*m_view_matrix = glm::lookAt(
+        p_transform.GetPosition(),
+        p_transform.GetTarget(),
+        p_transform.GetUp());*/
 }
 
 void S_Camera::UpdateProjectionMatrix()
