@@ -50,6 +50,7 @@
 #include "Built-in/Script/S_Scale.hpp"
 #include "Built-in/Script/S_Rotate.hpp"
 #include "Built-in/Script/S_Translate.hpp"
+#include "Built-in/Script/S_Collision.hpp"
 
 // User
 #include "Built-in/Script/S_Text.hpp"
