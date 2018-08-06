@@ -57,6 +57,8 @@ public:
 public:
 
     // Tools
+	static void				  ShowMouse         ();
+	static void				  HideMouse         ();
     static void               SetMousePosition  (const glm::vec2& position);
     static glm::tvec3<double> GetMousePosition  ();
     static glm::vec2          GetWindowSize     ();

@@ -77,9 +77,10 @@ namespace Sdk
 
     namespace Mouse
     {
+		void			   ShowMouse();
+		void			   HideMouse();
         void               SetMousePosition(const glm::vec2& position);
         glm::tvec3<double> GetMousePosition();
-        // TODO : Hide / show window
     }
 
     namespace Window
