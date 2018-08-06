@@ -31,6 +31,7 @@
 #include "Render/Material/CMaterial.hpp"
 #include "Render/Renderer/CMeshRenderer.hpp"
 #include "Render/Renderer/CTextRenderer.hpp"
+#include "Render/Renderer/CUISpriteRenderer.hpp"
 
 // Audio
 #include "Audio/CAudioSource3D.hpp"
@@ -109,6 +110,7 @@ namespace Sdk
         CGameObject* CreateText				();
 		CGameObject* CreateAudioListener3D	();
 		CGameObject* CreateAudioSource3D	();
+		CGameObject* CreateUISprite			();
     }
 
 	namespace Physic

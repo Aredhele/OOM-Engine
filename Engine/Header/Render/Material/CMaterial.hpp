@@ -51,6 +51,7 @@ private:
 
     friend class CMeshRenderer;
     friend class CTextRenderer;
+	friend class CUISpriteRenderer;
 
     void Begin(const SRenderData& render_data);
     void End  ();

@@ -144,6 +144,18 @@ namespace Sdk
 
 			return p_source;
         }
+
+	    CGameObject* CreateUISprite() {
+			CGameObject* p_sprite_object = CEngine::Instantiate();
+
+			p_sprite_object->AddComponent<CMeshFilter>();
+			p_sprite_object->AddComponent<CUISpriteRenderer>();
+
+			auto* p_material = p_sprite_object->AddComponent<CMaterial>();
+			p_material->SetShader(EShaderType::UISprite);
+
+			return p_sprite_object;
+	    }
     }
 
 	namespace Render

@@ -76,6 +76,12 @@ bool CRenderer::Initialize()
     glEnable              (GL_DEBUG_OUTPUT);
     glDebugMessageCallback(GLErrorCallback, nullptr);
 
+	// UI Shader
+	SShaderManager::RegisterShader(SShaderManager::EShaderType::UISprite,
+		"UISprite",
+		"Resources/Shader/UI/UISpriteVertexShader.glsl",
+		"Resources/Shader/UI/UISpriteFragmentShader.glsl");
+
     // Registering unlit shaders
     SShaderManager::RegisterShader(SShaderManager::EShaderType::Text,
         "Text",

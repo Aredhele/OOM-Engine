@@ -60,14 +60,14 @@
 
 	GetTransform()->SetPosition(p_cam->GetPosition());
 	
-	auto view_matrix = p_cam->GetViewMatrix();
+	/*auto view_matrix = p_cam->GetViewMatrix();
 	glm::vec3 right  = glm::row(view_matrix, 0);
 	glm::vec3 up     = glm::row(view_matrix, 1);
 	glm::vec3 foward = glm::row(view_matrix, 2);
 
 	GetTransform()->SetUp(up);
 	GetTransform()->SetRight(right);
-	GetTransform()->SetForward(foward);
+	GetTransform()->SetForward(foward);*/
 }
 
 float S_CameraController::GetSpeed() const

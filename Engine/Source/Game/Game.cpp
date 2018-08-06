@@ -127,9 +127,10 @@ void LoadDemoScenePhysics()
 
 void LoadDemoScreenSpaceUI()
 {
-	Sdk::GameObject::CreateFreeCamera();
 	Sdk::Debug::EnableGizmo(EGizmo::Axis);
 	Sdk::Debug::EnableGizmo(EGizmo::Grid);
+
+	Sdk::GameObject::CreateFreeCamera();
 }
 
 void LoadDemoTransformation()

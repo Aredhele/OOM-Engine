@@ -89,7 +89,7 @@ void S_Camera::SetClippingPlaneFar(float far)
 
 void S_Camera::UpdateViewMatrix()
 {
-    const auto& p_transform = mp_game_object->GetTransform();
+  //  const auto& p_transform = mp_game_object->GetTransform();
 	UpdateVector();
 
 	m_view_matrix = glm::lookAt(

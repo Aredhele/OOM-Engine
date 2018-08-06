@@ -21,6 +21,7 @@ public:
     {
         Text,
         Standard,
+		UISprite,
         UnlitLine,
         UnlitColor,
         UnlitTexture,
