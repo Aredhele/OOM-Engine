@@ -54,9 +54,19 @@
 
 	auto* p_cam = GetGameObject()->GetComponent<S_Camera>();
 
-	p_cam->RotateAround(p_cam->GetForward(), p_cam->GetUp(),    angleX);
-	p_cam->RotateAround(p_cam->GetForward(), p_cam->GetRight(), angleY);
-	p_cam->Translate  ((p_cam->GetOrientation() * (float)y_direction + p_cam->GetRight() * (float)x_direction) * 0.016f * m_speed * speed_coefficient);
+	//GetTransform()->RotateAround(GetTransform()->GetForward(), GetTransform()->GetUp(),    angleX);
+	//GetTransform()->RotateAround(GetTransform()->GetForward(), GetTransform()->GetRight(), angleY);
+
+//	GetTransform()->RotateYaw  (angleX);
+//	GetTransform()->RotatePitch(angleY);
+
+	GetTransform()->Translate(GetTransform()->GetForward() * (float)y_direction * .016f * m_speed * speed_coefficient);
+	GetTransform()->Translate(GetTransform()->GetRight()   * (float)x_direction * .016f * m_speed * speed_coefficient);
+	
+	/*(
+		GetTransform()->GetForward()     * (float)y_direction  +
+		GetTransform()->GetRight()       * (float)x_direction) * 
+		0.016f * m_speed * speed_coefficient);*/
 }
 
 float S_CameraController::GetSpeed() const

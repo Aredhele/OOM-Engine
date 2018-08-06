@@ -148,7 +148,6 @@ void CTransform::Translate(float x, float y, float z)
 void CTransform::Translate(const glm::vec3& translation)
 {
     m_position += translation;
-
 	TranslateTarget(translation);
 }
 
@@ -173,7 +172,7 @@ void CTransform::RotateTarget(const glm::vec3& rotation)
 
 void CTransform::TranslateTarget(const glm::vec3& translation)
 {
-	m_target += translation;
+	m_target      += translation;
 }
 
 /* virtual */ void CTransform::_Register()
