@@ -4,7 +4,6 @@
 /// \package    Composite
 /// \author     Vincent STEHLY--CALISTO
 
-
 #include "Composite/CGameObject.hpp"
 #include "Composite/Component/CTransform.hpp"
 

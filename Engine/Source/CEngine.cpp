@@ -30,6 +30,7 @@
 #include "Physics/CPhysicWorld.hpp"
 #include "Audio/CAudioEngine.hpp"
 #include "Scene/Hook.hpp"
+#include "CTime.hpp"
 
 namespace Oom
 {
