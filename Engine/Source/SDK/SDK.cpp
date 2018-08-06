@@ -30,6 +30,14 @@ namespace Sdk
     // Mouse specific functions
     namespace Mouse
     {
+	    void ShowMouse() {
+			CEngine::ShowMouse();
+	    }
+
+	    void HideMouse() {
+			CEngine::HideMouse();
+	    }
+
         void SetMousePosition(const glm::vec2 &position) {
             CEngine::SetMousePosition(position);
         }

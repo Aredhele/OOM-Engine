@@ -282,6 +282,18 @@ void CEngine::GameObjectUpdate(GLFWwindow* p_window, float delta_time)
     return game_objects;
 }
 
+/* static */ void CEngine::ShowMouse()
+{
+	glfwSetInputMode(sp_instance->mp_renderer->GetWindow()->GetHandle(), 
+		GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+}
+
+/* static */ void CEngine::HideMouse()
+{
+	glfwSetInputMode(sp_instance->mp_renderer->GetWindow()->GetHandle(), 
+		GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
+}
+
 /* static */ void CEngine::SetMousePosition(const glm::vec2 &position)
 {
     glfwSetCursorPos(sp_instance->mp_renderer->GetWindow()->GetHandle(),
