@@ -12,6 +12,7 @@
 void LoadGameScene();
 void LoadDemoSceneAudio();
 void LoadDemoScenePhysics();
+void LoadDemoScreenSpaceUI();
 void LoadDemoTransformation();
 
 class CScene
@@ -23,6 +24,7 @@ public:
 		Game,
 		DemoAudio,
 		DemoPhysics,
+		DemoScreenSpaceUI,
 		DemoTransformation
 	};
 
@@ -49,6 +51,7 @@ public:
 	{CScene::EScene::Game,               LoadGameScene},
 	{CScene::EScene::DemoAudio,          LoadDemoSceneAudio},
 	{CScene::EScene::DemoPhysics,        LoadDemoScenePhysics},
+	{CScene::EScene::DemoScreenSpaceUI,  LoadDemoScreenSpaceUI},
 	{CScene::EScene::DemoTransformation, LoadDemoTransformation},
 };
 

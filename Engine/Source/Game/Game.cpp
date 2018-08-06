@@ -17,7 +17,7 @@ CAudioBuffer buffer_2;
 
 void LoadScene()
 {
-	CScene::LoadScene(CScene::EScene::DemoTransformation);
+	CScene::LoadScene(CScene::EScene::DemoScreenSpaceUI);
 }
 
 void LoadGameScene()
@@ -99,7 +99,7 @@ void LoadDemoScenePhysics()
 
 	p_ground_go->GetTransform().SetPosition(0.0f, 0.0f, 0.0f);
 	p_physic_go->GetTransform().SetPosition(0.0f, 0.6f, 5.0f);
-	//p_ground_go->SetTag("Ground");
+	p_ground_go->SetTag("Ground");
 
 	auto* p_ground_body = p_ground_go->AddComponent<CRigidBody>();
 	auto* p_ground_box  = p_ground_go->AddComponent<CBoxCollider>();
@@ -115,7 +115,21 @@ void LoadDemoScenePhysics()
 	p_physic_box->SetExtent(glm::vec3(3.0f, 3.0f, 3.0f));
 
 	// Raycast test
-	// CRayCast Sdk::P
+	const glm::vec3 pos = glm::vec3(10.0f, 10.0f, 10.0f);
+	const glm::vec3 dir = glm::normalize(glm::vec3(0.0f) - pos);
+
+	CRayCast ray_cast = Sdk::Physic::RayCast(pos, dir * 20.0f);
+	if(ray_cast.GetGameObject())
+	{
+		/* Ray cast hit */
+	}
+}
+
+void LoadDemoScreenSpaceUI()
+{
+	Sdk::GameObject::CreateFreeCamera();
+	Sdk::Debug::EnableGizmo(EGizmo::Axis);
+	Sdk::Debug::EnableGizmo(EGizmo::Grid);
 }
 
 void LoadDemoTransformation()

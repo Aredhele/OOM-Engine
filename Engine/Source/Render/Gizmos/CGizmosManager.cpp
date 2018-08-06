@@ -51,6 +51,7 @@ CGizmosManager::CGizmosManager()
     m_array_map.push_back({EGizmo::Axis, false});
     m_array_map.push_back({EGizmo::Grid, false});
     m_array_map.push_back({EGizmo::Cone, false});
+    m_array_map.push_back({EGizmo::Transform,        false});
     m_array_map.push_back({EGizmo::PointLight,       false});
 	m_array_map.push_back({EGizmo::AudioSource,      false});
     m_array_map.push_back({EGizmo::DirectionalLight, false});
@@ -125,6 +126,11 @@ CGizmosManager::~CGizmosManager() // NOLINT
         AddLine(glm::vec3(0.0f, 0.0f, 0.01f), glm::vec3(0.0f,   0.0f,   1000.0f),  glm::vec3(0.0f, 0.0f, 1.0f));
     }
 
+	if (CGizmosManager::IsGizmoEnabled(EGizmo::Grid))
+	{
+		s_pInstance->m_grid.Draw(PV);
+	}
+
     if(s_pInstance->m_vertexCount == 0)
     {
         // There's nothing to draw
@@ -140,9 +146,6 @@ CGizmosManager::~CGizmosManager() // NOLINT
     glBindBuffer   (GL_ARRAY_BUFFER, s_pInstance->m_cbo);
     glBufferSubData(GL_ARRAY_BUFFER, 0, s_pInstance->m_vertexCount * sizeof(glm::vec3), s_pInstance->m_colors);
 
-    // glEnable (GL_MULTISAMPLE);
-    // glDisable(GL_BLEND);
-
     // Sets up shader
     glUseProgram      (s_pInstance->m_shaderID);
     glUniformMatrix4fv(s_pInstance->m_matrixID, 1, GL_FALSE, &MVP[0][0]);
@@ -157,13 +160,6 @@ CGizmosManager::~CGizmosManager() // NOLINT
     glDisableVertexAttribArray(1);
     glDisableVertexAttribArray(0);
     glBindVertexArray(0);
-
-    // glDisable(GL_MULTISAMPLE);
-
-    if(CGizmosManager::IsGizmoEnabled(EGizmo::Grid))
-    {
-        s_pInstance->m_grid.Draw(PV);
-    }
 }
 
 /* static */ void CGizmosManager::EnableGizmo(EGizmo type)

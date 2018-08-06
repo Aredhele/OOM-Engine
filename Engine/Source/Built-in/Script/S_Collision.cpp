@@ -13,7 +13,9 @@
 
 /*virtual */ void S_Collision::Update()
 {
-	// None
+	const glm::vec3 pos = glm::vec3(10.0f, 10.0f, 10.0f);
+	const glm::vec3 dir = glm::normalize(glm::vec3(0.0f) - pos);
+	Sdk::Debug::DrawRay(pos, dir * 20.0f, glm::vec3(1.0f));
 }
 
 /*virtual */ void S_Collision::OnCollisionEnter(const CCollision& collision)

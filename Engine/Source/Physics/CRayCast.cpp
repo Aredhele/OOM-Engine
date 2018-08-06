@@ -5,7 +5,6 @@
 /// \author     Vincent STEHLY--CALISTO
 
 #include "Physics/CRayCast.hpp"
-#include "Composite/CGameObject.hpp"
 
 namespace Oom
 {
@@ -27,6 +26,7 @@ void CRayCast::Init(const glm::vec3& start, const glm::vec3& dir)
 
 	m_data.t       = r32(10000.0);
 	m_final        = FLT_MAX;
+	m_nfinal       = q3Vec3(0.0f, 0.0f, 0.0f);
 	m_data.toi     = m_data.t;
 	mp_impact_body = nullptr;
 }

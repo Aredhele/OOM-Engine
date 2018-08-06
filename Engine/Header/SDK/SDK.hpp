@@ -66,6 +66,7 @@
 #include "Render/PostProcessing/IPostEffect.hpp"
 #include "Render/PostProcessing/CPostProcessingStack.hpp"
 #include "Physics/CRayCast.hpp"
+#include "Core/Debug/SLogger.hpp"
 
 // Namespace
 using namespace Oom;

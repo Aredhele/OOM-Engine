@@ -54,23 +54,25 @@ void CPhysicWorld::Release()
 
 void CPhysicWorld::Update()
 {
-    // Update body positions
-   for(auto* p_body : m_bodies)
-   {
-        // TODO : Rotation
-        p_body->SetPosition(p_body->GetTransform()->GetPosition());
-   }
+	// Update body positions
+	for(auto* p_body : m_bodies)
+	{
+	    // TODO : Rotation
+	    p_body->SetPosition(p_body->GetTransform()->GetPosition());
+	}
 
-    // Update GO positions
-    for(auto* p_body : m_bodies)
-    {
+	mp_scene->Step();
+
+	// Update GO positions
+	for(auto* p_body : m_bodies)
+	{
 		const glm::vec3 orientation = p_body->GetOrientation();
-        const glm::vec3 translation = p_body->GetPosition   () - p_body->GetTransform()->GetPosition();
+	    const glm::vec3 translation = p_body->GetPosition   () - p_body->GetTransform()->GetPosition();
 
 		// It just works !
-        p_body->GetTransform()->Translate(translation);
+	    p_body->GetTransform()->Translate(translation);
 		p_body->GetTransform()->SetOrientation(orientation);
-    }
+	}
 }
 
 /* static */ q3Scene* CPhysicWorld::GetScene()
