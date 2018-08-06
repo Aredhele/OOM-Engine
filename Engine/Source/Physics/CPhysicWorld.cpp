@@ -61,9 +61,12 @@ void CPhysicWorld::Update()
     // Update GO positions
     for(auto* p_body : m_bodies)
     {
-		// TODO : Rotation
-        const glm::vec3 translation = p_body->GetPosition() - p_body->GetTransform()->GetPosition();
+		const glm::vec3 orientation = p_body->GetOrientation();
+        const glm::vec3 translation = p_body->GetPosition   () - p_body->GetTransform()->GetPosition();
+
+		// It just works !
         p_body->GetTransform()->Translate(translation);
+		p_body->GetTransform()->SetOrientation(orientation);
     }
 }
 

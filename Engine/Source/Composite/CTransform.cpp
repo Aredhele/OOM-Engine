@@ -116,10 +116,11 @@ void CTransform::Rotate(const glm::vec3& rotation)
 
 void CTransform::RotateAround(const glm::vec3& point, const glm::vec3& axis, float angle)
 {
-    m_forward -= m_position;
-    m_forward  = glm::rotate(point, angle, axis);
-    m_forward += m_position;
-  //  UpdateVectors();
+	m_position -= point;
+	m_position  = glm::rotate(m_position, angle, axis);
+	m_position += point;
+
+	// UpdateVectors(); ?
 }
 
 void CTransform::Translate(float x, float y, float z)

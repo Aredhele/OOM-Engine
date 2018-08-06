@@ -14,12 +14,15 @@ class S_Rotate : public Oom::CBehavior
 public:
 
 	// Behavior
+	void Awake   () override;
 	void Start   () override;
 	void Update  () override;
+	void IsAround();
 	void SetAxis (const glm::vec3& axis);
 
 private:
 
+	bool	  m_around;
 	glm::vec3 m_axis;
 };
 

@@ -17,7 +17,7 @@ CAudioBuffer buffer_2;
 
 void LoadScene()
 {
-	CScene::LoadScene(CScene::EScene::DemoPhysics);
+	CScene::LoadScene(CScene::EScene::DemoTransformation);
 }
 
 void LoadGameScene()
@@ -126,7 +126,7 @@ void LoadDemoTransformation()
 	Sdk::GameObject::CreateDirectionalLight();
 
 	auto* p_camera = Sdk::GameObject::CreateFreeCamera();
-	//p_camera->GetTransform().SetPosition(4.0f, 4.0f, 4.0f);
+	// p_camera->GetTransform().SetPosition(4.0f, 4.0f, 4.0f);
 
 	auto* p_scale_go       = Sdk::Import::ImportMesh("Resources/Mesh/Cube.obj")[0];
 	auto* p_translate_go   = Sdk::Import::ImportMesh("Resources/Mesh/Cube.obj")[0];
@@ -134,11 +134,13 @@ void LoadDemoTransformation()
 	auto* p_rotate_x_go = Sdk::Import::ImportMesh("Resources/Mesh/Cube.obj")[0];
 	auto* p_rotate_y_go = Sdk::Import::ImportMesh("Resources/Mesh/Cube.obj")[0];
 	auto* p_rotate_z_go = Sdk::Import::ImportMesh("Resources/Mesh/Cube.obj")[0];
+	auto* p_around_z_go = Sdk::Import::ImportMesh("Resources/Mesh/Cube.obj")[0];
 
 	p_scale_go->GetTransform().SetPosition    ( 5.0f, 0.0f, 0.0f);
 	p_rotate_x_go->GetTransform().SetPosition (-5.0f, 0.0f, 0.0f);
-	p_rotate_y_go->GetTransform().SetPosition (-5.0f, 2.0f, 0.0f);
-	p_rotate_z_go->GetTransform().SetPosition (-5.0f, 4.0f, 0.0f);
+	p_rotate_y_go->GetTransform().SetPosition (-5.0f, 3.0f, 0.0f);
+	p_rotate_z_go->GetTransform().SetPosition (-5.0f, 6.0f, 0.0f);
+	p_around_z_go->GetTransform().SetPosition ( 9.0f, 0.0f, 0.0f);
 	p_translate_go->GetTransform().SetPosition( 0.0f, 0.0f, 0.0f);
 
 	p_scale_go->AddComponent    <S_Scale>    ();
@@ -148,8 +150,11 @@ void LoadDemoTransformation()
 	auto* p_component_x = p_rotate_x_go->AddComponent<S_Rotate>();
 	auto* p_component_y = p_rotate_y_go->AddComponent<S_Rotate>();
 	auto* p_component_z = p_rotate_z_go->AddComponent<S_Rotate>();
+	auto* p_component_a = p_around_z_go->AddComponent<S_Rotate>();
 
 	p_component_x->SetAxis(glm::vec3(1.0f, 0.0f, 0.0f));
 	p_component_y->SetAxis(glm::vec3(0.0f, 1.0f, 0.0f));
 	p_component_z->SetAxis(glm::vec3(0.0f, 0.0f, 1.0f));
+	p_component_a->SetAxis(glm::vec3(0.0f, 0.0f, 1.0f));
+	p_component_a->IsAround();
 }
