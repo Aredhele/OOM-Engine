@@ -8,9 +8,6 @@
 #include "Scene/Hook.hpp"
 #include "Scene/CScene.hpp"
 
-// User script
-#include "Game/S_CameraRotator.hpp"
-
 // Game include
 #include "Game/Prefabs.hpp"
 
@@ -20,7 +17,7 @@ CAudioBuffer buffer_2;
 
 void LoadScene()
 {
-	CScene::LoadScene(CScene::EScene::DemoPhysics);
+	CScene::LoadScene(CScene::EScene::DemoTransformation);
 }
 
 void LoadGameScene()
@@ -37,7 +34,6 @@ void LoadGameScene()
 
 void LoadDemoSceneAudio()
 {
-	// Settings
 	Sdk::Render::EnablePostProcessing();
 	Sdk::Render::EnablePostEffect(EPostEffect::FXAA);
 
@@ -83,7 +79,6 @@ void LoadDemoSceneAudio()
 
 void LoadDemoScenePhysics()
 {
-	// Settings
 	Sdk::Render::EnablePostProcessing();
 	Sdk::Render::EnablePostEffect(EPostEffect::FXAA);
 
@@ -111,6 +106,30 @@ void LoadDemoScenePhysics()
 	// Static body
 	p_ground_body->SetBodyType(CRigidBody::EBodyType::Static);
 
+	// Dynamic body (by default)
 	auto* p_physic_body = p_physic_go->AddComponent<CRigidBody>  ();
 	auto* p_physic_box  = p_physic_go->AddComponent<CBoxCollider>();
+}
+
+void LoadDemoTransformation()
+{
+	Sdk::Render::EnablePostProcessing();
+	Sdk::Render::EnablePostEffect(EPostEffect::FXAA);
+
+	Sdk::Debug::EnableGizmo(EGizmo::Ray);
+	Sdk::Debug::EnableGizmo(EGizmo::Box);
+	Sdk::Debug::EnableGizmo(EGizmo::Axis);
+	Sdk::Debug::EnableGizmo(EGizmo::Line);
+	Sdk::Debug::EnableGizmo(EGizmo::Grid);
+	Sdk::Debug::EnableGizmo(EGizmo::AudioSource);
+
+	Sdk::GameObject::CreateDirectionalLight();
+
+	auto* p_camera = Sdk::GameObject::CreateFreeCamera();
+	p_camera->GetTransform().SetPosition(4.0f, 4.0f, 4.0f);
+
+	auto* p_scale_go       = Sdk::Import::ImportMesh("Resources/Mesh/Cube.obj")[0];
+	auto* p_rotate_go      = Sdk::Import::ImportMesh("Resources/Mesh/Cube.obj")[0];
+	auto* p_translate_go   = Sdk::Import::ImportMesh("Resources/Mesh/Cube.obj")[0];
+	auto* p_composition_go = Sdk::Import::ImportMesh("Resources/Mesh/Cube.obj")[0];
 }

@@ -50,18 +50,18 @@ void CPhysicWorld::Release()
 void CPhysicWorld::Update()
 {
     // Update body positions
-   /* for(auto* p_body : m_bodies)
-    {
+   for(auto* p_body : m_bodies)
+   {
         // TODO : Rotation
         p_body->SetPosition(p_body->GetTransform()->GetPosition());
-    }*/
+   }
 
     mp_scene->Step();
 
     // Update GO positions
     for(auto* p_body : m_bodies)
     {
-        // TODO : Rotation
+		// TODO : Rotation
         const glm::vec3 translation = p_body->GetPosition() - p_body->GetTransform()->GetPosition();
         p_body->GetTransform()->Translate(translation);
     }

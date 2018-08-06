@@ -5,7 +5,7 @@
 /// \author     Vincent STEHLY--CALISTO
 
 #include "SDK/SDK.hpp"
-#include "Game/S_CameraRotator.hpp"
+#include "Built-in/Script/S_CameraRotator.hpp"
 
 /* virtual */ void S_CameraRotator::Start()
 {

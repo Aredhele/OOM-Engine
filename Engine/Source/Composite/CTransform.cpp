@@ -25,33 +25,33 @@ CTransform::CTransform()
 	UpdateVectors();
 }
 
-const glm::vec3& CTransform::GetUp() const 
-	{
+const glm::vec3& CTransform::GetUp() const
+{
     return m_up;
 }
 
 const glm::vec3& CTransform::GetRight() const 
-	{
+{
     return m_right;
 }
 
 const glm::vec3 &CTransform::GetForward() const 
-	{
+{
     return m_forward;
 }
 
 const glm::vec3& CTransform::GetPosition() const 
-	{
+{
     return m_position;
 }
 
-const glm::vec3& CTransform::GetScale() const 
-	{
+const glm::vec3& CTransform::GetScale() const
+{
     return m_scale;
 }
 
 const glm::vec3& CTransform::GetOrientation() const 
-	{
+{
     return m_orientation;
 }
 
@@ -83,6 +83,7 @@ void CTransform::SetOrientation(float x, float y, float z)
 
 void CTransform::SetOrientation(const glm::vec3& orientation)
 {
+	m_test        = orientation;
     m_orientation = orientation;
     UpdateVectors();
 }

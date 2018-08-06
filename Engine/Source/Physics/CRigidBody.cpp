@@ -188,7 +188,7 @@ glm::vec3 CRigidBody::GetPosition() const
 	return glm::vec3(p.x, p.z, p.y);
 }
 
-glm::vec3 CRigidBody::GetRotation() const
+glm::vec3 CRigidBody::GetOrientation() const
 {
 	q3Mat3 r = mp_body->GetTransform().rotation;
 
@@ -283,7 +283,7 @@ void CRigidBody::SetPosition(const glm::vec3& position)
 	mp_body->SetTransform(q3Vec3(position.x, position.z, position.y));
 }
 
-void CRigidBody::SetRotation(const glm::vec3& rotation)
+void CRigidBody::SetOrientation(const glm::vec3& rotation)
 {
 	const q3Vec3 position = mp_body->GetTransform().position;
 	const q3Vec3 axis_x   = (rotation.x != 0.0f) ? q3Vec3(1.0f, 0.0f, 0.0f) : q3Vec3(0.0f, 0.0f, 0.0f);

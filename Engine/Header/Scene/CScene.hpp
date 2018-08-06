@@ -12,6 +12,7 @@
 void LoadGameScene();
 void LoadDemoSceneAudio();
 void LoadDemoScenePhysics();
+void LoadDemoTransformation();
 
 class CScene
 {
@@ -21,7 +22,8 @@ public:
 	{
 		Game,
 		DemoAudio,
-		DemoPhysics
+		DemoPhysics,
+		DemoTransformation
 	};
 
 	EScene scene_type;			///< The scene type
@@ -44,9 +46,10 @@ public:
 
 /* static */ std::vector<CScene> CScene::scenes =
 { 
-	{CScene::EScene::Game,        LoadGameScene},
-	{CScene::EScene::DemoAudio,   LoadDemoSceneAudio},
-	{CScene::EScene::DemoPhysics, LoadDemoScenePhysics}
+	{CScene::EScene::Game,               LoadGameScene},
+	{CScene::EScene::DemoAudio,          LoadDemoSceneAudio},
+	{CScene::EScene::DemoPhysics,        LoadDemoScenePhysics},
+	{CScene::EScene::DemoTransformation, LoadDemoTransformation},
 };
 
 #endif ! //OOM_ENGINE_C_SCENE_HPP__

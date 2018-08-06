@@ -37,7 +37,7 @@ public:
 	int32_t   GetLayers				() const;
     EBodyType GetBodyType           () const;
 	glm::vec3 GetPosition			() const;
-	glm::vec3 GetRotation			() const;
+	glm::vec3 GetOrientation		() const;
     glm::vec3 GetAngularVelocity    () const;
     glm::vec3 GetLinearVelocity     () const;
 
@@ -52,7 +52,7 @@ public:
 	void SetLinearDamping			(const float damping);
 	void SetAngularDamping			(const float damping);
 	void SetPosition				(const glm::vec3& position);
-	void SetRotation				(const glm::vec3& rotation);
+	void SetOrientation				(const glm::vec3& rotation);
     void SetLinearVelocity          (const glm::vec3& velocity);
     void SetAngularVelocity         (const glm::vec3& velocity);
 	void AddTorque					(const glm::vec3& torque);
