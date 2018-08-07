@@ -119,6 +119,7 @@ void CPostProcessingStack::Initialize(const SPostProcessingStackCreateInfo& post
     }
 
 	// Order is important
+	m_stack.clear();
     m_stack.push_back(new CIdentityEffect());
     m_stack.push_back(new CFogEffect());
 	m_stack.push_back(new CVignetteEffect());

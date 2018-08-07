@@ -17,6 +17,11 @@ class CUISpriteRenderer : public IRenderer
 public:
 
 	void Draw(SRenderData& render_data) final;
+
+protected:
+
+	void _Register() override;
+	void _Destroy () override;
 };
 
 }

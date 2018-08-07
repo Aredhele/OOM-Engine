@@ -35,8 +35,8 @@ public:
 
 protected:
 
-    void _Register() final;
-    void _Destroy () final;
+    void _Register() override;
+    void _Destroy () override;
 
 private:
 

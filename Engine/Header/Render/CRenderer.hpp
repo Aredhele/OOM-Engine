@@ -29,6 +29,7 @@ struct SRendererCreateInfo
 // Forward declaration
 class CWindow;
 class IRenderer;
+class CUISpriteRenderer;
 
 class CRenderer
 {
@@ -49,6 +50,7 @@ private:
     friend class CEngine;
     friend class IRenderer;
 	friend class CAudioEngine;
+	friend class CUISpriteRenderer;
 
     bool     Initialize(const SRendererCreateInfo& renderer_create_info);
     void     Release   ();
@@ -58,12 +60,16 @@ private:
     static void RegisterRenderer      (IRenderer* p_renderer);
     static void UnregisterRenderer    (IRenderer* p_renderer);
 
+	static void RegisterUIRenderer    (CUISpriteRenderer* p_renderer);
+    static void UnregisterUIRenderer  (CUISpriteRenderer* p_renderer);
+
 private:
 
-	bool				     m_b_post_process;
-    CWindow*                 mp_window = nullptr;
-    std::vector<IRenderer*>  m_renderers;
-    CPostProcessingStack     m_post_processing;
+	bool							m_b_post_process;
+    CWindow*						mp_window = nullptr;
+    std::vector<IRenderer*>			m_renderers;
+	std::vector<CUISpriteRenderer*> m_ui_renderers;
+    CPostProcessingStack			m_post_processing;
 
 private:
 

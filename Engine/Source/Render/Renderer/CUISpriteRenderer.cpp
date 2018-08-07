@@ -5,6 +5,7 @@
 /// \author     Vincent STEHLY--CALISTO
 
 #include "Render/Config.hpp"
+#include "Render/CRenderer.hpp"
 #include "Render/Mesh/CMeshFilter.hpp"
 #include "Render/Material/CMaterial.hpp"
 #include "Render/Renderer/CUISpriteRenderer.hpp"
@@ -17,7 +18,6 @@ namespace Oom
 
 void CUISpriteRenderer::Draw(SRenderData& render_data)
 {
-	// TODO
 	CMaterial*   p_material    = GetAttachedMaterial();
 	CMeshFilter* p_mesh_filter = GetAttachedMeshFilter();
 
@@ -27,15 +27,12 @@ void CUISpriteRenderer::Draw(SRenderData& render_data)
 		return;
 	}
 
-	GLfloat aspectRatio = 1600 / 900;
-
 	// Computing the MVP matrix
-	render_data.M   = mp_transform->GetLocalToWorldMatrix();
-	render_data.P   = glm::ortho(-aspectRatio, aspectRatio, -1.0f, 1.0f, -1.0f, 1.0f); // Works but not
-	render_data.P   = glm::ortho(0.0f, 1600.0f, 0.0f, 900.0f, -1.0f, 1.0f);
-	render_data.P   = glm::ortho(0.0f, 16.0f, 0.0f, 9.0f);
+	render_data.M = mp_transform->GetLocalToWorldMatrix();
+	render_data.P = glm::ortho(0.0f, 16.0f, 0.0f, 9.0f);  // 16:9 aspect ratio
 
-	render_data.MVP = render_data.P * render_data.V * render_data.M;
+	// No view matrix since it's screen space
+	render_data.MVP = render_data.P * render_data.M;
 	
 	p_material->Begin(render_data);
 
@@ -46,6 +43,18 @@ void CUISpriteRenderer::Draw(SRenderData& render_data)
 	glDrawArrays(GL_TRIANGLES, 0, p_mesh_filter->GetMesh().GetVerticesCount());
 
 	p_material->End();
+}
+
+/* virtual */ void CUISpriteRenderer::_Register()
+{
+	CRenderer::RegisterUIRenderer(this);
+	SetVisible(true);
+}
+
+/* virtual */ void CUISpriteRenderer::_Destroy()
+{
+	CRenderer::UnregisterUIRenderer(this);
+	SetVisible(false);
 }
 
 }

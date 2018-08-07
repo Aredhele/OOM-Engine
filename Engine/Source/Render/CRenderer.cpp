@@ -15,6 +15,7 @@
 #include "Render/Shader/SRenderData.hpp"
 #include "Render/Shader/SShaderManager.hpp"
 #include "Render/Gizmos/CGizmosManager.hpp"
+#include "Render/Renderer/CUISpriteRenderer.hpp"
 
 #include "Core/Debug/SLogger.hpp"
 #include "Composite/CGameObject.hpp"
@@ -231,12 +232,19 @@ void CRenderer::Render()
 	
     mp_window->Clear(p_camera_script->GetClearColor());
 
-    // Forward rendering
+    // Rendering 3D
     for(auto* p_renderer : m_renderers)
     {
         if(p_renderer->IsVisible())
             p_renderer->Draw(render_data);
     }
+
+	// Rendering 2D
+	for(auto* p_renderer : m_ui_renderers)
+	{
+		if (p_renderer->IsVisible())
+			p_renderer->Draw(render_data);
+	}
 
     DrawGizmos(projection * view);
 
@@ -290,7 +298,7 @@ CWindow* CRenderer::GetWindow()
 
 /* static */ void Oom::CRenderer::UnregisterRenderer(IRenderer* p_renderer)
 {
-    std::vector<IRenderer*>& renderers = sp_instance->m_renderers;
+    auto& renderers = sp_instance->m_renderers;
 
     for(auto i = 0; i < renderers.size(); ++i)
     {
@@ -301,6 +309,26 @@ CWindow* CRenderer::GetWindow()
             break;
         }
     }
+}
+
+/* static */ void CRenderer::RegisterUIRenderer(CUISpriteRenderer* p_renderer)
+{
+	sp_instance->m_ui_renderers.push_back(p_renderer);
+}
+
+/* static */ void CRenderer::UnregisterUIRenderer(CUISpriteRenderer* p_renderer)
+{
+	auto& renderers = sp_instance->m_ui_renderers;
+
+	for (auto i = 0; i < renderers.size(); ++i)
+	{
+		if (renderers[i] == p_renderer)
+		{
+			renderers[i] = renderers.back();
+			renderers.pop_back();
+			break;
+		}
+	}
 }
 
 /* static */ void CRenderer::EnablePostProcessing()
