@@ -27,6 +27,7 @@ public:
         Axis,
         Grid,
         Cone,
+		Collider,
 		Transform,
         PointLight,
 		AudioSource,

@@ -51,6 +51,7 @@ CGizmosManager::CGizmosManager()
     m_array_map.push_back({EGizmo::Axis, false});
     m_array_map.push_back({EGizmo::Grid, false});
     m_array_map.push_back({EGizmo::Cone, false});
+	m_array_map.push_back({EGizmo::Collider,         false});
     m_array_map.push_back({EGizmo::Transform,        false});
     m_array_map.push_back({EGizmo::PointLight,       false});
 	m_array_map.push_back({EGizmo::AudioSource,      false});
