@@ -9,9 +9,9 @@
 
 #include <vector>
 #include <GLM/glm.hpp>
-#include <Composite/Component/CBehavior.hpp>
 
-#include "Render/Config.hpp"
+// Forward declartion
+struct GLFWwindow;
 
 namespace Oom
 {

@@ -4,39 +4,28 @@
 /// \package    Engine
 /// \author     Vincent STEHLY--CALISTO
 
-#include "Engine/CEngine.hpp"
-#include "Core/Debug/SLogger.hpp"
-#include "Render/Shader/SShaderCompiler.hpp"
-#include <Glm/glm.hpp>
-#include <Glm/ext.hpp>
-#include "Resource/CMesh.hpp"
-#include "QU3E/q3.h"
+// User code
+#include "Scene/Hook.hpp"
 
-// Keep
+// Engines
+#include "Engine/CEngine.hpp"
+#include "Render/CRenderer.hpp"
+#include "Audio/CAudioEngine.hpp"
+#include "Physics/CPhysicWorld.hpp"
+
+// Components
 #include "Composite/CGameObject.hpp"
 #include "Composite/Component/CBehavior.hpp"
 #include "Composite/Component/CTransform.hpp"
-#include "Built-in/Script/S_Camera.hpp"
-#include "Built-in/Script/S_CameraController.hpp"
-#include "Render/Mesh/CMeshFilter.hpp"
 
-// Keep²
-#include "Render/CWindow.hpp"
-#include "Render/CRenderer.hpp"
-#include "Render/Mesh/CMeshFilter.hpp"
-#include "Render/Renderer/CMeshRenderer.hpp"
-#include "Render/Shader/SShaderManager.hpp"
-#include "Render/Material/CMaterial.hpp"
-#include "Physics/CPhysicWorld.hpp"
-#include "Audio/CAudioEngine.hpp"
-#include "Scene/Hook.hpp"
+// Globals
 #include "Engine/CTime.hpp"
-#include "Render/Gizmos/CGizmosManager.hpp"
-#include "Render/Gizmos/CGizmosBox.hpp"
-#include "Render/Gizmos/CGizmosTransform.hpp"
-#include "SDK/SDK.hpp"
-#include "Render/Gizmos/CGizmosRay.hpp"
 #include "Engine/CConfig.hpp"
+
+// Misc
+#include "Render/CWindow.hpp"
+#include "Core/Debug/SLogger.hpp"
+#include "Render/Gizmos/CGizmosTransform.hpp"
 
 namespace Oom
 {
@@ -59,6 +48,9 @@ bool CEngine::Initialize()
 	renderer_create_info.window_width  = CConfig::default_window_width;
 	renderer_create_info.window_height = CConfig::default_window_height;
 
+	renderer_create_info.enable_anti_aliasing   = CConfig::enable_anti_aliasing;
+	renderer_create_info.enable_post_processing = CConfig::enable_post_processing;
+	
 	// Initializing the rendering engine
     mp_renderer = new CRenderer();
     mp_renderer->Initialize(renderer_create_info);

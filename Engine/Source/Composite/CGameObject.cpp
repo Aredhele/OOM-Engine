@@ -4,6 +4,7 @@
 /// \package    Composite
 /// \author     Vincent STEHLY--CALISTO
 
+#include "Engine/CEngine.hpp"
 #include "Composite/CGameObject.hpp"
 #include "Composite/Component/CBehavior.hpp"
 

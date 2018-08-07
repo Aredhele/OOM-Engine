@@ -2,7 +2,7 @@
 
 CGameObject& Game::Prefabs::CreatePlayer() 
 {
-	auto& player = *CEngine::Instantiate();
+	/*auto& player = *CEngine::Instantiate();
 
 	// Add the camera component
 	bool b_first_camera = (CEngine::FindWithTag("MainCamera") == nullptr);
@@ -15,7 +15,8 @@ CGameObject& Game::Prefabs::CreatePlayer()
 
 
 
-	return player;
+	return player;*/
+	return *Sdk::GameObject::CreateEmpty();
 }
 
 CGameObject& Game::Prefabs::CreateCB_Asset(Asset::Size size)
@@ -39,7 +40,7 @@ CGameObject& Game::Prefabs::CreateBigAsset()
 
 CGameObject& Game::Prefabs::priv::CreateAsset(Asset::Size size)
 {
-	auto& go = *CEngine::Instantiate();
+	/*auto& go = *CEngine::Instantiate();
 	auto& asset = *go.AddComponent<Game::Asset>();
 	go.AddComponent<CRigidBody>();
 	go.AddComponent<CBoxCollider>();
@@ -56,5 +57,6 @@ CGameObject& Game::Prefabs::priv::CreateAsset(Asset::Size size)
 		go.GetTransform().SetScale(2, 2, 2);
 		break;
 	}	
-	return go;
+	return go;*/
+	return *Sdk::GameObject::CreateEmpty();
 }

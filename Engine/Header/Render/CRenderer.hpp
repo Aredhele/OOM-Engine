@@ -7,8 +7,6 @@
 #ifndef OOM_ENGINE_C_RENDERER_HPP__
 #define OOM_ENGINE_C_RENDERER_HPP__
 
-// #include <Windows.h>
-
 #include <vector>
 #include "Render/PostProcessing/CPostProcessingStack.hpp"
 
@@ -20,10 +18,12 @@ struct SRendererCreateInfo
 {
 	int         window_width;
 	int         window_height;
+	const char* window_name;
 	int			opengl_major;
 	int			opengl_minor;
 	bool		full_screen;
-	const char* window_name;
+	bool		enable_post_processing;
+	bool		enable_anti_aliasing;
 };
 
 // Forward declaration
@@ -33,6 +33,7 @@ class IRenderer;
 class CRenderer
 {
 public:
+
     CWindow* GetWindow ();
 
 public:

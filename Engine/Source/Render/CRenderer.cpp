@@ -4,6 +4,9 @@
 /// \package    Renderer
 /// \author     Vincent STEHLY--CALISTO
 
+// Engine
+#include "Engine/CEngine.hpp"
+
 #include "Render/Config.hpp"
 #include "Render/CWindow.hpp"
 #include "Render/CRenderer.hpp"
@@ -19,7 +22,6 @@
 #include "Built-in/Script/S_PointLight.hpp"
 #include "Built-in/Script/S_DirectionalLight.hpp"
 
-#include "Render/Gizmos/CGizmosBox.hpp"
 #include "Render/Gizmos/CGizmosPointLight.hpp"
 #include "Render/Gizmos/CGizmosDirectionalLight.hpp"
 
@@ -32,9 +34,8 @@ bool CRenderer::Initialize(const SRendererCreateInfo& renderer_create_info)
 {
     SLogger::LogInfo("Renderer initialization.");
 
-    sp_instance      = this;
-	m_b_post_process = false;
-    mp_window        = new CWindow();
+	sp_instance = this;
+    mp_window   = new CWindow();
 
 	// Creates the window initialization structure
 	SWindowCreateInfo window_create_info {};
@@ -130,6 +131,16 @@ bool CRenderer::Initialize(const SRendererCreateInfo& renderer_create_info)
 
     m_post_processing.Initialize(post_processing_stack_create_info);
 
+	// Enabling or disabling post processing
+	m_b_post_process = renderer_create_info.enable_post_processing;
+
+	if(m_b_post_process)
+	{
+		// Checking for FXAA support
+		m_post_processing.SetEffectActive(IPostEffect::EType::FXAA, 
+			renderer_create_info.enable_anti_aliasing);
+	}
+	
 	// Back to the physical frame buffer
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
@@ -263,13 +274,13 @@ void CRenderer::DrawGizmos(const glm::mat4& PV)
         }
     }
 
-    // DrawBox(glm::vec3(0.0f), 2.0f, 2.0f, glm::vec3(0.0f, 0.0f, 1.0f));
-
     CGizmosManager::Draw(PV);
 }
 
 CWindow* CRenderer::GetWindow()
-{ return mp_window; }
+{
+	return mp_window;
+}
 
 /* static */ void Oom::CRenderer::RegisterRenderer(IRenderer* p_renderer)
 {
