@@ -45,16 +45,30 @@ void CUISpriteRenderer::Draw(SRenderData& render_data)
 	p_material->End();
 }
 
+void CUISpriteRenderer::SetSortingLayer(uint32_t sorting_layer)
+{
+	m_sorting_layer = sorting_layer;
+}
+
+uint32_t CUISpriteRenderer::GetSortingLayer() const
+{
+	return m_sorting_layer;
+}
+
 /* virtual */ void CUISpriteRenderer::_Register()
 {
-	CRenderer::RegisterUIRenderer(this);
 	SetVisible(true);
+	m_sorting_layer = 0;
+	
+	CRenderer::RegisterUIRenderer(this);
 }
 
 /* virtual */ void CUISpriteRenderer::_Destroy()
 {
-	CRenderer::UnregisterUIRenderer(this);
 	SetVisible(false);
+	m_sorting_layer = 0;
+
+	CRenderer::UnregisterUIRenderer(this);
 }
 
 }

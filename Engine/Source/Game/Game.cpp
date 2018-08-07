@@ -133,14 +133,27 @@ void LoadDemoScreenSpaceUI()
 
 	Sdk::GameObject::CreateFreeCamera();
 
-	auto* p_sprite_go  = Sdk::GameObject::CreateUISprite();
-	auto* p_rotate     = p_sprite_go->AddComponent<S_Rotate>();
-	auto* p_sprite_mat = p_sprite_go->GetComponent<CMaterial>();
+	auto* p_sprite_go_1  = Sdk::GameObject::CreateUISprite();
+	auto* p_sprite_go_2  = Sdk::GameObject::CreateUISprite();
 
-	p_rotate->SetAxis(glm::vec3(0.0f, 0.0f, 1.0f));
-	p_sprite_go->GetTransform().SetScale(3.0, 3.0f, 1.0f);
-	p_sprite_go->GetTransform().SetPosition(8.0f, 4.5f, 0.0f);
-	p_sprite_mat->SetTexture(Sdk::Import::ImportTexture("Resources/Texture/Kirito.png"));
+	auto* p_sprite_mat_1 = p_sprite_go_1->GetComponent<CMaterial>();
+	auto* p_sprite_mat_2 = p_sprite_go_2->GetComponent<CMaterial>();
+
+	auto* p_renderer_1   = p_sprite_go_1->GetComponent<CUISpriteRenderer>();
+	auto* p_renderer_2   = p_sprite_go_2->GetComponent<CUISpriteRenderer>();
+
+	p_sprite_mat_1->SetTexture(Sdk::Import::ImportTexture("Resources/Texture/Kirito.png"));
+	p_sprite_mat_2->SetTexture(Sdk::Import::ImportTexture("Resources/Texture/Kirito.png"));
+
+	p_renderer_1->SetSortingLayer(0);
+	p_renderer_2->SetSortingLayer(1);
+
+	p_sprite_go_1->GetTransform().SetScale   (3.0, 3.0f, 1.0f);
+	p_sprite_go_2->GetTransform().SetScale   (3.0, 3.0f, 1.0f);
+
+	p_sprite_go_1->GetTransform().SetPosition(4.0f, 4.5f, 0.0f);
+	p_sprite_go_2->GetTransform().SetPosition(3.0f, 4.5f, 0.0f);
+	
 }
 
 void LoadDemoTransformation()

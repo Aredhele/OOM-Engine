@@ -18,10 +18,17 @@ public:
 
 	void Draw(SRenderData& render_data) final;
 
+	void     SetSortingLayer	(uint32_t sorting_layer);
+	uint32_t GetSortingLayer	() const;
+
 protected:
 
 	void _Register() override;
 	void _Destroy () override;
+
+private:
+
+	uint32_t m_sorting_layer = 0;
 };
 
 }

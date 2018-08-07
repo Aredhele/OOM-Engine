@@ -26,6 +26,7 @@
 
 #include "Render/Gizmos/CGizmosPointLight.hpp"
 #include "Render/Gizmos/CGizmosDirectionalLight.hpp"
+#include <algorithm>
 
 namespace Oom
 {
@@ -240,10 +241,32 @@ void CRenderer::Render()
     }
 
 	// Rendering 2D
-	for(auto* p_renderer : m_ui_renderers)
+	// We have to sort the sprite from their layers
+	std::vector<std::pair<uint32_t, uint32_t>> sprite_layers;
+
+	// Feeding the vector
+	sprite_layers.reserve(m_ui_renderers.size());
+	for (auto i = 0; i < m_ui_renderers.size(); ++i)
+		sprite_layers.emplace_back(m_ui_renderers[i]->GetSortingLayer(), i);
+
+	const struct 
 	{
-		if (p_renderer->IsVisible())
-			p_renderer->Draw(render_data);
+		bool operator()(
+			const std::pair<uint32_t, uint32_t>& a, 
+			const std::pair<uint32_t, uint32_t>& b) const
+		{
+			return a.first < b.first;
+		}
+	} custom_less;
+
+	// Sorting
+	std::sort(sprite_layers.begin(), sprite_layers.end(), custom_less);
+
+	// Rendering
+	for(const auto& sprite : sprite_layers)
+	{
+		if (m_ui_renderers[sprite.second]->IsVisible())
+			m_ui_renderers[sprite.second]->Draw(render_data);
 	}
 
     DrawGizmos(projection * view);
