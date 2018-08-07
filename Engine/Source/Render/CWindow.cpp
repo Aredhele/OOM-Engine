@@ -6,6 +6,8 @@
 
 #include "Render/CWindow.hpp"
 #include "Core/Debug/SLogger.hpp"
+#include <cstdio>
+#include <xutility>
 
 namespace Oom
 {
@@ -35,10 +37,12 @@ bool CWindow::Initialize(const SWindowCreateInfo& window_create_info)
 
 	if(window_create_info.full_screen)
 	{
+		GLFWmonitor*       p_primary_monitor = glfwGetPrimaryMonitor();
+		const GLFWvidmode* p_video_mode      = glfwGetVideoMode(p_primary_monitor);
+		
 		// Full screen creation from the primary monitor
 		mp_window = glfwCreateWindow(
-			window_create_info.window_width, 
-			window_create_info.window_height, 
+			p_video_mode->width, p_video_mode->height,
 			window_create_info.window_name, glfwGetPrimaryMonitor(), nullptr);
 	}
 	else

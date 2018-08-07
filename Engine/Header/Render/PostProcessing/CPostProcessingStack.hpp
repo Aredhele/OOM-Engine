@@ -20,6 +20,13 @@
 namespace Oom
 {
 
+// Vulkan style
+struct SPostProcessingStackCreateInfo
+{
+	int framebuffer_width;
+	int framebuffer_height;
+};
+
 class CPostProcessingStack
 {
 public:
@@ -34,7 +41,7 @@ private:
     CPostProcessingStack ();
     ~CPostProcessingStack();
 
-    void Initialize();
+    void Initialize(const SPostProcessingStackCreateInfo& post_processing_stack_create_info);
     void Release   ();
 
     void OnPostProcessingBegin     ();
@@ -43,6 +50,10 @@ private:
     int GetActivePostProcessShaders() const;
 
 private:
+
+	// Window info
+	int m_window_width;
+	int m_window_height;
 
     // QUAD
     GLuint m_postProcessVao;

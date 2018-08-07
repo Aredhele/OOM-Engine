@@ -25,31 +25,39 @@ CPostProcessingStack::~CPostProcessingStack() // NOLINT
     // None
 }
 
-void CPostProcessingStack::Initialize()
+void CPostProcessingStack::Initialize(const SPostProcessingStackCreateInfo& post_processing_stack_create_info)
 {
     SLogger::LogInfo("Initializing the post-processing stack.");
 
+	const int width  = post_processing_stack_create_info.framebuffer_width;
+	const int height = post_processing_stack_create_info.framebuffer_height;
+
+	m_window_width  = width;
+	m_window_height = height;
+
     // Generating the frame buffer object
+	// No time to create a nice framebuffer class
     glGenFramebuffers(1, &m_postProcessFbo);
     glBindFramebuffer(GL_FRAMEBUFFER, m_postProcessFbo);
 
     glGenTextures  (1, &m_postProcessTexture);
     glBindTexture  (GL_TEXTURE_2D, m_postProcessTexture);
-    glTexImage2D   (GL_TEXTURE_2D, 0, GL_RGB, 1600, 900, 0, GL_RGB, GL_UNSIGNED_BYTE, nullptr);
+    glTexImage2D   (GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, nullptr);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 
     // FBO to render the depth buffer
+	// The clock is ticking...
     m_postProcessRbo = 0;
     glGenRenderbuffers       (1, &m_postProcessRbo);
     glBindRenderbuffer       (GL_RENDERBUFFER, m_postProcessRbo);
-    glRenderbufferStorage    (GL_RENDERBUFFER, GL_DEPTH_COMPONENT, 1600, 900);
+    glRenderbufferStorage    (GL_RENDERBUFFER, GL_DEPTH_COMPONENT, width, height);
     glFramebufferRenderbuffer(GL_FRAMEBUFFER,  GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, m_postProcessRbo);
 
     // Texture for the depth texture
     glGenTextures(1, &m_postProcessDepthTexture);
     glBindTexture(GL_TEXTURE_2D, m_postProcessDepthTexture);
-    glTexImage2D (GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT24, 1600, 900, 0,GL_DEPTH_COMPONENT, GL_FLOAT, 0);
+    glTexImage2D (GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT24, width, height, 0,GL_DEPTH_COMPONENT, GL_FLOAT, 0);
 
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
@@ -94,7 +102,7 @@ void CPostProcessingStack::Initialize()
 
     glGenTextures  (1, &m_postProcessTextureBuffer);
     glBindTexture  (GL_TEXTURE_2D, m_postProcessTextureBuffer);
-    glTexImage2D   (GL_TEXTURE_2D, 0, GL_RGB, 1600, 900, 0, GL_RGB, GL_UNSIGNED_BYTE, nullptr);
+    glTexImage2D   (GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, nullptr);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 
@@ -110,21 +118,11 @@ void CPostProcessingStack::Initialize()
         SLogger::LogError("Error while creating the post-processing buffers.");
     }
 
+	// Order is important
     m_stack.push_back(new CIdentityEffect());
-    // m_stack.push_back(new DepthBuffer());
-    // m_stack.push_back(new Mirror());
     m_stack.push_back(new CFogEffect());
-    // m_stack.push_back(new Negative());
-    // m_stack.push_back(new Sepia());
-    // m_stack.push_back(new BoxBlur());
-    // m_stack.push_back(new GaussianBlur());
-    // m_stack.push_back(new Sharpen());
-    // m_stack.push_back(new EdgeDetection());
-    // m_stack.push_back(new GodRay());
-    // m_stack.push_back(new Bloom());
-     m_stack.push_back(new CVignetteEffect());
-    // m_stack.push_back(new DepthOfField());
-     m_stack.push_back(new CFXAAEffect());
+	m_stack.push_back(new CVignetteEffect());
+	m_stack.push_back(new CFXAAEffect());
 
     SLogger::LogInfo("Post-processing stack successfully initialized.");
 }
@@ -138,7 +136,7 @@ void CPostProcessingStack::Release()
 void CPostProcessingStack::OnPostProcessingBegin()
 {
     glBindFramebuffer(GL_FRAMEBUFFER, m_postProcessFbo);
-    glViewport(0, 0, 1600, 900);
+    glViewport(0, 0, m_window_width, m_window_height);
 }
 
 void CPostProcessingStack::OnPostProcessingRender()
@@ -146,7 +144,7 @@ void CPostProcessingStack::OnPostProcessingRender()
     bool bSwapped = true;
 
     glBindFramebuffer     (GL_FRAMEBUFFER, m_postProcessFboBuffer);
-    glViewport            (0, 0, 1600, 900);
+    glViewport            (0, 0, m_window_width, m_window_height);
     glFramebufferTexture2D(GL_FRAMEBUFFER , GL_COLOR_ATTACHMENT0 , GL_TEXTURE_2D, m_postProcessTextureBuffer, 0);
 
     // Processing the stack (Ping pong with FBO)
@@ -181,7 +179,7 @@ void CPostProcessingStack::OnPostProcessingRender()
     // Render the texture on the physical frame buffer
     // Binding physical buffer
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
-    glViewport(0, 0, 1600, 900);
+    glViewport(0, 0, m_window_width, m_window_height);
 
     // Clears the buffer
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);

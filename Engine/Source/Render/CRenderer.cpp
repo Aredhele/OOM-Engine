@@ -120,9 +120,15 @@ bool CRenderer::Initialize(const SRendererCreateInfo& renderer_create_info)
         "Resources/Shader/Effect/IdentityVertexShader.glsl",
         "Resources/Shader/Effect/IdentityFragmentShader.glsl");
 
-	// Initializes gizmos and post processing
+	// Initializes gizmos
     CGizmosManager::Initialize();
-    m_post_processing.Initialize();
+
+	// Post-processing
+	SPostProcessingStackCreateInfo post_processing_stack_create_info {};
+	post_processing_stack_create_info.framebuffer_width  = mp_window->GetWindowSize().x;
+	post_processing_stack_create_info.framebuffer_height = mp_window->GetWindowSize().y;
+
+    m_post_processing.Initialize(post_processing_stack_create_info);
 
 	// Back to the physical frame buffer
     glBindFramebuffer(GL_FRAMEBUFFER, 0);

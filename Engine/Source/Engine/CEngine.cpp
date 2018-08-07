@@ -80,8 +80,11 @@ void CEngine::Release()
 {
     SLogger::LogInfo("Releasing Oom-Engine");
 
-    mp_renderer->Release();
-    delete mp_renderer;
+	if(mp_renderer)
+	{
+		mp_renderer->Release();
+		delete mp_renderer;
+	}
 
     mp_renderer = nullptr;
     sp_instance = nullptr;
