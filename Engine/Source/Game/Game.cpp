@@ -135,26 +135,35 @@ void LoadDemoScreenSpaceUI()
 
 	auto* p_sprite_go_1  = Sdk::GameObject::CreateUISprite();
 	auto* p_sprite_go_2  = Sdk::GameObject::CreateUISprite();
+	auto* p_sprite_go_3  = Sdk::GameObject::CreateUISprite();
 
 	auto* p_sprite_mat_1 = p_sprite_go_1->GetComponent<CMaterial>();
 	auto* p_sprite_mat_2 = p_sprite_go_2->GetComponent<CMaterial>();
+	auto* p_sprite_mat_3 = p_sprite_go_3->GetComponent<CMaterial>();
 
 	auto* p_renderer_1   = p_sprite_go_1->GetComponent<CUISpriteRenderer>();
 	auto* p_renderer_2   = p_sprite_go_2->GetComponent<CUISpriteRenderer>();
+	auto* p_renderer_3   = p_sprite_go_3->GetComponent<CUISpriteRenderer>();
 
-	p_sprite_mat_1->SetTexture(Sdk::Import::ImportTexture("Resources/Texture/Kirito.png"));
-	p_sprite_mat_2->SetTexture(Sdk::Import::ImportTexture("Resources/Texture/Kirito.png"));
+	p_sprite_mat_1->SetTexture(Sdk::Import::ImportTexture("Resources/Texture/Default.png"));
+	p_sprite_mat_2->SetTexture(Sdk::Import::ImportTexture("Resources/Texture/Default.png"));
+	p_sprite_mat_3->SetTexture(Sdk::Import::ImportTexture("Resources/Texture/Default.png"));
 
 	p_renderer_1->SetSortingLayer(0);
 	p_renderer_2->SetSortingLayer(1);
+	p_renderer_3->SetSortingLayer(2);
 
 	p_sprite_go_1->GetTransform().SetScale   (3.0, 3.0f, 1.0f);
 	p_sprite_go_2->GetTransform().SetScale   (3.0, 3.0f, 1.0f);
+	p_sprite_go_3->GetTransform().SetScale   (3.0, 3.0f, 1.0f);
 
-	p_sprite_go_1->GetTransform().SetPosition(1.f, .45f, 0.0f);
-	p_sprite_go_2->GetTransform().SetPosition(.3f, .45f, 0.0f);
+	p_sprite_go_1->GetTransform().SetPosition(.25f, .5f, 0.0f);
+	p_sprite_go_2->GetTransform().SetPosition(.50f, .5f, 0.0f);
+	p_sprite_go_3->GetTransform().SetPosition(.75f, .5f, 0.0f);
 
-	p_sprite_mat_1->SetColor(glm::vec3(0.8f, 0.0f, 1.0f));
+	p_sprite_mat_1->SetColor(glm::vec3(1.0f, 0.0f, 0.0f));
+	p_sprite_mat_2->SetColor(glm::vec3(0.0f, 1.0f, 0.0f));
+	p_sprite_mat_3->SetColor(glm::vec3(0.0f, 0.0f, 1.0f));
 	
 }
 
