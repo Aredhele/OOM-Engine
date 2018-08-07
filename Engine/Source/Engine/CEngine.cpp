@@ -25,7 +25,9 @@
 // Misc
 #include "Render/CWindow.hpp"
 #include "Core/Debug/SLogger.hpp"
+#include "Render/Renderer/CTextRenderer.hpp"
 #include "Render/Gizmos/CGizmosTransform.hpp"
+#include "Render/Renderer/CUISpriteRenderer.hpp"
 
 namespace Oom
 {
@@ -228,12 +230,15 @@ void CEngine::GameObjectUpdate(GLFWwindow* p_window, const float delta_time)
         auto* p_game_object = m_game_objects[n_go];
 		auto& p_transform   = p_game_object->GetTransform();
 
-		// TODO : Don't draw the transfom of screen space objects.
-		DrawTransform(
-			p_transform.GetPosition(), p_transform.GetUp(), 
-			p_transform.GetRight(),    p_transform.GetForward(), 
-			p_transform.GetForward());
-
+		if(!(p_game_object->GetComponent<CTextRenderer>() || 
+			 p_game_object->GetComponent<CUISpriteRenderer>()))
+		{
+			DrawTransform(
+				p_transform.GetPosition(), p_transform.GetUp(),
+				p_transform.GetRight(), p_transform.GetForward(),
+				p_transform.GetForward());
+		}
+		
         // The go is being destroyed
         if(p_game_object->m_is_destroyed &&
            p_game_object->m_destroy_delay != 0.0f)

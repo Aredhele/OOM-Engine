@@ -5,7 +5,7 @@
 
 #include "Engine/CEngine.hpp"
 
-int wmain()
+int main()
 {
     Oom::CEngine engine;
 

@@ -17,7 +17,7 @@ CAudioBuffer buffer_2;
 
 void LoadScene()
 {
-	CScene::LoadScene(CScene::EScene::DemoPhysics);
+	CScene::LoadScene(CScene::EScene::DemoRendering);
 }
 
 void LoadGameScene()
@@ -34,9 +34,6 @@ void LoadGameScene()
 
 void LoadDemoSceneAudio()
 {
-	Sdk::Render::EnablePostProcessing();
-	Sdk::Render::EnablePostEffect(EPostEffect::FXAA);
-
 	Sdk::Debug::EnableGizmo(EGizmo::Ray);
 	Sdk::Debug::EnableGizmo(EGizmo::Box);
 	Sdk::Debug::EnableGizmo(EGizmo::Axis);
@@ -79,9 +76,6 @@ void LoadDemoSceneAudio()
 
 void LoadDemoScenePhysics()
 {
-	Sdk::Render::EnablePostProcessing();
-	Sdk::Render::EnablePostEffect(EPostEffect::FXAA);
-
 	Sdk::Debug::EnableGizmo(EGizmo::Ray);
 	Sdk::Debug::EnableGizmo(EGizmo::Box);
 	Sdk::Debug::EnableGizmo(EGizmo::Axis);
@@ -93,10 +87,6 @@ void LoadDemoScenePhysics()
 	Sdk::GameObject::CreateDirectionalLight();
 
 	auto* p_camera = Sdk::GameObject::CreateFreeCamera();
-
-	//p_camera->GetTransform().LookAt(0.0f, 0.0f, 0.0f);
-	//p_camera->GetTransform().SetPosition(4.0f, 4.0f, 4.0f);
-	
 
 	auto* p_ground_go_1 = Sdk::Import::ImportMesh("Resources/Mesh/Cube.obj")[0];
 	auto* p_ground_go_2 = Sdk::Import::ImportMesh("Resources/Mesh/Cube.obj")[0];
@@ -186,11 +176,8 @@ void LoadDemoScreenSpaceUI()
 	p_text_3->Set("B", glm::tvec2<int>(1200.0f, 320.0f), 50, glm::vec3(1.0f));
 }
 
-void LoadDemoTransformation()
+void LoadDemoSceneTransformation()
 {
-	Sdk::Render::EnablePostProcessing();
-	Sdk::Render::EnablePostEffect(EPostEffect::FXAA);
-
 	Sdk::Debug::EnableGizmo(EGizmo::Ray);
 	Sdk::Debug::EnableGizmo(EGizmo::Box);
 	Sdk::Debug::EnableGizmo(EGizmo::Axis);
@@ -247,4 +234,20 @@ void LoadDemoTransformation()
 	p_component_a->IsAround();
 
 	p_look_at->SetTarget(p_around_z_go);	
+}
+
+void LoadDemoSceneRendering()
+{
+	Sdk::Debug::EnableGizmo(EGizmo::Ray);
+	Sdk::Debug::EnableGizmo(EGizmo::Box);
+	Sdk::Debug::EnableGizmo(EGizmo::Axis);
+	Sdk::Debug::EnableGizmo(EGizmo::Line);
+	Sdk::Debug::EnableGizmo(EGizmo::Grid);
+	Sdk::Debug::EnableGizmo(EGizmo::Transform);
+	Sdk::Debug::EnableGizmo(EGizmo::PointLight);
+	Sdk::Debug::EnableGizmo(EGizmo::DirectionalLight);
+
+	Sdk::GameObject::CreateFreeCamera();
+	Sdk::GameObject::CreateDirectionalLight();
+	
 }

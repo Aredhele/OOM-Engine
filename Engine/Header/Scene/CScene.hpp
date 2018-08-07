@@ -13,7 +13,8 @@ void LoadGameScene();
 void LoadDemoSceneAudio();
 void LoadDemoScenePhysics();
 void LoadDemoScreenSpaceUI();
-void LoadDemoTransformation();
+void LoadDemoSceneRendering();
+void LoadDemoSceneTransformation();
 
 class CScene
 {
@@ -24,7 +25,8 @@ public:
 		Game,
 		DemoAudio,
 		DemoPhysics,
-		DemoScreenSpaceUI,
+		DemoSpaceUI,
+		DemoRendering,
 		DemoTransformation
 	};
 
@@ -51,8 +53,9 @@ public:
 	{CScene::EScene::Game,               LoadGameScene},
 	{CScene::EScene::DemoAudio,          LoadDemoSceneAudio},
 	{CScene::EScene::DemoPhysics,        LoadDemoScenePhysics},
-	{CScene::EScene::DemoScreenSpaceUI,  LoadDemoScreenSpaceUI},
-	{CScene::EScene::DemoTransformation, LoadDemoTransformation},
+	{CScene::EScene::DemoSpaceUI,        LoadDemoScreenSpaceUI},
+	{CScene::EScene::DemoRendering,		 LoadDemoSceneRendering},
+	{CScene::EScene::DemoTransformation, LoadDemoSceneTransformation},
 };
 
 #endif ! //OOM_ENGINE_C_SCENE_HPP__
