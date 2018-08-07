@@ -27,8 +27,13 @@ void CUISpriteRenderer::Draw(SRenderData& render_data)
 		return;
 	}
 
-	// Computing the MVP matrix
-	render_data.M = mp_transform->GetLocalToWorldMatrix();
+	// Computing manually tranformation matrix
+	const glm::mat4 translation_matrix     = glm::translate(mp_transform->GetPosition() * glm::vec3(16.0f, 9.0f, 1.0f));
+	const glm::mat4 rotation_matrix        = glm::orientate4(mp_transform->GetOrientation());
+	const glm::mat4 scale_maxtrix          = glm::scale(mp_transform->GetScale());
+	const glm::mat4 transformation_matrix  = translation_matrix * rotation_matrix * scale_maxtrix;
+
+	render_data.M = transformation_matrix;
 	render_data.P = glm::ortho(0.0f, 16.0f, 0.0f, 9.0f);  // 16:9 aspect ratio
 
 	// No view matrix since it's screen space

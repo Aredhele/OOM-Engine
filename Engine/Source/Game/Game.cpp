@@ -151,8 +151,8 @@ void LoadDemoScreenSpaceUI()
 	p_sprite_go_1->GetTransform().SetScale   (3.0, 3.0f, 1.0f);
 	p_sprite_go_2->GetTransform().SetScale   (3.0, 3.0f, 1.0f);
 
-	p_sprite_go_1->GetTransform().SetPosition(4.0f, 4.5f, 0.0f);
-	p_sprite_go_2->GetTransform().SetPosition(3.0f, 4.5f, 0.0f);
+	p_sprite_go_1->GetTransform().SetPosition(1.f, .45f, 0.0f);
+	p_sprite_go_2->GetTransform().SetPosition(.3f, .45f, 0.0f);
 
 	p_sprite_mat_1->SetColor(glm::vec3(0.8f, 0.0f, 1.0f));
 	
