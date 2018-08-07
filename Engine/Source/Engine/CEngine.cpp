@@ -36,6 +36,7 @@
 #include "Render/Gizmos/CGizmosTransform.hpp"
 #include "SDK/SDK.hpp"
 #include "Render/Gizmos/CGizmosRay.hpp"
+#include "Engine/CConfig.hpp"
 
 namespace Oom
 {
@@ -46,16 +47,16 @@ bool CEngine::Initialize()
 {
     SLogger::LogInfo("Oom-Engine initialization.");
 
+	ReadConfiguration();
+
     mp_renderer = new CRenderer();
     mp_renderer->Initialize();
 
-    // TODO : Delta time customisable ?
     mp_physic_world = new CPhysicWorld();
     mp_physic_world->Initialize(1.0f / 60.0f);
 
     mp_audio_engine = new CAudioEngine();
     mp_audio_engine->Initialize();
-
 
     // Static instance initialization
     sp_instance = this;
@@ -75,6 +76,56 @@ void CEngine::Release()
     sp_instance = nullptr;
 
     SLogger::LogInfo("Oom-Engine released.");
+}
+
+void CEngine::ReadConfiguration()
+{
+	SLogger::LogInfo("Reading engine configuration...");
+
+	// Rendering
+	const bool b_enable_post_processing = GetPrivateProfileInt("Rendering", "enable_post_processing", 1, "Resources/Engine.ini");
+	const bool b_enable_anti_aliasing   = GetPrivateProfileInt("Rendering", "enable_anti_aliasing",   1, "Resources/Engine.ini");
+
+	// Window
+	int        window_size_width  = GetPrivateProfileInt("Window", "window_size_width",  1600, "Resources/Engine.ini");
+	int        window_size_height = GetPrivateProfileInt("Window", "window_size_height",  900, "Resources/Engine.ini");
+	const bool window_full_screen = GetPrivateProfileInt("Window", "window_full_screen",    0, "Resources/Engine.ini");
+	
+	// Logic
+	int update_per_second   = GetPrivateProfileInt("Logic", "update_per_second", 60, "Resources/Engine.ini");
+
+	// Checking arguments
+	const float ratio = 16.0f / 9.0f;
+	if(ratio != ((float)window_size_width / (float)window_size_height))
+	{
+		SLogger::LogError("The window size is not a 16:9 ratio. Taking the default value (1600x900).");
+		window_size_width  = 1600;
+		window_size_height = 900;
+	}
+
+	if(update_per_second <= 25 || update_per_second >= 240)
+	{
+		SLogger::LogError("The update count is too low or too hight. Taking the default value (60).");
+		update_per_second = 60;
+	}
+
+	// Updating the config
+	CConfig::window_full_screen     = window_full_screen;
+	CConfig::enable_anti_aliasing   = b_enable_anti_aliasing;
+	CConfig::enable_post_processing = b_enable_post_processing;
+	
+	CConfig::default_window_width      = window_size_width;
+	CConfig::default_window_height     = window_size_height;
+	CConfig::default_update_per_second = update_per_second;
+
+	SLogger::LogInfo("Read %s : %d", "enable_post_processing", b_enable_post_processing);
+	SLogger::LogInfo("Read %s : %d", "enable_anti_aliasing  ", b_enable_anti_aliasing);
+	SLogger::LogInfo("Read %s : %d", "window_size_width     ", window_size_width);
+	SLogger::LogInfo("Read %s : %d", "window_size_height    ", window_size_height);
+	SLogger::LogInfo("Read %s : %d", "window_full_screen    ", window_full_screen);
+	SLogger::LogInfo("Read %s : %d", "update_per_second     ", update_per_second);
+
+	SLogger::LogInfo("Configuration filed parsed.");
 }
 
 void CEngine::Run()

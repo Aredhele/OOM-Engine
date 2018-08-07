@@ -70,8 +70,9 @@ private:
     friend class CBehavior;
     friend class CGameObject;
 
-    void        GameObjectUpdate(GLFWwindow* p_window, float delta_time);
-    void        BehaviorUpdate  (GLFWwindow* p_window, float delta_time);
+	void		ReadConfiguration ();
+    void        GameObjectUpdate  (GLFWwindow* p_window, float delta_time);
+    void        BehaviorUpdate    (GLFWwindow* p_window, float delta_time);
 
     static void RegisterBehavior   (CBehavior* p_behavior);
     static void UnregisterBehavior (CBehavior* p_behavior);
