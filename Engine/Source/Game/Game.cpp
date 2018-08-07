@@ -133,7 +133,14 @@ void LoadDemoScreenSpaceUI()
 
 	Sdk::GameObject::CreateFreeCamera();
 
-	auto* p_sprite_go = Sdk::GameObject::CreateUISprite();
+	auto* p_sprite_go  = Sdk::GameObject::CreateUISprite();
+	auto* p_rotate     = p_sprite_go->AddComponent<S_Rotate>();
+	auto* p_sprite_mat = p_sprite_go->GetComponent<CMaterial>();
+
+	p_rotate->SetAxis(glm::vec3(0.0f, 0.0f, 1.0f));
+	p_sprite_go->GetTransform().SetScale(3.0, 3.0f, 1.0f);
+	p_sprite_go->GetTransform().SetPosition(8.0f, 4.5f, 0.0f);
+	p_sprite_mat->SetTexture(Sdk::Import::ImportTexture("Resources/Texture/Kirito.png"));
 }
 
 void LoadDemoTransformation()

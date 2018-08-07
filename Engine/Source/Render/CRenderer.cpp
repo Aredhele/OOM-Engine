@@ -42,9 +42,9 @@ void GLAPIENTRY GLErrorCallback(
         a++;
     }
 
- //fprintf(stderr, "GL CALLBACK: %s type = 0x%x, severity = 0x%x, message = %s\n",
- //         (type == GL_DEBUG_TYPE_ERROR ? "** GL ERROR **" : "" ),
- //        type, severity, message );
+	fprintf(stderr, "GL CALLBACK: %s type = 0x%x, severity = 0x%x, message = %s\n",
+         (type == GL_DEBUG_TYPE_ERROR ? "** GL ERROR **" : "" ),
+       type, severity, message );
 }
 
 namespace Oom
@@ -69,7 +69,7 @@ bool CRenderer::Initialize()
     glEnable   (GL_CULL_FACE);
     glCullFace (GL_BACK);
     glFrontFace(GL_CCW);
-
+	glDisable(GL_CULL_FACE);
     glEnable   (GL_MULTISAMPLE);
 
     // Enables debug callback

@@ -1,21 +1,21 @@
 #version 330 core
 
 // In
-layout(location = 0) in vec3 vertex;
+layout(location = 0) in vec2 vertex;
 layout(location = 2) in vec2 vertexUV;
 
-// Uniform
-uniform mat4 M;
-
 // Out
-out vec2 UV;
+out vec2 textureUV;
 
-void main()
+uniform mat4 model;
+uniform mat4 proj; 
+
+void main(void)
 {
-	vec2 vertexPosition_homoneneousspace  = vec2(vertex.x, vertex.y) - vec2(900, 450);
-    	 vertexPosition_homoneneousspace /= vec2(900, 450);
+	//gl_Position = proj * (model * vec4(vec2(vertex.x / (16.0f / 9.0f), vertex.y / (16.0f / 9.0f)), 0.0, 1.0));
 
-	gl_Position =  vec4(vertexPosition_homoneneousspace, 0.0f, 1.0f);
-	UV          = vec2(vertexUV.x, vertexUV.y);
+	gl_Position = proj * (model * vec4(vertex, 0.0, 1.0));
+
+	//gl_Position = proj * (model * vec4(vertex, 0.0, 0.0));
+	textureUV   = vec2(vertexUV.x, 1.0f - vertexUV.y);
 }
-

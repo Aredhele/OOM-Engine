@@ -147,12 +147,36 @@ namespace Sdk
 
 	    CGameObject* CreateUISprite() {
 			CGameObject* p_sprite_object = CEngine::Instantiate();
-
-			p_sprite_object->AddComponent<CMeshFilter>();
 			p_sprite_object->AddComponent<CUISpriteRenderer>();
 
+			auto* p_filter   = p_sprite_object->AddComponent<CMeshFilter>();
 			auto* p_material = p_sprite_object->AddComponent<CMaterial>();
 			p_material->SetShader(EShaderType::UISprite);
+
+			static float sprite_quad[18] =
+			{
+				-0.5f,  0.5f, 0.0f,
+				-0.5f, -0.5f, 0.0f,
+				 0.5f,  0.5f, 0.0f,
+
+				 0.5f,  0.5f, 0.0f,
+				-0.5f, -0.5f, 0.0f,
+			 	 0.5f, -0.5f, 0.0f
+			};
+
+			static float sprite_uv[12] =
+			{
+				 0.0f,  1.0f,
+				 0.0f,  0.0f,	
+				 1.0f,  1.0f,
+
+				 1.0f,  1.0f, 
+				 0.0f,  0.0f,
+				 1.0f,  0.0f
+			};
+
+			p_filter->GetMesh().SetVertices(sprite_quad, 18);
+			p_filter->GetMesh().SetUVs     (sprite_uv,   12);
 
 			return p_sprite_object;
 	    }
