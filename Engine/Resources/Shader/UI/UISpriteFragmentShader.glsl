@@ -7,15 +7,19 @@ in vec2 textureUV;
 out vec3 color;
 
 // Uniform
+uniform vec3	  spriteColor;
 uniform sampler2D colorTexture;
 
 void main(void)
 {
-   color = texture2D(colorTexture, textureUV).rgb;
+   // Blending colors
+   vec3 baseColor = texture2D(colorTexture, textureUV).rgb;
 
    float threshold = 0.99f;
-   if(color.x >= threshold && color.y >= threshold && color.z >= threshold)
+   if(baseColor.x >= threshold && baseColor.y >= threshold && baseColor.z >= threshold)
    {
 	   discard;
    }
+
+   color = spriteColor * baseColor;
 }

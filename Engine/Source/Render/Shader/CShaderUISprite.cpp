@@ -16,10 +16,10 @@ CShaderUISprite::CShaderUISprite()
 
 void CShaderUISprite::Begin(const SRenderData& render_data)
 {
-	// TODO
 	BindShader();
-	SetMatrix("proj",  render_data.P);
-	SetMatrix("model", render_data.M);
+	SetMatrix("proj",        render_data.P);
+	SetMatrix("model",       render_data.M);
+	SetVector("spriteColor", m_shader_color);
 
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, m_texture_id);
