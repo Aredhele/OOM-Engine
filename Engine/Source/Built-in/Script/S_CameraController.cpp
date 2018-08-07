@@ -52,28 +52,17 @@
     auto angleY = static_cast<float>(-deltaMouse.y * m_sensitivity);
     float speed_coefficient = (Sdk::Input::IsKeyPressed(GLFW_KEY_LEFT_SHIFT)) ? m_run_speed_multiplier : 1.0f;
 
-	auto* p_cam = GetGameObject()->GetComponent<S_Camera>();
+	GetTransform()->Translate(GetTransform()->GetForward() * static_cast<float>(y_direction) * CTime::delta_time * m_speed * speed_coefficient);
+	GetTransform()->Translate(GetTransform()->GetRight  () * static_cast<float>(x_direction) * CTime::delta_time * m_speed * speed_coefficient);
 
-	p_cam->RotateAround(p_cam->GetForward(), p_cam->GetUp(),    angleX);
-	p_cam->RotateAround(p_cam->GetForward(), p_cam->GetRight(), angleY);
-	p_cam->Translate  ((p_cam->GetOrientation() * (float)y_direction + p_cam->GetRight() * (float)x_direction) * 0.016f * m_speed * speed_coefficient);
-
-	GetTransform()->SetPosition(p_cam->GetPosition());
-	
-	/*auto view_matrix = p_cam->GetViewMatrix();
-	glm::vec3 right  = glm::row(view_matrix, 0);
-	glm::vec3 up     = glm::row(view_matrix, 1);
-	glm::vec3 foward = glm::row(view_matrix, 2);
-
-	GetTransform()->SetUp(up);
-	GetTransform()->SetRight(right);
-	GetTransform()->SetForward(foward);*/
+	GetTransform()->Rotate(glm::vec3(angleY, 0.0f, 0.0f)); 
+	GetTransform()->RotateWorld(glm::vec3(0.0f, 0.0f, angleX));
 }
 
 float S_CameraController::GetSpeed() const
 { return m_speed; }
 
-float S_CameraController::GetSensitivirt() const
+float S_CameraController::GetSensitivity() const
 { return m_sensitivity; }
 
 float S_CameraController::GetRunSpeedMultiplier() const

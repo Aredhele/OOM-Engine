@@ -5,6 +5,7 @@
 /// \author     Vincent STEHLY--CALISTO
 
 // Engine
+#include <algorithm>
 #include "Engine/CEngine.hpp"
 
 // Render
@@ -26,7 +27,6 @@
 
 #include "Render/Gizmos/CGizmosPointLight.hpp"
 #include "Render/Gizmos/CGizmosDirectionalLight.hpp"
-#include <algorithm>
 
 namespace Oom
 {

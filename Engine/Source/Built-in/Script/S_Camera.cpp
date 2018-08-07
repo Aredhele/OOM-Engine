@@ -4,6 +4,7 @@
 /// \package    Built-in/Script
 /// \author     Vincent STEHLY--CALISTO
 
+#include "SDK/SDK.hpp"
 #include <GLM/gtc/matrix_transform.hpp>
 
 #include "Composite/CGameObject.hpp"
@@ -33,7 +34,7 @@ void S_Camera::Start()
 
 void S_Camera::Update()
 {
-    // None
+	// None
 }
 
 const glm::vec3& S_Camera::GetClearColor() const
@@ -75,32 +76,32 @@ void S_Camera::SetFieldOfView(float field_of_view)
     UpdateProjectionMatrix();
 }
 
-void S_Camera::SetClippingPlaneNear(float near)
+void S_Camera::SetClippingPlaneNear(float near_plane)
 {
-    m_clipping_plane_near = near;
+    m_clipping_plane_near = near_plane;
     UpdateProjectionMatrix();
 }
 
-void S_Camera::SetClippingPlaneFar(float far)
+void S_Camera::SetClippingPlaneFar(float far_plane)
 {
-    m_clipping_plane_far = far;
+    m_clipping_plane_far = far_plane;
     UpdateProjectionMatrix();
 }
 
 void S_Camera::UpdateViewMatrix()
 {
-  //  const auto& p_transform = mp_game_object->GetTransform();
-	UpdateVector();
-
-	m_view_matrix = glm::lookAt(
-		m_position,
-		m_forward,
-		m_up);
+   const auto& p_transform = mp_game_object->GetTransform();
+	//UpdateVector();
 
 	/*m_view_matrix = glm::lookAt(
+		m_position,
+		m_forward,
+		m_up);*/
+
+	m_view_matrix = glm::lookAt(
         p_transform.GetPosition(),
-        p_transform.GetTarget(),
-        p_transform.GetUp());*/
+		p_transform.GetPosition() + p_transform.GetForward(),
+        p_transform.GetUp());
 }
 
 void S_Camera::UpdateProjectionMatrix()

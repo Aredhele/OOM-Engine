@@ -232,7 +232,7 @@ void CEngine::GameObjectUpdate(GLFWwindow* p_window, const float delta_time)
 		DrawTransform(
 			p_transform.GetPosition(), p_transform.GetUp(), 
 			p_transform.GetRight(),    p_transform.GetForward(), 
-			p_transform.GetTarget());
+			p_transform.GetForward());
 
         // The go is being destroyed
         if(p_game_object->m_is_destroyed &&

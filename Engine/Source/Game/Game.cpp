@@ -93,7 +93,10 @@ void LoadDemoScenePhysics()
 	Sdk::GameObject::CreateDirectionalLight();
 
 	auto* p_camera = Sdk::GameObject::CreateFreeCamera();
-	p_camera->GetTransform().SetPosition(4.0f, 4.0f, 4.0f);
+
+	//p_camera->GetTransform().LookAt(0.0f, 0.0f, 0.0f);
+	//p_camera->GetTransform().SetPosition(4.0f, 4.0f, 4.0f);
+	
 
 	auto* p_ground_go_1 = Sdk::Import::ImportMesh("Resources/Mesh/Cube.obj")[0];
 	auto* p_ground_go_2 = Sdk::Import::ImportMesh("Resources/Mesh/Cube.obj")[0];
@@ -215,7 +218,7 @@ void LoadDemoTransformation()
 
 	// OK
 	p_scale_go->GetTransform().SetPosition      (0.0f, 0.0f, 8.0f);
-	p_look_at_go->GetTransform().SetOrientation (0.0f, 20.0f, 0.0f);
+	p_look_at_go->GetTransform().SetEulerAngles (0.0f, 20.0f, 0.0f);
 	p_look_at_go->GetTransform().SetPosition    (-12.0f, -12.0f,  0.0f);
 	
 	p_rotate_x_go->GetTransform().SetPosition   ( 12.0f,  12.0f,  0.0f);

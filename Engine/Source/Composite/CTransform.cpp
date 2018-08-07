@@ -15,11 +15,9 @@ CTransform::CTransform()
 	mp_game_object  = nullptr;
 	m_scale         = glm::vec3(1.0f);
 	m_position      = glm::vec3(0.0f);
-	m_orientation   = glm::vec3(0.0f);
 	m_up            = glm::vec3(0.0f, 0.0f, 1.0f);
 	m_right         = glm::vec3(1.0f, 0.0f, 0.0f);
 	m_forward       = glm::vec3(0.0f, 1.0f, 0.0f);
-	m_target        = glm::vec3(0.0f, 5.0f, 0.0f);
 	m_q_orientation = glm::quat(glm::vec3(0.0f, 0.0f, 0.0f));
 }
 
@@ -37,11 +35,6 @@ const glm::vec3 &CTransform::GetForward() const
 {
 
 	return m_forward;
-}
-
-const glm::vec3& CTransform::GetTarget() const
-{
-	return m_target;
 }
 
 const glm::vec3& CTransform::GetPosition() const
@@ -84,12 +77,18 @@ void CTransform::SetPosition(const glm::vec3& position)
 	Translate(position - m_position);
 }
 
-void CTransform::SetOrientation(float x, float y, float z)
+void CTransform::SetOrientation(const glm::quat& orientation)
 {
-	SetOrientation(glm::vec3(x, y, z));
+	m_q_orientation = orientation;
+	UpdateVectors();
 }
 
-void CTransform::SetOrientation(const glm::vec3& orientation)
+void CTransform::SetEulerAngles(float x, float y, float z)
+{
+	SetEulerAngles(glm::vec3(x, y, z));
+}
+
+void CTransform::SetEulerAngles(const glm::vec3& orientation)
 {
 	m_q_orientation = glm::quat(orientation);
 	UpdateVectors();
@@ -131,8 +130,6 @@ void CTransform::Rotate(const glm::vec3& rotation)
 
 void CTransform::RotateAround(const glm::vec3& point, const glm::vec3& axis, float angle)
 {
-	const glm::vec3 old = m_position;
-
 	m_position -= point;
 	m_position  = glm::rotate(m_position, angle, axis);
 	m_position += point;
@@ -147,6 +144,7 @@ void CTransform::Translate(float x, float y, float z)
 void CTransform::Translate(const glm::vec3& translation)
 {
 	m_position += translation;
+	UpdateVectors();
 }
 
 void CTransform::UpdateVectors()
@@ -176,6 +174,13 @@ glm::mat4 CTransform::GetLocalToWorldMatrix() const
 
 	// The order is IMPORTANT
 	return translation_matrix * rotation_matrix * scale_maxtrix;
+}
+
+	
+void CTransform::RotateWorld(const glm::vec3& rotation)
+{
+	m_q_orientation = glm::normalize(glm::quat(rotation) * m_q_orientation);
+	UpdateVectors();
 }
 
 }

@@ -21,7 +21,7 @@ public:
 public:
 
     float GetSpeed              ()   const;
-    float GetSensitivirt        ()   const;
+    float GetSensitivity        ()   const;
     float GetRunSpeedMultiplier ()   const;
 
     void SetSpeed               (float speed);
