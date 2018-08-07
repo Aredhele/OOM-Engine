@@ -10,6 +10,9 @@
 namespace Oom
 {
 
+/// \brief  Initializes the opengl context and the window
+/// \param  window_create_info The parameters structure
+/// \return True on success, else false
 bool CWindow::Initialize(const SWindowCreateInfo& window_create_info)
 {
     SLogger::LogInfo("Window initialization.");
@@ -30,8 +33,22 @@ bool CWindow::Initialize(const SWindowCreateInfo& window_create_info)
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-	// TODO Full screen
-    mp_window = glfwCreateWindow(window_create_info.window_width, window_create_info.window_height, window_create_info.window_name, nullptr, nullptr);
+	if(window_create_info.full_screen)
+	{
+		// Full screen creation from the primary monitor
+		mp_window = glfwCreateWindow(
+			window_create_info.window_width, 
+			window_create_info.window_height, 
+			window_create_info.window_name, glfwGetPrimaryMonitor(), nullptr);
+	}
+	else
+	{
+		// Regular creation
+		mp_window = glfwCreateWindow(
+			window_create_info.window_width, 
+			window_create_info.window_height,
+			window_create_info.window_name, nullptr, nullptr);
+	}
 
     if(mp_window == nullptr)
     {
@@ -58,6 +75,7 @@ bool CWindow::Initialize(const SWindowCreateInfo& window_create_info)
     return true;
 }
 
+/// \brief Releases all objects and the opengl context
 void CWindow::Release()
 {
     SLogger::LogInfo("Releasing window.");
@@ -68,9 +86,15 @@ void CWindow::Release()
     SLogger::LogInfo("Window released.");
 }
 
+/// \brief  Returns the glfw window
+/// \return A pointer on the glfw window
 GLFWwindow* CWindow::GetHandle()
-{ return mp_window; }
+{
+	return mp_window;
+}
 
+/// \brief  Returns the window size
+/// \return The window size
 glm::vec2 CWindow::GetWindowSize()
 {
     int x = 0, y = 0;
@@ -79,12 +103,15 @@ glm::vec2 CWindow::GetWindowSize()
     return glm::vec2(x, y);
 }
 
+/// \brief Clears the window with a color
+/// \param clear_color The clear color
 void CWindow::Clear(const glm::vec3& clear_color)
 {
     glClearColor(clear_color.x, clear_color.y, clear_color.z, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
+/// \brief Swaps window buffer (basic double buffering)
 void CWindow::Display()
 {
     glfwSwapBuffers(mp_window);
