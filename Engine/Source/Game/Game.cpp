@@ -164,7 +164,19 @@ void LoadDemoScreenSpaceUI()
 	p_sprite_mat_1->SetColor(glm::vec3(1.0f, 0.0f, 0.0f));
 	p_sprite_mat_2->SetColor(glm::vec3(0.0f, 1.0f, 0.0f));
 	p_sprite_mat_3->SetColor(glm::vec3(0.0f, 0.0f, 1.0f));
-	
+
+	// Add some texts
+	auto* p_text_go_1 = Sdk::GameObject::CreateText();
+	auto* p_text_go_2 = Sdk::GameObject::CreateText();
+	auto* p_text_go_3 = Sdk::GameObject::CreateText();
+
+	auto* p_text_1 = p_text_go_1->GetComponent<S_Text>();
+	auto* p_text_2 = p_text_go_2->GetComponent<S_Text>();
+	auto* p_text_3 = p_text_go_3->GetComponent<S_Text>();
+
+	p_text_1->Set("R", glm::tvec2<int>(300.0f,  320.0f), 50, glm::vec3(1.0f));
+	p_text_2->Set("G", glm::tvec2<int>(750.0f,  320.0f), 50, glm::vec3(1.0f));
+	p_text_3->Set("B", glm::tvec2<int>(1200.0f, 320.0f), 50, glm::vec3(1.0f));
 }
 
 void LoadDemoTransformation()

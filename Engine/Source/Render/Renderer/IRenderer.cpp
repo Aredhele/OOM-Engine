@@ -31,7 +31,7 @@ CMaterial* IRenderer::GetAttachedMaterial()
 
 void IRenderer::SetVisible(bool visible)
 {
-    m_is_visible = true;
+    m_is_visible = visible;
 }
 
 /* virtual */ void IRenderer::_Register()
