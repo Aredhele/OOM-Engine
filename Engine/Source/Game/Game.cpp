@@ -17,7 +17,7 @@ CAudioBuffer buffer_2;
 
 void LoadScene()
 {
-	CScene::LoadScene(CScene::EScene::DemoScreenSpaceUI);
+	CScene::LoadScene(CScene::EScene::DemoPhysics);
 }
 
 void LoadGameScene()
@@ -87,6 +87,7 @@ void LoadDemoScenePhysics()
 	Sdk::Debug::EnableGizmo(EGizmo::Axis);
 	Sdk::Debug::EnableGizmo(EGizmo::Line);
 	Sdk::Debug::EnableGizmo(EGizmo::Grid);
+	Sdk::Debug::EnableGizmo(EGizmo::Collider);
 	Sdk::Debug::EnableGizmo(EGizmo::Transform);
 
 	Sdk::GameObject::CreateDirectionalLight();
@@ -98,7 +99,7 @@ void LoadDemoScenePhysics()
 	auto* p_physic_go = Sdk::Import::ImportMesh("Resources/Mesh/Cube.obj")[0];
 
 	p_ground_go->GetTransform().SetPosition(0.0f, 0.0f, 0.0f);
-	p_physic_go->GetTransform().SetPosition(0.0f, 0.6f, 5.0f);
+	p_physic_go->GetTransform().SetPosition(0.0f, 0.6f, 20.0f);
 	p_ground_go->SetTag("Ground");
 
 	auto* p_ground_body = p_ground_go->AddComponent<CRigidBody>();
@@ -112,6 +113,7 @@ void LoadDemoScenePhysics()
 	auto* p_physic_box  = p_physic_go->AddComponent<CBoxCollider>();
 	auto* p_script      = p_physic_go->AddComponent<S_Collision>();
 
+	p_physic_body->SetGravityScale(0.2f);
 	p_physic_box->SetExtent(glm::vec3(3.0f, 3.0f, 3.0f));
 
 	// Raycast test

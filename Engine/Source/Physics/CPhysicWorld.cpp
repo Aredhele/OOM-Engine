@@ -7,11 +7,14 @@
 #include <QU3E/q3.h>
 
 #include "Physics/CRigidBody.hpp"
+#include "Physics/CBoxCollider.hpp"
 #include "Physics/CPhysicWorld.hpp"
 #include "Physics/CContactListener.hpp"
 
 #include "Core/Debug/SLogger.hpp"
+#include "Composite/CGameObject.hpp"
 #include "Composite/Component/CTransform.hpp"
+#include "Render/Gizmos/CGizmosCollider.hpp"
 
 namespace Oom
 {
@@ -79,6 +82,16 @@ void CPhysicWorld::Update()
 		// It just works !
 	    p_body->GetTransform()->Translate(translation);
 		p_body->GetTransform()->SetOrientation(orientation);
+
+		// Drawing debug
+		for(auto* p_collider : p_body->GetGameObject()->GetComponents<CBoxCollider>())
+		{
+			DrawCollider(
+				p_collider->GetTransform()->GetPosition(), 
+				p_collider->GetExtent(), 
+				p_body->GetOrientation(), 
+				glm::vec3(0.1f, 0.1f, 0.9f));
+		}
 	}
 }
 

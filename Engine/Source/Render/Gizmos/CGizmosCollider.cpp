@@ -18,20 +18,21 @@ void DrawCollider(const glm::vec3& position, const glm::vec3& extent, const glm:
 	if (!CGizmosManager::IsGizmoEnabled(CGizmosManager::EGizmo::Collider))
 		return;
 
-	float halfWidth    = glm::max(extent.x, extent.y) / 2.0f;
-	float halfHeight   = extent.y / 2.0f;
+	float halfWidth  = extent.x / 2.0f;
+	float halfDepth  = extent.y / 2.0f;
+	float halfHeight = extent.z / 2.0f;
 
 	glm::mat4 translation = glm::translate(position);
 	glm::mat4 rotation    = glm::orientate4(euler);
 
-	const glm::vec3 A = translation * rotation * glm::vec4(-halfWidth,  halfWidth, -halfHeight, 1.0f);
-	const glm::vec3 B = translation * rotation * glm::vec4( halfWidth,  halfWidth, -halfHeight, 1.0f);
-	const glm::vec3 C = translation * rotation * glm::vec4( halfWidth, -halfWidth, -halfHeight, 1.0f);
-	const glm::vec3 D = translation * rotation * glm::vec4(-halfWidth, -halfWidth, -halfHeight, 1.0f);
-	const glm::vec3 E = translation * rotation * glm::vec4(-halfWidth,  halfWidth,  halfHeight, 1.0f);
-	const glm::vec3 F = translation * rotation * glm::vec4( halfWidth,  halfWidth,  halfHeight, 1.0f);
-	const glm::vec3 G = translation * rotation * glm::vec4( halfWidth, -halfWidth,  halfHeight, 1.0f);
-	const glm::vec3 H = translation * rotation * glm::vec4(-halfWidth, -halfWidth,  halfHeight, 1.0f);
+	const glm::vec3 A = translation * rotation * glm::vec4(-halfWidth,  halfDepth, -halfHeight, 1.0f);
+	const glm::vec3 B = translation * rotation * glm::vec4( halfWidth,  halfDepth, -halfHeight, 1.0f);
+	const glm::vec3 C = translation * rotation * glm::vec4( halfWidth, -halfDepth, -halfHeight, 1.0f);
+	const glm::vec3 D = translation * rotation * glm::vec4(-halfWidth, -halfDepth, -halfHeight, 1.0f);
+	const glm::vec3 E = translation * rotation * glm::vec4(-halfWidth,  halfDepth,  halfHeight, 1.0f);
+	const glm::vec3 F = translation * rotation * glm::vec4( halfWidth,  halfDepth,  halfHeight, 1.0f);
+	const glm::vec3 G = translation * rotation * glm::vec4( halfWidth, -halfDepth,  halfHeight, 1.0f);
+	const glm::vec3 H = translation * rotation * glm::vec4(-halfWidth, -halfDepth,  halfHeight, 1.0f);
 
 	CGizmosManager::AddLine(A, B, color);
 	CGizmosManager::AddLine(B, C, color);
