@@ -13,11 +13,22 @@
 namespace Oom
 {
 
+// Vulkan style initialization
+struct SWindowCreateInfo
+{
+	int         window_width;
+	int         window_height;
+	int			opengl_major;
+	int			opengl_minor;
+	bool        full_screen;
+	const char* window_name;
+};
+
 class CWindow
 {
 public:
 
-    bool        Initialize   (int width, int height, const char* p_name);
+    bool        Initialize   (const SWindowCreateInfo& window_create_info);
     void        Release      ();
     GLFWwindow* GetHandle    ();
     glm::vec2   GetWindowSize();

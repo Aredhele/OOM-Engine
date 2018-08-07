@@ -10,7 +10,7 @@
 namespace Oom
 {
 
-bool CWindow::Initialize(int width, int height, const char* p_name)
+bool CWindow::Initialize(const SWindowCreateInfo& window_create_info)
 {
     SLogger::LogInfo("Window initialization.");
 
@@ -23,12 +23,16 @@ bool CWindow::Initialize(int width, int height, const char* p_name)
     SLogger::LogInfo("GLFW successfully initialized.");
 
     glfwWindowHint(GLFW_SAMPLES, 4);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3); //< TODO : Add option
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3); //< TODO : Add option
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, window_create_info.opengl_major);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, window_create_info.opengl_minor);
+
+	// Hard constraint. We don't of all OpenGL deprecated stuff.
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-    mp_window = glfwCreateWindow(width, height, p_name, nullptr, nullptr);
+	// TODO Full screen
+    mp_window = glfwCreateWindow(window_create_info.window_width, window_create_info.window_height, window_create_info.window_name, nullptr, nullptr);
+
     if(mp_window == nullptr)
     {
         SLogger::LogError(

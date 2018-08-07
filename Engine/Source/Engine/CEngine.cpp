@@ -47,10 +47,21 @@ bool CEngine::Initialize()
 {
     SLogger::LogInfo("Oom-Engine initialization.");
 
+	// Getting engine parameters
 	ReadConfiguration();
 
+	// Change the window name with the game name
+	SRendererCreateInfo renderer_create_info {};
+	renderer_create_info.window_name   = "Engine";
+	renderer_create_info.full_screen   = CConfig::window_full_screen;
+	renderer_create_info.opengl_major  = CConfig::opengl_version_major;
+	renderer_create_info.opengl_minor  = CConfig::opengl_version_minor;
+	renderer_create_info.window_width  = CConfig::default_window_width;
+	renderer_create_info.window_height = CConfig::default_window_height;
+
+	// Initializing the rendering engine
     mp_renderer = new CRenderer();
-    mp_renderer->Initialize();
+    mp_renderer->Initialize(renderer_create_info);
 
     mp_physic_world = new CPhysicWorld();
     mp_physic_world->Initialize(1.0f / 60.0f);
@@ -85,6 +96,8 @@ void CEngine::ReadConfiguration()
 	// Rendering
 	const bool b_enable_post_processing = GetPrivateProfileInt("Rendering", "enable_post_processing", 1, "Resources/Engine.ini");
 	const bool b_enable_anti_aliasing   = GetPrivateProfileInt("Rendering", "enable_anti_aliasing",   1, "Resources/Engine.ini");
+		  int  opengl_version_major     = GetPrivateProfileInt("Rendering", "opengl_version_major",   3, "Resources/Engine.ini");
+		  int  opengl_version_minor     = GetPrivateProfileInt("Rendering", "opengl_version_minor",   3, "Resources/Engine.ini");
 
 	// Window
 	int        window_size_width  = GetPrivateProfileInt("Window", "window_size_width",  1600, "Resources/Engine.ini");
@@ -95,6 +108,13 @@ void CEngine::ReadConfiguration()
 	int update_per_second   = GetPrivateProfileInt("Logic", "update_per_second", 60, "Resources/Engine.ini");
 
 	// Checking arguments
+	if(opengl_version_major < 3 || opengl_version_minor < 3)
+	{
+		SLogger::LogError("OpenGL bad version. Taking the default value (3.3).");
+		opengl_version_major = 3;
+		opengl_version_minor = 3;
+	}
+
 	const float ratio = 16.0f / 9.0f;
 	if(ratio != ((float)window_size_width / (float)window_size_height))
 	{
@@ -113,13 +133,17 @@ void CEngine::ReadConfiguration()
 	CConfig::window_full_screen     = window_full_screen;
 	CConfig::enable_anti_aliasing   = b_enable_anti_aliasing;
 	CConfig::enable_post_processing = b_enable_post_processing;
-	
+
+	CConfig::opengl_version_major      = opengl_version_major;
+	CConfig::opengl_version_minor      = opengl_version_minor;
 	CConfig::default_window_width      = window_size_width;
 	CConfig::default_window_height     = window_size_height;
 	CConfig::default_update_per_second = update_per_second;
 
 	SLogger::LogInfo("Read %s : %d", "enable_post_processing", b_enable_post_processing);
 	SLogger::LogInfo("Read %s : %d", "enable_anti_aliasing  ", b_enable_anti_aliasing);
+	SLogger::LogInfo("Read %s : %d", "opengl_version_major  ", opengl_version_major);
+	SLogger::LogInfo("Read %s : %d", "opengl_version_minor  ", opengl_version_minor);
 	SLogger::LogInfo("Read %s : %d", "window_size_width     ", window_size_width);
 	SLogger::LogInfo("Read %s : %d", "window_size_height    ", window_size_height);
 	SLogger::LogInfo("Read %s : %d", "window_full_screen    ", window_full_screen);

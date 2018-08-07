@@ -23,36 +23,12 @@
 #include "Render/Gizmos/CGizmosPointLight.hpp"
 #include "Render/Gizmos/CGizmosDirectionalLight.hpp"
 
-
-//#define  GLFW_EXPOSE_NATIVE_WIN32
-//#include <GLFW/glfw3native.h>
-
-void GLAPIENTRY GLErrorCallback(
-    GLenum source,
-    GLenum type,
-    GLuint id,
-    GLenum severity,
-    GLsizei length,
-    const GLchar* message,
-    const void* userParam)
-{
-    if(severity == 0x9146)
-    {
-        int a = 0;
-        a++;
-    }
-
-	fprintf(stderr, "GL CALLBACK: %s type = 0x%x, severity = 0x%x, message = %s\n",
-         (type == GL_DEBUG_TYPE_ERROR ? "** GL ERROR **" : "" ),
-       type, severity, message );
-}
-
 namespace Oom
 {
 
 /* static */ CRenderer* CRenderer::sp_instance = nullptr;
 
-bool CRenderer::Initialize()
+bool CRenderer::Initialize(const SRendererCreateInfo& renderer_create_info)
 {
     SLogger::LogInfo("Renderer initialization.");
 
@@ -60,21 +36,31 @@ bool CRenderer::Initialize()
 	m_b_post_process = false;
     mp_window        = new CWindow();
 
-    mp_window->Initialize(1600, 900, "Oom-Engine"); //< TODO : Add option
+	// Creates the window initialization structure
+	SWindowCreateInfo window_create_info {};
+	window_create_info.window_width  = renderer_create_info.window_width;
+	window_create_info.window_height = renderer_create_info.window_height;
+	window_create_info.opengl_major  = renderer_create_info.opengl_major;
+	window_create_info.opengl_minor  = renderer_create_info.opengl_minor;
+	window_create_info.full_screen   = renderer_create_info.full_screen;
+	window_create_info.window_name   = renderer_create_info.window_name;
 
-    // OpenGL pipeline states
+	// Initializes the window
+    mp_window->Initialize(window_create_info);
+
+    // Pipeline state configuration
+	// Use depth test
     glEnable   (GL_DEPTH_TEST);
     glDepthFunc(GL_LESS);
 
+	// Front face are defined by
+	// CCW vertices, culling back faces
     glEnable   (GL_CULL_FACE);
     glCullFace (GL_BACK);
     glFrontFace(GL_CCW);
-	glDisable(GL_CULL_FACE);
-    glEnable   (GL_MULTISAMPLE);
 
-    // Enables debug callback
-    glEnable              (GL_DEBUG_OUTPUT);
-    glDebugMessageCallback(GLErrorCallback, nullptr);
+	// Uses MSAA (but not working here)
+    glEnable   (GL_MULTISAMPLE);
 
 	// UI Shader
 	SShaderManager::RegisterShader(SShaderManager::EShaderType::UISprite,
@@ -134,9 +120,11 @@ bool CRenderer::Initialize()
         "Resources/Shader/Effect/IdentityVertexShader.glsl",
         "Resources/Shader/Effect/IdentityFragmentShader.glsl");
 
+	// Initializes gizmos and post processing
     CGizmosManager::Initialize();
     m_post_processing.Initialize();
 
+	// Back to the physical frame buffer
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
     SLogger::LogInfo("Renderer initialization.");
@@ -147,6 +135,7 @@ void CRenderer::Release()
 {
     SLogger::LogInfo("Releasing renderer.");
 
+	// This method should be called "Release"
     CGizmosManager::Shutdown();
 
     mp_window->Release();
@@ -182,6 +171,7 @@ void CRenderer::Render()
     const glm::mat4& view       = p_camera_script->GetViewMatrix();
     const glm::mat4& projection = p_camera_script->GetProjectionMatrix();
 
+	// The model matrix will be computed later.
     SRenderData render_data;
     render_data.V = view;
     render_data.P = projection;
@@ -189,12 +179,13 @@ void CRenderer::Render()
     // Gathering all point lights
     auto game_objects = CEngine::GetAllGameObjects();
 
+	// Forward rendering lighting, very inefficient.
     for(auto* p_game_object : game_objects)
     {
         const auto point_behaviors = p_game_object->GetComponents<S_PointLight>();
         const auto direc_behaviors = p_game_object->GetComponent<S_DirectionalLight>();
+        const auto size            = point_behaviors.size();
 
-        auto size = point_behaviors.size();
         for(auto i = 0; i < size; ++i)
         {
             render_data.point_lights.push_back({

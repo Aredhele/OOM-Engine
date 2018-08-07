@@ -15,6 +15,17 @@
 namespace Oom
 {
 
+// Vulkan style initialization
+struct SRendererCreateInfo
+{
+	int         window_width;
+	int         window_height;
+	int			opengl_major;
+	int			opengl_minor;
+	bool		full_screen;
+	const char* window_name;
+};
+
 // Forward declaration
 class CWindow;
 class IRenderer;
@@ -33,11 +44,12 @@ public:
 	static CPostProcessingStack* GetPostProcessingStack();
 
 private:
+
     friend class CEngine;
     friend class IRenderer;
 	friend class CAudioEngine;
 
-    bool     Initialize();
+    bool     Initialize(const SRendererCreateInfo& renderer_create_info);
     void     Release   ();
     void     Render    ();
     void     DrawGizmos(const glm::mat4& PV);
