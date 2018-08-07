@@ -4,7 +4,7 @@
 /// \package    CGameObject
 /// \author     Vincent STEHLY--CALISTO
 
-#include "CEngine.hpp"
+#include "Engine/CEngine.hpp"
 #include "Core/Standard/StringID.hpp"
 
 namespace Oom

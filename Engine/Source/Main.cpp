@@ -3,7 +3,7 @@
 /// \project    OOM-Engine
 /// \author     Vincent STEHLY--CALISTO
 
-#include "CEngine.hpp"
+#include "Engine/CEngine.hpp"
 
 int wmain()
 {

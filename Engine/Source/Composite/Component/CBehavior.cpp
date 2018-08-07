@@ -4,7 +4,7 @@
 /// \package    Composite/Component
 /// \author     Vincent STEHLY--CALISTO
 
-#include "CEngine.hpp"
+#include "Engine/CEngine.hpp"
 
 #include "Physics/CCollision.hpp"
 #include "Composite/Component/CBehavior.hpp"

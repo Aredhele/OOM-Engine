@@ -4,7 +4,7 @@
 /// \package    Engine
 /// \author     Vincent STEHLY--CALISTO
 
-#include "CEngine.hpp"
+#include "Engine/CEngine.hpp"
 #include "Core/Debug/SLogger.hpp"
 #include "Render/Shader/SShaderCompiler.hpp"
 #include <Glm/glm.hpp>
@@ -30,7 +30,7 @@
 #include "Physics/CPhysicWorld.hpp"
 #include "Audio/CAudioEngine.hpp"
 #include "Scene/Hook.hpp"
-#include "CTime.hpp"
+#include "Engine/CTime.hpp"
 #include "Render/Gizmos/CGizmosManager.hpp"
 #include "Render/Gizmos/CGizmosBox.hpp"
 #include "Render/Gizmos/CGizmosTransform.hpp"
