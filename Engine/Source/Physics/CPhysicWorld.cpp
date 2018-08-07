@@ -23,17 +23,24 @@ namespace Oom
 	sp_instance->mp_scene->RayCast(p_callback, *p_ray_cast_data);
 }
 
-bool CPhysicWorld::Initialize(float delta_time)
+bool CPhysicWorld::Initialize(const SPhysicWorldCreateInfo& world_create_info)
 {
     SLogger::LogInfo("Physic world initialization.");
 
     sp_instance = this;
-    mp_scene    = new q3Scene(delta_time);
+    mp_scene    = new q3Scene(world_create_info.delta_time);
 	mp_listener = new CContactListener();
 
+	// Setting the gravity
+	mp_scene->SetGravity(q3Vec3(
+		world_create_info.gravity_x, 
+		world_create_info.gravity_z, 
+		world_create_info.gravity_y));
+
+	// Listener for collision callback
 	mp_scene->SetContactListener(mp_listener);
 
-    SLogger::LogInfo("Physic world : Delta = %f ms - Gravity = %f", delta_time, -9.81f);
+    SLogger::LogInfo("Physic world : Delta = %f ms - Gravity = %f", world_create_info.delta_time, world_create_info.gravity_z);
     SLogger::LogInfo("Physic world initialization.");
 
     return true;

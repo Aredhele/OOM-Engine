@@ -55,8 +55,14 @@ bool CEngine::Initialize()
     mp_renderer = new CRenderer();
     mp_renderer->Initialize(renderer_create_info);
 
+	SPhysicWorldCreateInfo world_create_info {};
+	world_create_info.delta_time =  1.0f / CConfig::default_update_per_second;
+	world_create_info.gravity_x  =  0.0f;
+	world_create_info.gravity_y  =  0.0f;
+	world_create_info.gravity_z  = -9.81f;
+
     mp_physic_world = new CPhysicWorld();
-    mp_physic_world->Initialize(1.0f / 60.0f);
+    mp_physic_world->Initialize(world_create_info);
 
     mp_audio_engine = new CAudioEngine();
     mp_audio_engine->Initialize();
@@ -152,9 +158,9 @@ void CEngine::Run()
     // Getting GLFW window
     GLFWwindow* p_handle = mp_renderer->GetWindow()->GetHandle();
 
-    double lag        = 0.0;
-    double previous   = glfwGetTime();
-    double delta_time = 1.0 / 60.0;
+    double lag              = 0.0;
+    double previous         = glfwGetTime();
+    const double delta_time = 1.0 / CConfig::default_update_per_second;
 
     // Setting up the scene
     LoadScene();
@@ -162,9 +168,9 @@ void CEngine::Run()
     while (glfwWindowShouldClose(p_handle) == 0 &&
            glfwGetKey(p_handle, GLFW_KEY_ESCAPE) != GLFW_PRESS)
     {
-        double current = glfwGetTime();
-        double elapsed = current - previous;
-        previous       = current;
+        const double current = glfwGetTime();
+		const double elapsed = current - previous;
+        previous             = current;
 
         lag += elapsed;
 
@@ -183,6 +189,7 @@ void CEngine::Run()
 
             lag -= delta_time;
 
+			// The physic world needs a fixed update
 			mp_physic_world->Update();
 			mp_audio_engine->Update(delta_time);
         }
@@ -194,11 +201,11 @@ void CEngine::Run()
 void CEngine::BehaviorUpdate(GLFWwindow* p_window, float delta_time)
 {
     // Behavior updates
-    auto behavior_count = static_cast<uint32_t>(m_behaviors.size());
+    const auto behavior_count = static_cast<uint32_t>(m_behaviors.size());
     for(uint32_t i = 0; i < behavior_count; ++i)
     {
-        CBehavior* p_behavior = m_behaviors[i];
-		CGameObject* p_go     = p_behavior->GetGameObject();
+        auto* p_behavior = m_behaviors[i];
+		auto* p_go       = p_behavior->GetGameObject();
 
         // We can update the behavior
         if(p_behavior->m_is_enabled && p_go->IsActive())
@@ -212,15 +219,16 @@ void CEngine::BehaviorUpdate(GLFWwindow* p_window, float delta_time)
     }
 }
 
-void CEngine::GameObjectUpdate(GLFWwindow* p_window, float delta_time)
+void CEngine::GameObjectUpdate(GLFWwindow* p_window, const float delta_time)
 {
     // Game objects life cycle check
     auto go_count = static_cast<uint32_t>(m_game_objects.size());
     for(uint32_t n_go = 0; n_go < go_count; /* no increment */)
     {
-        CGameObject* p_game_object = m_game_objects[n_go];
+        auto* p_game_object = m_game_objects[n_go];
+		auto& p_transform   = p_game_object->GetTransform();
 
-		auto& p_transform = p_game_object->GetTransform();
+		// TODO : Don't draw the transfom of screen space objects.
 		DrawTransform(
 			p_transform.GetPosition(), p_transform.GetUp(), 
 			p_transform.GetRight(),    p_transform.GetForward(), 
@@ -414,6 +422,8 @@ void CEngine::GameObjectUpdate(GLFWwindow* p_window, float delta_time)
 }
 
 /* static */ const std::vector<CGameObject*>& CEngine::GetAllGameObjects()
-{ return sp_instance->m_game_objects; }
+{
+	return sp_instance->m_game_objects;
+}
 
 }

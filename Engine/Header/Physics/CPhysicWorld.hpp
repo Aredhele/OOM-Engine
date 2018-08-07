@@ -14,6 +14,15 @@ class q3QueryCallback;
 namespace Oom
 {
 
+// Vulkan style
+struct SPhysicWorldCreateInfo
+{
+	float delta_time;
+	float gravity_x;
+	float gravity_y;
+	float gravity_z;
+};
+
 // Forward declaration
 class CRigidBody;
 class CContactListener;
@@ -30,7 +39,7 @@ private:
     friend class CRigidBody;
     friend class CBoxCollider;
 
-    bool Initialize (float delta_time);
+    bool Initialize (const SPhysicWorldCreateInfo& world_create_info);
     void Release    ();
     void Update     ();
 
