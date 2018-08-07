@@ -95,36 +95,38 @@ void LoadDemoScenePhysics()
 	auto* p_camera = Sdk::GameObject::CreateFreeCamera();
 	p_camera->GetTransform().SetPosition(4.0f, 4.0f, 4.0f);
 
-	auto* p_ground_go = Sdk::Import::ImportMesh("Resources/Mesh/Cube.obj")[0];
-	auto* p_physic_go = Sdk::Import::ImportMesh("Resources/Mesh/Cube.obj")[0];
+	auto* p_ground_go_1 = Sdk::Import::ImportMesh("Resources/Mesh/Cube.obj")[0];
+	auto* p_ground_go_2 = Sdk::Import::ImportMesh("Resources/Mesh/Cube.obj")[0];
+	auto* p_ground_go_3 = Sdk::Import::ImportMesh("Resources/Mesh/Cube.obj")[0];
+	auto* p_ground_go_4 = Sdk::Import::ImportMesh("Resources/Mesh/Cube.obj")[0];
 
-	p_ground_go->GetTransform().SetPosition(0.0f, 0.0f, 0.0f);
-	p_physic_go->GetTransform().SetPosition(0.0f, 0.6f, 20.0f);
-	p_ground_go->SetTag("Ground");
+	// Static
+	p_ground_go_1->GetTransform().SetPosition( 0.8f, 0.0f,  3.0f);
+	p_ground_go_2->GetTransform().SetPosition( 2.8f, 0.0f,  5.0f);
+	p_ground_go_3->GetTransform().SetPosition(-0.8f, 0.0f, 10.0f);
+	p_ground_go_4->GetTransform().SetPosition(-1.8f, 0.0f,  2.0f);
 
-	auto* p_ground_body = p_ground_go->AddComponent<CRigidBody>();
-	auto* p_ground_box  = p_ground_go->AddComponent<CBoxCollider>();
+	p_ground_go_1->AddComponent<CBoxCollider>();
+	p_ground_go_2->AddComponent<CBoxCollider>();
+	p_ground_go_3->AddComponent<CBoxCollider>();
+	p_ground_go_4->AddComponent<CBoxCollider>();
+
+	auto* p_ground_body_1 = p_ground_go_1->AddComponent<CRigidBody>();
+	auto* p_ground_body_2 = p_ground_go_2->AddComponent<CRigidBody>();
+	auto* p_ground_body_3 = p_ground_go_3->AddComponent<CRigidBody>();
+	auto* p_ground_body_4 = p_ground_go_4->AddComponent<CRigidBody>();
 
 	// Static body
-	p_ground_body->SetBodyType(CRigidBody::EBodyType::Static);
+	p_ground_body_1->SetBodyType(CRigidBody::EBodyType::Static);
+	p_ground_body_2->SetBodyType(CRigidBody::EBodyType::Static);
+	p_ground_body_3->SetBodyType(CRigidBody::EBodyType::Static);
+	p_ground_body_4->SetBodyType(CRigidBody::EBodyType::Static);
 
-	// Dynamic body (by default)
-	auto* p_physic_body = p_physic_go->AddComponent<CRigidBody>  ();
-	auto* p_physic_box  = p_physic_go->AddComponent<CBoxCollider>();
-	auto* p_script      = p_physic_go->AddComponent<S_Collision>();
+	p_ground_body_2->SetOrientation(glm::vec3(45.0f, 0.0f, 0.0f));
 
-	p_physic_body->SetGravityScale(0.2f);
-	p_physic_box->SetExtent(glm::vec3(3.0f, 3.0f, 3.0f));
-
-	// Raycast test
-	const glm::vec3 pos = glm::vec3(10.0f, 10.0f, 10.0f);
-	const glm::vec3 dir = glm::normalize(glm::vec3(0.0f) - pos);
-
-	CRayCast ray_cast = Sdk::Physic::RayCast(pos, dir * 20.0f);
-	if(ray_cast.GetGameObject())
-	{
-		/* Ray cast hit */
-	}
+	// Controller
+	auto* p_controller = Sdk::GameObject::CreateEmpty();
+	p_controller->AddComponent<S_Spawner>();
 }
 
 void LoadDemoScreenSpaceUI()
@@ -209,14 +211,19 @@ void LoadDemoTransformation()
 	auto* p_rotate_z_go = Sdk::Import::ImportMesh("Resources/Mesh/Cube.obj")[0];
 	auto* p_around_z_go = Sdk::Import::ImportMesh("Resources/Mesh/Cube.obj")[0];
 	auto* p_look_at_go  = Sdk::Import::ImportMesh("Resources/Mesh/Cube.obj")[0];
+	auto* p_rotate_c_go = Sdk::Import::ImportMesh("Resources/Mesh/Cube.obj")[0];
 
-	p_scale_go->GetTransform().SetPosition    (  0.0f,   0.0f,  8.0f);
-	p_look_at_go->GetTransform().SetPosition  (-12.0f, -12.0f,  0.0f);
-	p_rotate_x_go->GetTransform().SetPosition ( 12.0f,  12.0f,  0.0f);
-	p_rotate_y_go->GetTransform().SetPosition (-12.0f,  12.0f,  0.0f);
-	p_rotate_z_go->GetTransform().SetPosition ( 12.0f, -12.0f,  0.0f);
-	p_around_z_go->GetTransform().SetPosition (  9.0f,   0.0f,  0.0f);
-	p_translate_go->GetTransform().SetPosition(  0.0f,   0.0f,  0.0f);
+	// OK
+	p_scale_go->GetTransform().SetPosition      (0.0f, 0.0f, 8.0f);
+	p_look_at_go->GetTransform().SetOrientation (0.0f, 20.0f, 0.0f);
+	p_look_at_go->GetTransform().SetPosition    (-12.0f, -12.0f,  0.0f);
+	
+	p_rotate_x_go->GetTransform().SetPosition   ( 12.0f,  12.0f,  0.0f);
+	p_rotate_y_go->GetTransform().SetPosition   (-12.0f,  12.0f,  0.0f);
+	p_rotate_z_go->GetTransform().SetPosition   ( 12.0f, -12.0f,  0.0f);
+	p_around_z_go->GetTransform().SetPosition   (  9.0f,   0.0f,  3.0f);
+	p_rotate_c_go->GetTransform().SetPosition   (  0.0f,   0.0f, 12.0f);
+	p_translate_go->GetTransform().SetPosition  (  0.0f,   0.0f,  0.0f);
 	
 	p_scale_go->AddComponent    <S_Scale>    ();
 	p_translate_go->AddComponent<S_Translate>();
@@ -227,12 +234,14 @@ void LoadDemoTransformation()
 	auto* p_component_y = p_rotate_y_go->AddComponent<S_Rotate>();
 	auto* p_component_z = p_rotate_z_go->AddComponent<S_Rotate>();
 	auto* p_component_a = p_around_z_go->AddComponent<S_Rotate>();
+	auto* p_component_c = p_rotate_c_go->AddComponent<S_Rotate>();
 
 	p_component_x->SetAxis(glm::vec3(1.0f, 0.0f, 0.0f));
 	p_component_y->SetAxis(glm::vec3(0.0f, 1.0f, 0.0f));
 	p_component_z->SetAxis(glm::vec3(0.0f, 0.0f, 1.0f));
 	p_component_a->SetAxis(glm::vec3(0.0f, 0.0f, 1.0f));
+	p_component_c->SetAxis(glm::vec3(1.0f, 0.0f, 1.0f));
 	p_component_a->IsAround();
 
-	p_look_at->SetTarget(p_around_z_go);
+	p_look_at->SetTarget(p_around_z_go);	
 }

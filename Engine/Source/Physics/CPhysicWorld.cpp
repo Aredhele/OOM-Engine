@@ -67,7 +67,7 @@ void CPhysicWorld::Update()
 	// Update body positions
 	for(auto* p_body : m_bodies)
 	{
-	    // TODO : Rotation
+		// Rotation ... ? Rotate the body instead !
 	    p_body->SetPosition(p_body->GetTransform()->GetPosition());
 	}
 
@@ -86,11 +86,11 @@ void CPhysicWorld::Update()
 		// Drawing debug
 		for(auto* p_collider : p_body->GetGameObject()->GetComponents<CBoxCollider>())
 		{
-			DrawCollider(
-				p_collider->GetTransform()->GetPosition(), 
-				p_collider->GetExtent(), 
-				p_body->GetOrientation(), 
-				glm::vec3(0.1f, 0.1f, 0.9f));
+		/*	DrawCollider(
+				p_collider->GetTransform()->GetPosition(),
+				p_collider->GetExtent(),
+				p_collider->GetTransform()->GetEulerAngles(),
+				glm::vec3(0.1f, 0.1f, 0.9f));*/
 		}
 	}
 }

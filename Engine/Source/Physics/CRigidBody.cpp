@@ -290,9 +290,11 @@ void CRigidBody::SetOrientation(const glm::vec3& rotation)
 	const q3Vec3 axis_y   = (rotation.z != 0.0f) ? q3Vec3(0.0f, 1.0f, 0.0f) : q3Vec3(0.0f, 0.0f, 0.0f);
 	const q3Vec3 axis_z   = (rotation.y != 0.0f) ? q3Vec3(0.0f, 0.0f, 1.0f) : q3Vec3(0.0f, 0.0f, 0.0f);
 
-	mp_body->SetTransform(position, axis_x, glm::radians(rotation.x));
-	mp_body->SetTransform(position, axis_y, glm::radians(rotation.z));
-	mp_body->SetTransform(position, axis_z, glm::radians(rotation.y));
+	/*mp_body->SetTransform(position, axis_x, rotation.x);
+	mp_body->SetTransform(position, axis_y, rotation.z);
+	mp_body->SetTransform(position, axis_z, rotation.y);*/
+
+	mp_body->SetTransform(position, q3Vec3(0.0f, 0.0f, 1.0f), 45.0f);
 }
 
 void CRigidBody::SetLinearVelocity(const glm::vec3& velocity)

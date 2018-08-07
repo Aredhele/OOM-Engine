@@ -81,8 +81,11 @@ void CGameObject::SetActive(bool active)
 void CGameObject::__DestroyMessage()
 {
     for(IComponent* p_component : m_components)
-        p_component->__DestroyMessage();
-
+    {
+		p_component->__DestroyMessage();
+		p_component->_Destroy();
+    }
+        
     m_components.clear();
 }
 

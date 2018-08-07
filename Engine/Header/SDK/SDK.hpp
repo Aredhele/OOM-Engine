@@ -50,6 +50,7 @@
 // Test
 #include "Built-in/Script/S_Scale.hpp"
 #include "Built-in/Script/S_Rotate.hpp"
+#include "Built-in/Script/S_Spawner.hpp"
 #include "Built-in/Script/S_Translate.hpp"
 #include "Built-in/Script/S_Collision.hpp"
 

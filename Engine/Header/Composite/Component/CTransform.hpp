@@ -35,12 +35,10 @@ public:
 	const glm::vec3&    GetTarget             () const;
     const glm::vec3&    GetPosition           () const;
     const glm::vec3&    GetScale              () const;
-    const glm::vec3&    GetOrientation        () const;
+          glm::vec3     GetEulerAngles        () const;
+    const glm::quat&    GetOrientation        () const;
           glm::mat4     GetLocalToWorldMatrix () const;
 
-	void SetUp			(const glm::vec3& up);
-	void SetRight		(const glm::vec3& right);
-	void SetForward		(const glm::vec3& forward);
     void SetScale       (const glm::vec3& scale);
     void SetScale       (float x, float y, float z);
     void SetPosition    (const glm::vec3& position);
@@ -51,7 +49,6 @@ public:
 public:
 
     // Methods
-    const CTransform*   Find            (const CString& name);
 	void				LookAt			(float x, float y, float z);
 	void				LookAt			(const glm::vec3& target);
     void                LookAt          (const CTransform& target);
@@ -68,14 +65,14 @@ protected:
 
 private:
 
-	void				RotateTarget    (const glm::vec3& rotation);
-	void				TranslateTarget	(const glm::vec3& translation);
+	void				UpdateVectors   ();
 
 private:
 
     glm::vec3 m_position;
     glm::vec3 m_scale;
     glm::vec3 m_orientation;
+	glm::quat m_q_orientation;
 
     glm::vec3 m_up;
     glm::vec3 m_right;
