@@ -182,6 +182,14 @@ namespace Sdk
 
 			return p_sprite_object;
 	    }
+
+	    CGameObject* CreateGameObjectFromMesh(const char* p_mesh) {
+			return CMeshImporter::CreateObjectFromMesh(p_mesh);
+	    }
+
+	    std::vector<CGameObject*> CreateGameObjectsFromMeshes(const char* p_file) {
+			return CMeshImporter::CreateObjectsFromFile(p_file);
+	    }
     }
 
 	namespace Render
@@ -298,8 +306,8 @@ namespace Sdk
             return CTextureImporter::ImportTexture(p_path);
         }
 
-        std::vector<CGameObject*> ImportMesh(const char* p_path) {
-            return CMeshImporter::ImportFromObj(p_path);
+        void ImportMesh(const char* p_path) {
+			CMeshImporter::ImportFromObj(p_path);
         }
     }
 

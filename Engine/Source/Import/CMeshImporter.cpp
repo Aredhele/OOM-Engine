@@ -4,7 +4,6 @@
 /// \package    Import
 /// \author     Vincent STEHLY--CALISTO
 
-
 #include "Engine/CEngine.hpp"
 #include "Core/Debug/SLogger.hpp"
 #include "Import/CMeshImporter.hpp"
@@ -18,49 +17,124 @@
 namespace Oom
 {
 
-std::vector<CGameObject*> CMeshImporter::ImportFromObj(const char* p_path)
+/* static */ std::vector<SObjectFile*> CMeshImporter::object_files;
+
+/* static */ void CMeshImporter::ImportFromObj(const char* p_path)
 {
-    std::vector<CGameObject*> game_objects;
+	FILE* file_descriptor = fopen(p_path, "r");
+	if (!file_descriptor)
+	{
+		SLogger::LogError("Mesh importer : Unable to open %s.", p_path);
+		return;
+	}
 
-    FILE* file_descriptor = fopen(p_path, "r");
-    if(!file_descriptor)
-    {
-        SLogger::LogError("Mesh importer : Unable to open %s.", p_path);
-        return game_objects;
-    }
+	auto* p_object_file = new SObjectFile();
+	p_object_file->file_name = p_path;
+	
+	char p_buffer[1024];
+	while (fgets(p_buffer, sizeof(p_buffer), file_descriptor) != nullptr)
+	{
+		const size_t line_size = strlen(p_buffer);
+		p_buffer[line_size - 1] = '\0';
 
-    char p_buffer[1024];
-    while(fgets(p_buffer, sizeof(p_buffer), file_descriptor) != nullptr)
-    {
-        size_t line_size = strlen(p_buffer);
-        p_buffer[line_size - 1] = '\0';
+		if (p_buffer[0] == 'o')
+		{
+			ImportObj(file_descriptor, p_buffer, p_object_file);
+		}
+	}
 
-        if(p_buffer[0] == 'o')
-        {
-			ImportObj(file_descriptor, p_buffer, game_objects);
-        }
-    }
+	object_files.push_back(p_object_file);
 
-    // Closing the descriptor
-    fclose(file_descriptor);
+	SLogger::LogUser("%d mesh loaded from %s :", 
+		p_object_file->objects.size(), 
+		p_object_file->file_name.Data());
 
-    return game_objects;
+	for (const auto* p_object : p_object_file->objects)
+		SLogger::LogUser(" - (%d\t vertices) : %s", 
+			p_object->vertices.size(), 
+			p_object->name.Data());
+
+	// Closing the descriptor
+	fclose(file_descriptor);
 }
 
-void CMeshImporter::ImportObj(FILE* file_descriptor, char* current_line, std::vector<CGameObject*>& game_objects)
+/* static */ CGameObject* CMeshImporter::CreateObjectFromMesh(const char* p_name)
 {
-	std::vector<glm::vec3> _vertices;
-	std::vector<glm::vec3> _normals;
-	std::vector<glm::vec2> _uvs;
-	
-    std::vector<glm::vec3> vertices;
-    std::vector<glm::vec3> normals;
-    std::vector<glm::vec2> uvs;
+	for(const auto* p_file : object_files)
+	{
+		for(const auto* p_object : p_file->objects)
+		{
+			if (p_object->name == p_name)
+				return AssembleGameObject(*p_object);
+		}
+	}
 
-	int counter = 0;
-    GLuint texture_id = 0;
+	// No object found
+	return nullptr;
+}
 
-	// Getting the name for the first time
+/* static */ std::vector<CGameObject*> CMeshImporter::CreateObjectsFromFile(const char* p_file_name)
+{
+	std::vector<CGameObject*> game_objects;
+
+	for (const auto* p_file : object_files)
+	{
+		for (const auto* p_object : p_file->objects)
+		{
+			auto* p_game_object = AssembleGameObject(*p_object);
+
+			if (p_game_object)
+				game_objects.push_back(p_game_object);
+		}
+	}
+
+	return game_objects;
+}
+
+CGameObject* CMeshImporter::AssembleGameObject(const SObjectFile::SObject& object)
+{
+	CGameObject* p_game_object = CEngine::Instantiate();
+	p_game_object->SetName(object.name);
+
+	if (!object.vertices.empty() && !object.normals.empty())
+	{
+		auto* p_material      = p_game_object->AddComponent<CMaterial>();
+		auto* p_mesh_filter   = p_game_object->AddComponent<CMeshFilter>();
+		auto* p_mesh_renderer = p_game_object->AddComponent<CMeshRenderer>();
+		
+		p_material->SetShader(EShaderType::UnlitColor);
+		p_material->SetColor(glm::vec3(1.0f, 0.0f, 1.0f));
+
+		p_mesh_filter->GetMesh().SetVertices(object.vertices);
+		p_mesh_filter->GetMesh().SetNormals (object.normals);
+
+		if (!object.uvs.empty())
+		{
+			p_mesh_filter->GetMesh().SetUVs(object.uvs);
+
+			if (object.texture != 0)
+			{
+				p_material->SetShader(EShaderType::Standard);
+				p_material->SetTexture(object.texture);
+			}
+		}
+
+		// Moving the mesh
+		p_game_object->GetTransform().SetPosition(p_mesh_filter->GetMesh().GetMeshOffset());
+	}
+
+	return p_game_object;
+}
+
+void CMeshImporter::ImportObj(FILE* file_descriptor, char* current_line, SObjectFile* p_object_file)
+{
+	std::vector<glm::vec2> uvs;
+	std::vector<glm::vec3> normals;
+	std::vector<glm::vec3> vertices;
+
+	auto* p_object = new SObjectFile::SObject();
+
+	// Getting the name of the first 
 	char p_name[128] = { '\0' };
 	sscanf(current_line, "o %s", p_name);
 
@@ -69,114 +143,81 @@ void CMeshImporter::ImportObj(FILE* file_descriptor, char* current_line, std::ve
     {
         if(p_buffer[0] == 'o')
         {
-			// We get our gameoobject
-			CGameObject* p_game_object = CEngine::Instantiate();
-			p_game_object->SetName(p_name);
+			p_object->name = p_name;
+			p_object_file->objects.push_back(p_object);
 
-			printf("Instantiated : %s with %d vertices.\n", p_name, vertices.size());
-
-			if (!vertices.empty() && !normals.empty())
-			{
-				auto* p_material      = p_game_object->AddComponent<CMaterial>();
-				auto* p_mesh_renderer = p_game_object->AddComponent<CMeshRenderer>();
-				auto* p_mesh_filter   = p_game_object->AddComponent<CMeshFilter>();
-
-				p_material->SetShader(EShaderType::UnlitColor);
-				p_material->SetColor(glm::vec3(1.0f, 0.0f, 1.0f));
-
-				p_mesh_filter->GetMesh().SetVertices(std::move(vertices));
-				p_mesh_filter->GetMesh().SetNormals(std::move(normals));
-
-				if (!uvs.empty())
-				{
-					p_mesh_filter->GetMesh().SetUVs(std::move(uvs));
-
-					if (texture_id != 0)
-					{
-						p_material->SetShader(EShaderType::Standard);
-						p_material->SetTexture(texture_id);
-					}
-				}
-
-				// Moving the mesh
-				p_game_object->GetTransform().SetPosition(p_mesh_filter->GetMesh().GetMeshOffset());
-
-				game_objects.push_back(p_game_object);
-			}
-
-			uvs.clear();
-			normals.clear();
-			vertices.clear();
-			
 			// Getting next name
 			sscanf(p_buffer, "o %s", p_name);
+			p_object = new SObjectFile::SObject();
         }
         else if(p_buffer[0] == 't')
         {
             char p_texture_name[128] = {'\0'};
             sscanf(p_buffer, "t %s", p_texture_name);
 
-            CString path = CString("Resources/Texture/") + p_texture_name;
-            texture_id = CTextureImporter::ImportTexture(path.Data());
+            CString path      = CString("Resources/Texture/") + p_texture_name;
+			p_object->texture = CTextureImporter::ImportTexture(path.Data());
         }
         else if(p_buffer[0] == 'v' && p_buffer[1] == ' ')
         {
             glm::vec3 vertex;
-            sscanf(p_buffer, "v %f %f %f", &vertex.x, &vertex.y, &vertex.z); // NOLINT
-            _vertices.push_back(vertex);
-			counter++;
+            sscanf(p_buffer, "v %f %f %f", &vertex.x, &vertex.y, &vertex.z);
+            vertices.push_back(vertex);
         }
         else if(p_buffer[0] == 'v' && p_buffer[1] == 'n')
         {
             glm::vec3 normal;
-            sscanf(p_buffer, "vn %f %f %f", &normal.x, &normal.y, &normal.z); // NOLINT
-            _normals.push_back(normal);
+            sscanf(p_buffer, "vn %f %f %f", &normal.x, &normal.y, &normal.z);
+            normals.push_back(normal);
         }
         else if(p_buffer[0] == 'v' && p_buffer[1] == 't')
         {
             glm::vec2 uv;
-            sscanf(p_buffer, "vt %f %f", &uv.x, &uv.y); // NOLINT
-            _uvs.push_back(uv);
+            sscanf(p_buffer, "vt %f %f", &uv.x, &uv.y);
+            uvs.push_back(uv);
         }
         else if(p_buffer[0] == 'f')
         {
             // Unindexing faces
-            if(!_uvs.empty())
+            if(!uvs.empty())
             {
                 int index[9] = {0};
-                sscanf(p_buffer, "f %d/%d/%d %d/%d/%d %d/%d/%d",                // NOLINT
+                sscanf(p_buffer, "f %d/%d/%d %d/%d/%d %d/%d/%d",
                        &index[0], &index[1], &index[2], &index[3], &index[4],
                        &index[5], &index[6], &index[7], &index[8]);
 
-                vertices.push_back(_vertices[index[0] - 1]);
-                vertices.push_back(_vertices[index[3] - 1]);
-                vertices.push_back(_vertices[index[6] - 1]);
+				p_object->vertices.push_back(vertices[index[0] - 1]);
+                p_object->vertices.push_back(vertices[index[3] - 1]);
+                p_object->vertices.push_back(vertices[index[6] - 1]);
+		
+                p_object->uvs.push_back(uvs[index[1] - 1]);
+                p_object->uvs.push_back(uvs[index[4] - 1]);
+                p_object->uvs.push_back(uvs[index[7] - 1]);
 
-                uvs.push_back(_uvs[index[1] - 1]);
-                uvs.push_back(_uvs[index[4] - 1]);
-                uvs.push_back(_uvs[index[7] - 1]);
-
-                normals.push_back(_normals[index[2] - 1]);
-                normals.push_back(_normals[index[5] - 1]);
-                normals.push_back(_normals[index[8] - 1]);
+                p_object->normals.push_back(normals[index[2] - 1]);
+                p_object->normals.push_back(normals[index[5] - 1]);
+                p_object->normals.push_back(normals[index[8] - 1]);
             }
             else
             {
                 int index[6] = {0};
-                sscanf(p_buffer, "f %d//%d %d//%d %d//%d",                      // NOLINT
+                sscanf(p_buffer, "f %d//%d %d//%d %d//%d",
                        &index[0], &index[1], &index[2],
                        &index[3], &index[4], &index[5]);
 
-                vertices.push_back(_vertices[index[0] - 1]);
-                vertices.push_back(_vertices[index[2] - 1]);
-                vertices.push_back(_vertices[index[4] - 1]);
+				p_object->vertices.push_back(vertices[index[0] - 1]);
+				p_object->vertices.push_back(vertices[index[2] - 1]);
+				p_object->vertices.push_back(vertices[index[4] - 1]);
 
-                normals.push_back(_normals[index[1] - 1]);
-                normals.push_back(_normals[index[3] - 1]);
-                normals.push_back(_normals[index[5] - 1]);
+                p_object->normals.push_back(normals[index[1] - 1]);
+                p_object->normals.push_back(normals[index[3] - 1]);
+                p_object->normals.push_back(normals[index[5] - 1]);
             }
         }
     }
+
+	p_object->name = p_name;
+	p_object_file->objects.push_back(p_object);
 }
 
 }

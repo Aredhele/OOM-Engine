@@ -77,6 +77,7 @@ void CMesh::SetVertices(const std::vector<glm::vec3>& vertices)
 {
     m_vertices.clear();
     m_vertices.insert(m_vertices.end(), vertices.begin(), vertices.end());
+	ResetMeshPosition();
     UploadVertices();
 }
 

@@ -37,7 +37,20 @@ void LoadGameScene()
 	Sdk::GameObject::CreateDirectionalLight();
 	
 	// Load static environement
+	Sdk::Import::ImportMesh("Resources/Mesh/Assets.obj");
 	Sdk::Import::ImportMesh("Resources/Mesh/Environment_03.obj");
+
+	auto env    = Sdk::GameObject::CreateGameObjectsFromMeshes("Resources/Mesh/Assets.obj");
+	auto assets = Sdk::GameObject::CreateGameObjectsFromMeshes("Resources/Mesh/Environment_03.obj");
+
+	for(auto* p_asset : assets)
+	{
+		if (p_asset->GetName() == "Plane_1")      p_asset->GetTransform().SetPosition(0.0f, 0.0f,  5.0f);
+		if (p_asset->GetName() == "Plane_2")      p_asset->GetTransform().SetPosition(0.0f, 0.0f,  6.0f);
+		if (p_asset->GetName() == "Asset_Cube")   p_asset->GetTransform().SetPosition(0.0f, 0.0f,  8.0f);
+		if (p_asset->GetName() == "Floppy")       p_asset->GetTransform().SetPosition(0.0f, 0.0f, 12.0f);
+		if (p_asset->GetName() == "Supper_Asset") p_asset->GetTransform().SetPosition(0.0f, 0.0f, 18.0f);
+	}
 }
 
 void LoadDemoSceneAudio()
@@ -90,13 +103,14 @@ void LoadDemoScenePhysics()
 	Sdk::Debug::EnableGizmo(EGizmo::AllTransforms);
 
 	Sdk::GameObject::CreateDirectionalLight();
+	Sdk::Import::ImportMesh("Resources/Mesh/Cube.obj");
 
 	auto* p_camera = Sdk::GameObject::CreateFreeCamera();
 
-	auto* p_ground_go_1 = Sdk::Import::ImportMesh("Resources/Mesh/Cube.obj")[0];
-	auto* p_ground_go_2 = Sdk::Import::ImportMesh("Resources/Mesh/Cube.obj")[0];
-	auto* p_ground_go_3 = Sdk::Import::ImportMesh("Resources/Mesh/Cube.obj")[0];
-	auto* p_ground_go_4 = Sdk::Import::ImportMesh("Resources/Mesh/Cube.obj")[0];
+	auto* p_ground_go_1 = Sdk::GameObject::CreateGameObjectFromMesh("Cube");
+	auto* p_ground_go_2 = Sdk::GameObject::CreateGameObjectFromMesh("Cube");
+	auto* p_ground_go_3 = Sdk::GameObject::CreateGameObjectFromMesh("Cube");
+	auto* p_ground_go_4 = Sdk::GameObject::CreateGameObjectFromMesh("Cube");
 
 	// Static
 	p_ground_go_1->GetTransform().SetPosition( 0.8f, 0.0f,  3.0f);
@@ -187,18 +201,19 @@ void LoadDemoSceneTransformation()
 	Sdk::Debug::EnableGizmo(EGizmo::Grid);
 	Sdk::Debug::EnableGizmo(EGizmo::AllTransforms);
 
-	Sdk::GameObject::CreateDirectionalLight();
 	Sdk::GameObject::CreateFreeCamera();
+	Sdk::GameObject::CreateDirectionalLight();
 
-	auto* p_scale_go       = Sdk::Import::ImportMesh("Resources/Mesh/Cube.obj")[0];
-	auto* p_translate_go   = Sdk::Import::ImportMesh("Resources/Mesh/Cube.obj")[0];
+	Sdk::Import::ImportMesh("Resources/Mesh/Cube.obj");
 
-	auto* p_rotate_x_go = Sdk::Import::ImportMesh("Resources/Mesh/Cube.obj")[0];
-	auto* p_rotate_y_go = Sdk::Import::ImportMesh("Resources/Mesh/Cube.obj")[0];
-	auto* p_rotate_z_go = Sdk::Import::ImportMesh("Resources/Mesh/Cube.obj")[0];
-	auto* p_around_z_go = Sdk::Import::ImportMesh("Resources/Mesh/Cube.obj")[0];
-	auto* p_look_at_go  = Sdk::Import::ImportMesh("Resources/Mesh/Cube.obj")[0];
-	auto* p_rotate_c_go = Sdk::Import::ImportMesh("Resources/Mesh/Cube.obj")[0];
+	auto* p_scale_go     = Sdk::GameObject::CreateGameObjectFromMesh("Cube");
+	auto* p_translate_go = Sdk::GameObject::CreateGameObjectFromMesh("Cube");
+	auto* p_rotate_x_go  = Sdk::GameObject::CreateGameObjectFromMesh("Cube");
+	auto* p_rotate_y_go  = Sdk::GameObject::CreateGameObjectFromMesh("Cube");
+	auto* p_rotate_z_go  = Sdk::GameObject::CreateGameObjectFromMesh("Cube");
+	auto* p_around_z_go  = Sdk::GameObject::CreateGameObjectFromMesh("Cube");
+	auto* p_look_at_go   = Sdk::GameObject::CreateGameObjectFromMesh("Cube");
+	auto* p_rotate_c_go  = Sdk::GameObject::CreateGameObjectFromMesh("Cube");
 
 	// OK
 	p_scale_go->GetTransform().SetPosition      (0.0f, 0.0f, 8.0f);
@@ -242,6 +257,7 @@ void LoadDemoSceneRendering()
 	Sdk::Debug::EnableGizmo(EGizmo::AllDirectionalLights);
 
 	Sdk::GameObject::CreateFreeCamera();
+	Sdk::Import::ImportMesh("Resources/Mesh/Cube.obj");
 
 	auto* p_point_go       = Sdk::GameObject::CreatePointLight();
 	auto* p_directional_go = Sdk::GameObject::CreateDirectionalLight();
@@ -259,18 +275,18 @@ void LoadDemoSceneRendering()
 	
 	for(auto i = -5; i < 6; ++i) {
 		for(auto j = -5; j < 6; ++j) {
-			auto* p_object_1 = Sdk::Import::ImportMesh("Resources/Mesh/Cube.obj")[0];
-			auto* p_object_2 = Sdk::Import::ImportMesh("Resources/Mesh/Cube.obj")[0];
+			auto* p_object_1 = Sdk::GameObject::CreateGameObjectFromMesh("Cube");
+			auto* p_object_2 = Sdk::GameObject::CreateGameObjectFromMesh("Cube");
 			p_object_1->GetTransform().SetPosition(i, j, 0.0f);
 			p_object_2->GetTransform().SetPosition(i, j, 7.0f);
 		}
 	}
 
 	for(auto i = 0; i < 6; ++i) {
-		auto* p_object_1 = Sdk::Import::ImportMesh("Resources/Mesh/Cube.obj")[0];
-		auto* p_object_2 = Sdk::Import::ImportMesh("Resources/Mesh/Cube.obj")[0];
-		auto* p_object_3 = Sdk::Import::ImportMesh("Resources/Mesh/Cube.obj")[0];
-		auto* p_object_4 = Sdk::Import::ImportMesh("Resources/Mesh/Cube.obj")[0];
+		auto* p_object_1 = Sdk::GameObject::CreateGameObjectFromMesh("Cube");
+		auto* p_object_2 = Sdk::GameObject::CreateGameObjectFromMesh("Cube");
+		auto* p_object_3 = Sdk::GameObject::CreateGameObjectFromMesh("Cube");
+		auto* p_object_4 = Sdk::GameObject::CreateGameObjectFromMesh("Cube");
 
 		p_object_1->GetTransform().SetPosition( 5,  5, i + 1);
 		p_object_2->GetTransform().SetPosition(-5,  5, i + 1);

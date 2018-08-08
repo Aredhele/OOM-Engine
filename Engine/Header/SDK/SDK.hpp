@@ -113,6 +113,9 @@ namespace Sdk
 		CGameObject* CreateAudioListener3D	();
 		CGameObject* CreateAudioSource3D	();
 		CGameObject* CreateUISprite			();
+
+		CGameObject*              CreateGameObjectFromMesh   (const char* p_mesh);
+		std::vector<CGameObject*> CreateGameObjectsFromMeshes(const char* p_file);
     }
 
 	namespace Physic
@@ -156,7 +159,7 @@ namespace Sdk
     namespace Import
     {
         GLuint ImportTexture(const char* p_path);
-        std::vector<CGameObject*> ImportMesh(const char* p_path);
+        void   ImportMesh   (const char* p_path);
     }
 }
 

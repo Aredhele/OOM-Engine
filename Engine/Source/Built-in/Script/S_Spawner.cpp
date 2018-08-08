@@ -9,7 +9,7 @@
 /*virtual */ void S_Spawner::Start()
 {
 	// Spawn the first
-	auto* p_cube = Sdk::Import::ImportMesh("Resources/Mesh/Cube.obj")[0];
+	auto* p_cube = Sdk::GameObject::CreateGameObjectFromMesh("Cube");
 
 	// Drop it
 	p_cube->GetTransform().SetPosition(0.0f, 0.0f, 13.0f);
@@ -31,7 +31,7 @@
 	{
 		Destroy(ray_cast.GetGameObject());
 
-		auto* p_cube = Sdk::Import::ImportMesh("Resources/Mesh/Cube.obj")[0];
+		auto* p_cube = Sdk::GameObject::CreateGameObjectFromMesh("Cube");
 		p_cube->GetTransform().SetPosition(0.0f, 0.0f, 13.0f);
 
 		auto* p_cube_body = p_cube->AddComponent<CRigidBody>();
