@@ -1,4 +1,4 @@
-#include "Game/Prefabs.hpp"
+#include "Game/Prefab/Prefabs.hpp"
 
 CGameObject& Game::Prefabs::CreatePlayer() 
 {

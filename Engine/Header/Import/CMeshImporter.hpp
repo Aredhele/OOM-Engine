@@ -1,4 +1,4 @@
-/// \file       CMeshImporter
+/// \file       CMeshImporter.hpp
 /// \date       01/08/2018
 /// \project    OOM-Engine
 /// \package    Import
@@ -8,6 +8,7 @@
 #define OOM_ENGINE_C_MESH_IMPORTER_HPP__
 
 #include <cstdio>
+#include <vector>
 
 namespace Oom
 {
@@ -23,7 +24,7 @@ public:
 
 private:
 
-    static CGameObject* ImportObj(FILE* file_descriptor, char* current_line);
+    static void ImportObj(FILE* file_descriptor, char* current_line, std::vector<CGameObject*>& game_objects);
 };
 
 }

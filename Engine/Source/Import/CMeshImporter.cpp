@@ -6,8 +6,8 @@
 
 
 #include "Engine/CEngine.hpp"
-#include "Import/CMeshImporter"
 #include "Core/Debug/SLogger.hpp"
+#include "Import/CMeshImporter.hpp"
 #include "Composite/CGameObject.hpp"
 #include "Import/CTextureImporter.hpp"
 
@@ -37,12 +37,7 @@ std::vector<CGameObject*> CMeshImporter::ImportFromObj(const char* p_path)
 
         if(p_buffer[0] == 'o')
         {
-            CGameObject* p_game_object = ImportObj(file_descriptor, p_buffer);
-
-            if(p_game_object)
-            {
-                game_objects.push_back(p_game_object);
-            }
+			ImportObj(file_descriptor, p_buffer, game_objects);
         }
     }
 
@@ -52,32 +47,66 @@ std::vector<CGameObject*> CMeshImporter::ImportFromObj(const char* p_path)
     return game_objects;
 }
 
-CGameObject* CMeshImporter::ImportObj(FILE* file_descriptor, char* current_line)
+void CMeshImporter::ImportObj(FILE* file_descriptor, char* current_line, std::vector<CGameObject*>& game_objects)
 {
-    std::vector<glm::vec3> _vertices;
-    std::vector<glm::vec3> _normals;
-    std::vector<glm::vec2> _uvs;
-
+	std::vector<glm::vec3> _vertices;
+	std::vector<glm::vec3> _normals;
+	std::vector<glm::vec2> _uvs;
+	
     std::vector<glm::vec3> vertices;
     std::vector<glm::vec3> normals;
     std::vector<glm::vec2> uvs;
 
+	int counter = 0;
     GLuint texture_id = 0;
 
-    // Getting the name
-    char p_name[128] = {'\0'};
-    sscanf(current_line, "o %s", p_name);
+	// Getting the name for the first time
+	char p_name[128] = { '\0' };
+	sscanf(current_line, "o %s", p_name);
 
     char p_buffer[1024];
     while(fgets(p_buffer, sizeof(p_buffer), file_descriptor) != nullptr)
     {
         if(p_buffer[0] == 'o')
         {
-            long pos = ftell(file_descriptor);
-            pos -= strlen(p_buffer);
-            fseek(file_descriptor, pos, SEEK_SET);
+			// We get our gameoobject
+			CGameObject* p_game_object = CEngine::Instantiate();
+			p_game_object->SetName(p_name);
 
-            break;
+			printf("Instantiated : %s with %d vertices.\n", p_name, vertices.size());
+
+			if (!vertices.empty() && !normals.empty())
+			{
+				auto* p_material      = p_game_object->AddComponent<CMaterial>();
+				auto* p_mesh_renderer = p_game_object->AddComponent<CMeshRenderer>();
+				auto* p_mesh_filter   = p_game_object->AddComponent<CMeshFilter>();
+
+				p_material->SetShader(EShaderType::UnlitColor);
+				p_material->SetColor(glm::vec3(1.0f, 0.0f, 1.0f));
+
+				p_mesh_filter->GetMesh().SetVertices(std::move(vertices));
+				p_mesh_filter->GetMesh().SetNormals(std::move(normals));
+
+				if (!uvs.empty())
+				{
+					p_mesh_filter->GetMesh().SetUVs(std::move(uvs));
+
+					if (texture_id != 0)
+					{
+						p_material->SetShader(EShaderType::Standard);
+						p_material->SetTexture(texture_id);
+					}
+				}
+
+				game_objects.push_back(p_game_object);
+			}
+
+			uvs.clear();
+			normals.clear();
+			vertices.clear();
+			
+			// Getting next name
+			sscanf(p_buffer, "o %s", p_name);
         }
         else if(p_buffer[0] == 't')
         {
@@ -92,6 +121,7 @@ CGameObject* CMeshImporter::ImportObj(FILE* file_descriptor, char* current_line)
             glm::vec3 vertex;
             sscanf(p_buffer, "v %f %f %f", &vertex.x, &vertex.y, &vertex.z); // NOLINT
             _vertices.push_back(vertex);
+			counter++;
         }
         else if(p_buffer[0] == 'v' && p_buffer[1] == 'n')
         {
@@ -144,35 +174,6 @@ CGameObject* CMeshImporter::ImportObj(FILE* file_descriptor, char* current_line)
             }
         }
     }
-
-    CGameObject* p_game_object = CEngine::Instantiate();
-    p_game_object->SetName(p_name);
-
-    if(!vertices.empty() && !normals.empty())
-    {
-        auto* p_material      = p_game_object->AddComponent<CMaterial>();
-        auto* p_mesh_renderer = p_game_object->AddComponent<CMeshRenderer>();
-        auto* p_mesh_filter   = p_game_object->AddComponent<CMeshFilter>();
-
-        p_material->SetShader(EShaderType::UnlitColor);
-        // p_material->SetColor("", glm::vec3(1.0f)); TODO
-
-        p_mesh_filter->GetMesh().SetVertices(std::move(vertices));
-        p_mesh_filter->GetMesh().SetNormals (std::move(normals));
-
-        if(!uvs.empty())
-        {
-            p_mesh_filter->GetMesh().SetUVs(std::move(uvs));
-
-            if(texture_id != 0)
-            {
-                p_material->SetShader (EShaderType::Standard);
-                p_material->SetTexture(texture_id);
-            }
-        }
-    }
-
-    return p_game_object;
 }
 
 }

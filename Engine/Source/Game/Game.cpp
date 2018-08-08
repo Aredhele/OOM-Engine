@@ -9,15 +9,15 @@
 #include "Scene/CScene.hpp"
 
 // Game include
-#include "Game/Prefabs.hpp"
+#include "Game/Floppy/S_GameManager.hpp"
 
 // Temporary
 CAudioBuffer buffer_1;
 CAudioBuffer buffer_2;
-/// TODO collider
+
 void LoadScene()
 {
-	CScene::LoadScene(CScene::EScene::DemoPhysics);
+	CScene::LoadScene(CScene::EScene::Game);
 }
 
 void LoadGameScene()
@@ -27,9 +27,13 @@ void LoadGameScene()
 	Sdk::Debug::EnableGizmo(EGizmo::Axis);
 	Sdk::Debug::EnableGizmo(EGizmo::Line);
 	Sdk::Debug::EnableGizmo(EGizmo::Grid);
-	Sdk::Debug::EnableGizmo(EGizmo::AudioSource);
+	Sdk::Debug::EnableGizmo(EGizmo::AllTransforms);
 
-	auto& player = Game::Prefabs::CreatePlayer();
+	Sdk::GameObject::CreateFreeCamera();
+	Sdk::GameObject::CreateDirectionalLight();
+	
+	// Load static environement
+	Sdk::Import::ImportMesh("Resources/Mesh/Environment_03.obj");
 }
 
 void LoadDemoSceneAudio()

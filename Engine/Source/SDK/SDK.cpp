@@ -11,7 +11,7 @@
 #include "Physics/CPhysicWorld.hpp"
 
 // Import
-#include "Import/CMeshImporter"
+#include "Import/CMeshImporter.hpp"
 #include "Import/CTextureImporter.hpp"
 
 // Debug
