@@ -7,6 +7,7 @@
 #include "Game/Prefab/Prefab.hpp"
 
 // Game scritps
+#include "Game/Floppy/S_Floppy.hpp"
 #include "Game/Floppy/S_GameManager.hpp"
 
 namespace Prefab
@@ -154,8 +155,19 @@ void CreateGameManager()
 
 	p_game_object->SetTag("Game_Manager");
 	p_game_object->SetName("Game_Manager");
-
 	p_game_object->AddComponent<S_GameManager>();	
+}
+
+void CreateFloppy()
+{
+	auto* p_game_object = Sdk::GameObject::CreateGameObjectFromMesh("Floppy");
+
+	p_game_object->SetTag("Floppy");
+	p_game_object->SetName("Floppy");
+	p_game_object->AddComponent<S_Floppy>();
+
+	p_game_object->GetTransform().SetScale   (4.0f, 4.0f, 4.0f);
+	p_game_object->GetTransform().SetPosition(0.0f, 0.0f, 8.0f);
 }
 
 }

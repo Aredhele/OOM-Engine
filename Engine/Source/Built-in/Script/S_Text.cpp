@@ -130,5 +130,5 @@ void S_Text::UpdateText()
     }
 
     mesh.SetUVs(std::move(UVs));
-    mesh.SetVertices(std::move(vertices));
+    mesh.SetVerticesNoOffset(std::move(vertices));
 }

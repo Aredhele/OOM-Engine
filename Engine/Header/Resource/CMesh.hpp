@@ -35,21 +35,23 @@ public:
 
 public:
 
-    void SetVertices    (const float* p_vertices, uint32_t count);
-    void SetVertices    (const std::vector<glm::vec3>& vertices);
-    void SetVertices    (std::vector<glm::vec3>&& vertices);
-    void SetNormals     (const float* p_normals, uint32_t count);
-    void SetNormals     (const std::vector<glm::vec3>& normals);
-    void SetNormals     (std::vector<glm::vec3>&& normals);
-    void SetColors      (const float* p_colors, uint32_t count);
-    void SetColors      (const std::vector<glm::vec3>& colors);
-    void SetColors      (std::vector<glm::vec3>&& colors);
-    void SetUVs         (const float* p_uvs, uint32_t count);
-    void SetUVs         (const std::vector<glm::vec2>& uvs);
-    void SetUVs         (std::vector<glm::vec2>&& uvs);
-    void SetIndices     (const uint32_t* p_indices, uint32_t count);
-    void SetIndices     (const std::vector<uint32_t>& indices);
-    void SetIndices     (std::vector<uint32_t>&& indices);
+	// Quick fix for texts
+	void SetVerticesNoOffset (std::vector<glm::vec3>&& vertices);
+    void SetVertices		 (const float* p_vertices, uint32_t count);
+    void SetVertices		 (const std::vector<glm::vec3>& vertices);
+    void SetVertices		 (std::vector<glm::vec3>&& vertices);
+    void SetNormals			 (const float* p_normals, uint32_t count);
+    void SetNormals			 (const std::vector<glm::vec3>& normals);
+    void SetNormals			 (std::vector<glm::vec3>&& normals);
+    void SetColors			 (const float* p_colors, uint32_t count);
+    void SetColors			 (const std::vector<glm::vec3>& colors);
+    void SetColors			 (std::vector<glm::vec3>&& colors);
+    void SetUVs				 (const float* p_uvs, uint32_t count);
+    void SetUVs				 (const std::vector<glm::vec2>& uvs);
+    void SetUVs				 (std::vector<glm::vec2>&& uvs);
+    void SetIndices			 (const uint32_t* p_indices, uint32_t count);
+    void SetIndices			 (const std::vector<uint32_t>& indices);
+    void SetIndices			 (std::vector<uint32_t>&& indices);
 
 public:
 

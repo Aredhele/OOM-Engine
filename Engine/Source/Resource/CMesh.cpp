@@ -60,6 +60,13 @@ glm::vec3 CMesh::GetMeshOffset() const
 	return m_mesh_offset;
 }
 
+void CMesh::SetVerticesNoOffset(std::vector<glm::vec3>&& vertices)
+{
+	m_vertices.clear();
+	m_vertices = static_cast<std::vector<glm::vec3>&&>(vertices);
+	UploadVertices();
+}
+
 void CMesh::SetVertices(const float* p_vertices, uint32_t count)
 {
     m_vertices.clear();

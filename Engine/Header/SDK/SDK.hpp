@@ -109,7 +109,7 @@ namespace Sdk
         CGameObject* CreateParticleSystem	();
         CGameObject* CreateDirectionalLight	();
         CGameObject* CreatePointLight		();
-        CGameObject* CreateText				();
+        CGameObject* CreateUIText           ();
 		CGameObject* CreateAudioListener3D	();
 		CGameObject* CreateAudioSource3D	();
 		CGameObject* CreateUISprite			();

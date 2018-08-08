@@ -45,6 +45,8 @@ void LoadGameScene()
 	Prefab::CreateAlarms();
 	Prefab::CreateConveyors();
 	Prefab::CreateGameManager();
+
+	Prefab::CreateFloppy();
 }
 
 void LoadDemoSceneAudio()
@@ -176,9 +178,9 @@ void LoadDemoScreenSpaceUI()
 	p_sprite_mat_3->SetColor(glm::vec3(0.0f, 0.0f, 1.0f));
 
 	// Add some texts
-	auto* p_text_go_1 = Sdk::GameObject::CreateText();
-	auto* p_text_go_2 = Sdk::GameObject::CreateText();
-	auto* p_text_go_3 = Sdk::GameObject::CreateText();
+	auto* p_text_go_1 = Sdk::GameObject::CreateUIText();
+	auto* p_text_go_2 = Sdk::GameObject::CreateUIText();
+	auto* p_text_go_3 = Sdk::GameObject::CreateUIText();
 
 	auto* p_text_1 = p_text_go_1->GetComponent<S_Text>();
 	auto* p_text_2 = p_text_go_2->GetComponent<S_Text>();

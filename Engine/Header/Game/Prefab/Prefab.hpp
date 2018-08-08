@@ -11,6 +11,7 @@ namespace Prefab
 	void CreateDoors();
 	void CreatePlayer();
 	void CreateAlarms();
+	void CreateFloppy();
 	void CreateConveyors();
 	void CreateGameManager();
 	void CreateGlobalLighting();

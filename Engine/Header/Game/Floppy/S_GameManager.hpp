@@ -17,6 +17,10 @@ public:
 	void Start     () final;
 	void Update    () final;
 	void OnDestroy () final;
+
+private:
+
+	CGameObject* mp_floppy;
 };
 
 #endif // !OOM_ENGINE_S_GAME_MANAGER_HPP__

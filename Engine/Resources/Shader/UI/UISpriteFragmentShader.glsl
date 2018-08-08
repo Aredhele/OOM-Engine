@@ -15,7 +15,7 @@ void main(void)
    // Blending colors
    vec3 baseColor = texture2D(colorTexture, textureUV).rgb;
 
-   float threshold = 0.99f;
+   float threshold = 0.94f;
    if(baseColor.x >= threshold && baseColor.y >= threshold && baseColor.z >= threshold)
    {
 	   discard;

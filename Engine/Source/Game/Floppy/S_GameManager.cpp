@@ -8,12 +8,12 @@
 
 /*virtual */ void S_GameManager::Awake()
 {
-	// None
+	mp_floppy = nullptr;
 }
 
 /*virtual */ void S_GameManager::Start()
 {
-	// None
+	mp_floppy = CGameObject::Find("Floppy");
 }
 
 /*virtual */ void S_GameManager::Update()

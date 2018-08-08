@@ -119,7 +119,7 @@ namespace Sdk
             return p_light_object;
         }
 
-        CGameObject* CreateText() {
+        CGameObject* CreateUIText() {
             CGameObject* p_text_object = CEngine::Instantiate();
 
             p_text_object->AddComponent<S_Text>();
