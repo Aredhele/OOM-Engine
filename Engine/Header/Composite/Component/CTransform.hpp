@@ -36,6 +36,7 @@ public:
     const glm::vec3&    GetScale              () const;
           glm::vec3     GetEulerAngles        () const;
     const glm::quat&    GetOrientation        () const;
+		  glm::mat4		GetRotationMatrix     () const;
           glm::mat4     GetLocalToWorldMatrix () const;
 
     void SetScale       (const glm::vec3& scale);

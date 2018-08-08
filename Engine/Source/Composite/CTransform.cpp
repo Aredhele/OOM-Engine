@@ -49,12 +49,19 @@ const glm::vec3& CTransform::GetScale() const
 
 glm::vec3 CTransform::GetEulerAngles() const
 {
-	return glm::degrees(glm::eulerAngles(m_q_orientation));
+	// Warning - Quaternion flip
+	const glm::vec3 euler(glm::eulerAngles(m_q_orientation));
+	return glm::vec3(euler.x, euler.z, euler.y);
 }
 
 const glm::quat& CTransform::GetOrientation() const
 {
 	return m_q_orientation;
+}
+
+glm::mat4 CTransform::GetRotationMatrix() const
+{
+	return glm::toMat4(m_q_orientation);
 }
 
 void CTransform::SetScale(float x, float y, float z)

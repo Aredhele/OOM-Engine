@@ -14,10 +14,10 @@
 // Temporary
 CAudioBuffer buffer_1;
 CAudioBuffer buffer_2;
-
+/// TODO collider
 void LoadScene()
 {
-	CScene::LoadScene(CScene::EScene::DemoRendering);
+	CScene::LoadScene(CScene::EScene::DemoPhysics);
 }
 
 void LoadGameScene()
@@ -39,12 +39,9 @@ void LoadDemoSceneAudio()
 	Sdk::Debug::EnableGizmo(EGizmo::Axis);
 	Sdk::Debug::EnableGizmo(EGizmo::Line);
 	Sdk::Debug::EnableGizmo(EGizmo::Grid);
-	Sdk::Debug::EnableGizmo(EGizmo::AudioSource);
+	Sdk::Debug::EnableGizmo(EGizmo::AllAudioSources);
 
 	auto* p_camera = Sdk::GameObject::CreateFreeCamera();
-
-	p_camera->AddComponent   <S_CameraRotator>();
-	p_camera->RemoveComponent<S_CameraController>();
 
 	// Loads 2 sounds from a file
 	buffer_1.LoadFromFile("Resources/Music/Town-Academy.ogg");
@@ -81,8 +78,8 @@ void LoadDemoScenePhysics()
 	Sdk::Debug::EnableGizmo(EGizmo::Axis);
 	Sdk::Debug::EnableGizmo(EGizmo::Line);
 	Sdk::Debug::EnableGizmo(EGizmo::Grid);
-	Sdk::Debug::EnableGizmo(EGizmo::Collider);
-	Sdk::Debug::EnableGizmo(EGizmo::Transform);
+	Sdk::Debug::EnableGizmo(EGizmo::AllColliders);
+	Sdk::Debug::EnableGizmo(EGizmo::AllTransforms);
 
 	Sdk::GameObject::CreateDirectionalLight();
 
@@ -178,20 +175,12 @@ void LoadDemoScreenSpaceUI()
 
 void LoadDemoSceneTransformation()
 {
-	Sdk::Debug::EnableGizmo(EGizmo::Ray);
-	Sdk::Debug::EnableGizmo(EGizmo::Box);
 	Sdk::Debug::EnableGizmo(EGizmo::Axis);
-	Sdk::Debug::EnableGizmo(EGizmo::Line);
 	Sdk::Debug::EnableGizmo(EGizmo::Grid);
-	Sdk::Debug::EnableGizmo(EGizmo::Transform);
+	Sdk::Debug::EnableGizmo(EGizmo::AllTransforms);
 
 	Sdk::GameObject::CreateDirectionalLight();
-
-	auto* p_camera_go = Sdk::GameObject::CreateFreeCamera();
-	auto* p_camera    = p_camera_go->GetComponent<S_Camera>();
-
-	p_camera->GetTransform()->SetPosition(30.0f, 30.0f, 30.0f);
-	p_camera->GetTransform()->LookAt(0.0f, 0.0f, 0.0f);
+	Sdk::GameObject::CreateFreeCamera();
 
 	auto* p_scale_go       = Sdk::Import::ImportMesh("Resources/Mesh/Cube.obj")[0];
 	auto* p_translate_go   = Sdk::Import::ImportMesh("Resources/Mesh/Cube.obj")[0];
@@ -238,14 +227,11 @@ void LoadDemoSceneTransformation()
 
 void LoadDemoSceneRendering()
 {
-	Sdk::Debug::EnableGizmo(EGizmo::Ray);
-	Sdk::Debug::EnableGizmo(EGizmo::Box);
 	Sdk::Debug::EnableGizmo(EGizmo::Axis);
-	Sdk::Debug::EnableGizmo(EGizmo::Line);
 	Sdk::Debug::EnableGizmo(EGizmo::Grid);
 	Sdk::Debug::EnableGizmo(EGizmo::Transform);
-	Sdk::Debug::EnableGizmo(EGizmo::PointLight);
-	Sdk::Debug::EnableGizmo(EGizmo::DirectionalLight);
+	Sdk::Debug::EnableGizmo(EGizmo::AllPointLights);
+	Sdk::Debug::EnableGizmo(EGizmo::AllDirectionalLights);
 
 	Sdk::GameObject::CreateFreeCamera();
 

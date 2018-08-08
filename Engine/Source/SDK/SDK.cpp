@@ -268,7 +268,7 @@ namespace Sdk
 
 			Oom::DrawCollider(
 				p_go->GetTransform().GetPosition(), 
-				collider.GetExtent(), p_go->GetTransform().GetEulerAngles(), glm::vec3(0.1f, 0.1f, 0.9f));
+				collider.GetExtent(), p_go->GetTransform().GetRotationMatrix(), glm::vec3(0.1f, 0.1f, 0.9f));
 	    }
 
 	    void DrawTransform(const CTransform& transform) {

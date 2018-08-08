@@ -51,4 +51,41 @@ void DrawCollider(const glm::vec3& position, const glm::vec3& extent, const glm:
 	CGizmosManager::AddLine(H, E, color);
 }
 
+void DrawCollider(const glm::vec3& position, const glm::vec3& extent, const glm::mat4& rotation, const glm::vec3& color)
+{
+	if (!CGizmosManager::IsGizmoEnabled(CGizmosManager::EGizmo::Collider) &&
+		!CGizmosManager::IsGizmoEnabled(CGizmosManager::EGizmo::AllColliders))
+		return;
+
+	float halfWidth = extent.x / 2.0f;
+	float halfDepth = extent.y / 2.0f;
+	float halfHeight = extent.z / 2.0f;
+
+	glm::mat4 translation = glm::translate(position);
+
+	const glm::vec3 A = translation * rotation * glm::vec4(-halfWidth, halfDepth, -halfHeight, 1.0f);
+	const glm::vec3 B = translation * rotation * glm::vec4(halfWidth, halfDepth, -halfHeight, 1.0f);
+	const glm::vec3 C = translation * rotation * glm::vec4(halfWidth, -halfDepth, -halfHeight, 1.0f);
+	const glm::vec3 D = translation * rotation * glm::vec4(-halfWidth, -halfDepth, -halfHeight, 1.0f);
+	const glm::vec3 E = translation * rotation * glm::vec4(-halfWidth, halfDepth, halfHeight, 1.0f);
+	const glm::vec3 F = translation * rotation * glm::vec4(halfWidth, halfDepth, halfHeight, 1.0f);
+	const glm::vec3 G = translation * rotation * glm::vec4(halfWidth, -halfDepth, halfHeight, 1.0f);
+	const glm::vec3 H = translation * rotation * glm::vec4(-halfWidth, -halfDepth, halfHeight, 1.0f);
+
+	CGizmosManager::AddLine(A, B, color);
+	CGizmosManager::AddLine(B, C, color);
+	CGizmosManager::AddLine(C, D, color);
+	CGizmosManager::AddLine(D, A, color);
+
+	CGizmosManager::AddLine(A, E, color);
+	CGizmosManager::AddLine(B, F, color);
+	CGizmosManager::AddLine(C, G, color);
+	CGizmosManager::AddLine(D, H, color);
+
+	CGizmosManager::AddLine(E, F, color);
+	CGizmosManager::AddLine(F, G, color);
+	CGizmosManager::AddLine(G, H, color);
+	CGizmosManager::AddLine(H, E, color);
+}
+
 }

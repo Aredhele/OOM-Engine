@@ -94,7 +94,7 @@ void CPhysicWorld::Update()
 				DrawCollider(
 					p_collider->GetTransform()->GetPosition(),
 					p_collider->GetExtent(),
-					p_collider->GetTransform()->GetEulerAngles(),
+					p_collider->GetTransform()->GetRotationMatrix(),
 					glm::vec3(0.1f, 0.1f, 0.9f));
 			}
 		}

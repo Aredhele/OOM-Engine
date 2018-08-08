@@ -28,13 +28,13 @@
 {
 	if (mp_d_light)
 	{
-		// const glm::vec3 direction = glm::rotate(mp_d_light->GetDirection(), 1.0f * CTime::delta_time, glm::vec3(0.0f, 0.0f, 1.0f));
-		// mp_d_light->SetDirection(direction);
+		const glm::vec3 direction = glm::rotate(mp_d_light->GetDirection(), 1.0f * CTime::delta_time, glm::vec3(0.0f, 0.0f, 1.0f));
+		mp_d_light->SetDirection(direction);
 	}
 
 	if(mp_p_light)
 	{
 		mp_p_light->GetTransform()->RotateAround(glm::vec3(0.0f), glm::vec3(0.0f, 0.0f, 1.0f), 2.0f * CTime::delta_time);
-		// TODO
+		Sdk::Debug::DrawTransform(*mp_p_light->GetTransform());
 	}
 }
