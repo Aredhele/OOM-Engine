@@ -27,6 +27,7 @@ void Oom::CMeshRenderer::Draw(SRenderData& render_data)
     }
 
     // Computing the MVP matrix
+	render_data.M = mp_transform->GetLocalToWorldMatrix();
     render_data.MVP = render_data.P * render_data.V * mp_transform->GetLocalToWorldMatrix();
 
     p_material->Begin(render_data);

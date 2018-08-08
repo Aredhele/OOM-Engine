@@ -14,6 +14,9 @@
 #include "Core/Debug/SLogger.hpp"
 #include "Composite/CGameObject.hpp"
 #include "Composite/Component/CTransform.hpp"
+
+// Debug
+#include "Render/Gizmos/CGizmosManager.hpp"
 #include "Render/Gizmos/CGizmosCollider.hpp"
 
 namespace Oom
@@ -86,11 +89,14 @@ void CPhysicWorld::Update()
 		// Drawing debug
 		for(auto* p_collider : p_body->GetGameObject()->GetComponents<CBoxCollider>())
 		{
-		/*	DrawCollider(
-				p_collider->GetTransform()->GetPosition(),
-				p_collider->GetExtent(),
-				p_collider->GetTransform()->GetEulerAngles(),
-				glm::vec3(0.1f, 0.1f, 0.9f));*/
+			if (CGizmosManager::IsGizmoEnabled(CGizmosManager::EGizmo::AllColliders))
+			{
+				DrawCollider(
+					p_collider->GetTransform()->GetPosition(),
+					p_collider->GetExtent(),
+					p_collider->GetTransform()->GetEulerAngles(),
+					glm::vec3(0.1f, 0.1f, 0.9f));
+			}
 		}
 	}
 }

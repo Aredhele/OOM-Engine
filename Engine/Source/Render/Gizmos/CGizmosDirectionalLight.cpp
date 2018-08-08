@@ -13,18 +13,20 @@ namespace Oom
 
 void DrawDirectionalLight(glm::vec3 const& position, glm::vec3 const& direction, glm::vec3 const& color, float scale)
 {
-    if(!CGizmosManager::IsGizmoEnabled(CGizmosManager::EGizmo::DirectionalLight))
+    if(!CGizmosManager::IsGizmoEnabled(CGizmosManager::EGizmo::DirectionalLight) &&
+	   !CGizmosManager::IsGizmoEnabled(CGizmosManager::EGizmo::AllDirectionalLights))
         return;
 
-    glm::vec3 dir = glm::normalize(direction) * 5.0f;
-    glm::vec3 top  (position.x, position.y, position.z + 2.0f * scale);
-    glm::vec3 bot  (position.x, position.y, position.z - 2.0f * scale);
-    glm::vec3 left (position.x - 1.0f * scale, position.y, position.z);
-    glm::vec3 right(position.x + 1.0f * scale, position.y, position.z);
-    glm::vec3 front(position.x, position.y + 1.0f * scale, position.z);
-    glm::vec3 back (position.x, position.y - 1.0f * scale, position.z);
+	float size = 0.25f;
+    glm::vec3 dir = glm::normalize(direction) * 2.0f;
+    glm::vec3 top  (position.x, position.y, position.z + size * 2.0f * scale);
+    glm::vec3 bot  (position.x, position.y, position.z - size * 2.0f * scale);
+    glm::vec3 left (position.x - size * scale, position.y, position.z);
+    glm::vec3 right(position.x + size * scale, position.y, position.z);
+    glm::vec3 front(position.x, position.y + size * scale, position.z);
+    glm::vec3 back (position.x, position.y - size * scale, position.z);
 
-    glm::vec3 arrowStart(bot.x, bot.y, bot.z - 1.0f);
+    glm::vec3 arrowStart(bot.x, bot.y, bot.z - size);
     glm::vec3 arrowEnd  (arrowStart + dir);
 
     CGizmosManager::AddLine(top, left,  color);

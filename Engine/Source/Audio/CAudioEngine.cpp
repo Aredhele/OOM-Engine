@@ -15,6 +15,7 @@
 #include "Built-in/Script/S_Camera.hpp"
 
 #include "Render/Gizmos/CGizmosAudioSource.hpp"
+#include "Render/Gizmos/CGizmosManager.hpp"
 
 namespace Oom
 {
@@ -165,18 +166,20 @@ void CAudioEngine::CreateBuffer()
 
 void CAudioEngine::DrawGizmos()
 {
-	// Updates source
-	for (CAudioSource3D* p_source : m_sources)
+	if (CGizmosManager::IsGizmoEnabled(CGizmosManager::EGizmo::AllAudioSources))
 	{
-		if (p_source->mp_source_3D_buffer)
+		for (CAudioSource3D* p_source : m_sources)
 		{
-			D3DVALUE min = 0;
-			D3DVALUE max = 0;
+			if (p_source->mp_source_3D_buffer)
+			{
+				D3DVALUE min = 0;
+				D3DVALUE max = 0;
 
-			p_source->mp_source_3D_buffer->GetMinDistance(&min);
-			p_source->mp_source_3D_buffer->GetMaxDistance(&max);
+				p_source->mp_source_3D_buffer->GetMinDistance(&min);
+				p_source->mp_source_3D_buffer->GetMaxDistance(&max);
 
-			DrawAudioSource(p_source->GetTransform()->GetPosition(), min, max, 30, 1.0f);
+				DrawAudioSource(p_source->GetTransform()->GetPosition(), min, max, 30, 1.0f);
+			}
 		}
 	}
 }

@@ -248,6 +248,39 @@ void LoadDemoSceneRendering()
 	Sdk::Debug::EnableGizmo(EGizmo::DirectionalLight);
 
 	Sdk::GameObject::CreateFreeCamera();
-	Sdk::GameObject::CreateDirectionalLight();
+
+	auto* p_point_go       = Sdk::GameObject::CreatePointLight();
+	auto* p_directional_go = Sdk::GameObject::CreateDirectionalLight();
+	auto* p_point_light    = p_point_go->GetComponent<S_PointLight>();
+
+	p_point_light->SetRange    (5.0f);
+	p_point_light->SetIntensity(1.0f);
+	p_point_light->SetColor    (glm::vec3(0.0f, 0.0f, 1.0f));
 	
+	p_point_go->GetTransform().SetPosition(3.0f, 0.0f, 2.0f);
+	p_directional_go->GetTransform().SetPosition(10.0f, 10.0f, 6.0f);
+
+	p_point_go->AddComponent<S_RotateLight>();
+	p_directional_go->AddComponent<S_RotateLight>();
+	
+	for(auto i = -5; i < 6; ++i) {
+		for(auto j = -5; j < 6; ++j) {
+			auto* p_object_1 = Sdk::Import::ImportMesh("Resources/Mesh/Cube.obj")[0];
+			auto* p_object_2 = Sdk::Import::ImportMesh("Resources/Mesh/Cube.obj")[0];
+			p_object_1->GetTransform().SetPosition(i, j, 0.0f);
+			p_object_2->GetTransform().SetPosition(i, j, 7.0f);
+		}
+	}
+
+	for(auto i = 0; i < 6; ++i) {
+		auto* p_object_1 = Sdk::Import::ImportMesh("Resources/Mesh/Cube.obj")[0];
+		auto* p_object_2 = Sdk::Import::ImportMesh("Resources/Mesh/Cube.obj")[0];
+		auto* p_object_3 = Sdk::Import::ImportMesh("Resources/Mesh/Cube.obj")[0];
+		auto* p_object_4 = Sdk::Import::ImportMesh("Resources/Mesh/Cube.obj")[0];
+
+		p_object_1->GetTransform().SetPosition( 5,  5, i + 1);
+		p_object_2->GetTransform().SetPosition(-5,  5, i + 1);
+		p_object_3->GetTransform().SetPosition( 5, -5, i + 1);
+		p_object_4->GetTransform().SetPosition(-5, -5, i + 1);
+	}
 }

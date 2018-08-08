@@ -6,11 +6,16 @@
 
 #include "Built-in/Script/S_PointLight.hpp"
 
+/* virtual */ void S_PointLight::Awake()
+{
+	m_range       = 2.0f;
+	m_intensity   = 1.0f;
+	m_color       = glm::vec3(1.0f);
+}
+
 /* virtual */ void S_PointLight::Start()
 {
-    //m_range       = 0.5f;
-    //m_intensity   = 1.0f;
-    //m_color       = glm::vec3(1.0f);
+	// None
 }
 
 /* virtual */ void S_PointLight::Update()

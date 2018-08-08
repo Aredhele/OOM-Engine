@@ -13,7 +13,8 @@ namespace Oom
 
 void DrawAudioSource(glm::vec3 const& position, float distance_min, float distance_max, int resolution, float scale)
 {
-	if (!CGizmosManager::IsGizmoEnabled(CGizmosManager::EGizmo::AudioSource))
+	if (!CGizmosManager::IsGizmoEnabled(CGizmosManager::EGizmo::AudioSource) && 
+		!CGizmosManager::IsGizmoEnabled(CGizmosManager::EGizmo::AllAudioSources))
 		return;
 
 	// Compute spherical coordinates

@@ -291,19 +291,25 @@ void CRenderer::DrawGizmos(const glm::mat4& PV)
         const auto point_behaviors = p_game_object->GetComponents<S_PointLight>();
         const auto direc_behaviors = p_game_object->GetComponents<S_DirectionalLight>();
 
-        auto size = point_behaviors.size();
-        for(auto i = 0; i < size; ++i)
-        {
-            DrawPointLight(p_game_object->GetTransform().GetPosition(), glm::vec3(0.7f),
-                           32, point_behaviors[i]->GetRange(), 1.0f);
-        }
+		if (CGizmosManager::IsGizmoEnabled(CGizmosManager::EGizmo::AllPointLights))
+		{
+			const auto size = point_behaviors.size();
+			for (auto i = 0; i < size; ++i)
+			{
+				DrawPointLight(p_game_object->GetTransform().GetPosition(), glm::vec3(0.7f),
+					32, point_behaviors[i]->GetRange(), 1.0f);
+			}
+		}
 
-        size = direc_behaviors.size();
-        for(auto i = 0; i < size; ++i)
-        {
-            DrawDirectionalLight(p_game_object->GetTransform().GetPosition(),
-                          direc_behaviors[i]->GetDirection(), glm::vec3(0.7f), 1.0f);
-        }
+		if (CGizmosManager::IsGizmoEnabled(CGizmosManager::EGizmo::AllDirectionalLights))
+		{
+			const auto size = direc_behaviors.size();
+			for (auto i = 0; i < size; ++i)
+			{
+				DrawDirectionalLight(p_game_object->GetTransform().GetPosition(),
+					direc_behaviors[i]->GetDirection(), glm::vec3(0.7f), 1.0f);
+			}
+		}
     }
 
     CGizmosManager::Draw(PV);

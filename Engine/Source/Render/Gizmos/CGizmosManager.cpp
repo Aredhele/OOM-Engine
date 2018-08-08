@@ -45,17 +45,22 @@ CGizmosManager::CGizmosManager()
     glBindVertexArray(0);
 
     // Filling map
-    m_array_map.push_back({EGizmo::Box,  false});
-    m_array_map.push_back({EGizmo::Ray,  false});
-    m_array_map.push_back({EGizmo::Line, false});
-    m_array_map.push_back({EGizmo::Axis, false});
-    m_array_map.push_back({EGizmo::Grid, false});
-    m_array_map.push_back({EGizmo::Cone, false});
-	m_array_map.push_back({EGizmo::Collider,         false});
-    m_array_map.push_back({EGizmo::Transform,        false});
-    m_array_map.push_back({EGizmo::PointLight,       false});
-	m_array_map.push_back({EGizmo::AudioSource,      false});
-    m_array_map.push_back({EGizmo::DirectionalLight, false});
+    m_array_map.push_back({EGizmo::Box,                  false});
+    m_array_map.push_back({EGizmo::Ray,                  false});
+    m_array_map.push_back({EGizmo::Line,                 false});
+    m_array_map.push_back({EGizmo::Axis,                 false});
+    m_array_map.push_back({EGizmo::Grid,                 false});
+    m_array_map.push_back({EGizmo::Cone,                 false});
+	m_array_map.push_back({EGizmo::Collider,             false});
+    m_array_map.push_back({EGizmo::Transform,            false});
+    m_array_map.push_back({EGizmo::PointLight,           false});
+	m_array_map.push_back({EGizmo::AudioSource,          false});
+    m_array_map.push_back({EGizmo::DirectionalLight,     false});
+    m_array_map.push_back({EGizmo::AllColliders,         false});
+    m_array_map.push_back({EGizmo::AllTransforms,        false});
+    m_array_map.push_back({EGizmo::AllPointLights,       false});
+    m_array_map.push_back({EGizmo::AllAudioSources,      false});
+    m_array_map.push_back({EGizmo::AllDirectionalLights, false});
 
     // Initializes the grid
     m_grid.Initialize(50, 1.0f, glm::vec3(0.4f, 0.4f, 0.4f));

@@ -38,6 +38,7 @@
 #include "Audio/CAudioListener3D.hpp"
 
 // Physics
+#include "Physics/CRayCast.hpp"
 #include "Physics/CCollision.hpp"
 #include "Physics/CRigidBody.hpp"
 #include "Physics/CBoxCollider.hpp"
@@ -59,16 +60,16 @@
 #include "Built-in/Script/S_Camera.hpp"
 #include "Built-in/Script/S_LookAt.hpp"
 #include "Built-in/Script/S_PointLight.hpp"
+#include "Built-in/Script/S_RotateLight.hpp"
 #include "Built-in/Script/S_CameraRotator.hpp"
 #include "Built-in/Script/S_DirectionalLight.hpp"
 #include "Built-in/Script/S_CameraController.hpp"
 
 // Misc
+#include "Core/Debug/SLogger.hpp"
 #include "Render/Gizmos/CGizmosManager.hpp"
 #include "Render/PostProcessing/IPostEffect.hpp"
 #include "Render/PostProcessing/CPostProcessingStack.hpp"
-#include "Physics/CRayCast.hpp"
-#include "Core/Debug/SLogger.hpp"
 
 // Namespace
 using namespace Oom;
@@ -142,6 +143,11 @@ namespace Sdk
 		void DrawBox			 (glm::vec3 const& center,   float width, float height, glm::vec3 const& color);
 		void DrawLine			 (glm::vec3 const& start,    glm::vec3 const& end, glm::vec3 const& color);
 		void DrawCone			 (glm::vec3 const& position, float radius, float topRadius, float lenght, glm::vec3 const& color);
+
+		void DrawCollider		 (CBoxCollider& collider);
+		void DrawTransform       (const CTransform& transform);
+		void DrawTransform       (glm::vec3 const& position, const glm::vec3& up, const glm::vec3& right, const glm::vec3& forward);
+
 		void DrawPointLight		 (glm::vec3 const& position, glm::vec3 const& color, int resolution, float range, float scale);
 		void DrawAudioSource     (glm::vec3 const& position, float distance_min, float distance_max, int resolution, float scale);
 		void DrawDirectionalLight(glm::vec3 const& position, glm::vec3 const& direction, glm::vec3 const& color, float scale);

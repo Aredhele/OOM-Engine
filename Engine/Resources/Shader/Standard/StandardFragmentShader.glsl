@@ -67,4 +67,5 @@ void main(void)
     }
 
     color = worldLighting + pointLighting;
+	// color = lights_out[0].point_light_color;
 }

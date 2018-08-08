@@ -11,7 +11,7 @@
 
 namespace Oom {
 
-	void DrawTransform(const glm::vec3& position, const glm::vec3& up, const glm::vec3& right, const glm::vec3& forward, const glm::vec3& target);
+	void DrawTransform(const glm::vec3& position, const glm::vec3& up, const glm::vec3& right, const glm::vec3& forward);
 
 }
 

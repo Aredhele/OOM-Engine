@@ -26,8 +26,10 @@
 #include "Render/CWindow.hpp"
 #include "Core/Debug/SLogger.hpp"
 #include "Render/Renderer/CTextRenderer.hpp"
-#include "Render/Gizmos/CGizmosTransform.hpp"
 #include "Render/Renderer/CUISpriteRenderer.hpp"
+
+#include "Render/Gizmos/CGizmosManager.hpp"
+#include "Render/Gizmos/CGizmosTransform.hpp"
 
 namespace Oom
 {
@@ -233,10 +235,12 @@ void CEngine::GameObjectUpdate(GLFWwindow* p_window, const float delta_time)
 		if(!(p_game_object->GetComponent<CTextRenderer>() || 
 			 p_game_object->GetComponent<CUISpriteRenderer>()))
 		{
-			DrawTransform(
-				p_transform.GetPosition(), p_transform.GetUp(),
-				p_transform.GetRight(), p_transform.GetForward(),
-				p_transform.GetForward());
+			if (CGizmosManager::IsGizmoEnabled(CGizmosManager::EGizmo::AllTransforms))
+			{
+				DrawTransform(
+					p_transform.GetPosition(), p_transform.GetUp(),
+					p_transform.GetRight(), p_transform.GetForward());
+			}
 		}
 		
         // The go is being destroyed

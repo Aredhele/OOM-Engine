@@ -19,19 +19,26 @@ class CGizmosManager
 {
 public:
 
-    enum EGizmo
-    {
-        Box,
-        Ray,
-        Line,
-        Axis,
-        Grid,
-        Cone,
+	enum EGizmo
+	{
+		Box,
+		Ray,
+		Line,
+		Axis,
+		Grid,
+		Cone,
+
 		Collider,
 		Transform,
-        PointLight,
+		PointLight,
 		AudioSource,
-        DirectionalLight
+		DirectionalLight,
+
+		AllColliders,
+		AllTransforms,
+		AllPointLights,
+		AllAudioSources,
+		AllDirectionalLights
     };
 
     struct SPair

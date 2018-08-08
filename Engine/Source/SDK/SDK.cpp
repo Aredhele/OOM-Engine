@@ -22,6 +22,8 @@
 #include "Render/Gizmos/CGizmosBox.hpp"
 #include "Render/Gizmos/CGizmosLine.hpp"
 #include "Render/Gizmos/CGizmosCone.hpp"
+#include "Render/Gizmos/CGizmosCollider.hpp"
+#include "Render/Gizmos/CGizmosTransform.hpp"
 #include "Render/Gizmos/CGizmosPointLight.hpp"
 #include "Render/Gizmos/CGizmosAudioSource.hpp"
 #include "Render/Gizmos/CGizmosDirectionalLight.hpp"
@@ -257,6 +259,24 @@ namespace Sdk
 
 	    void DrawCone(glm::vec3 const& position, float radius, float topRadius, float lenght, glm::vec3 const& color) {
 			Oom::DrawCone(position, radius, topRadius, lenght, color);
+	    }
+
+	    void DrawCollider(CBoxCollider& collider) {
+
+			auto* p_go   = collider.GetGameObject();
+			auto* p_body = p_go->GetComponent<CRigidBody>();
+
+			Oom::DrawCollider(
+				p_go->GetTransform().GetPosition(), 
+				collider.GetExtent(), p_go->GetTransform().GetEulerAngles(), glm::vec3(0.1f, 0.1f, 0.9f));
+	    }
+
+	    void DrawTransform(const CTransform& transform) {
+			Oom::DrawTransform(transform.GetPosition(), transform.GetUp(), transform.GetRight(), transform.GetForward());
+	    }
+
+	    void DrawTransform(glm::vec3 const& position, const glm::vec3& up, const glm::vec3& right, const glm::vec3& forward)  {
+			Oom::DrawTransform(position, up, right, forward);
 	    }
 
 	    void DrawPointLight(glm::vec3 const& position, glm::vec3 const& color, int resolution, float range, float scale) {

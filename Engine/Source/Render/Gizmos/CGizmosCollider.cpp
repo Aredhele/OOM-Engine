@@ -15,7 +15,8 @@ namespace Oom
 
 void DrawCollider(const glm::vec3& position, const glm::vec3& extent, const glm::vec3& euler, const glm::vec3& color)
 {
-	if (!CGizmosManager::IsGizmoEnabled(CGizmosManager::EGizmo::Collider))
+	if (!CGizmosManager::IsGizmoEnabled(CGizmosManager::EGizmo::Collider) && 
+		!CGizmosManager::IsGizmoEnabled(CGizmosManager::EGizmo::AllColliders))
 		return;
 
 	float halfWidth  = extent.x / 2.0f;
