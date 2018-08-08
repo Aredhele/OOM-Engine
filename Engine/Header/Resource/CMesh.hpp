@@ -31,6 +31,7 @@ public:
     bool        HasIndices       ()  const;
     GLuint      GetVAO           ()  const;
     uint32_t    GetVerticesCount ()  const;
+	glm::vec3	GetMeshOffset    ()  const;
 
 public:
 
@@ -57,15 +58,17 @@ public:
 
 private:
 
-    void UploadVertices ();
-    void UploadNormals  ();
-    void UploadColors   ();
-    void UploadUVs      ();
-    void UploadIndices  ();
+    void UploadVertices    ();
+    void UploadNormals     ();
+    void UploadColors      ();
+    void UploadUVs         ();
+    void UploadIndices     ();
+	void ResetMeshPosition ();
 
 private:
 
-    CBound mp_bounds;
+    CBound				   mp_bounds;
+	glm::vec3			   m_mesh_offset;
     std::vector<glm::vec3> m_vertices;
     std::vector<glm::vec3> m_normals;
     std::vector<glm::vec3> m_colors;

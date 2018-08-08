@@ -98,6 +98,9 @@ void CMeshImporter::ImportObj(FILE* file_descriptor, char* current_line, std::ve
 					}
 				}
 
+				// Moving the mesh
+				p_game_object->GetTransform().SetPosition(p_mesh_filter->GetMesh().GetMeshOffset());
+
 				game_objects.push_back(p_game_object);
 			}
 

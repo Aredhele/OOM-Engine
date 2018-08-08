@@ -55,6 +55,11 @@ GLuint CMesh::GetVAO() const
 uint32_t CMesh::GetVerticesCount() const
 { return static_cast<uint32_t>(m_vertices.size()); }
 
+glm::vec3 CMesh::GetMeshOffset() const
+{
+	return m_mesh_offset;
+}
+
 void CMesh::SetVertices(const float* p_vertices, uint32_t count)
 {
     m_vertices.clear();
@@ -64,7 +69,7 @@ void CMesh::SetVertices(const float* p_vertices, uint32_t count)
                                 p_vertices[i + 1],
                                 p_vertices[i + 2]);
     }
-
+	ResetMeshPosition();
     UploadVertices();
 }
 
@@ -79,6 +84,7 @@ void CMesh::SetVertices(std::vector<glm::vec3>&& vertices)
 {
     m_vertices.clear();
     m_vertices = static_cast<std::vector<glm::vec3>&&>(vertices);
+	ResetMeshPosition();
     UploadVertices();
 }
 
@@ -275,6 +281,21 @@ void CMesh::UploadIndices()
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, m_indices.size() * sizeof(uint32_t), m_indices.data(), GL_STATIC_DRAW);
 
     glBindVertexArray(0);
+}
+
+void CMesh::ResetMeshPosition()
+{
+	glm::vec3 offset(0.0f, 0.0f, 0.0f);
+
+	for(const auto& vertex : m_vertices)
+		offset += vertex;
+
+	offset /= m_vertices.size();
+
+	for (auto& vertex : m_vertices)
+		vertex -= offset;
+
+	m_mesh_offset = offset;
 }
 
 }
