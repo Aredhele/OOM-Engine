@@ -69,7 +69,7 @@ namespace Oom
 		}
 	}
 
-	// No object found
+	SLogger::LogWaring("Mesh not found (%s)", p_name);
 	return nullptr;
 }
 

@@ -7,9 +7,7 @@
 #include "SDK/SDK.hpp"
 #include "Scene/Hook.hpp"
 #include "Scene/CScene.hpp"
-
-// Game include
-#include "Game/Floppy/S_GameManager.hpp"
+#include "Game/Prefab/Prefab.hpp"
 
 // Temporary
 CAudioBuffer buffer_1;
@@ -22,6 +20,7 @@ void LoadScene()
 
 void LoadGameScene()
 {
+	// Enabling debug gizmos
 	Sdk::Debug::EnableGizmo(EGizmo::Ray);
 	Sdk::Debug::EnableGizmo(EGizmo::Box);
 	Sdk::Debug::EnableGizmo(EGizmo::Axis);
@@ -33,24 +32,19 @@ void LoadGameScene()
 	Sdk::Debug::EnableGizmo(EGizmo::AllAudioSources);
 	Sdk::Debug::EnableGizmo(EGizmo::AllDirectionalLights);
 
-	Sdk::GameObject::CreateFreeCamera();
-	Sdk::GameObject::CreateDirectionalLight();
-	
-	// Load static environement
+	// Importing 3D assets
 	Sdk::Import::ImportMesh("Resources/Mesh/Assets.obj");
 	Sdk::Import::ImportMesh("Resources/Mesh/Environment_03.obj");
 
-	auto env    = Sdk::GameObject::CreateGameObjectsFromMeshes("Resources/Mesh/Assets.obj");
-	auto assets = Sdk::GameObject::CreateGameObjectsFromMeshes("Resources/Mesh/Environment_03.obj");
+	// Setting up the scene
+	Prefab::CreatePlayer();
+	Prefab::CreateGlobalLighting();
+	Prefab::CreateStaticEnvironment();
 
-	for(auto* p_asset : assets)
-	{
-		if (p_asset->GetName() == "Plane_1")      p_asset->GetTransform().SetPosition(0.0f, 0.0f,  5.0f);
-		if (p_asset->GetName() == "Plane_2")      p_asset->GetTransform().SetPosition(0.0f, 0.0f,  6.0f);
-		if (p_asset->GetName() == "Asset_Cube")   p_asset->GetTransform().SetPosition(0.0f, 0.0f,  8.0f);
-		if (p_asset->GetName() == "Floppy")       p_asset->GetTransform().SetPosition(0.0f, 0.0f, 12.0f);
-		if (p_asset->GetName() == "Supper_Asset") p_asset->GetTransform().SetPosition(0.0f, 0.0f, 18.0f);
-	}
+	Prefab::CreateDoors();
+	Prefab::CreateAlarms();
+	Prefab::CreateConveyors();
+	Prefab::CreateGameManager();
 }
 
 void LoadDemoSceneAudio()
