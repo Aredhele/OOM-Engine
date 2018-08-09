@@ -49,6 +49,15 @@ void character_callback(GLFWwindow* window, unsigned int codepoint)
 	sp_instance = this;
 	glfwSetCharCallback(CRenderer::GetRenderWindow()->GetHandle(), character_callback);
 
+	// Initializing prompt texts
+	for(int i = 0; i < 10; ++i)
+	{
+		auto* p_text_go = Sdk::GameObject::CreateUIText();
+		p_text_go->GetComponent<CTextRenderer>()->SetVisible(false);
+
+		m_free_texts.push_back(p_text_go);
+	}
+
 	ClosePrompt();
 }
 
@@ -72,6 +81,10 @@ void character_callback(GLFWwindow* window, unsigned int codepoint)
 		if (Sdk::Input::IsKeyPressed(GLFW_KEY_ENTER) && m_key_elapsed >= m_key_delay)
 		{
 			m_key_elapsed = 0.0f;
+			LogMessage(m_command);
+
+			m_command = "> ";
+			UpdateCommandText();
 		}
 
 		if (Sdk::Input::IsKeyPressed(GLFW_KEY_X) && m_key_elapsed >= m_key_delay)
@@ -123,14 +136,38 @@ bool S_CommandPrompt::IsOpen() const
 	return (m_state == EPromptState::Open);
 }
 
-void S_CommandPrompt::LogMessage(const char* message)
-{
-
-}
-
 void S_CommandPrompt::LogMessage(const CString& message)
 {
+	if(m_free_texts.empty())
+	{
+		printf("Empty\n");
+		auto* p_front_go       = m_used_texts.front();
+		auto* p_text_component = p_front_go->GetComponent<S_Text>();
 
+		for (auto i = 0; i < m_used_texts.size() - 1; ++i)
+			m_used_texts[i] = m_used_texts[i + 1];
+
+		p_text_component->SetSize(40);
+		p_text_component->SetText(message.Data());
+		p_text_component->SetColor(glm::vec3(0.0f, 1.0f, 0.0f));
+
+		m_used_texts.pop_back();
+		m_used_texts.push_back(p_front_go);
+	}
+	else
+	{
+		auto* p_go             = m_free_texts.back();
+		auto* p_text_component = p_go->GetComponent<S_Text>();
+
+		p_text_component->SetSize(40);
+		p_text_component->SetText(message.Data());
+		p_text_component->SetColor(glm::vec3(0.0f, 1.0f, 0.0f));
+
+		m_used_texts.push_back(p_go);
+		m_free_texts.pop_back();
+	}
+
+	UpdatePromptLogs();
 }
 
 /* static */ void S_CommandPrompt::OnCharacterCallback(unsigned int codepoint)
@@ -140,12 +177,14 @@ void S_CommandPrompt::LogMessage(const CString& message)
 
 void S_CommandPrompt::HideLogText()
 {
-
+	for(auto* p_text : m_used_texts)
+		p_text->GetComponent<CTextRenderer>()->SetVisible(false);
 }
 
 void S_CommandPrompt::ShowLogText()
 {
-
+	for (auto* p_text : m_used_texts)
+		p_text->GetComponent<CTextRenderer>()->SetVisible(true);
 }
 
 void S_CommandPrompt::MinimizePrompt()
@@ -170,6 +209,21 @@ void S_CommandPrompt::ShowCommandText()
 {
 	auto* p_renderer = m_command_text->GetComponent<CTextRenderer>();
 	p_renderer->SetVisible(true);
+}
+
+void S_CommandPrompt::UpdatePromptLogs()
+{
+	uint32_t n_pos = 0;
+	for (auto* p_text : m_used_texts)
+	{
+		auto* p_text_component = p_text->GetComponent<S_Text>();
+		auto* p_renderer       = p_text->GetComponent<CTextRenderer>();
+
+		p_renderer->SetVisible(true);
+		p_text_component->SetPosition(glm::tvec2<int>(50, 800 - n_pos * 50));
+
+		n_pos++;
+	}
 }
 
 void S_CommandPrompt::UpdateCommandText()

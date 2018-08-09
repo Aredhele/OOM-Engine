@@ -35,8 +35,6 @@ public:
 	void OpenPrompt  ();
 	void ClosePrompt ();
 	bool IsOpen      () const;
-
-	void LogMessage	 (const char* message);
 	void LogMessage	 (const CString& message);
 
 public:
@@ -52,7 +50,8 @@ private:
 	void MaximizePrompt();
 	void HideCommandText();
 	void ShowCommandText();
-	
+
+	void UpdatePromptLogs ();
 	void UpdateCommandText();
 
 private:
@@ -69,7 +68,8 @@ private:
 	glm::vec3		m_prompt_position_close;
 
 	
-	Texts	     m_texts;
+	Texts	     m_used_texts;
+	Texts	     m_free_texts;
 	CString      m_command;
 	Text		 m_command_text = nullptr;
 	CGameObject* mp_prompt      = nullptr;
