@@ -49,6 +49,7 @@ void LoadGameScene()
 	Prefab::CreateFloppy();
 
 	Prefab::CreateGameManager();
+	Prefab::CreateCommandPrompt();
 	Prefab::CreateSpawnerManager();
 }
 

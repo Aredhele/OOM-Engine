@@ -11,6 +11,7 @@
 #include "Game/Floppy/S_GameManager.hpp"
 #include "Game/Floppy/Player/S_Player.hpp"
 #include "Game/Floppy/Asset/S_SpawnerManager.hpp"
+#include "Game/Floppy/Prompt/S_CommandPrompt.hpp"
 
 namespace Prefab
 {
@@ -161,6 +162,15 @@ void CreateGameManager()
 	p_game_object->SetTag("Game_Manager");
 	p_game_object->SetName("Game_Manager");
 	p_game_object->AddComponent<S_GameManager>();	
+}
+
+void CreateCommandPrompt()
+{
+	auto* p_game_object = Sdk::GameObject::CreateEmpty();
+
+	p_game_object->SetTag("Prompt");
+	p_game_object->SetName("Prompt");
+	p_game_object->AddComponent<S_CommandPrompt>();
 }
 
 void CreateSpawnerManager()

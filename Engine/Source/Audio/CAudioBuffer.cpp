@@ -71,11 +71,7 @@ bool CAudioBuffer::LoadFromFile(const CString& path)
 		}
 
 		AddPCMCacheEntry(p_cache_entry);
-		printf("Add in cache : %s\n", path.Data());
-	}
-	else
-	{
-		printf("Already in cache : %s\n", path.Data());
+		SLogger::LogInfo("Add in cache : %s\n", path.Data());
 	}
 
 	// The sound is already in memory
