@@ -123,6 +123,8 @@ void S_AssetSpawner::SpawnBigAsset(uint32_t size)
 	p_big_asset->SetKiloBytes(S_BigAsset::s_cost);
 	p_game_object->GetTransform().SetScale(0.5f, 0.5f, 0.5f);
 	p_game_object->SetTag("Big_Asset");
+
+	p_game_object->GetTransform().SetOrientation(GetTransform()->GetOrientation());
 }
 
 void S_AssetSpawner::SpawnBusAsset(uint32_t size) 
@@ -134,6 +136,8 @@ void S_AssetSpawner::SpawnBusAsset(uint32_t size)
 	p_bus_asset->SetKiloBytes(S_BusAsset::s_cost * size);
 	p_game_object->GetTransform().SetScale(size, size, size);
 	p_game_object->SetTag("Bus_Asset");
+
+	p_game_object->GetTransform().SetOrientation(GetTransform()->GetOrientation());
 }
 
 void S_AssetSpawner::SpawnConveyorAsset(uint32_t size)
@@ -145,6 +149,8 @@ void S_AssetSpawner::SpawnConveyorAsset(uint32_t size)
 	p_conveyor_asset->SetKiloBytes(S_ConveyorAsset::s_cost * size);
 	p_game_object->GetTransform().SetScale(size, size, size);
 	p_game_object->SetTag("Conveyor_Asset");
+
+	p_game_object->GetTransform().SetOrientation(GetTransform()->GetOrientation());
 }
 
 void S_AssetSpawner::RegisterAssetWave(CAssetWave* p_asset_wave)

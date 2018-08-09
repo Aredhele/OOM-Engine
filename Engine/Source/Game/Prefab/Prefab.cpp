@@ -168,7 +168,6 @@ void CreateSpawnerManager()
 	p_game_object->SetName("Spawner_manager");
 
 	// Test
-
 	p_manager->RegisterAssetWave(5.0f, 8.0f, EAsset::BigAsset,      ESpawnZone::R2, "1111");
 	p_manager->RegisterAssetWave(6.0f, 5.0f, EAsset::BusAsset,		ESpawnZone::R3, "122112123");
 	p_manager->RegisterAssetWave(6.0f, 7.0f, EAsset::BusAsset,		ESpawnZone::R1, "111123123");

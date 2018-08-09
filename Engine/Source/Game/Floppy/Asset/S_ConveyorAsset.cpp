@@ -47,10 +47,8 @@
 		return;
 	}
 
-	const glm::vec3 direction(glm::normalize(target - GetTransform()->GetPosition()));
-
 	// Translating the asset toward the center
-	transform.Translate(direction * m_speed * CTime::delta_time);
+	transform.Translate(GetTransform()->GetForward() * m_speed * CTime::delta_time);
 }
 
 /* virtual */ void S_ConveyorAsset::OnDestroy()

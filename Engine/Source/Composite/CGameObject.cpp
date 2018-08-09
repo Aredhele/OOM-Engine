@@ -38,7 +38,7 @@ CGameObject::CGameObject(const glm::vec3& position, const glm::vec3& scale, cons
 
     m_transform.SetScale(scale);
     m_transform.SetPosition(position);
-    m_transform.SetOrientation(orientation);
+    m_transform.SetEulerAngles(orientation);
 
     m_transform.mp_game_object = this;
 }

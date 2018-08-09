@@ -32,9 +32,10 @@ public:
 
 protected:
 
-	float    m_speed;
-	EAsset   m_asset_type;
-	uint32_t m_kilo_bytes;
+	float     m_speed;
+	EAsset    m_asset_type;
+	uint32_t  m_kilo_bytes;
+	glm::vec3 m_direction;
 };
 
 #endif // !OOM_ENGINE_S_ASSET_HPP__

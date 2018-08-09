@@ -29,13 +29,13 @@
 
 void S_SpawnerManager::CreateSpawners()
 {
-	m_asset_spawners.push_back(CGameObject::Instantiate(glm::vec3( 0.0f,  -55.0f, 4.0f))); // R1
-	m_asset_spawners.push_back(CGameObject::Instantiate(glm::vec3( 0.0f,   55.0f, 4.0f))); // R2
-	m_asset_spawners.push_back(CGameObject::Instantiate(glm::vec3( 58.0f,   0.0f, 4.0f))); // R3
-	m_asset_spawners.push_back(CGameObject::Instantiate(glm::vec3(-46.0f, -40.0f, 4.0f))); // C1
-	m_asset_spawners.push_back(CGameObject::Instantiate(glm::vec3(-46.0f,  40.0f, 4.0f))); // C2
-	m_asset_spawners.push_back(CGameObject::Instantiate(glm::vec3( 47.0f,  40.0f, 4.0f))); // C3
-	m_asset_spawners.push_back(CGameObject::Instantiate(glm::vec3( 38.0f, -45.0f, 4.0f))); // C4
+	m_asset_spawners.push_back(CGameObject::Instantiate(glm::vec3( 0.0f,  -55.0f, 4.0f), glm::vec3(1.0f), glm::vec3(0.0f, 0.0f,   0.0f))); // R1
+	m_asset_spawners.push_back(CGameObject::Instantiate(glm::vec3( 0.0f,   55.0f, 4.0f), glm::vec3(1.0f), glm::vec3(0.0f, 0.0,  180.0f))); // R2
+	m_asset_spawners.push_back(CGameObject::Instantiate(glm::vec3( 58.0f,   0.0f, 4.0f), glm::vec3(1.0f), glm::vec3(0.0f, 0.0,   90.0f))); // R3
+	m_asset_spawners.push_back(CGameObject::Instantiate(glm::vec3(-47.0f, -40.0f, 4.0f), glm::vec3(1.0f), glm::vec3(0.0f, 0.0,  -45.0f))); // C1
+	m_asset_spawners.push_back(CGameObject::Instantiate(glm::vec3(-47.0f,  40.0f, 4.0f), glm::vec3(1.0f), glm::vec3(0.0f, 0.0, -135.0f))); // C2
+	m_asset_spawners.push_back(CGameObject::Instantiate(glm::vec3( 47.0f,  40.0f, 4.0f), glm::vec3(1.0f), glm::vec3(0.0f, 0.0,  135.0f))); // C3
+	m_asset_spawners.push_back(CGameObject::Instantiate(glm::vec3( 38.0f, -45.0f, 4.0f), glm::vec3(1.0f), glm::vec3(0.0f, 0.0,   45.0f))); // C4
 
 	for (auto p_spawner : m_asset_spawners)
 	{

@@ -97,7 +97,7 @@ void CTransform::SetEulerAngles(float x, float y, float z)
 
 void CTransform::SetEulerAngles(const glm::vec3& orientation)
 {
-	m_q_orientation = glm::quat(orientation);
+	m_q_orientation = glm::quat(glm::radians(orientation));
 	UpdateVectors();
 }
 
