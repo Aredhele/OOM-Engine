@@ -114,6 +114,7 @@ namespace Sdk
 		CGameObject* CreateAudioSource3D	();
 		CGameObject* CreateUISprite			();
 
+		void					  AddMesh                    (CGameObject* p_game_object, const char* p_mesh);
 		CGameObject*              CreateGameObjectFromMesh   (const char* p_mesh);
 		std::vector<CGameObject*> CreateGameObjectsFromMeshes(const char* p_file);
     }

@@ -18,6 +18,10 @@ public:
 	void Start    () final;
 	void Update   () final;
 	void OnDestroy() final;
+
+public:
+
+	static const constexpr uint32_t s_cost = 10;
 };
 
 #endif // !OOM_ENGINE_S_BUS_ASSET_HPP__

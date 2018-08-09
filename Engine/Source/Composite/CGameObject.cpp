@@ -117,7 +117,7 @@ std::vector<CBehavior*> CGameObject::__GetBehaviors()
 	return behaviors;
 }
 
-	/* static */
+/* static */
 CGameObject* CGameObject::Instantiate()
 { return CEngine::Instantiate(); }
 

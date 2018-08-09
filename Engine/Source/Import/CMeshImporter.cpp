@@ -58,6 +58,21 @@ namespace Oom
 	fclose(file_descriptor);
 }
 
+/* static */ void CMeshImporter::AddMeshToGameObject(CGameObject* p_game_object, const char* p_name)
+{
+	for (const auto* p_file : object_files)
+	{
+		for (const auto* p_object : p_file->objects)
+		{
+			if (p_object->name == p_name)
+			{
+				AssembleGameObject(*p_object, p_game_object);
+				return;
+			}
+		}
+	}
+}
+
 /* static */ CGameObject* CMeshImporter::CreateObjectFromMesh(const char* p_name)
 {
 	for(const auto* p_file : object_files)
@@ -126,7 +141,39 @@ CGameObject* CMeshImporter::AssembleGameObject(const SObjectFile::SObject& objec
 	return p_game_object;
 }
 
-void CMeshImporter::ImportObj(FILE* file_descriptor, char* current_line, SObjectFile* p_object_file)
+/* static */ void CMeshImporter::AssembleGameObject(const SObjectFile::SObject& object, CGameObject* p_game_object)
+{
+	if (!object.vertices.empty() && !object.normals.empty())
+	{
+		auto* p_material      = p_game_object->AddComponent<CMaterial>();
+		auto* p_mesh_filter   = p_game_object->AddComponent<CMeshFilter>();
+		auto* p_mesh_renderer = p_game_object->AddComponent<CMeshRenderer>();
+
+		p_material->SetShader(EShaderType::UnlitColor);
+		p_material->SetColor(glm::vec3(1.0f, 0.0f, 1.0f));
+
+		p_mesh_filter->GetMesh().SetVertices(object.vertices);
+		p_mesh_filter->GetMesh().SetNormals(object.normals);
+
+		if (!object.uvs.empty())
+		{
+			p_mesh_filter->GetMesh().SetUVs(object.uvs);
+
+			if (object.texture != 0)
+			{
+				p_material->SetShader(EShaderType::Standard);
+				p_material->SetTexture(object.texture);
+			}
+		}
+
+		// Moving the mesh
+		p_game_object->GetTransform().SetPosition(
+			p_game_object->GetTransform().GetPosition() + 
+			p_mesh_filter->GetMesh().GetMeshOffset());
+	}
+}
+
+/* static */ void CMeshImporter::ImportObj(FILE* file_descriptor, char* current_line, SObjectFile* p_object_file)
 {
 	std::vector<glm::vec2> uvs;
 	std::vector<glm::vec3> normals;

@@ -9,6 +9,7 @@
 // Game scritps
 #include "Game/Floppy/S_Floppy.hpp"
 #include "Game/Floppy/S_GameManager.hpp"
+#include "Game/Floppy/Asset/S_SpawnerManager.hpp"
 
 namespace Prefab
 {
@@ -156,6 +157,25 @@ void CreateGameManager()
 	p_game_object->SetTag("Game_Manager");
 	p_game_object->SetName("Game_Manager");
 	p_game_object->AddComponent<S_GameManager>();	
+}
+
+void CreateSpawnerManager()
+{
+	auto* p_game_object = Sdk::GameObject::CreateEmpty();
+	auto* p_manager     = p_game_object->AddComponent<S_SpawnerManager>();
+
+	p_game_object->SetTag("Spawner_manager");
+	p_game_object->SetName("Spawner_manager");
+
+	// Test
+
+	p_manager->RegisterAssetWave(5.0f, 8.0f, EAsset::BigAsset,      ESpawnZone::R2, "1111");
+	p_manager->RegisterAssetWave(6.0f, 5.0f, EAsset::BusAsset,		ESpawnZone::R3, "122112123");
+	p_manager->RegisterAssetWave(6.0f, 7.0f, EAsset::BusAsset,		ESpawnZone::R1, "111123123");
+	p_manager->RegisterAssetWave(3.0f, 3.0f, EAsset::ConveyorAsset, ESpawnZone::C1, "111222211");
+	p_manager->RegisterAssetWave(5.0f, 4.0f, EAsset::ConveyorAsset, ESpawnZone::C2, "212112113");
+	p_manager->RegisterAssetWave(7.0f, 2.0f, EAsset::ConveyorAsset, ESpawnZone::C3, "111211112");
+	p_manager->RegisterAssetWave(4.0f, 2.5f, EAsset::ConveyorAsset, ESpawnZone::C4, "111122311");
 }
 
 void CreateFloppy()

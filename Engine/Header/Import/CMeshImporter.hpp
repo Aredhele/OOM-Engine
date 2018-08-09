@@ -37,12 +37,15 @@ class CMeshImporter
 public:
 
     static void				         ImportFromObj        (const char* p_path);
+	static void						 AddMeshToGameObject  (CGameObject* p_game_object, const char* p_name);
+
 	static CGameObject*		         CreateObjectFromMesh (const char* p_name);
 	static std::vector<CGameObject*> CreateObjectsFromFile(const char* p_file_name);
 
 private:
 
 	static CGameObject* AssembleGameObject(const SObjectFile::SObject& object);
+	static void         AssembleGameObject(const SObjectFile::SObject& object, CGameObject* p_game_object);
     static void			ImportObj         (FILE* file_descriptor, char* current_line, SObjectFile* p_object_file);
 
 private:

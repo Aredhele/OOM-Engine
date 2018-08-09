@@ -14,6 +14,7 @@ namespace Prefab
 	void CreateFloppy();
 	void CreateConveyors();
 	void CreateGameManager();
+	void CreateSpawnerManager();
 	void CreateGlobalLighting();
 	void CreateStaticEnvironment();
 }

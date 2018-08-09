@@ -290,12 +290,12 @@ void CEngine::GameObjectUpdate(GLFWwindow* p_window, const float delta_time)
 
 /* static */ CGameObject* CEngine::Instantiate(const glm::vec3& position)
 {
-    return Instantiate((position), glm::vec3(0.0f), glm::vec3(0.0f));
+    return Instantiate((position), glm::vec3(1.0f), glm::vec3(0.0f));
 }
 
 /* static */ CGameObject* CEngine::Instantiate(const glm::vec3& position, const glm::vec3& scale)
 {
-    return Instantiate((position), glm::vec3(0.0f), glm::vec3(0.0f));
+    return Instantiate((position), glm::vec3(1.0f), glm::vec3(0.0f));
 }
 
 /* static */ CGameObject* CEngine::Instantiate(const glm::vec3& position, const glm::vec3& scale, const glm::vec3& orientation)

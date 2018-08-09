@@ -44,9 +44,10 @@ void LoadGameScene()
 	Prefab::CreateDoors();
 	Prefab::CreateAlarms();
 	Prefab::CreateConveyors();
-	Prefab::CreateGameManager();
-
 	Prefab::CreateFloppy();
+
+	Prefab::CreateGameManager();
+	Prefab::CreateSpawnerManager();
 }
 
 void LoadDemoSceneAudio()

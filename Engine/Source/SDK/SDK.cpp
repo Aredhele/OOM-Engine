@@ -183,6 +183,10 @@ namespace Sdk
 			return p_sprite_object;
 	    }
 
+	    void AddMesh(CGameObject* p_game_object, const char* p_mesh) {
+			CMeshImporter::AddMeshToGameObject(p_game_object, p_mesh);
+	    }
+
 	    CGameObject* CreateGameObjectFromMesh(const char* p_mesh) {
 			return CMeshImporter::CreateObjectFromMesh(p_mesh);
 	    }

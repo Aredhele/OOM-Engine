@@ -9,6 +9,8 @@
 /*virtual */ void S_GameManager::Awake()
 {
 	mp_floppy = nullptr;
+
+	glm::quat x = glm::eulerAngles(glm::quat());
 }
 
 /*virtual */ void S_GameManager::Start()

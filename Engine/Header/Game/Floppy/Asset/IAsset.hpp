@@ -9,28 +9,32 @@
 
 #include "SDK/SDK.hpp"
 
+enum EAsset
+{
+	BigAsset,
+	BusAsset,
+	ConveyorAsset
+};
+
 class IAsset
 {
 public:
 
-	enum EAsset
-	{
-		BusAsset,
-		SuperAsset,
-		ConveyorAsset
-	};
+	void SetSpeed     (float speed);
+	void SetAssetType (EAsset asset_type);
+	void SetKiloBytes (uint32_t kilo_bytes);
 
 public:
 
-	void SetAssetType(EAsset asset_type);
-
-public:
-
-	EAsset GetAssetType() const;
+	float	 GetSpeed     () const;
+	EAsset   GetAssetType () const;
+	uint32_t GetKiloBytes () const;
 
 protected:
 
-	EAsset m_asset_type;
+	float    m_speed;
+	EAsset   m_asset_type;
+	uint32_t m_kilo_bytes;
 };
 
 #endif // !OOM_ENGINE_S_ASSET_HPP__
