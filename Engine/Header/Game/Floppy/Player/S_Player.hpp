@@ -19,6 +19,11 @@ public:
 	void OnDestroy   () final;
 	void OnDrawGizmos() final;
 
+public:
+
+	void	SetShootDelay	(float delay);
+	float	GetShootDelay	(float delay);
+
 private:
 
 	CAudioBuffer    m_shoot_buffer;
@@ -26,6 +31,9 @@ private:
 
 	CAudioSource3D* mp_music_source;
 	CAudioSource3D* mp_shoot_source;
+
+	float			m_shoot_delay;
+	float			m_shoot_elapsed;
 };
 
 #endif // !OOM_ENGINE_S_PLAYER_HPP__

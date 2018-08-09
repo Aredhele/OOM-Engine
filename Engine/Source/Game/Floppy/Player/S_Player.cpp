@@ -9,7 +9,8 @@
 
 /* virtual */ void S_Player::Awake()
 {
-	// None
+	m_shoot_delay   = 1.0f;
+	m_shoot_elapsed = 0.0f;
 }
 
  /* virtual */ void S_Player::Start()
@@ -35,10 +36,14 @@
 
  /* virtual */ void S_Player::Update()
 {
-	 if(Sdk::Input::IsMouseButtonPressed(GLFW_MOUSE_BUTTON_1))
+	 m_shoot_elapsed += CTime::delta_time;
+
+
+	 if(Sdk::Input::IsMouseButtonPressed(GLFW_MOUSE_BUTTON_1) &&  m_shoot_elapsed >= m_shoot_delay)
 	 {
 		 const auto& transform = *GetTransform();
 		 mp_shoot_source->Play();
+
 		 CRayCast ray_cast = Sdk::Physic::RayCast(transform.GetPosition(), transform.GetForward() * 100.0f);
 		 if (ray_cast.GetGameObject())
 		 {
@@ -50,9 +55,10 @@
 
 			 // Delayed destroy
 			 Destroy(p_sound_go, 2.0f);
-
 			 Destroy(ray_cast.GetGameObject());
 		 }
+
+		 m_shoot_elapsed = 0.0f;
 	 }
 }
 
@@ -72,4 +78,14 @@
 		(transform.GetRight()   * 2.0f) + 
 		(transform.GetForward() * 2.0f),
 		 transform.GetForward() * 100.0f, glm::vec3(1.0f, 0.0f, 0.5f));
+}
+
+void S_Player::SetShootDelay(float delay)
+{
+	m_shoot_delay = delay;
+}
+
+float S_Player::GetShootDelay(float delay)
+{
+	return m_shoot_delay;
 }
