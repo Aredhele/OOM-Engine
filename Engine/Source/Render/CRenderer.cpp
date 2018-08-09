@@ -320,6 +320,11 @@ CWindow* CRenderer::GetWindow()
 	return mp_window;
 }
 
+/* static */ CWindow* CRenderer::GetRenderWindow()
+{
+	return sp_instance->mp_window;
+}
+
 /* static */ void Oom::CRenderer::RegisterRenderer(IRenderer* p_renderer)
 {
     sp_instance->m_renderers.push_back(p_renderer);

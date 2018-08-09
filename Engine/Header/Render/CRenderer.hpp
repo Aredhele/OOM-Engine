@@ -39,9 +39,10 @@ public:
 
 public:
 
-	static void EnablePostProcessing  ();
-	static void DisablePostProcessing ();
-	static bool IsPostProcessingActive();
+	static CWindow* GetRenderWindow();
+	static void     EnablePostProcessing  ();
+	static void     DisablePostProcessing ();
+	static bool     IsPostProcessingActive();
 
 	static CPostProcessingStack* GetPostProcessingStack();
 

@@ -6,37 +6,87 @@
 
 #include "Game/Floppy/Prompt/S_CommandPrompt.hpp"
 
+#include "Render/CWindow.hpp"
+#include "Render/CRenderer.hpp"
+
+/* static */ S_CommandPrompt* S_CommandPrompt::sp_instance = nullptr;
+
+/// \brief GLFW character callback
+void character_callback(GLFWwindow* window, unsigned int codepoint)
+{
+	S_CommandPrompt::OnCharacterCallback(codepoint);
+}
+
 /* virtual */ void S_CommandPrompt::Awake()
 {
+	m_command_position      = glm::tvec2<int>(50, 800);
 	m_prompt_scale_open     = glm::vec3(6.0f, 7.0f, 1.0f);
 	m_prompt_scale_close    = glm::vec3(6.0f, 1.3f, 1.0f);
 
 	m_prompt_position_open  = glm::vec3(0.195f, 0.6f,   0.0f);
 	m_prompt_position_close = glm::vec3(0.195f, 0.915f, 0.0f);
+
+
+	m_key_delay   = 0.1f;
+	m_key_elapsed = 0.0f;
+
+	CInputManager::Initialize();
 }	
 
 /* virtual */ void S_CommandPrompt::Start()
 {
-	mp_prompt_background = Sdk::GameObject::CreateUISprite();
+	mp_prompt = Sdk::GameObject::CreateUISprite();
 
-	auto* p_material = mp_prompt_background->GetComponent<CMaterial>();
-	auto* p_renderer = mp_prompt_background->GetComponent<CUISpriteRenderer>();
+	auto* p_material = mp_prompt->GetComponent<CMaterial>();
+	auto* p_renderer = mp_prompt->GetComponent<CUISpriteRenderer>();
 
 	p_renderer->SetSortingLayer(0);
 	p_material->SetTexture(Sdk::Import::ImportTexture("Resources/Texture/Prompt.png"));
 
-	mp_prompt_background->GetTransform().SetScale(m_prompt_scale_open);
-	mp_prompt_background->GetTransform().SetPosition(m_prompt_position_open);
+	mp_prompt->GetTransform().SetScale(m_prompt_scale_open);
+	mp_prompt->GetTransform().SetPosition(m_prompt_position_open);
+
+	m_command_text = Sdk::GameObject::CreateUIText();
+
+	auto* p_text = m_command_text->GetComponent<S_Text>();
+
+	m_command = "> ";
+	UpdateCommandText();
+	
+	sp_instance = this;
+	glfwSetCharCallback(CRenderer::GetRenderWindow()->GetHandle(), character_callback);
+
+	ClosePrompt();
 }
 
 /* virtual */ void S_CommandPrompt::Update()
 {
-	// None
+	m_key_elapsed += CTime::delta_time;
+
+	if(IsOpen())
+	{
+		if(Sdk::Input::IsKeyPressed(GLFW_KEY_BACKSPACE) && m_key_elapsed >= m_key_delay)
+		{
+			m_key_elapsed = 0.0f;
+
+			if(m_command.Size() > 2)
+			{
+				m_command.PopBack();
+				UpdateCommandText();
+			}
+		}
+
+		if (Sdk::Input::IsKeyPressed(GLFW_KEY_ENTER) && m_key_elapsed >= m_key_delay)
+		{
+			m_key_elapsed = 0.0f;
+		}
+	}
 }
 
 /* virtual */ void S_CommandPrompt::OnDestroy()
 {
-	// None
+	sp_instance = nullptr;
+	glfwSetCharCallback(CRenderer::GetRenderWindow()->GetHandle(), nullptr);
 }
 
 /* virtual */ void S_CommandPrompt::OnDrawGizmos()
@@ -44,17 +94,63 @@
 	// None
 }
 
+void S_CommandPrompt::ProcessCharacter(unsigned int codepoint)
+{
+	if(IsOpen())
+	{
+		m_command += (char)codepoint;
+		UpdateCommandText();
+	}
+}
+
 void S_CommandPrompt::OpenPrompt()
 {
 	m_state = EPromptState::Open;
+	ShowLogText();
+	ShowCommandText();
 }
 
 void S_CommandPrompt::ClosePrompt()
 {
 	m_state = EPromptState::Close;
+	HideLogText();
+	HideCommandText();
 }
 
 bool S_CommandPrompt::IsOpen() const
 {
 	return (m_state == EPromptState::Open);
+}
+
+/* static */ void S_CommandPrompt::OnCharacterCallback(unsigned int codepoint)
+{
+	sp_instance->ProcessCharacter(codepoint);
+}
+
+void S_CommandPrompt::HideLogText()
+{
+
+}
+
+void S_CommandPrompt::ShowLogText()
+{
+
+}
+
+void S_CommandPrompt::HideCommandText()
+{
+	auto* p_renderer = m_command_text->GetComponent<CTextRenderer>();
+	p_renderer->SetVisible(false);
+}
+
+void S_CommandPrompt::ShowCommandText()
+{
+	auto* p_renderer = m_command_text->GetComponent<CTextRenderer>();
+	p_renderer->SetVisible(true);
+}
+
+void S_CommandPrompt::UpdateCommandText()
+{
+	auto* p_text = m_command_text->GetComponent<S_Text>();
+	p_text->Set(m_command.Data(), m_command_position, 35, glm::vec3(1.0f));
 }
