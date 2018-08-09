@@ -8,7 +8,6 @@
 #define OOM_ENGINE_S_COMMAND_PROMPT_HPP__
 
 #include "SDK/SDK.hpp"
-#include "Game/Floppy/Prompt/CInputManager.hpp"
 
 class S_CommandPrompt : public CBehavior
 {
@@ -47,6 +46,8 @@ private:
 
 	void HideLogText();
 	void ShowLogText();
+	void MinimizePrompt();
+	void MaximizePrompt();
 	void HideCommandText();
 	void ShowCommandText();
 	

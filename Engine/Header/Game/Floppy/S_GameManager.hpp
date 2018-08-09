@@ -26,8 +26,8 @@ private:
 	CGameObject*     mp_floppy = nullptr;
 	S_CommandPrompt* mp_prompt = nullptr;
 
-	float		 m_key_delay;
-	float		 m_key_elapsed;
+	float		     m_key_delay;
+	float		     m_key_elapsed;
 };
 
 #endif // !OOM_ENGINE_S_GAME_MANAGER_HPP__

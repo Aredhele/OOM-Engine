@@ -29,8 +29,6 @@ void character_callback(GLFWwindow* window, unsigned int codepoint)
 
 	m_key_delay   = 0.1f;
 	m_key_elapsed = 0.0f;
-
-	CInputManager::Initialize();
 }	
 
 /* virtual */ void S_CommandPrompt::Start()
@@ -43,12 +41,8 @@ void character_callback(GLFWwindow* window, unsigned int codepoint)
 	p_renderer->SetSortingLayer(0);
 	p_material->SetTexture(Sdk::Import::ImportTexture("Resources/Texture/Prompt.png"));
 
-	mp_prompt->GetTransform().SetScale(m_prompt_scale_open);
-	mp_prompt->GetTransform().SetPosition(m_prompt_position_open);
-
 	m_command_text = Sdk::GameObject::CreateUIText();
-
-	auto* p_text = m_command_text->GetComponent<S_Text>();
+	auto* p_text   = m_command_text->GetComponent<S_Text>();
 
 	m_command = "> ";
 	UpdateCommandText();
@@ -80,6 +74,12 @@ void character_callback(GLFWwindow* window, unsigned int codepoint)
 		{
 			m_key_elapsed = 0.0f;
 		}
+
+		if (Sdk::Input::IsKeyPressed(GLFW_KEY_X) && m_key_elapsed >= m_key_delay)
+		{
+			m_key_elapsed = 0.0f;
+			ClosePrompt();
+		}
 	}
 }
 
@@ -107,6 +107,7 @@ void S_CommandPrompt::OpenPrompt()
 {
 	m_state = EPromptState::Open;
 	ShowLogText();
+	MaximizePrompt();
 	ShowCommandText();
 }
 
@@ -114,6 +115,7 @@ void S_CommandPrompt::ClosePrompt()
 {
 	m_state = EPromptState::Close;
 	HideLogText();
+	MinimizePrompt();
 	HideCommandText();
 }
 
@@ -135,6 +137,18 @@ void S_CommandPrompt::HideLogText()
 void S_CommandPrompt::ShowLogText()
 {
 
+}
+
+void S_CommandPrompt::MinimizePrompt()
+{
+	mp_prompt->GetTransform().SetScale(m_prompt_scale_close);
+	mp_prompt->GetTransform().SetPosition(m_prompt_position_close);
+}
+
+void S_CommandPrompt::MaximizePrompt()
+{
+	mp_prompt->GetTransform().SetScale(m_prompt_scale_open);
+	mp_prompt->GetTransform().SetPosition(m_prompt_position_open);
 }
 
 void S_CommandPrompt::HideCommandText()

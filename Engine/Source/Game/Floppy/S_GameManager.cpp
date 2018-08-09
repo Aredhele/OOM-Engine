@@ -10,7 +10,7 @@
 /*virtual */ void S_GameManager::Awake()
 {
 	mp_floppy     = nullptr;
-	m_key_delay   = 0.1f;
+	m_key_delay   = 0.3f;
 	m_key_elapsed = 0.1f;
 }
 
@@ -18,14 +18,27 @@
 {
 	mp_floppy         = CGameObject::Find("Floppy");
 	auto* p_prompt_go = CGameObject::Find("Prompt");
+
+	if(p_prompt_go)
+		mp_prompt = p_prompt_go->GetComponent<S_CommandPrompt>();
 }
 
 /*virtual */ void S_GameManager::Update()
 {
+	m_key_elapsed += CTime::delta_time;
+
 	if (Sdk::Input::IsKeyPressed(GLFW_KEY_LEFT_CONTROL) && m_key_elapsed >= m_key_delay)
 	{
 		m_key_elapsed = 0.0f;
-		// mp_prompt->GetComponent<S_CommandPrompt>()->IsOpen();
+
+		if(mp_prompt->IsOpen())
+		{
+			mp_prompt->ClosePrompt();
+		}
+		else
+		{
+			mp_prompt->OpenPrompt();
+		}
 	}
 }
 
