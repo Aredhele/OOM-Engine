@@ -23,8 +23,9 @@ public:
 
 private:
 
-	CGameObject*     mp_floppy = nullptr;
-	S_CommandPrompt* mp_prompt = nullptr;
+	CGameObject*        mp_floppy = nullptr;
+	S_CommandPrompt*    mp_prompt = nullptr;
+	S_CameraController* mp_camera = nullptr;
 
 	float		     m_key_delay;
 	float		     m_key_elapsed;

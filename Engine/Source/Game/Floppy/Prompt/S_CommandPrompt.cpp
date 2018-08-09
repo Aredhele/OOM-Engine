@@ -19,13 +19,12 @@ void character_callback(GLFWwindow* window, unsigned int codepoint)
 
 /* virtual */ void S_CommandPrompt::Awake()
 {
-	m_command_position      = glm::tvec2<int>(50, 800);
+	m_command_position      = glm::tvec2<int>(50, 220);
 	m_prompt_scale_open     = glm::vec3(6.0f, 7.0f, 1.0f);
 	m_prompt_scale_close    = glm::vec3(6.0f, 1.3f, 1.0f);
 
-	m_prompt_position_open  = glm::vec3(0.195f, 0.6f,   0.0f);
+	m_prompt_position_open  = glm::vec3(0.195f, 0.598f,   0.0f);
 	m_prompt_position_close = glm::vec3(0.195f, 0.915f, 0.0f);
-
 
 	m_key_delay   = 0.1f;
 	m_key_elapsed = 0.0f;
@@ -122,6 +121,16 @@ void S_CommandPrompt::ClosePrompt()
 bool S_CommandPrompt::IsOpen() const
 {
 	return (m_state == EPromptState::Open);
+}
+
+void S_CommandPrompt::LogMessage(const char* message)
+{
+
+}
+
+void S_CommandPrompt::LogMessage(const CString& message)
+{
+
 }
 
 /* static */ void S_CommandPrompt::OnCharacterCallback(unsigned int codepoint)

@@ -34,8 +34,10 @@ public:
 
 	void OpenPrompt  ();
 	void ClosePrompt ();
-	 
 	bool IsOpen      () const;
+
+	void LogMessage	 (const char* message);
+	void LogMessage	 (const CString& message);
 
 public:
 
