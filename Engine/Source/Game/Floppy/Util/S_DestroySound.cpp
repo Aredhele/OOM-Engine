@@ -13,7 +13,7 @@
 
 /* virtual */ void S_DestroySound::Start()
 {
-	m_damage_buffer.LoadFromFile("resources/Sound/sound_asset_damaged.ogg");
+	m_damage_buffer.LoadFromFile("resources/Sound/sound_bigasset_killed.ogg");
 
 	auto* p_source = GetGameObject()->AddComponent<CAudioSource3D>();
 	p_source->SetAudioBuffer(&m_damage_buffer);

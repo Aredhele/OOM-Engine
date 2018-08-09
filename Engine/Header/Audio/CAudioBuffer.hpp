@@ -18,6 +18,12 @@ class CAudioBuffer
 {
 public:
 
+	struct SPCMCache
+	{
+		CString   name;
+		CPCMData* p_pcm;
+	};
+
 	CAudioBuffer();
 	~CAudioBuffer();
 
@@ -30,6 +36,15 @@ private:
 
 	CPCMData		       m_pcm_data;
 	IDirectSoundBuffer8*   mp_secondary_buffer;
+
+private:
+
+	void		AddPCMCacheEntry	(SPCMCache* pcm_entry);
+	SPCMCache * GetPCMCacheEntry	(const CString& path);
+
+private:
+
+	static std::vector<SPCMCache*> s_pcm_cache;
 }; 
 
 }

@@ -12,6 +12,8 @@
 namespace Oom
 {
 
+/* static */ std::vector<CAudioBuffer::SPCMCache*> CAudioBuffer::s_pcm_cache;
+
 CAudioBuffer::CAudioBuffer()
 {
 	mp_secondary_buffer = nullptr;
@@ -25,32 +27,64 @@ CAudioBuffer::~CAudioBuffer()
 
 bool CAudioBuffer::LoadFromFile(const CString& path)
 {
-	CString extension;
-	for (uint32_t i = path.Size() - 1; i >= 0; i--)
-	{
-		if (path[i] == '.') break;
-		
-		extension += path[i];
-	}
+	SPCMCache* p_cache_entry = GetPCMCacheEntry(path);
 
-	bool ret = false;
-	if (extension == "ggo")      {
-		ret = CAudioDecoder::DecodeOGG(path.Data(), m_pcm_data);
-	}
-	else if (extension == "vaw") {
-		ret = CAudioDecoder::DecodeOGG(path.Data(), m_pcm_data);
+	// Check for cache first
+	if(!p_cache_entry)
+	{
+		CString extension;
+		for (uint32_t i = path.Size() - 1; i >= 0; i--)
+		{
+			if (path[i] == '.') break;
+
+			extension += path[i];
+		}
+
+		p_cache_entry  = new SPCMCache();
+
+		p_cache_entry->name  = path;
+		p_cache_entry->p_pcm = new CPCMData();
+
+		bool ret = false;
+		if (extension == "ggo") {
+			ret = CAudioDecoder::DecodeOGG(path.Data(), *p_cache_entry->p_pcm);
+		}
+		else if (extension == "vaw") {
+			ret = CAudioDecoder::DecodeOGG(path.Data(), *p_cache_entry->p_pcm);
+		}
+		else
+		{
+			delete p_cache_entry->p_pcm;
+			delete p_cache_entry;
+
+			SLogger::LogError("Audio extension not supported.");
+			return false;
+		}
+
+		if (!ret)
+		{
+			delete p_cache_entry->p_pcm;
+			delete p_cache_entry;
+
+			SLogger::LogError("Invalid audio format.");
+			return false;
+		}
+
+		AddPCMCacheEntry(p_cache_entry);
+		printf("Add in cache : %s\n", path.Data());
 	}
 	else
 	{
-		SLogger::LogError("Audio extension not supported.");
-		return false;
+		printf("Already in cache : %s\n", path.Data());
 	}
 
-	if (!ret)
-	{
-		SLogger::LogError("Invalid audio format.");
-		return false;
-	}
+	// The sound is already in memory
+	// Copying header
+	memcpy(&m_pcm_data.wave_header, &p_cache_entry->p_pcm->wave_header, sizeof(CWaveHeader));
+
+	// Fast copy of samples
+	m_pcm_data.samples.reserve(p_cache_entry->p_pcm->samples.size());
+	m_pcm_data.samples = p_cache_entry->p_pcm->samples;
 
 	WAVEFORMATEX         wave_format;
 	DSBUFFERDESC         buffer_description;
@@ -117,6 +151,22 @@ bool CAudioBuffer::LoadFromFile(const CString& path)
 	}
 
 	return true;
+}
+
+void CAudioBuffer::AddPCMCacheEntry(SPCMCache* pcm_entry)
+{
+	s_pcm_cache.push_back(pcm_entry);
+}
+
+CAudioBuffer::SPCMCache* CAudioBuffer::GetPCMCacheEntry(const CString& path)
+{
+	for(auto* p_cache_entry : s_pcm_cache)
+	{
+		if (p_cache_entry->name == path)
+			return p_cache_entry;
+	}
+
+	return nullptr;
 }
 
 }
