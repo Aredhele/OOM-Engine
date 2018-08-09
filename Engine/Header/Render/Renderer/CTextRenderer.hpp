@@ -16,7 +16,7 @@ class CTextRenderer : public IRenderer
 {
 public:
 
-    void Draw(SRenderData& render_data) final;
+    void Draw(SRenderData render_data) final;
 };
 
 }

@@ -135,7 +135,9 @@ CGameObject* CMeshImporter::AssembleGameObject(const SObjectFile::SObject& objec
 		}
 
 		// Moving the mesh
-		p_game_object->GetTransform().SetPosition(p_mesh_filter->GetMesh().GetMeshOffset());
+		p_game_object->GetTransform().SetPosition(
+			p_game_object->GetTransform().GetPosition() + 
+			p_mesh_filter->GetMesh().GetMeshOffset());
 	}
 
 	return p_game_object;

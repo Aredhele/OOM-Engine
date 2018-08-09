@@ -15,7 +15,7 @@ namespace Oom
 class CMeshRenderer : public IRenderer
 {
 public:
-    void Draw(SRenderData& render_data) final;
+    void Draw(SRenderData render_data) final;
 };
 
 }

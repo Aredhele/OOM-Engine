@@ -27,7 +27,7 @@ public:
 
 public:
 
-    virtual void Draw(SRenderData& render_data) = 0;
+    virtual void Draw(SRenderData render_data) = 0;
 
 public:
 

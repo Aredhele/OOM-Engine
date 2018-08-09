@@ -58,7 +58,7 @@ void CShaderStandard::Begin(const SRenderData& render_data)
     }
 
 	 glActiveTexture   (GL_TEXTURE0);
-    glBindTexture     (GL_TEXTURE_2D, m_texture_id);
+     glBindTexture     (GL_TEXTURE_2D, m_texture_id);
 }
 
 void CShaderStandard::End()

@@ -16,7 +16,7 @@
 namespace Oom
 {
 
-void CUISpriteRenderer::Draw(SRenderData& render_data)
+void CUISpriteRenderer::Draw(SRenderData render_data)
 {
 	CMaterial*   p_material    = GetAttachedMaterial();
 	CMeshFilter* p_mesh_filter = GetAttachedMeshFilter();

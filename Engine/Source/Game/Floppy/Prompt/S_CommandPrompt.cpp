@@ -52,7 +52,7 @@ void character_callback(GLFWwindow* window, unsigned int codepoint)
 	glfwSetCharCallback(CRenderer::GetRenderWindow()->GetHandle(), character_callback);
 
 	// Initializing prompt texts
-	for(int i = 0; i < 30; ++i)
+	for(int i = 0; i < 20; ++i)
 	{
 		auto* p_text_go = Sdk::GameObject::CreateUIText();
 

@@ -15,7 +15,7 @@
 namespace Oom
 {
 
-void Oom::CMeshRenderer::Draw(SRenderData& render_data)
+void Oom::CMeshRenderer::Draw(SRenderData render_data)
 {
     CMaterial*   p_material    = GetAttachedMaterial();
     CMeshFilter* p_mesh_filter = GetAttachedMeshFilter();
@@ -28,7 +28,7 @@ void Oom::CMeshRenderer::Draw(SRenderData& render_data)
 
     // Computing the MVP matrix
 	render_data.M = mp_transform->GetLocalToWorldMatrix();
-    render_data.MVP = render_data.P * render_data.V * mp_transform->GetLocalToWorldMatrix();
+	render_data.MVP = render_data.P * render_data.V * render_data.M;
 
     p_material->Begin(render_data);
 

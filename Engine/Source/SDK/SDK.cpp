@@ -128,17 +128,17 @@ namespace Sdk
         }
 
         CGameObject* CreateUIText() {
-            CGameObject* p_text_object = CEngine::Instantiate();
+			CGameObject* p_text_object = CEngine::Instantiate();
 
-            p_text_object->AddComponent<S_Text>();
-            p_text_object->AddComponent<CMeshFilter>();
-            p_text_object->AddComponent<CTextRenderer>();
+			auto* p_renderer    = p_text_object->AddComponent<CTextRenderer>();
+			auto* p_mesh_filter = p_text_object->AddComponent<CMeshFilter>();
+			auto* p_material    = p_text_object->AddComponent<CMaterial>();
+			auto* p_script      = p_text_object->AddComponent<S_Text>();
 
-            auto* p_material = p_text_object->AddComponent<CMaterial>();
-            p_material->SetShader(EShaderType::Text);
-            p_material->SetTexture(CTextureImporter::ImportTexture("Resources/Texture/Font.png"));
+			p_material->SetShader(EShaderType::Text);
+			p_material->SetTexture(CTextureImporter::ImportTexture("Resources/Texture/Font.png"));
 
-            return p_text_object;
+			return p_text_object;
         }
 
 		CGameObject* CreateAudioListener3D() {

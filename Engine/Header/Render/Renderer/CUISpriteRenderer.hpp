@@ -16,7 +16,7 @@ class CUISpriteRenderer : public IRenderer
 {
 public:
 
-	void Draw(SRenderData& render_data) final;
+	void Draw(SRenderData render_data) final;
 
 	void     SetSortingLayer	(uint32_t sorting_layer);
 	uint32_t GetSortingLayer	() const;

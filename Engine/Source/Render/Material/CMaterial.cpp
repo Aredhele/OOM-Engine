@@ -110,9 +110,9 @@ void CMaterial::SetMatrix(const char* p_name, const glm::mat4 &matrix4)
 { mp_shader->SetMatrix(p_name, matrix4); }
 
 void CMaterial::Begin(const SRenderData &render_data)
-{ mp_shader->Begin(render_data); }
+{ if(mp_shader) mp_shader->Begin(render_data); }
 
 void CMaterial::End()
-{ mp_shader->End(); }
+{ if (mp_shader) mp_shader->End(); }
 
 }

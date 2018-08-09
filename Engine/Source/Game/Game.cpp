@@ -43,7 +43,7 @@ void LoadGameScene()
 	Prefab::CreateGlobalLighting();
 	Prefab::CreateStaticEnvironment();
 
-	Prefab::CreateDoors();
+    Prefab::CreateDoors();
 	Prefab::CreateAlarms();
 	Prefab::CreateConveyors();
 	Prefab::CreateFloppy();

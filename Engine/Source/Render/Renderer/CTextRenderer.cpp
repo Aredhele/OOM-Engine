@@ -15,7 +15,7 @@
 namespace Oom
 {
 
-void CTextRenderer::Draw(SRenderData& render_data)
+void CTextRenderer::Draw(SRenderData render_data)
 {
     CMaterial*   p_material    = GetAttachedMaterial();
     CMeshFilter* p_mesh_filter = GetAttachedMeshFilter();

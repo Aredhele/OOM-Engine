@@ -118,7 +118,7 @@ void S_AssetSpawner::SpawnBigAsset(uint32_t size)
 {
 	// Creating the big asset
 	auto* p_game_object = CGameObject::Instantiate(GetTransform()->GetPosition() + glm::vec3(0.0f, 0.0f, 6.0f));
-	auto* p_big_asset   = p_game_object->AddComponent<S_BigAsset>();
+	auto* p_big_asset = p_game_object->AddComponent<S_BigAsset>();
 
 	p_big_asset->SetKiloBytes(S_BigAsset::s_cost);
 	p_game_object->GetTransform().SetScale(0.5f, 0.5f, 0.5f);
@@ -131,7 +131,7 @@ void S_AssetSpawner::SpawnBusAsset(uint32_t size)
 {
 	// Creating the bus asset
 	auto* p_game_object = CGameObject::Instantiate(GetTransform()->GetPosition());
-	auto* p_bus_asset   = p_game_object->AddComponent<S_BusAsset>();
+	auto* p_bus_asset = p_game_object->AddComponent<S_BusAsset>();
 
 	p_bus_asset->SetKiloBytes(S_BusAsset::s_cost * size);
 	p_game_object->GetTransform().SetScale(size, size, size);
@@ -143,7 +143,7 @@ void S_AssetSpawner::SpawnBusAsset(uint32_t size)
 void S_AssetSpawner::SpawnConveyorAsset(uint32_t size)
 {
 	// Creating the conveyor asset
-	auto* p_game_object    = CGameObject::Instantiate(GetTransform()->GetPosition());
+	auto* p_game_object = CGameObject::Instantiate(GetTransform()->GetPosition());
 	auto* p_conveyor_asset = p_game_object->AddComponent<S_ConveyorAsset>();
 
 	p_conveyor_asset->SetKiloBytes(S_ConveyorAsset::s_cost * size);
