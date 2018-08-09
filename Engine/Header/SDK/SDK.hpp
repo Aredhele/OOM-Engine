@@ -96,8 +96,10 @@ namespace Sdk
 
     namespace Input
     {
-        bool IsKeyPressed  (int key_code);
-        bool IsKeyReleased (int key_code);
+        bool IsKeyPressed          (int key_code);
+        bool IsKeyReleased         (int key_code);
+		bool IsMouseButtonPressed  (int button);
+		bool IsMouseButtonReleased (int button);
     }
 
     namespace GameObject

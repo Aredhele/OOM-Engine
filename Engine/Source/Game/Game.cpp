@@ -26,10 +26,12 @@ void LoadGameScene()
 	Sdk::Debug::EnableGizmo(EGizmo::Axis);
 	Sdk::Debug::EnableGizmo(EGizmo::Line);
 	Sdk::Debug::EnableGizmo(EGizmo::Grid);
+
 	Sdk::Debug::EnableGizmo(EGizmo::AllColliders);
 	Sdk::Debug::EnableGizmo(EGizmo::AllTransforms);
 	Sdk::Debug::EnableGizmo(EGizmo::AllPointLights);
 	Sdk::Debug::EnableGizmo(EGizmo::AllAudioSources);
+	Sdk::Debug::EnableGizmo(EGizmo::AllAudioListeners);
 	Sdk::Debug::EnableGizmo(EGizmo::AllDirectionalLights);
 
 	// Importing 3D assets

@@ -55,11 +55,13 @@ CGizmosManager::CGizmosManager()
     m_array_map.push_back({EGizmo::Transform,            false});
     m_array_map.push_back({EGizmo::PointLight,           false});
 	m_array_map.push_back({EGizmo::AudioSource,          false});
+	m_array_map.push_back({EGizmo::AudioListener,        false});
     m_array_map.push_back({EGizmo::DirectionalLight,     false});
     m_array_map.push_back({EGizmo::AllColliders,         false});
     m_array_map.push_back({EGizmo::AllTransforms,        false});
     m_array_map.push_back({EGizmo::AllPointLights,       false});
     m_array_map.push_back({EGizmo::AllAudioSources,      false});
+    m_array_map.push_back({EGizmo::AllAudioListeners,    false});
     m_array_map.push_back({EGizmo::AllDirectionalLights, false});
 
     // Initializes the grid

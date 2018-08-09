@@ -410,6 +410,16 @@ void CEngine::GameObjectUpdate(GLFWwindow* p_window, const float delta_time)
     return (glfwGetKey(sp_instance->mp_renderer->GetWindow()->GetHandle(), key_code) == GLFW_RELEASE);
 }
 
+/* static */ bool CEngine::IsMouseButtonPressed(int button)
+{
+	return (glfwGetMouseButton(sp_instance->mp_renderer->GetWindow()->GetHandle(), button) == GLFW_PRESS);
+}
+
+/* static */ bool CEngine::IsMouseButtonReleased(int button)
+{
+	return (glfwGetMouseButton(sp_instance->mp_renderer->GetWindow()->GetHandle(), button) == GLFW_RELEASE);
+}
+
 /* static */ void CEngine::RegisterBehavior(CBehavior* p_behavior)
 {
     sp_instance->m_behaviors.push_back(p_behavior);

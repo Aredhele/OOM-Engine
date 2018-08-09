@@ -32,12 +32,14 @@ public:
 		Transform,
 		PointLight,
 		AudioSource,
+		AudioListener,
 		DirectionalLight,
 
 		AllColliders,
 		AllTransforms,
 		AllPointLights,
 		AllAudioSources,
+		AllAudioListeners,
 		AllDirectionalLights
     };
 

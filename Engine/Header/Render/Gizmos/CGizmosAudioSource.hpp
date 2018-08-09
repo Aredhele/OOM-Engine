@@ -11,7 +11,8 @@
 
 namespace Oom {
 
-	void DrawAudioSource(glm::vec3 const& position, float distance_min, float distance_max, int resolution, float scale);
+	void DrawAudioSource  (glm::vec3 const& position, float distance_min, float distance_max, int resolution, float scale);
+	void DrawAudioListener(glm::vec3 const& position, int resolution, float scale);
 
 }
 

@@ -68,6 +68,14 @@ namespace Sdk
         bool IsKeyReleased(int key_code) {
             return CEngine::IsKeyReleased(key_code);
         }
+
+	    bool IsMouseButtonPressed(int button) {
+			return CEngine::IsMouseButtonPressed(button);
+	    }
+
+	    bool IsMouseButtonReleased(int button) {
+			return CEngine::IsMouseButtonReleased(button);
+	    }
     }
 
     // GameObject specific functions

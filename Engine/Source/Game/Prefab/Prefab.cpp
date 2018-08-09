@@ -9,6 +9,7 @@
 // Game scritps
 #include "Game/Floppy/S_Floppy.hpp"
 #include "Game/Floppy/S_GameManager.hpp"
+#include "Game/Floppy/Player/S_Player.hpp"
 #include "Game/Floppy/Asset/S_SpawnerManager.hpp"
 
 namespace Prefab
@@ -17,6 +18,9 @@ namespace Prefab
 void CreatePlayer()
 {
 	auto* p_game_object = Sdk::GameObject::CreateFreeCamera();
+
+	// Player script
+	p_game_object->AddComponent<S_Player>();
 
 	p_game_object->SetTag ("MainCamera"); ///< Required by the camera
 	p_game_object->SetName("Player");     ///< Required to find the player

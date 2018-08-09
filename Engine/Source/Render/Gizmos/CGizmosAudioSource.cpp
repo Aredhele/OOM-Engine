@@ -103,4 +103,45 @@ void DrawAudioSource(glm::vec3 const& position, float distance_min, float distan
 	CGizmosManager::AddLine(pointsY[0], pointsY[pointsY.size() - 1], glm::vec3(0.9f, 0.1f, 0.1f));
 }
 
+void DrawAudioListener(glm::vec3 const& position, int resolution, float scale)
+{
+	if (!CGizmosManager::IsGizmoEnabled(CGizmosManager::EGizmo::AudioListener) &&
+		!CGizmosManager::IsGizmoEnabled(CGizmosManager::EGizmo::AllAudioListeners))
+		return;
+
+	const float radius = 5.0f;
+	const float color  = 0.3f;
+
+	// Compute spherical coordinates
+	int pointCount = static_cast<int>(resolution * scale); // NOLINT
+	float alpha = (360.0f * (glm::pi<float>() / 180.0f)) / pointCount;
+
+	// Min circle
+	std::vector<glm::vec3> pointsZ;
+	std::vector<glm::vec3> pointsY;
+	for (int nPoint = 0; nPoint < pointCount; ++nPoint)
+	{
+		float x1 = position.x + glm::cos(alpha * nPoint) * radius;
+		float y1 = position.y + glm::sin(alpha * nPoint) * radius;
+		float z1 = position.z;
+
+		float x2 = position.x;
+		float y2 = position.y + glm::sin(alpha * nPoint) * radius;
+		float z2 = position.z + glm::cos(alpha * nPoint) * radius;
+
+		pointsZ.emplace_back(x1, y1, z1);
+		pointsY.emplace_back(x2, y2, z2);
+
+		if (nPoint != 0)
+		{
+			CGizmosManager::AddLine(pointsZ[nPoint - 1], pointsZ[nPoint], glm::vec3(color));
+			CGizmosManager::AddLine(pointsY[nPoint - 1], pointsY[nPoint], glm::vec3(color));
+		}
+	}
+
+	// Adding last points
+	CGizmosManager::AddLine(pointsZ[0], pointsZ[pointsZ.size() - 1], glm::vec3(color));
+	CGizmosManager::AddLine(pointsY[0], pointsY[pointsY.size() - 1], glm::vec3(color));
+}
+
 }

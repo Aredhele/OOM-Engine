@@ -182,6 +182,14 @@ void CAudioEngine::DrawGizmos()
 			}
 		}
 	}
+
+	if (CGizmosManager::IsGizmoEnabled(CGizmosManager::EGizmo::AllAudioListeners))
+	{
+		for (CAudioListener3D* p_listener : m_listeners)
+		{
+			DrawAudioListener(p_listener->GetTransform()->GetPosition(), 16, 1.0f);
+		}
+	}
 }
 
 /* static */ IDirectSoundBuffer* CAudioEngine::GetPrimaryBuffer()

@@ -37,6 +37,12 @@ void CAudioSource3D::_Destroy()
 {
 	CAudioEngine::UnregisterCAudioSource3D(this);
 
+	if (mp_audio_buffer)
+	{
+		mp_audio_buffer->mp_secondary_buffer->Stop();
+		mp_audio_buffer->mp_secondary_buffer->Release();
+	}
+		
 	if (mp_source_3D_buffer)
 		mp_source_3D_buffer->Release();
 }

@@ -57,13 +57,15 @@ public:
 public:
 
     // Tools
-	static void				  ShowMouse         ();
-	static void				  HideMouse         ();
-    static void               SetMousePosition  (const glm::vec2& position);
-    static glm::tvec3<double> GetMousePosition  ();
-    static glm::vec2          GetWindowSize     ();
-    static bool               IsKeyPressed      (int key_code);
-    static bool               IsKeyReleased     (int key_code);
+	static void				  ShowMouse				();
+	static void				  HideMouse				();
+    static void               SetMousePosition		(const glm::vec2& position);
+    static glm::tvec3<double> GetMousePosition		();
+    static glm::vec2          GetWindowSize			();
+    static bool               IsKeyPressed			(int key_code);
+    static bool               IsKeyReleased			(int key_code);
+	static bool				  IsMouseButtonPressed	(int button);
+	static bool				  IsMouseButtonReleased	(int button);
 
 private:
 
