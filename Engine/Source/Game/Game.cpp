@@ -190,9 +190,13 @@ void LoadDemoScreenSpaceUI()
 	auto* p_text_2 = p_text_go_2->GetComponent<S_Text>();
 	auto* p_text_3 = p_text_go_3->GetComponent<S_Text>();
 
-	p_text_1->Set("R", glm::tvec2<int>(300.0f,  320.0f), 50, glm::vec3(1.0f));
-	p_text_2->Set("G", glm::tvec2<int>(750.0f,  320.0f), 50, glm::vec3(1.0f));
-	p_text_3->Set("B", glm::tvec2<int>(1200.0f, 320.0f), 50, glm::vec3(1.0f));
+	p_text_go_1->GetTransform().SetPosition(0.15f, 0.35f, 0.0f);
+	p_text_go_2->GetTransform().SetPosition(0.40f, 0.35f, 0.0f);
+	p_text_go_3->GetTransform().SetPosition(0.65f, 0.35f, 0.0f);
+
+	p_text_1->SetText("R");
+	p_text_2->SetText("G");
+	p_text_3->SetText("B");
 }
 
 void LoadDemoSceneTransformation()
@@ -216,8 +220,8 @@ void LoadDemoSceneTransformation()
 	auto* p_rotate_c_go  = Sdk::GameObject::CreateGameObjectFromMesh("Cube");
 
 	// OK
-	p_scale_go->GetTransform().SetPosition      (0.0f, 0.0f, 8.0f);
-	p_look_at_go->GetTransform().SetEulerAngles (0.0f, 20.0f, 0.0f);
+	p_scale_go->GetTransform().SetPosition      (  0.0f,   0.0f,  8.0f);
+	p_look_at_go->GetTransform().SetEulerAngles (  0.0f,  20.0f,  0.0f);
 	p_look_at_go->GetTransform().SetPosition    (-12.0f, -12.0f,  0.0f);
 	
 	p_rotate_x_go->GetTransform().SetPosition   ( 12.0f,  12.0f,  0.0f);

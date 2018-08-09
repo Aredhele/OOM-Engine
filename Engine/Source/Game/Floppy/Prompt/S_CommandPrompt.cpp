@@ -19,14 +19,13 @@ void character_callback(GLFWwindow* window, unsigned int codepoint)
 
 /* virtual */ void S_CommandPrompt::Awake()
 {
-	m_command_position      = glm::tvec2<int>(50, 220);
 	m_prompt_scale_open     = glm::vec3(6.0f, 7.0f, 1.0f);
 	m_prompt_scale_close    = glm::vec3(6.0f, 1.3f, 1.0f);
 
 	m_prompt_position_open  = glm::vec3(0.195f, 0.598f,   0.0f);
 	m_prompt_position_close = glm::vec3(0.195f, 0.915f, 0.0f);
 
-	m_key_delay   = 0.1f;
+	m_key_delay   = 0.2f;
 	m_key_elapsed = 0.0f;
 }	
 
@@ -43,6 +42,9 @@ void character_callback(GLFWwindow* window, unsigned int codepoint)
 	m_command_text = Sdk::GameObject::CreateUIText();
 	auto* p_text   = m_command_text->GetComponent<S_Text>();
 
+	m_command_text->GetTransform().SetScale   (0.4f, 0.4f, 0.4f);
+	m_command_text->GetTransform().SetPosition(0.02f, 0.25f, 0.0f);
+
 	m_command = "> ";
 	UpdateCommandText();
 	
@@ -50,10 +52,13 @@ void character_callback(GLFWwindow* window, unsigned int codepoint)
 	glfwSetCharCallback(CRenderer::GetRenderWindow()->GetHandle(), character_callback);
 
 	// Initializing prompt texts
-	for(int i = 0; i < 10; ++i)
+	for(int i = 0; i < 30; ++i)
 	{
 		auto* p_text_go = Sdk::GameObject::CreateUIText();
+
+		p_text_go->GetTransform().SetScale(0.3f, 0.3f, 0.3f);
 		p_text_go->GetComponent<CTextRenderer>()->SetVisible(false);
+		p_text_go->GetComponent<CMaterial>()->SetColor(glm::vec3(0.0f, 1.0f, 0.0f));
 
 		m_free_texts.push_back(p_text_go);
 	}
@@ -140,17 +145,14 @@ void S_CommandPrompt::LogMessage(const CString& message)
 {
 	if(m_free_texts.empty())
 	{
-		printf("Empty\n");
 		auto* p_front_go       = m_used_texts.front();
 		auto* p_text_component = p_front_go->GetComponent<S_Text>();
 
 		for (auto i = 0; i < m_used_texts.size() - 1; ++i)
 			m_used_texts[i] = m_used_texts[i + 1];
 
-		p_text_component->SetSize(40);
 		p_text_component->SetText(message.Data());
-		p_text_component->SetColor(glm::vec3(0.0f, 1.0f, 0.0f));
-
+		
 		m_used_texts.pop_back();
 		m_used_texts.push_back(p_front_go);
 	}
@@ -159,9 +161,7 @@ void S_CommandPrompt::LogMessage(const CString& message)
 		auto* p_go             = m_free_texts.back();
 		auto* p_text_component = p_go->GetComponent<S_Text>();
 
-		p_text_component->SetSize(40);
 		p_text_component->SetText(message.Data());
-		p_text_component->SetColor(glm::vec3(0.0f, 1.0f, 0.0f));
 
 		m_used_texts.push_back(p_go);
 		m_free_texts.pop_back();
@@ -177,8 +177,11 @@ void S_CommandPrompt::LogMessage(const CString& message)
 
 void S_CommandPrompt::HideLogText()
 {
-	for(auto* p_text : m_used_texts)
-		p_text->GetComponent<CTextRenderer>()->SetVisible(false);
+	for (auto i = 3; i < m_used_texts.size(); ++i)
+	{
+		m_used_texts[i]->GetComponent<CTextRenderer>()->SetVisible(false);
+	}
+		
 }
 
 void S_CommandPrompt::ShowLogText()
@@ -220,7 +223,7 @@ void S_CommandPrompt::UpdatePromptLogs()
 		auto* p_renderer       = p_text->GetComponent<CTextRenderer>();
 
 		p_renderer->SetVisible(true);
-		p_text_component->SetPosition(glm::tvec2<int>(50, 800 - n_pos * 50));
+		p_text->GetTransform().SetPosition(0.02f, 0.93f - n_pos * 0.03f, 0.0f);
 
 		n_pos++;
 	}
@@ -229,5 +232,5 @@ void S_CommandPrompt::UpdatePromptLogs()
 void S_CommandPrompt::UpdateCommandText()
 {
 	auto* p_text = m_command_text->GetComponent<S_Text>();
-	p_text->Set(m_command.Data(), m_command_position, 35, glm::vec3(1.0f));
+	p_text->SetText(m_command.Data());
 }

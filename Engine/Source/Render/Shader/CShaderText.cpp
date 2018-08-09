@@ -17,7 +17,9 @@ CShaderText::CShaderText()
 void CShaderText::Begin(const SRenderData& render_data)
 {
     BindShader();
-    SetColor ("textColor", m_shader_color);
+	SetMatrix("proj",     render_data.P);
+	SetMatrix("model",    render_data.M);
+	SetColor("textColor", m_shader_color);
 
     glActiveTexture   (GL_TEXTURE0);
     glBindTexture     (GL_TEXTURE_2D, m_texture_id);

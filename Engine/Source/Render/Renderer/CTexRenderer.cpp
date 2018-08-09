@@ -26,8 +26,16 @@ void CTextRenderer::Draw(SRenderData& render_data)
         return;
     }
 
-    // Computing the MVP matrix
-    render_data.MVP = render_data.P * render_data.V * glm::mat4(1.0f);
+	const glm::mat4 translation_matrix    = glm::translate(mp_transform->GetPosition() * glm::vec3(16.0f, 9.0f, 1.0f));
+	const glm::mat4 rotation_matrix       = glm::orientate4(mp_transform->GetEulerAngles());
+	const glm::mat4 scale_maxtrix         = glm::scale(mp_transform->GetScale());
+	const glm::mat4 transformation_matrix = translation_matrix * rotation_matrix * scale_maxtrix;
+
+	render_data.M = transformation_matrix;
+	render_data.P = glm::ortho(0.0f, 16.0f, 0.0f, 9.0f);  // 16:9 aspect ratio
+
+	// No view matrix since it's screen space
+	render_data.MVP = render_data.P * render_data.M;
 
     p_material->Begin(render_data);
 
