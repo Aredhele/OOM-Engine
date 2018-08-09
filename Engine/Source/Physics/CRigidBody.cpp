@@ -283,18 +283,22 @@ void CRigidBody::SetPosition(const glm::vec3& position)
 	mp_body->SetTransform(q3Vec3(position.x, position.z, position.y));
 }
 
-void CRigidBody::SetOrientation(const glm::vec3& rotation)
+void CRigidBody::SetOrientationX(float angle)
 {
 	const q3Vec3 position = mp_body->GetTransform().position;
-	const q3Vec3 axis_x   = (rotation.x != 0.0f) ? q3Vec3(1.0f, 0.0f, 0.0f) : q3Vec3(0.0f, 0.0f, 0.0f);
-	const q3Vec3 axis_y   = (rotation.z != 0.0f) ? q3Vec3(0.0f, 1.0f, 0.0f) : q3Vec3(0.0f, 0.0f, 0.0f);
-	const q3Vec3 axis_z   = (rotation.y != 0.0f) ? q3Vec3(0.0f, 0.0f, 1.0f) : q3Vec3(0.0f, 0.0f, 0.0f);
+	mp_body->SetTransform(position, q3Vec3(1.0f, 0.0f, 0.0f), glm::radians(angle));
+}
 
-	/*mp_body->SetTransform(position, axis_x, rotation.x);
-	mp_body->SetTransform(position, axis_y, rotation.z);
-	mp_body->SetTransform(position, axis_z, rotation.y);*/
+void CRigidBody::SetOrientationY(float angle)
+{
+	const q3Vec3 position = mp_body->GetTransform().position;
+	mp_body->SetTransform(position, q3Vec3(0.0f, 0.0f, 1.0f), glm::radians(angle));
+}
 
-	mp_body->SetTransform(position, q3Vec3(0.0f, 0.0f, 1.0f), 45.0f);
+void CRigidBody::SetOrientationZ(float angle)
+{
+	const q3Vec3 position = mp_body->GetTransform().position;
+	mp_body->SetTransform(position, q3Vec3(0.0f, 1.0f, 0.0f), glm::radians(angle));
 }
 
 void CRigidBody::SetLinearVelocity(const glm::vec3& velocity)

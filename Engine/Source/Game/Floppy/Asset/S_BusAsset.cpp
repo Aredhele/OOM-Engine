@@ -15,7 +15,18 @@
 
 /* virtual */ void S_BusAsset::Start()
 {
-	Sdk::GameObject::AddMesh(GetGameObject(), "Asset_Cube");
+	auto* p_game_object = GetGameObject();
+
+	Sdk::GameObject::AddMesh(p_game_object, "Asset_Cube");
+
+	// Adds the collider
+	auto* p_body = p_game_object->AddComponent<CRigidBody>();
+	auto* p_box = p_game_object->AddComponent<CBoxCollider>();
+
+	p_body->SetBodyType(CRigidBody::EBodyType::Kinematic);
+	p_body->SetOrientationZ(GetTransform()->GetEulerAngles().z);
+
+	p_box->SetExtent(glm::vec3(4.0f, 4.0f, 4.0f));
 }
 
 /* virtual */ void S_BusAsset::Update()

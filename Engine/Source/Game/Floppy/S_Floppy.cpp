@@ -29,7 +29,7 @@
 	p_material->SetTexture(Sdk::Import::ImportTexture("Resources/Texture/Floppy_ui.jpg"));
 
 	mp_floppy_sprite->GetTransform().SetPosition(0.96f, 0.06f, 0.0f);
-	mp_text->Set("0 / 1.44 M B", glm::tvec2<int>(1430, 35), 45, glm::vec3(1.0f));
+	mp_text->Set("0.00 / 1.44 M B", glm::tvec2<int>(1390, 35), 45, glm::vec3(1.0f));
 }
 
 /*virtual */ void S_Floppy::Update()
@@ -46,11 +46,13 @@ void S_Floppy::AddKiloByte(uint32_t kilo_bytes)
 {
 	m_current_size += kilo_bytes;
 
-	// TODO : To string function ?
-	char text_buffer[128] = { '\0' };
-	sprintf(text_buffer, "%d / 1.44 M B", m_current_size);
 
-	mp_text->Set(text_buffer, glm::tvec2<int>(1440, 35), 45, glm::vec3(1.0f));
+	const float mega_byte = (float)m_current_size / 1000.0f;
+
+	char text_buffer[32] = { '\0' };
+	sprintf(text_buffer, "%.2f / 1.44 M B", mega_byte);
+
+	mp_text->Set(text_buffer, glm::tvec2<int>(1390, 35), 45, glm::vec3(1.0f));
 }
 
 uint32_t S_Floppy::GetLimitSize() const

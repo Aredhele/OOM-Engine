@@ -50,8 +50,12 @@ const glm::vec3& CTransform::GetScale() const
 glm::vec3 CTransform::GetEulerAngles() const
 {
 	// Warning - Quaternion flip
-	const glm::vec3 euler(glm::eulerAngles(m_q_orientation));
-	return glm::vec3(euler.x, euler.z, euler.y);
+	glm::vec3 euler(glm::degrees(glm::eulerAngles(m_q_orientation)));
+
+	if (euler.z < 90.0f && euler.z > -90.0f)
+		euler.z = -euler.z;
+
+	return glm::vec3(euler.x, euler.y, euler.z);
 }
 
 const glm::quat& CTransform::GetOrientation() const

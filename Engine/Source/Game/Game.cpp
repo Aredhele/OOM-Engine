@@ -131,7 +131,7 @@ void LoadDemoScenePhysics()
 	p_ground_body_3->SetBodyType(CRigidBody::EBodyType::Static);
 	p_ground_body_4->SetBodyType(CRigidBody::EBodyType::Static);
 
-	p_ground_body_2->SetOrientation(glm::vec3(45.0f, 0.0f, 0.0f));
+	p_ground_body_2->SetOrientationX(45.0f);
 
 	// Controller
 	auto* p_controller = Sdk::GameObject::CreateEmpty();

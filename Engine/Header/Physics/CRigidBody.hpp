@@ -52,7 +52,9 @@ public:
 	void SetLinearDamping			(const float damping);
 	void SetAngularDamping			(const float damping);
 	void SetPosition				(const glm::vec3& position);
-	void SetOrientation				(const glm::vec3& rotation);
+	void SetOrientationX			(float angle);
+	void SetOrientationY			(float angle);
+	void SetOrientationZ			(float angle);
     void SetLinearVelocity          (const glm::vec3& velocity);
     void SetAngularVelocity         (const glm::vec3& velocity);
 	void AddTorque					(const glm::vec3& torque);
