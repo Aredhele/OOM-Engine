@@ -47,7 +47,8 @@ void character_callback(GLFWwindow* window, unsigned int codepoint)
 	m_command_text->GetTransform().SetScale   (0.4f, 0.4f, 0.4f);
 	m_command_text->GetTransform().SetPosition(0.02f, 0.25f, 0.0f);
 
-	m_command = "> ";
+	CString username = getenv("USERNAME");
+	m_command = username + " > ";
 	UpdateCommandText();
 	
 	sp_instance = this;
@@ -93,10 +94,10 @@ void character_callback(GLFWwindow* window, unsigned int codepoint)
 		if (Sdk::Input::IsKeyPressed(GLFW_KEY_ENTER) && m_key_elapsed >= m_key_delay)
 		{
 			m_key_elapsed = 0.0f;
-			LogMessage    (m_command);
+			LogMessage    (m_command, false);
 			ProcessCommand(m_command);
-
-			m_command = "> ";
+			CString username = getenv("USERNAME");
+			m_command = username + " > ";
 			UpdateCommandText();
 		}
 
@@ -149,10 +150,15 @@ bool S_CommandPrompt::IsOpen() const
 	return (m_state == EPromptState::Open);
 }
 
-void S_CommandPrompt::LogMessage(const CString& _message)
+void S_CommandPrompt::LogMessage(const CString& _message, bool isSystem)
 {
+
 	CString message = CString(_message.Data());
 	message.toUpper();
+	if (isSystem)
+	{
+		message = "[SYSTEM]: " + message;
+	}
 	if(m_free_texts.empty())
 	{
 		auto* p_front_go       = m_used_texts.front();
