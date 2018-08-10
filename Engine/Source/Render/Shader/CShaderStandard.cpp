@@ -13,6 +13,7 @@ namespace Oom
 
 CShaderStandard::CShaderStandard()
 {
+	m_uv_offset = glm::vec2(2.0f);
     m_shader_id = SShaderManager::GetProgram(EShaderType::Standard);
 }
 
@@ -23,6 +24,7 @@ void CShaderStandard::Begin(const SRenderData& render_data)
     SetMatrix("M",   render_data.M);
     SetMatrix("MVP", render_data.MVP);
 
+	SetVector("uvOffset",		  m_uv_offset);
     SetVector("lightColor",       render_data.directional.m_light_color);
     SetVector("lightDirection",   render_data.directional.m_direction);
     SetFloat ("lightIntensity",   render_data.directional.m_light_intensity);

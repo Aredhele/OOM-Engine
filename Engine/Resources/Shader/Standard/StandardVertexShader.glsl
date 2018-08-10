@@ -27,6 +27,7 @@ uniform mat4 M;
 uniform mat4 PR;
 uniform mat4 MVP;
 uniform vec3 lightDirection;
+uniform vec2 uvOffset;
 
 // Lighting
 struct PointLight
@@ -47,7 +48,9 @@ void main()
     light_vector   = -(vec4(lightDirection, 1.0f)).xyz;   //  -(vec4(lightDirection, 1.0f)).xyz;
 
     surface_normal = (M * vec4(vertex_normal, 0.0f)).xyz;
-    uv             = vertex_uv;
+
+	vec2 uv_tmp    = vertex_uv + uvOffset;
+    uv             = vec2(uv_tmp.x, 1.0f - uv_tmp.y);
 
     if(lightCount > 0)
     {

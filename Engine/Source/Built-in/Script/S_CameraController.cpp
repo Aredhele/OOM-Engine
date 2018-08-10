@@ -55,7 +55,7 @@
 	GetTransform()->Translate(GetTransform()->GetForward() * static_cast<float>(y_direction) * CTime::delta_time * m_speed * speed_coefficient);
 	GetTransform()->Translate(GetTransform()->GetRight  () * static_cast<float>(x_direction) * CTime::delta_time * m_speed * speed_coefficient);
 
-	GetTransform()->Rotate(glm::vec3(angleY, 0.0f, 0.0f)); 
+	GetTransform()->Rotate     (glm::vec3(angleY, 0.0f, 0.0f)); 
 	GetTransform()->RotateWorld(glm::vec3(0.0f, 0.0f, angleX));
 }
 

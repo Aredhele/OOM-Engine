@@ -56,7 +56,7 @@ void CBoxCollider::CreateBox()
 		);
 
 		// Setting the box def
-		box_def.Set(local_space, q3Vec3(m_extent.x, m_extent.z, m_extent.y));
+		box_def.Set(local_space, q3Vec3(m_extent.x, m_extent.z, m_extent.x));
 
 		// Creating the box
 		mp_box = p_body->mp_body->AddBox(box_def);

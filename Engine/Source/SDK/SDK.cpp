@@ -136,7 +136,7 @@ namespace Sdk
 			auto* p_script      = p_text_object->AddComponent<S_Text>();
 
 			p_material->SetShader(EShaderType::Text);
-			p_material->SetTexture(CTextureImporter::ImportTexture("Resources/Texture/Font.png"));
+			p_material->SetTexture(CTextureImporter::ImportTexture("Resources/Texture/T_Font.png"));
 
 			return p_text_object;
         }

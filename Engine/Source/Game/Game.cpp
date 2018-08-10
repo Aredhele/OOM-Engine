@@ -31,12 +31,13 @@ void LoadGameScene()
 	Sdk::Debug::EnableGizmo(EGizmo::AllTransforms);
 	Sdk::Debug::EnableGizmo(EGizmo::AllPointLights);
 	Sdk::Debug::EnableGizmo(EGizmo::AllAudioSources);
-	Sdk::Debug::EnableGizmo(EGizmo::AllAudioListeners);
 	Sdk::Debug::EnableGizmo(EGizmo::AllDirectionalLights);
 
 	// Importing 3D assets
-	Sdk::Import::ImportMesh("Resources/Mesh/Assets.obj");
-	Sdk::Import::ImportMesh("Resources/Mesh/Environment_03.obj");
+	Sdk::Import::ImportMesh("Resources/Mesh/Mesh_Asset.obj");
+	Sdk::Import::ImportMesh("Resources/Mesh/Mesh_Floppy.obj");
+	Sdk::Import::ImportMesh("Resources/Mesh/Mesh_Super_Asset.obj");
+	Sdk::Import::ImportMesh("Resources/Mesh/Mesh_Environment.obj");
 
 	// Setting up the scene
 	Prefab::CreatePlayer();
@@ -65,8 +66,8 @@ void LoadDemoSceneAudio()
 	auto* p_camera = Sdk::GameObject::CreateFreeCamera();
 
 	// Loads 2 sounds from a file
-	buffer_1.LoadFromFile("Resources/Music/Town-Academy.ogg");
-	buffer_2.LoadFromFile("Resources/Music/Town-Dungeon.ogg");
+	buffer_1.LoadFromFile("Resources/Music/Music_floppy_jam.ogg");
+	buffer_2.LoadFromFile("Resources/Music/Music_floppy_jam.ogg");
 
 	// Creates 2 game objets with audio source attatched
 	auto* p_source_1_go = Sdk::GameObject::CreateAudioSource3D();

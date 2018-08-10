@@ -14,10 +14,11 @@ class S_BusAsset : public CBehavior, public IAsset
 {
 public:
 
-	void Awake    () final;
-	void Start    () final;
-	void Update   () final;
-	void OnDestroy() final;
+	void Awake				()								final;
+	void Start				()								final;
+	void Update				()								final;
+	void OnDestroy			()								final;
+	void OnCollisionEnter	(const CCollision& collision)	final;
 
 public:
 

@@ -26,6 +26,8 @@ public:
 
 	void StartConveyorBelt(ESpawnZone zone);
 	void StopConveyorBelt (ESpawnZone zone);
+	void OpenDoor	      (ESpawnZone zone);
+	void CloseDoor		  (ESpawnZone zone);
 
 private:
 
@@ -37,6 +39,7 @@ private:
 	float		     m_key_elapsed;
 
 	// Game logic
+	bool			 m_door_state    [3];
 	bool			 m_conveyor_state[4];
 };
 
