@@ -42,7 +42,7 @@
 	// Check distance from the origin
 	const float distance = glm::distance(position, target);
 
-	if(distance <= 20.0f)
+	if(distance <= 15.0f)
 	{
 		// Finds the floppy
 		auto* p_floppy_go = CGameObject::FindWithTag("Floppy");

@@ -92,7 +92,7 @@ void CPhysicWorld::Update()
 			if (CGizmosManager::IsGizmoEnabled(CGizmosManager::EGizmo::AllColliders))
 			{
 				DrawCollider(
-					p_collider->GetTransform()->GetPosition(),
+					p_collider->GetTransform()->GetPosition() + p_collider->GetLocalPosition(),
 					p_collider->GetExtent(),
 					p_collider->GetTransform()->GetRotationMatrix(),
 					glm::vec3(0.1f, 0.1f, 0.9f));
