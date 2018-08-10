@@ -10,8 +10,9 @@
 
 /* virtual */ void S_ConveyorAsset::Awake()
 {
-	m_speed      = 3.0f;
-	m_asset_type = EAsset::ConveyorAsset;
+	m_speed            = 3.0f;
+	m_asset_type       = EAsset::ConveyorAsset;
+	m_is_being_cleaned = false;
 }
 
 /* virtual */ void S_ConveyorAsset::Start()
@@ -24,7 +25,8 @@
 	auto* p_body = p_game_object->AddComponent<CRigidBody>();
 	auto* p_box  = p_game_object->AddComponent<CBoxCollider>();
 
-	p_body->SetBodyType(CRigidBody::EBodyType::Kinematic);
+	p_body->SetGravityScale(0.0f);
+	p_body->SetBodyType(CRigidBody::EBodyType::Dynamic);
 	p_body->SetOrientationZ(GetTransform()->GetEulerAngles().z);
 
 	p_box->SetExtent(glm::vec3(4.0f, 4.0f, 4.0f));
@@ -32,8 +34,11 @@
 
 /* virtual */ void S_ConveyorAsset::Update()
 {
+	if (m_is_being_cleaned)
+		return;
+
 	auto& transform = *GetTransform();
-	auto& position  = GetTransform()->GetPosition();
+	auto& position  =  GetTransform()->GetPosition();
 
 	// The is the target that the asset must reach
 	const glm::vec3 target(0.0f, 0.0f, position.z);
@@ -70,4 +75,15 @@
 
 	p_sound_compo->SetSound("Resources/Sound/sound_asset_damaged.ogg");
 	Destroy(p_death_sound, 1.5f);
+}
+
+void S_ConveyorAsset::Clean()
+{
+	auto* p_body = GetGameObject()->GetComponent<CRigidBody>();
+
+	if (p_body)
+		p_body->SetGravityScale(1.0f);
+
+	m_is_being_cleaned = true;
+	Destroy(GetGameObject(), 3.0f);
 }

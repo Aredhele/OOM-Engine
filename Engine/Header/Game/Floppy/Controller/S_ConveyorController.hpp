@@ -18,12 +18,17 @@ public:
 	void Update    () final;
 	void OnDestroy () final;
 
+	void StartClean			 ();
+	void StopClean			 ();
 	void ActivateConveyor	 ();
 	void DesactivateConveyor ();
-
+	
 private:
 
 	// State
+	bool			m_is_cleaning;	
+	float			m_clean_elapsed;
+
 	bool			m_is_activated;
 	float			m_uv_offset;
 	GLuint			m_activated_texture;
@@ -34,6 +39,8 @@ private:
 	CAudioSource3D* mp_source_switch_off;
 	CAudioBuffer    m_audio_buffer_switch_on;
 	CAudioBuffer    m_audio_buffer_shutdown;
+
+	glm::vec3		m_right;
 };
 
 #endif // !OOM_ENGINE_S_CONVEYOR_AUDIO_CONTROLLER_HPP__
