@@ -22,6 +22,12 @@ public:
 
 	void OpenDoor  ();
 	void CloseDoor ();
+
+private:
+
+	bool            m_is_closed;
+	CAudioSource3D* mp_source_door;
+	CAudioBuffer    m_audio_buffer_door;
 };
 
 #endif // !OOM_ENGINE_S_CONVEYOR_AUDIO_CONTROLLER_HPP__

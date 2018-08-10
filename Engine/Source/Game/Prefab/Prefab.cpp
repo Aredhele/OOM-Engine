@@ -83,9 +83,9 @@ void CreateDoors()
 	auto* p_door_block_2 = Sdk::GameObject::CreateGameObjectFromMesh("Door_Block_02");
 	auto* p_door_block_3 = Sdk::GameObject::CreateGameObjectFromMesh("Door_Block_03");
 
-	p_door_block_1->SetName("Door_Block_01");
-	p_door_block_2->SetName("Door_Block_02");
-	p_door_block_3->SetName("Door_Block_03");
+	p_door_block_1->SetName("Door_Block_R1");
+	p_door_block_2->SetName("Door_Block_R2");
+	p_door_block_3->SetName("Door_Block_R3");
 
 	p_door_block_1->SetTag("Door_Block");
 	p_door_block_2->SetTag("Door_Block");

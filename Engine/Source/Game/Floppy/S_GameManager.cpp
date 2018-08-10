@@ -8,6 +8,7 @@
 #include "Game/Floppy/Asset/S_ConveyorAsset.hpp"
 #include "Game/Floppy/Prompt/S_CommandPrompt.hpp"
 #include "Game/Floppy/Controller/S_ConveyorController.hpp"
+#include "Game/Floppy/Controller/S_DoorController.hpp"
 
 /*virtual */ void S_GameManager::Awake()
 {
@@ -27,6 +28,10 @@
 
 	if(p_prompt_go)
 		mp_prompt = p_prompt_go->GetComponent<S_CommandPrompt>();
+
+	m_door_state[0] = true;
+	m_door_state[1] = true;
+	m_door_state[2] = true;
 
 	m_conveyor_state[0] = true;
 	m_conveyor_state[1] = true;
@@ -82,7 +87,7 @@ void S_GameManager::StartConveyorBelt(ESpawnZone zone)
 			}
 		}
 
-		auto spawner   = CGameObject::FindWithTag(tag_spawner);
+		auto spawner    = CGameObject::FindWithTag(tag_spawner);
 		auto conveyors  = CGameObject::FindGameObjectsWithTag(tag_conveyor);
 		auto controller = CGameObject::Find("Conveyor_" + tag_spawner);
 
@@ -157,10 +162,70 @@ void S_GameManager::StopConveyorBelt(ESpawnZone zone)
 
 void S_GameManager::OpenDoor(ESpawnZone zone)
 {
-	// TODO
+	if (!m_door_state[zone]) 
+	{
+		m_door_state[zone] = true;
+
+		CString door_name;
+		CString door_type;
+		switch (zone)
+		{
+			case R1: door_name = "Door_Block_R1"; door_type = "R1"; break;
+			case R2: door_name = "Door_Block_R2"; door_type = "R2"; break;
+			case R3: door_name = "Door_Block_R3"; door_type = "R3"; break;
+
+			default:
+			{
+				return;
+			}
+		}
+
+		auto* p_door = CGameObject::Find(door_name);
+
+		if (p_door)
+			p_door->GetComponent<S_DoorController>()->OpenDoor();
+
+		mp_prompt->LogMessage("> Warning : Door " + door_type + " opened");
+	}
 }
 
 void S_GameManager::CloseDoor(ESpawnZone zone)
 {
-	// TODO
+	// Case 1 : The door is already closed
+	// Nothing to do
+	if (!m_door_state[zone]) {
+		return;
+	}
+
+	// Case 2 : There is already a door closed
+	// Unauthorized action
+	for (bool state : m_door_state)
+	{
+		if (!state)
+			return;
+	}
+
+	// Case 3 : Authorized close
+	m_door_state[zone] = false;
+
+	CString door_name;
+	CString door_type;
+	switch (zone)
+	{
+		case R1: door_name = "Door_Block_R1"; door_type = "R1"; break;
+		case R2: door_name = "Door_Block_R2"; door_type = "R2"; break;
+		case R3: door_name = "Door_Block_R3"; door_type = "R3"; break;
+
+		default:
+		{
+			return;
+		}
+	}
+
+	auto* p_door = CGameObject::Find(door_name);
+
+	if(p_door)
+		p_door->GetComponent<S_DoorController>()->CloseDoor();
+
+	mp_prompt->LogMessage("> Warning : Door " + door_type + " closed");
 }
