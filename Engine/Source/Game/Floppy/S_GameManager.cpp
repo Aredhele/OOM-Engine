@@ -106,12 +106,13 @@ void S_GameManager::StartConveyorBelt(ESpawnZone zone)
 
 		CString tag_spawner;
 		CString tag_conveyor;
+		CString code_CB;
 		switch (zone)
 		{
-			case C1: tag_spawner = "C1"; tag_conveyor = "C1_Conveyor"; break;
-			case C2: tag_spawner = "C2"; tag_conveyor = "C2_Conveyor"; break;
-			case C3: tag_spawner = "C3"; tag_conveyor = "C3_Conveyor"; break;
-			case C4: tag_spawner = "C4"; tag_conveyor = "C4_Conveyor"; break;
+			case C1: code_CB = "CB1";  tag_spawner = "C1"; tag_conveyor = "C1_Conveyor"; break;
+			case C2: code_CB = "CB2"; tag_spawner = "C2"; tag_conveyor = "C2_Conveyor"; break;
+			case C3: code_CB = "CB3"; tag_spawner = "C3"; tag_conveyor = "C3_Conveyor"; break;
+			case C4: code_CB = "CB4"; tag_spawner = "C4"; tag_conveyor = "C4_Conveyor"; break;
 
 			default:
 			{
@@ -135,7 +136,11 @@ void S_GameManager::StartConveyorBelt(ESpawnZone zone)
 			p_controller->SetEnabled(true);
 		}
 
-		mp_prompt->LogMessage("> Warning : Conveyor " + tag_spawner + " started");
+		mp_prompt->LogMessage(code_CB + " STARTED");
+	}
+	else
+	{
+		mp_prompt->LogMessage("CB ALREADY STARTED");
 	}
 }
 
@@ -144,6 +149,7 @@ void S_GameManager::StopConveyorBelt(ESpawnZone zone)
 	// Case 1 : The conveyor is already stopped
 	// Nothing to do
 	if (!m_conveyor_state[zone - 3]) {
+		mp_prompt->LogMessage("CB ALREADY STOPPED");
 		return;
 	}
 
@@ -152,7 +158,10 @@ void S_GameManager::StopConveyorBelt(ESpawnZone zone)
 	for (bool state : m_conveyor_state)
 	{
 		if (!state)
+		{
+			mp_prompt->LogMessage("YOU CAN'T STOP SEVERAL CB AT THE SAME TIME");
 			return;
+		}
 	}
 
 	// Case 3 : Authorized stop
@@ -160,12 +169,13 @@ void S_GameManager::StopConveyorBelt(ESpawnZone zone)
 
 	CString tag_spawner;
 	CString tag_conveyor;
+	CString code_CB;
 	switch(zone)
 	{
-		case C1: tag_spawner = "C1"; tag_conveyor = "C1_Conveyor"; break;
-		case C2: tag_spawner = "C2"; tag_conveyor = "C2_Conveyor"; break;
-		case C3: tag_spawner = "C3"; tag_conveyor = "C3_Conveyor"; break;
-		case C4: tag_spawner = "C4"; tag_conveyor = "C4_Conveyor"; break;
+		case C1: code_CB = "CB1";  tag_spawner = "C1"; tag_conveyor = "C1_Conveyor"; break;
+		case C2: code_CB = "CB2"; tag_spawner = "C2"; tag_conveyor = "C2_Conveyor"; break;
+		case C3: code_CB = "CB3"; tag_spawner = "C3"; tag_conveyor = "C3_Conveyor"; break;
+		case C4: code_CB = "CB4"; tag_spawner = "C4"; tag_conveyor = "C4_Conveyor"; break;
 
 		default:
 		{
@@ -189,7 +199,7 @@ void S_GameManager::StopConveyorBelt(ESpawnZone zone)
 		p_controller->SetEnabled(false);
 	}
 
-	mp_prompt->LogMessage("> Warning : Conveyor " + tag_spawner + " stopped");
+	mp_prompt->LogMessage(code_CB + " STOPPED");
 }
 
 void S_GameManager::OpenDoor(ESpawnZone zone)
@@ -200,11 +210,12 @@ void S_GameManager::OpenDoor(ESpawnZone zone)
 
 		CString door_name;
 		CString door_type;
+		CString code_door;
 		switch (zone)
 		{
-			case R1: door_name = "Door_Block_R1"; door_type = "R1"; break;
-			case R2: door_name = "Door_Block_R2"; door_type = "R2"; break;
-			case R3: door_name = "Door_Block_R3"; door_type = "R3"; break;
+			case R1: code_door = "D1";  door_name = "Door_Block_R1"; door_type = "R1"; break;
+			case R2: code_door = "D2"; door_name = "Door_Block_R2"; door_type = "R2"; break;
+			case R3: code_door = "D3"; door_name = "Door_Block_R3"; door_type = "R3"; break;
 
 			default:
 			{
@@ -217,7 +228,11 @@ void S_GameManager::OpenDoor(ESpawnZone zone)
 		if (p_door)
 			p_door->GetComponent<S_DoorController>()->OpenDoor();
 
-		mp_prompt->LogMessage("> Warning : Door " + door_type + " opened");
+		mp_prompt->LogMessage(code_door + "OPENED");
+	}
+	else
+	{
+		mp_prompt->LogMessage("DOOR ALREADY OPENED");	
 	}
 }
 
@@ -226,6 +241,7 @@ void S_GameManager::CloseDoor(ESpawnZone zone)
 	// Case 1 : The door is already closed
 	// Nothing to do
 	if (!m_door_state[zone]) {
+		mp_prompt->LogMessage("DOOR ALREDY CLOSED");
 		return;
 	}
 
@@ -234,7 +250,10 @@ void S_GameManager::CloseDoor(ESpawnZone zone)
 	for (bool state : m_door_state)
 	{
 		if (!state)
+		{
+			mp_prompt->LogMessage("YOU CAN'T CLOSE SEVERAL DOORS AT THE SAME TIME");
 			return;
+		}
 	}
 
 	// Case 3 : Authorized close
@@ -242,11 +261,12 @@ void S_GameManager::CloseDoor(ESpawnZone zone)
 
 	CString door_name;
 	CString door_type;
+	CString code_door;
 	switch (zone)
 	{
-		case R1: door_name = "Door_Block_R1"; door_type = "R1"; break;
-		case R2: door_name = "Door_Block_R2"; door_type = "R2"; break;
-		case R3: door_name = "Door_Block_R3"; door_type = "R3"; break;
+		case R1: code_door = "D1";  door_name = "Door_Block_R1"; door_type = "R1"; break;
+		case R2: code_door = "D2"; door_name = "Door_Block_R2"; door_type = "R2"; break;
+		case R3: code_door = "D3"; door_name = "Door_Block_R3"; door_type = "R3"; break;
 
 		default:
 		{
@@ -259,7 +279,7 @@ void S_GameManager::CloseDoor(ESpawnZone zone)
 	if(p_door)
 		p_door->GetComponent<S_DoorController>()->CloseDoor();
 
-	mp_prompt->LogMessage("> Warning : Door " + door_type + " closed");
+	mp_prompt->LogMessage(code_door + " CLOSED");
 }
 
 void S_GameManager::TryActivateFirewall()
@@ -338,7 +358,7 @@ void S_GameManager::CleanAllCB()
 	// Case 1 : Cooldown left
 	if(m_clean_up_elapsed < m_clean_up_cooldown)
 	{
-		CString message = "> Cleanup not ready (";
+		CString message = "CLEANUP NOT READY (";
 		const int time_left = m_firewall_cooldown - m_firewall_elapsed;
 
 		// String to int
@@ -346,7 +366,7 @@ void S_GameManager::CleanAllCB()
 		sprintf(buffer, "%d", time_left);
 
 		message += buffer;
-		message += " s left)";
+		message += " SECONDS LEFT)";
 
 		mp_prompt->LogMessage(message.Data());
 		return;
@@ -396,7 +416,7 @@ void S_GameManager::CleanAllCB()
 	if (p_spawner_3) p_spawner_3->GetComponent<S_AssetSpawner>()->StartClean();
 	if (p_spawner_4) p_spawner_4->GetComponent<S_AssetSpawner>()->StartClean();
 
-	mp_prompt->LogMessage("> Conveyors cleaned up");
+	mp_prompt->LogMessage("ALL CB CLEANED UP");
 }
 
 void S_GameManager::StopCleanAllCB()
@@ -426,7 +446,7 @@ void S_GameManager::StopCleanAllCB()
 	if (p_spawner_3) p_spawner_3->GetComponent<S_AssetSpawner>()->StopClean();
 	if (p_spawner_4) p_spawner_4->GetComponent<S_AssetSpawner>()->StopClean();
 
-	mp_prompt->LogMessage("> Clean up finished");
+	mp_prompt->LogMessage("CB CLEAN UP FINISHED");
 }
 
 void S_GameManager::ShowHelp()
@@ -447,8 +467,13 @@ void S_GameManager::ShowHelp()
 
 void S_GameManager::StartHacking()
 {
+	if (m_startedHacking)
+	{
+		mp_prompt->LogMessage("ALREADY HACKING");
+	}
 	// TODO start spawning waves
-	mp_prompt->LogMessage("START HACKING");
+	mp_prompt->LogMessage("STARTING HACKING");
+	m_startedHacking = true;
 }
 
 void S_GameManager::ProcessUnknownCommand(const CString& command)
@@ -473,6 +498,15 @@ void S_GameManager::ProcessUnknownCommand(const CString& command)
 	{
 		mp_prompt->LogMessage("ERROR : COMMAND NOT FOUND");
 	}
+}
+
+void S_GameManager::GameOver()
+{
+	mp_prompt->OpenPrompt();
+	mp_prompt->LogMessage("F#TA‡AL E&RORR : FLOÁPY DI˘K OOV\\RFLO|ING");
+	mp_prompt->LogMessage("SY[STËM CRAAA'A{SHI@NG");
+	//TODO wait for 2 seconds and crash the game
+	while (true) {} // OR CRASH THE GAME LIKE THAT YEAH !
 }
 
 void S_GameManager::DoCapcha()
