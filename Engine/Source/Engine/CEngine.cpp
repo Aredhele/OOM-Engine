@@ -159,6 +159,8 @@ void CEngine::ReadConfiguration()
 
 void CEngine::Run()
 {
+	m_running = true;
+
     // Getting GLFW window
     GLFWwindow* p_handle = mp_renderer->GetWindow()->GetHandle();
 
@@ -169,7 +171,8 @@ void CEngine::Run()
     // Setting up the scene
     LoadScene();
 
-    while (glfwWindowShouldClose(p_handle) == 0 &&
+    while (m_running && 
+		   glfwWindowShouldClose(p_handle) == 0 &&
            glfwGetKey(p_handle, GLFW_KEY_ESCAPE) != GLFW_PRESS)
     {
         const double current = glfwGetTime();
@@ -422,7 +425,7 @@ void CEngine::GameObjectUpdate(GLFWwindow* p_window, const float delta_time)
 
 /* static */ void CEngine::Exit()
 {
-	glfwDestroyWindow(CRenderer::GetRenderWindow()->GetHandle());
+	m_running = false;
 }
 
 /* static */ void CEngine::RegisterBehavior(CBehavior* p_behavior)

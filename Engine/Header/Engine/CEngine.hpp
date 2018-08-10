@@ -86,6 +86,8 @@ private:
 
 private:
 
+	bool					  m_running;
+
     CRenderer*                mp_renderer     = nullptr;
     CPhysicWorld*             mp_physic_world = nullptr;
     CAudioEngine*             mp_audio_engine = nullptr;
