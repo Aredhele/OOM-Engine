@@ -30,6 +30,7 @@ public:
 	void CloseDoor		    (ESpawnZone zone);
 	void ActivateFireWall   ();
 	void DeactivateFireWall ();
+	void CleanConveyor		(ESpawnZone zone);
 
 private:
 
