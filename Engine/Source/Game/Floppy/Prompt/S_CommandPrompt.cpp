@@ -47,7 +47,8 @@ void character_callback(GLFWwindow* window, unsigned int codepoint)
 	m_command_text->GetTransform().SetScale   (0.4f, 0.4f, 0.4f);
 	m_command_text->GetTransform().SetPosition(0.02f, 0.25f, 0.0f);
 
-	m_username = getenv("USERNAME"); // TODO tronque to avoid too big username
+	m_username = getenv("USERNAME");
+	m_username.Resize(10);
 	m_command = m_username + " > ";
 	UpdateCommandText();
 	
