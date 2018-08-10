@@ -5,7 +5,7 @@
 /// \author     Vincent STEHLY--CALISTO
 
 #include "Game/Floppy/Player/S_Player.hpp"
-#include "Game/Floppy/Util/S_DestroySound.hpp"
+#include "Game/Floppy/Util/S_SoundSource.hpp"
 
 /* virtual */ void S_Player::Awake()
 {
@@ -51,7 +51,8 @@
 			 auto* p_sound_go = Instantiate(ray_cast.GetGameObject()->GetTransform().GetPosition());
 
 			 // Adds the audio controller
-			 p_sound_go->AddComponent<S_DestroySound>();
+			 auto* p_source = p_sound_go->AddComponent<S_SoundSource>();
+			 p_source->SetSound("resources/Sound/sound_bigasset_killed.ogg");
 
 			 // Delayed destroy
 			 Destroy(p_sound_go, 2.0f);

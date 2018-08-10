@@ -36,6 +36,7 @@ private:
 
 private:
 
+	bool					 m_block_conveyor;
 	std::vector<CAssetWave*> m_waves_to_process;
 	std::vector<CAssetWave*> m_processing_waves;
 };

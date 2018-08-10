@@ -9,6 +9,9 @@
 
 #include "SDK/SDK.hpp"
 
+// Forward declaration
+class S_GameManager;
+
 class S_CommandPrompt : public CBehavior
 {
 public:
@@ -54,6 +57,8 @@ private:
 	void UpdatePromptLogs ();
 	void UpdateCommandText();
 
+	void ProcessCommand   (const CString& command);
+
 private:
 
 	EPromptState	m_state;
@@ -68,11 +73,14 @@ private:
 	glm::vec3		m_prompt_position_close;
 
 	
-	Texts	     m_used_texts;
-	Texts	     m_free_texts;
-	CString      m_command;
-	Text		 m_command_text = nullptr;
-	CGameObject* mp_prompt      = nullptr;
+	Texts	       m_used_texts;
+	Texts	       m_free_texts;
+	CString        m_command;
+	Text		   m_command_text  = nullptr;
+	CGameObject*   mp_prompt       = nullptr;
+
+	// Buffer
+	S_GameManager* mp_game_manager = nullptr;
 
 private:
 

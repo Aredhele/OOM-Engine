@@ -37,6 +37,14 @@ void S_SpawnerManager::CreateSpawners()
 	m_asset_spawners.push_back(CGameObject::Instantiate(glm::vec3( 47.0f,  40.0f, 4.0f), glm::vec3(1.0f), glm::vec3(0.0f, 0.0,  135.0f))); // C3
 	m_asset_spawners.push_back(CGameObject::Instantiate(glm::vec3( 38.0f, -45.0f, 4.0f), glm::vec3(1.0f), glm::vec3(0.0f, 0.0,   45.0f))); // C4
 
+	m_asset_spawners[0]->SetTag("R1");
+	m_asset_spawners[1]->SetTag("R2");
+	m_asset_spawners[2]->SetTag("R3");
+	m_asset_spawners[3]->SetTag("C1");
+	m_asset_spawners[4]->SetTag("C2");
+	m_asset_spawners[5]->SetTag("C3");
+	m_asset_spawners[6]->SetTag("C4");
+
 	for (auto p_spawner : m_asset_spawners)
 	{
 		p_spawner->AddComponent<S_AssetSpawner>();

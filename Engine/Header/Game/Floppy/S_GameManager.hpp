@@ -8,6 +8,7 @@
 #define OOM_ENGINE_S_GAME_MANAGER_HPP__
 
 #include "SDK/SDK.hpp"
+#include "Game/Floppy/Asset/S_AssetSpawner.hpp"
 
 // Forward declaration
 class S_CommandPrompt;
@@ -21,6 +22,11 @@ public:
 	void Update    () final;
 	void OnDestroy () final;
 
+public:
+
+	void StartConveyorBelt(ESpawnZone zone);
+	void StopConveyorBelt (ESpawnZone zone);
+
 private:
 
 	CGameObject*        mp_floppy = nullptr;
@@ -29,6 +35,9 @@ private:
 
 	float		     m_key_delay;
 	float		     m_key_elapsed;
+
+	// Game logic
+	bool			 m_conveyor_state[4];
 };
 
 #endif // !OOM_ENGINE_S_GAME_MANAGER_HPP__

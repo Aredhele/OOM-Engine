@@ -148,7 +148,7 @@ void S_AssetSpawner::SpawnConveyorAsset(uint32_t size)
 
 	p_conveyor_asset->SetKiloBytes(S_ConveyorAsset::s_cost * size);
 	p_game_object->GetTransform().SetScale(size, size, size);
-	p_game_object->SetTag("Conveyor_Asset");
+	p_game_object->SetTag(GetGameObject()->GetTag() + "_Conveyor");
 
 	p_game_object->GetTransform().SetOrientation(GetTransform()->GetOrientation());
 }

@@ -12,6 +12,7 @@
 #include "Game/Floppy/Player/S_Player.hpp"
 #include "Game/Floppy/Asset/S_SpawnerManager.hpp"
 #include "Game/Floppy/Prompt/S_CommandPrompt.hpp"
+#include "Game/Floppy/Util/S_ConveyorAudioController.hpp"
 
 namespace Prefab
 {
@@ -144,15 +145,20 @@ void CreateConveyors()
 	auto* p_conveyor_03 = Sdk::GameObject::CreateGameObjectFromMesh("Tapis_03");
 	auto* p_conveyor_04 = Sdk::GameObject::CreateGameObjectFromMesh("Tapis_04");
 
-	p_conveyor_01->SetName("Conveyor_01");
-	p_conveyor_02->SetName("Conveyor_02");
-	p_conveyor_03->SetName("Conveyor_03");
-	p_conveyor_04->SetName("Conveyor_04");
+	p_conveyor_01->SetName("Conveyor_C1");
+	p_conveyor_02->SetName("Conveyor_C2");
+	p_conveyor_03->SetName("Conveyor_C3");
+	p_conveyor_04->SetName("Conveyor_C4");
 
 	p_conveyor_01->SetTag("Conveyor");
 	p_conveyor_02->SetTag("Conveyor");
 	p_conveyor_03->SetTag("Conveyor");
 	p_conveyor_04->SetTag("Conveyor");
+
+	p_conveyor_01->AddComponent<S_ConveyorAudioController>();
+	p_conveyor_02->AddComponent<S_ConveyorAudioController>();
+	p_conveyor_03->AddComponent<S_ConveyorAudioController>();
+	p_conveyor_04->AddComponent<S_ConveyorAudioController>();
 }
 
 void CreateGameManager()

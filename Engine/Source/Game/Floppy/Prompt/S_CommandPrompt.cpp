@@ -4,6 +4,8 @@
 /// \package    Game/Floppy/Prompt/Script
 /// \author     Vincent STEHLY--CALISTO
 
+#include "Game/Floppy/S_GameManager.hpp"
+#include "Game/Floppy/Asset/S_AssetSpawner.hpp"
 #include "Game/Floppy/Prompt/S_CommandPrompt.hpp"
 
 #include "Render/CWindow.hpp"
@@ -63,6 +65,11 @@ void character_callback(GLFWwindow* window, unsigned int codepoint)
 		m_free_texts.push_back(p_text_go);
 	}
 
+	auto* p_go = CGameObject::FindWithTag("Game_Manager");
+
+	if(p_go)
+		mp_game_manager = p_go->GetComponent<S_GameManager>();
+
 	ClosePrompt();
 }
 
@@ -86,7 +93,8 @@ void character_callback(GLFWwindow* window, unsigned int codepoint)
 		if (Sdk::Input::IsKeyPressed(GLFW_KEY_ENTER) && m_key_elapsed >= m_key_delay)
 		{
 			m_key_elapsed = 0.0f;
-			LogMessage(m_command);
+			LogMessage    (m_command);
+			ProcessCommand(m_command);
 
 			m_command = "> ";
 			UpdateCommandText();
@@ -180,8 +188,7 @@ void S_CommandPrompt::HideLogText()
 	for (auto i = 3; i < m_used_texts.size(); ++i)
 	{
 		m_used_texts[i]->GetComponent<CTextRenderer>()->SetVisible(false);
-	}
-		
+	}	
 }
 
 void S_CommandPrompt::ShowLogText()
@@ -233,4 +240,24 @@ void S_CommandPrompt::UpdateCommandText()
 {
 	auto* p_text = m_command_text->GetComponent<S_Text>();
 	p_text->SetText(m_command.Data());
+}
+
+void S_CommandPrompt::ProcessCommand(const CString& command)
+{
+	if (command.Size() < 3)
+		return;
+
+	const CString true_command = &command[2];
+	if		(true_command == "start conveyor belt c1") { mp_game_manager->StartConveyorBelt(ESpawnZone::C1); }
+	else if (true_command == "start conveyor belt c2") { mp_game_manager->StartConveyorBelt(ESpawnZone::C2); }
+	else if (true_command == "start conveyor belt c3") { mp_game_manager->StartConveyorBelt(ESpawnZone::C3); }
+	else if (true_command == "start conveyor belt c4") { mp_game_manager->StartConveyorBelt(ESpawnZone::C4); }
+	else if (true_command == "stop conveyor belt c1" ) { mp_game_manager->StopConveyorBelt (ESpawnZone::C1); }
+	else if (true_command == "stop conveyor belt c2" ) { mp_game_manager->StopConveyorBelt (ESpawnZone::C2); }
+	else if (true_command == "stop conveyor belt c3" ) { mp_game_manager->StopConveyorBelt (ESpawnZone::C3); }
+	else if (true_command == "stop conveyor belt c4" ) { mp_game_manager->StopConveyorBelt (ESpawnZone::C4); }
+	else
+	{
+		LogMessage("ERROR : COMMAND NOT FOUND");
+	}
 }
