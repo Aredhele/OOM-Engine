@@ -268,10 +268,11 @@ void S_CommandPrompt::ProcessCommand(const CString& _command)
 	else if (true_command == "CLOSE D2") { mp_game_manager->CloseDoor(ESpawnZone::R2); }
 	else if (true_command == "CLOSE D3") { mp_game_manager->CloseDoor(ESpawnZone::R3); }
 
-	else if (true_command == "activate firewall") { mp_game_manager->ActivateFireWall(); }
+	else if (true_command == "ACTIVATE FIREWALL") { mp_game_manager->TryActivateFirewall(); }
+	else if (true_command == "CLEAN ALL CB") { mp_game_manager->TryCleanAllCB(); }
 
 	else
 	{
-		LogMessage("ERROR : COMMAND NOT FOUND");
+		mp_game_manager->ProcessUnknownCommand(command);		
 	}
 }

@@ -22,14 +22,16 @@ public:
 	void Update    () final;
 	void OnDestroy () final;
 
-public:
-
 	void StartConveyorBelt  (ESpawnZone zone);
 	void StopConveyorBelt   (ESpawnZone zone);
 	void OpenDoor	        (ESpawnZone zone);
 	void CloseDoor		    (ESpawnZone zone);
+	void TryActivateFirewall();
 	void ActivateFireWall   ();
-	void DeactivateFireWall ();
+	void DeactivateFireWall();
+	void TryCleanAllCB();
+	void CleanAllCB();
+	void ProcessUnknownCommand(CString command);
 
 private:
 

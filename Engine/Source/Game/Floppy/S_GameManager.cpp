@@ -246,6 +246,11 @@ void S_GameManager::CloseDoor(ESpawnZone zone)
 	mp_prompt->LogMessage("> Warning : Door " + door_type + " closed");
 }
 
+void S_GameManager::TryActivateFirewall()
+{
+	ActivateFireWall();
+}
+
 void S_GameManager::ActivateFireWall()
 {
 	// Case 1 : Already activated
@@ -286,6 +291,11 @@ void S_GameManager::ActivateFireWall()
 	if (p_door_3) p_door_3->GetComponent<S_DoorController>()->CloseDoor();
 }
 
+void S_GameManager::TryCleanAllCB()
+{
+	CleanAllCB();
+}
+
 void S_GameManager::DeactivateFireWall()
 {
 	m_firewall_elapsed   = 0.0f;
@@ -301,4 +311,13 @@ void S_GameManager::DeactivateFireWall()
 	if (p_door_1) p_door_1->GetComponent<S_DoorController>()->OpenDoor();
 	if (p_door_2) p_door_2->GetComponent<S_DoorController>()->OpenDoor();
 	if (p_door_3) p_door_3->GetComponent<S_DoorController>()->OpenDoor();
+}
+
+void S_GameManager::CleanAllCB()
+{
+}
+
+void S_GameManager::ProcessUnknownCommand(CString command)
+{
+	mp_prompt->LogMessage("ERROR : COMMAND NOT FOUND");
 }
