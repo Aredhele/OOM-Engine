@@ -273,6 +273,6 @@ void S_CommandPrompt::ProcessCommand(const CString& _command)
 
 	else
 	{
-		mp_game_manager->ProcessUnknownCommand(command);		
+		mp_game_manager->ProcessUnknownCommand(true_command);		
 	}
 }
