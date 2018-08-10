@@ -24,10 +24,12 @@ public:
 
 public:
 
-	void StartConveyorBelt(ESpawnZone zone);
-	void StopConveyorBelt (ESpawnZone zone);
-	void OpenDoor	      (ESpawnZone zone);
-	void CloseDoor		  (ESpawnZone zone);
+	void StartConveyorBelt  (ESpawnZone zone);
+	void StopConveyorBelt   (ESpawnZone zone);
+	void OpenDoor	        (ESpawnZone zone);
+	void CloseDoor		    (ESpawnZone zone);
+	void ActivateFireWall   ();
+	void DeactivateFireWall ();
 
 private:
 
@@ -41,6 +43,12 @@ private:
 	// Game logic
 	bool			 m_door_state    [3];
 	bool			 m_conveyor_state[4];
+
+	// Firewall
+	bool			 m_firewall_activated;
+	float			 m_firewall_cooldown;
+	float			 m_firewall_duration;
+	float			 m_firewall_elapsed;
 };
 
 #endif // !OOM_ENGINE_S_GAME_MANAGER_HPP__
