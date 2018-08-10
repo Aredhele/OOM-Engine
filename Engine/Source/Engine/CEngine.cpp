@@ -420,6 +420,11 @@ void CEngine::GameObjectUpdate(GLFWwindow* p_window, const float delta_time)
 	return (glfwGetMouseButton(sp_instance->mp_renderer->GetWindow()->GetHandle(), button) == GLFW_RELEASE);
 }
 
+/* static */ void CEngine::Exit()
+{
+	glfwDestroyWindow(CRenderer::GetRenderWindow()->GetHandle());
+}
+
 /* static */ void CEngine::RegisterBehavior(CBehavior* p_behavior)
 {
     sp_instance->m_behaviors.push_back(p_behavior);
