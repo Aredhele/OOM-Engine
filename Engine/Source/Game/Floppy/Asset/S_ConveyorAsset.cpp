@@ -5,6 +5,7 @@
 /// \author     Vincent STEHLY--CALISTO
 
 #include "Game/Floppy/S_Floppy.hpp"
+#include "Game/Floppy/Util/S_SoundSource.hpp"
 #include "Game/Floppy/Asset/S_ConveyorAsset.hpp"
 
 /* virtual */ void S_ConveyorAsset::Awake()
@@ -64,5 +65,9 @@
 
 /* virtual */ void S_ConveyorAsset::OnDestroy()
 {
-	// None
+	auto* p_death_sound = Instantiate(GetTransform()->GetPosition());
+	auto* p_sound_compo = p_death_sound->AddComponent<S_SoundSource>();
+
+	p_sound_compo->SetSound("Resources/Sound/sound_asset_damaged.ogg");
+	Destroy(p_death_sound, 1.5f);
 }

@@ -19,8 +19,9 @@
 	mp_source_door = GetGameObject()->AddComponent<CAudioSource3D>();
 
 	p_body->SetBodyType(CRigidBody::EBodyType::Kinematic);
-	p_box->SetExtent(glm::vec3(4.0f, 4.0f, 4.0f));
-	p_box->SetLocalOrientation(glm::vec3(0.0f, 0.0f, 90.0f));
+
+	p_box->SetExtent(glm::vec3(5.0f, 5.0f, 5.0f));
+	p_box->SetLocalPosition(glm::vec3(0.0f, 0.0f, -5.0f));
 
 	// Audio
 	m_audio_buffer_door.LoadFromFile("Resources/Sound/sound_automatic_door_fast.ogg");
@@ -32,7 +33,7 @@
 
 /* virtual */  void S_DoorController::Update()
 {
-	if(m_is_closed && GetTransform()->GetPosition().z < 4.5f)
+	if(m_is_closed && GetTransform()->GetPosition().z < 9.5f)
 		GetTransform()->Translate(0.0f, 0.0, 60.0f * CTime::delta_time);
 
 	if(!m_is_closed && GetTransform()->GetPosition().z > -13.3f)

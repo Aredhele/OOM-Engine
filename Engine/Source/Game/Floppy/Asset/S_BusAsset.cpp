@@ -6,6 +6,7 @@
 
 #include "Game/Floppy/S_Floppy.hpp"
 #include "Game/Floppy/Asset/S_BusAsset.hpp"
+#include "Game/Floppy/Util/S_SoundSource.hpp"
 
 /* virtual */ void S_BusAsset::Awake()
 {
@@ -65,7 +66,11 @@
 
 /* virtual */ void S_BusAsset::OnDestroy()
 {
-	// None
+	auto* p_death_sound = Instantiate(GetTransform()->GetPosition());
+	auto* p_sound_compo = p_death_sound->AddComponent<S_SoundSource>();
+
+	p_sound_compo->SetSound("Resources/Sound/sound_asset_damaged.ogg");
+	Destroy(p_death_sound, 2.0f);
 }
 
 void S_BusAsset::OnCollisionEnter(const CCollision& collision)
@@ -74,7 +79,6 @@ void S_BusAsset::OnCollisionEnter(const CCollision& collision)
 	{
 		if(collision.p_game_object->GetTag() == "Door_Block")
 		{
-			printf("DESTROYED\n");
 			Destroy(GetGameObject());
 		}
 	}

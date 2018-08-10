@@ -6,6 +6,9 @@
 
 #include "Game/Floppy/Player/S_Player.hpp"
 #include "Game/Floppy/Util/S_SoundSource.hpp"
+#include "Game/Floppy/Asset/S_BigAsset.hpp"
+#include "Game/Floppy/Asset/S_ConveyorAsset.hpp"
+#include "Game/Floppy/Asset/S_BusAsset.hpp"
 
 /* virtual */ void S_Player::Awake()
 {
@@ -37,8 +40,6 @@
  /* virtual */ void S_Player::Update()
 {
 	 m_shoot_elapsed += CTime::delta_time;
-
-
 	 if(Sdk::Input::IsMouseButtonPressed(GLFW_MOUSE_BUTTON_1) &&  m_shoot_elapsed >= m_shoot_delay)
 	 {
 		 const auto& transform = *GetTransform();
@@ -47,16 +48,13 @@
 		 CRayCast ray_cast = Sdk::Physic::RayCast(transform.GetPosition(), transform.GetForward() * 100.0f);
 		 if (ray_cast.GetGameObject())
 		 {
-			 // Creates the GO containing the audio source
-			 auto* p_sound_go = Instantiate(ray_cast.GetGameObject()->GetTransform().GetPosition());
+			 auto* p_hit            = ray_cast.GetGameObject();
+			 auto* p_bus_asset      = p_hit->GetComponent<S_BusAsset>();
+			 auto* p_super_asset    = p_hit->GetComponent<S_BigAsset>();
+			 auto* p_conveyor_asset = p_hit->GetComponent<S_ConveyorAsset>();
 
-			 // Adds the audio controller
-			 auto* p_source = p_sound_go->AddComponent<S_SoundSource>();
-			 p_source->SetSound("resources/Sound/sound_bigasset_killed.ogg");
-
-			 // Delayed destroy
-			 Destroy(p_sound_go, 2.0f);
-			 Destroy(ray_cast.GetGameObject());
+			 if(p_bus_asset || p_super_asset || p_conveyor_asset)
+				 Destroy(p_hit);
 		 }
 
 		 m_shoot_elapsed = 0.0f;

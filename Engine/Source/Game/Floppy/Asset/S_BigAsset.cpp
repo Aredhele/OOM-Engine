@@ -6,6 +6,7 @@
 
 #include "Game/Floppy/S_Floppy.hpp"
 #include "Game/Floppy/Asset/S_BigAsset.hpp"
+#include "Game/Floppy/Util/S_SoundSource.hpp"
 
 /* virtual */ void S_BigAsset::Awake()
 {
@@ -65,5 +66,9 @@
 
 /* virtual */ void S_BigAsset::OnDestroy()
 {
-	// None
+	auto* p_death_sound = Instantiate(GetTransform()->GetPosition());
+	auto* p_sound_compo = p_death_sound->AddComponent<S_SoundSource>();
+
+	p_sound_compo->SetSound("Resources/Sound/sound_bigasset_killed.ogg");
+	Destroy(p_death_sound, 2.0f);
 }
