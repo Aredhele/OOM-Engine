@@ -47,8 +47,8 @@ void character_callback(GLFWwindow* window, unsigned int codepoint)
 	m_command_text->GetTransform().SetScale   (0.4f, 0.4f, 0.4f);
 	m_command_text->GetTransform().SetPosition(0.02f, 0.25f, 0.0f);
 
-	CString username = getenv("USERNAME");
-	m_command = username + " > ";
+	m_username = getenv("USERNAME"); // TODO tronque to avoid too big username
+	m_command = m_username + " > ";
 	UpdateCommandText();
 	
 	sp_instance = this;
@@ -70,7 +70,7 @@ void character_callback(GLFWwindow* window, unsigned int codepoint)
 
 	if(p_go)
 		mp_game_manager = p_go->GetComponent<S_GameManager>();
-
+	ShowStartingText();
 	ClosePrompt();
 }
 
@@ -96,8 +96,7 @@ void character_callback(GLFWwindow* window, unsigned int codepoint)
 			m_key_elapsed = 0.0f;
 			LogMessage    (m_command, false);
 			ProcessCommand(m_command);
-			CString username = getenv("USERNAME");
-			m_command = username + " > ";
+			m_command = m_username + " > ";
 			UpdateCommandText();
 		}
 
@@ -157,7 +156,7 @@ void S_CommandPrompt::LogMessage(const CString& _message, bool isSystem)
 	message.toUpper();
 	if (isSystem)
 	{
-		message = "[SYSTEM]: " + message;
+		message = "SYSTEM > " + message;
 	}
 	if(m_free_texts.empty())
 	{
@@ -257,7 +256,7 @@ void S_CommandPrompt::ProcessCommand(const CString& _command)
 	if (command.Size() < 3)
 		return;
 
-	const CString true_command = &command[2];
+	const CString true_command = &command[3 + m_username.Size()];
 	if		(true_command == "START CB1") { mp_game_manager->StartConveyorBelt(ESpawnZone::C1); }
 	else if (true_command == "START CB2") { mp_game_manager->StartConveyorBelt(ESpawnZone::C2); }
 	else if (true_command == "START CB3") { mp_game_manager->StartConveyorBelt(ESpawnZone::C3); }
@@ -276,9 +275,28 @@ void S_CommandPrompt::ProcessCommand(const CString& _command)
 
 	else if (true_command == "ACTIVATE FIREWALL") { mp_game_manager->TryActivateFirewall(); }
 	else if (true_command == "CLEAN ALL CB") { mp_game_manager->TryCleanAllCB(); }
+	else if (true_command == "HELP") { mp_game_manager->ShowHelp(); }
+	else if (true_command == "START HACKING") { mp_game_manager->ShowHelp(); }
 
 	else
 	{
 		mp_game_manager->ProcessUnknownCommand(true_command);		
 	}
+}
+
+void S_CommandPrompt::ShowStartingText()
+{
+	CString username = getenv("USERNAME");
+	LogMessage(username + " CONNECTED WITH SUCCESS");
+	LogMessage("RIGHT CLICK TO SHOOT");
+	LogMessage("PRESS ZQSD KEYS TO MOVE AROUND");
+	LogMessage("PRESS CTRL KEY TO OPEN OR CLOSE THE TERMINAL");
+	LogMessage("INCOMING EXTERNAL MESSAGE :");
+	LogMessage("HEY ! IT'S JEAN HENRI.");
+	LogMessage("YOU HAVE TO DESTROY THE ARTISTS ASSETS");
+	LogMessage("IF YOU DON'T THE FLOPPY WILL OVERTROW");
+	LogMessage("YOU CAN TYPE IN COMMANDS IN THE TERMINAL");
+	LogMessage("USE THE \"HELP\" COMMAND TO SHOW ALL COMMANDS");
+	LogMessage("THE STUDIO'S FUTURE IS IN YOUR HANDS");
+	LogMessage("[END OF MESSAGE]");
 }

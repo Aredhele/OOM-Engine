@@ -32,7 +32,9 @@ public:
 	void DeactivateFireWall();
 	void TryCleanAllCB();
 	void CleanAllCB();
-	void ProcessUnknownCommand(CString command);
+	void ShowHelp();
+	void StartHacking();
+	void ProcessUnknownCommand(const CString& command);
 
 private:
 

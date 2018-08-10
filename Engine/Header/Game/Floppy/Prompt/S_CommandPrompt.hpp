@@ -59,6 +59,8 @@ private:
 
 	void ProcessCommand   (const CString& command);
 
+	void ShowStartingText();
+
 private:
 
 	EPromptState	m_state;
@@ -81,6 +83,9 @@ private:
 
 	// Buffer
 	S_GameManager* mp_game_manager = nullptr;
+
+	CString m_username = "";
+
 
 private:
 

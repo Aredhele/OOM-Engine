@@ -323,7 +323,29 @@ void S_GameManager::CleanAllCB()
 	
 }
 
-void S_GameManager::ProcessUnknownCommand(const CString command)
+void S_GameManager::ShowHelp()
+{
+	mp_prompt->LogMessage("COMMANDS :");
+	mp_prompt->LogMessage("STOP [CB CODE]");
+	mp_prompt->LogMessage("AVAILABLE COMMANDS : ");
+	mp_prompt->LogMessage("OPEN [DOOR CODE]");
+	mp_prompt->LogMessage("CLOSE [DOOR CODE]");
+	mp_prompt->LogMessage("START [CB CODE]");
+	mp_prompt->LogMessage("STOP [CB CODE]");
+	mp_prompt->LogMessage("ACTIVATE FIREWALL");
+	mp_prompt->LogMessage("CLEAN ALL CB");
+	mp_prompt->LogMessage("DOOR CODES : D1, D2, D3");
+	mp_prompt->LogMessage("CB CODES : CB1, CB2, CB3, CB4");
+	mp_prompt->LogMessage("USE \"START HACKING\" TO START");
+}
+
+void S_GameManager::StartHacking()
+{
+	// TODO start spawning waves
+	mp_prompt->LogMessage("START HACKING");
+}
+
+void S_GameManager::ProcessUnknownCommand(const CString& command)
 {
 	if (m_on_capcha)
 	{
