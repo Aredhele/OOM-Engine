@@ -37,6 +37,8 @@ public:
 	void StartHacking();
 	void ProcessUnknownCommand(const CString& command);
 
+	void GameOver();
+
 private:
 
 	void DoCapcha			();
