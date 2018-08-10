@@ -25,10 +25,15 @@
 	m_conveyor_state[2] = true;
 	m_conveyor_state[3] = true;
 
+	m_firewall_activated = false;
 	m_firewall_cooldown  = 30.0f;
 	m_firewall_elapsed   = 30.0f;
-	m_firewall_activated = false;
 	m_firewall_duration  = 10.0f;
+
+	m_clean_up_activated = false;
+	m_clean_up_cooldown  = 30.0f;
+	m_clean_up_elapsed   = 30.0f;
+	m_clean_up_duration  = 2.0f;
 }
 
 /*virtual */ void S_GameManager::Start()
@@ -73,6 +78,16 @@
 			DeactivateFireWall();
 	}
 
+	// Cleaning update
+	if (m_clean_up_activated)
+	{
+		m_clean_up_elapsed += CTime::delta_time;
+
+		if (m_clean_up_elapsed >= m_clean_up_duration)
+			StopCleanAllCB();
+	}
+
+	m_clean_up_elapsed += CTime::delta_time;
 	m_firewall_elapsed += CTime::delta_time;
 }
 
@@ -108,7 +123,7 @@ void S_GameManager::StartConveyorBelt(ESpawnZone zone)
 		auto controller = CGameObject::Find("Conveyor_" + tag_spawner);
 
 		if (spawner)
-			spawner->SetActive(true);
+			spawner->GetComponent<S_AssetSpawner>()->UnblockConveyor();
 
 		if (controller)
 			controller->GetComponent<S_ConveyorController>()->ActivateConveyor();
@@ -162,7 +177,7 @@ void S_GameManager::StopConveyorBelt(ESpawnZone zone)
 	auto controller = CGameObject::Find("Conveyor_" + tag_spawner);
 
 	if (spawner)
-		spawner->SetActive(false);
+		spawner->GetComponent<S_AssetSpawner>()->BlockConveyor();
 
 	if (controller)
 		controller->GetComponent<S_ConveyorController>()->DesactivateConveyor();
@@ -246,6 +261,11 @@ void S_GameManager::CloseDoor(ESpawnZone zone)
 	mp_prompt->LogMessage("> Warning : Door " + door_type + " closed");
 }
 
+void S_GameManager::TryActivateFirewall()
+{
+	ActivateFireWall();
+}
+
 void S_GameManager::ActivateFireWall()
 {
 	// Case 1 : Already activated
@@ -286,6 +306,11 @@ void S_GameManager::ActivateFireWall()
 	if (p_door_3) p_door_3->GetComponent<S_DoorController>()->CloseDoor();
 }
 
+void S_GameManager::TryCleanAllCB()
+{
+	CleanAllCB();
+}
+
 void S_GameManager::DeactivateFireWall()
 {
 	m_firewall_elapsed   = 0.0f;
@@ -301,4 +326,105 @@ void S_GameManager::DeactivateFireWall()
 	if (p_door_1) p_door_1->GetComponent<S_DoorController>()->OpenDoor();
 	if (p_door_2) p_door_2->GetComponent<S_DoorController>()->OpenDoor();
 	if (p_door_3) p_door_3->GetComponent<S_DoorController>()->OpenDoor();
+}
+
+void S_GameManager::CleanAllCB()
+{
+	// Case 1 : Cooldown left
+	if(m_clean_up_elapsed < m_clean_up_cooldown)
+	{
+		CString message = "> Cleanup not ready (";
+		const int time_left = m_firewall_cooldown - m_firewall_elapsed;
+
+		// String to int
+		char buffer[8] = { '\0' };
+		sprintf(buffer, "%d", time_left);
+
+		message += buffer;
+		message += " s left)";
+
+		mp_prompt->LogMessage(message.Data());
+		return;
+	}
+
+	// Case 2 : Allowed
+	m_clean_up_activated = true;
+	m_clean_up_elapsed   = 0.0f;
+
+	// Gets all conveyors
+	auto conveyors = CGameObject::FindGameObjectsWithTag("Conveyor");
+
+	for(auto* p_conveyor : conveyors)
+	{
+		auto* p_controller = p_conveyor->GetComponent<S_ConveyorController>();
+
+		if (p_controller)
+			p_controller->StartClean();
+	}
+
+	// Gets all conveyor assets
+	auto asset_c1 = CGameObject::FindGameObjectsWithTag("C1_Conveyor");
+	auto asset_c2 = CGameObject::FindGameObjectsWithTag("C2_Conveyor");
+	auto asset_c3 = CGameObject::FindGameObjectsWithTag("C3_Conveyor");
+	auto asset_c4 = CGameObject::FindGameObjectsWithTag("C4_Conveyor");
+
+	asset_c1.insert(asset_c1.end(), asset_c2.begin(), asset_c2.end());
+	asset_c1.insert(asset_c1.end(), asset_c3.begin(), asset_c3.end());
+	asset_c1.insert(asset_c1.end(), asset_c4.begin(), asset_c4.end());
+
+	for(auto* p_asset : asset_c1)
+	{
+		auto* p_conveyor_asset = p_asset->GetComponent<S_ConveyorAsset>();
+
+		if (p_conveyor_asset)
+			p_conveyor_asset->Clean();
+	}
+
+	// Gets all spawner
+	auto* p_spawner_1 = CGameObject::FindWithTag("C1");
+	auto* p_spawner_2 = CGameObject::FindWithTag("C2");
+	auto* p_spawner_3 = CGameObject::FindWithTag("C3");
+	auto* p_spawner_4 = CGameObject::FindWithTag("C4");
+
+	if (p_spawner_1) p_spawner_1->GetComponent<S_AssetSpawner>()->StartClean();
+	if (p_spawner_2) p_spawner_2->GetComponent<S_AssetSpawner>()->StartClean();
+	if (p_spawner_3) p_spawner_3->GetComponent<S_AssetSpawner>()->StartClean();
+	if (p_spawner_4) p_spawner_4->GetComponent<S_AssetSpawner>()->StartClean();
+
+	mp_prompt->LogMessage("> Conveyors cleaned up");
+}
+
+void S_GameManager::StopCleanAllCB()
+{
+	m_clean_up_elapsed   = 0.0f;
+	m_clean_up_activated = false;
+
+	// Gets all conveyors
+	auto conveyors = CGameObject::FindGameObjectsWithTag("Conveyor");
+
+	for (auto* p_conveyor : conveyors)
+	{
+		auto* p_controller = p_conveyor->GetComponent<S_ConveyorController>();
+
+		if (p_controller)
+			p_controller->StopClean();
+	}
+
+	// Gets all spawner
+	auto* p_spawner_1 = CGameObject::FindWithTag("C1");
+	auto* p_spawner_2 = CGameObject::FindWithTag("C2");
+	auto* p_spawner_3 = CGameObject::FindWithTag("C3");
+	auto* p_spawner_4 = CGameObject::FindWithTag("C4");
+
+	if (p_spawner_1) p_spawner_1->GetComponent<S_AssetSpawner>()->StopClean();
+	if (p_spawner_2) p_spawner_2->GetComponent<S_AssetSpawner>()->StopClean();
+	if (p_spawner_3) p_spawner_3->GetComponent<S_AssetSpawner>()->StopClean();
+	if (p_spawner_4) p_spawner_4->GetComponent<S_AssetSpawner>()->StopClean();
+
+	mp_prompt->LogMessage("> Clean up finished");
+}
+
+void S_GameManager::ProcessUnknownCommand(CString command)
+{
+	mp_prompt->LogMessage("ERROR : COMMAND NOT FOUND");
 }

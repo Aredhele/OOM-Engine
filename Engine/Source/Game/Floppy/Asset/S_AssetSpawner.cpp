@@ -13,7 +13,8 @@
 
 /*virtual */ void S_AssetSpawner::Awake()
 {
-	// None
+	m_is_cleaning    = false;
+	m_block_conveyor = false;
 }
 
 /*virtual */ void S_AssetSpawner::Start()
@@ -68,12 +69,18 @@ void S_AssetSpawner::ProcessActiveWave()
 {
 	for (auto i = 0; i < m_processing_waves.size(); /* None */)
 	{
+		if ((m_block_conveyor || m_is_cleaning) && m_processing_waves[i]->m_type == ConveyorAsset)
+		{
+			i++;
+			continue;
+		}
+			
 		// Buffer wave pointer
 		auto* p_wave = m_processing_waves[i];
 
 		// Incrementing internal timer
 		p_wave->m_elapsed += CTime::delta_time;
-
+	
 		// Check if its time to spawn (and if there something to spawn)
 		if(p_wave->m_elapsed >= p_wave->m_delay && 
 		   p_wave->m_current <  p_wave->m_pattern.Size())
@@ -156,4 +163,24 @@ void S_AssetSpawner::SpawnConveyorAsset(uint32_t size)
 void S_AssetSpawner::RegisterAssetWave(CAssetWave* p_asset_wave)
 {
 	m_waves_to_process.push_back(p_asset_wave);
+}
+
+void S_AssetSpawner::StartClean()
+{
+	m_is_cleaning = true;
+}
+
+void S_AssetSpawner::StopClean()
+{
+	m_is_cleaning = false;
+}
+
+void S_AssetSpawner::BlockConveyor()
+{
+	m_block_conveyor = true;
+}
+
+void S_AssetSpawner::UnblockConveyor()
+{
+	m_block_conveyor = false;
 }

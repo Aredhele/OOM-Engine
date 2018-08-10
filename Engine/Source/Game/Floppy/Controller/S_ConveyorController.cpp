@@ -11,10 +11,16 @@
 	mp_material               = nullptr;
 	mp_source_switch_on       = nullptr;
 	mp_source_switch_off      = nullptr;
+	m_is_cleaning			  = false;
 	m_is_activated			  = true;
 	m_activated_texture		  = 0;
 	m_desactivated_texture	  = 0;
 	m_uv_offset				  = 0.0f;
+	m_clean_elapsed			  = 0.0f;
+
+	const glm::vec3 forward = glm::normalize(glm::vec3(0.0f) -GetTransform()->GetPosition());
+	const glm::vec3 up      = glm::vec3(0.0f, 0.0f, 1.0f);
+	m_right                 = glm::cross(forward, up);
 }
 
 /* virtual */ void S_ConveyorController::Start()
@@ -47,6 +53,28 @@
 
 void S_ConveyorController::Update()
 {
+	/*
+	if(m_is_cleaning)
+	{
+		m_clean_elapsed += CTime::delta_time;
+		GetTransform()->Translate(m_right * CTime::delta_time *  5.0f);
+
+		m_clean_elapsed += CTime::delta_time;
+	}
+	else
+	{
+		if(m_clean_elapsed > 0)
+		{
+			m_clean_elapsed -= CTime::delta_time;
+			GetTransform()->Translate(m_right * CTime::delta_time * -5.0f);
+		}
+		else
+		{
+			m_clean_elapsed = 0.0f;
+		}
+	}
+	*/
+
 	if(m_is_activated)
 	{
 		m_uv_offset += CTime::delta_time;
@@ -58,6 +86,22 @@ void S_ConveyorController::Update()
 {
 	mp_source_switch_on->Stop();
 	mp_source_switch_off->Stop();
+}
+
+void S_ConveyorController::StartClean()
+{
+	DesactivateConveyor();
+
+	m_is_cleaning   = true;
+	GetGameObject()->GetComponent<CMeshRenderer>()->SetVisible(false);
+}
+
+void S_ConveyorController::StopClean()
+{
+	ActivateConveyor();
+
+	m_is_cleaning   = false;
+	GetGameObject()->GetComponent<CMeshRenderer>()->SetVisible(true);
 }
 
 void S_ConveyorController::ActivateConveyor()

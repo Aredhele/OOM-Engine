@@ -22,15 +22,17 @@ public:
 	void Update    () final;
 	void OnDestroy () final;
 
-public:
-
-	void StartConveyorBelt  (ESpawnZone zone);
-	void StopConveyorBelt   (ESpawnZone zone);
-	void OpenDoor	        (ESpawnZone zone);
-	void CloseDoor		    (ESpawnZone zone);
-	void ActivateFireWall   ();
-	void DeactivateFireWall ();
-	void CleanConveyor		(ESpawnZone zone);
+	void StartConveyorBelt    (ESpawnZone zone);
+	void StopConveyorBelt     (ESpawnZone zone);
+	void OpenDoor	          (ESpawnZone zone);
+	void CloseDoor		      (ESpawnZone zone);
+	void TryActivateFirewall  ();
+	void ActivateFireWall     ();
+	void DeactivateFireWall   ();
+	void TryCleanAllCB        ();
+	void CleanAllCB           ();
+	void StopCleanAllCB		  ();
+	void ProcessUnknownCommand(CString command);
 
 private:
 
@@ -38,18 +40,24 @@ private:
 	S_CommandPrompt*    mp_prompt = nullptr;
 	S_CameraController* mp_camera = nullptr;
 
-	float		     m_key_delay;
-	float		     m_key_elapsed;
+	float m_key_delay;
+	float m_key_elapsed;
 
 	// Game logic
-	bool			 m_door_state    [3];
-	bool			 m_conveyor_state[4];
+	bool m_door_state    [3];
+	bool m_conveyor_state[4];
 
 	// Firewall
-	bool			 m_firewall_activated;
-	float			 m_firewall_cooldown;
-	float			 m_firewall_duration;
-	float			 m_firewall_elapsed;
+	bool  m_firewall_activated;
+	float m_firewall_cooldown;
+	float m_firewall_duration;
+	float m_firewall_elapsed;
+
+	// Cleanup
+	bool  m_clean_up_activated;
+	float m_clean_up_cooldown;
+	float m_clean_up_duration;
+	float m_clean_up_elapsed;
 };
 
 #endif // !OOM_ENGINE_S_GAME_MANAGER_HPP__

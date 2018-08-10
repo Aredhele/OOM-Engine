@@ -21,7 +21,15 @@ public:
 
 public:
 
+	void Clean	  ();
+
+public:
+
 	static const constexpr uint32_t s_cost = 10;
+
+private:
+
+	bool m_is_being_cleaned;
 };
 
 #endif // !OOM_ENGINE_S_CONVEYOR_HPP__

@@ -22,7 +22,11 @@ public:
 
 public:
 
-	void RegisterAssetWave(CAssetWave* p_asset_wave);
+	void StartClean			();
+	void StopClean			();
+	void BlockConveyor		();
+	void UnblockConveyor	();
+	void RegisterAssetWave	(CAssetWave* p_asset_wave);
 
 private:
 
@@ -36,6 +40,7 @@ private:
 
 private:
 
+	bool					 m_is_cleaning;
 	bool					 m_block_conveyor;
 	std::vector<CAssetWave*> m_waves_to_process;
 	std::vector<CAssetWave*> m_processing_waves;
