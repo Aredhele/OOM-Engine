@@ -72,6 +72,8 @@ public:
     void PushBack (char character);
     void PopBack  ();
     uint32_t Find (char character, uint32_t pos = 0) const noexcept;
+	void toUpper();
+	void toLower();
 
 private:
 
