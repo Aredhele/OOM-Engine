@@ -26,7 +26,7 @@
 	auto* p_renderer = mp_floppy_sprite->GetComponent<CUISpriteRenderer>();
 	
 	p_renderer->SetSortingLayer(0);
-	p_material->SetTexture(Sdk::Import::ImportTexture("Resources/Texture/Floppy_ui.jpg"));
+	p_material->SetTexture(Sdk::Import::ImportTexture("Resources/Texture/T_Floppy_ui.jpg"));
 
 	mp_floppy_sprite->GetTransform().SetPosition(0.96f, 0.06f, 0.0f);
 

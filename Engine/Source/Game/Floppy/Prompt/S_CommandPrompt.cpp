@@ -39,7 +39,7 @@ void character_callback(GLFWwindow* window, unsigned int codepoint)
 	auto* p_renderer = mp_prompt->GetComponent<CUISpriteRenderer>();
 
 	p_renderer->SetSortingLayer(0);
-	p_material->SetTexture(Sdk::Import::ImportTexture("Resources/Texture/Prompt.png"));
+	p_material->SetTexture(Sdk::Import::ImportTexture("Resources/Texture/T_Prompt.png"));
 
 	m_command_text = Sdk::GameObject::CreateUIText();
 	auto* p_text   = m_command_text->GetComponent<S_Text>();
@@ -256,6 +256,14 @@ void S_CommandPrompt::ProcessCommand(const CString& command)
 	else if (true_command == "stop conveyor belt c2" ) { mp_game_manager->StopConveyorBelt (ESpawnZone::C2); }
 	else if (true_command == "stop conveyor belt c3" ) { mp_game_manager->StopConveyorBelt (ESpawnZone::C3); }
 	else if (true_command == "stop conveyor belt c4" ) { mp_game_manager->StopConveyorBelt (ESpawnZone::C4); }
+
+	else if (true_command == "open door d1" ) { mp_game_manager->OpenDoor (ESpawnZone::R1); }
+	else if (true_command == "open door d2" ) { mp_game_manager->OpenDoor (ESpawnZone::R2); }
+	else if (true_command == "open door d3" ) { mp_game_manager->OpenDoor (ESpawnZone::R3); }
+	else if (true_command == "close door d1") { mp_game_manager->CloseDoor(ESpawnZone::R1); }
+	else if (true_command == "close door d2") { mp_game_manager->CloseDoor(ESpawnZone::R2); }
+	else if (true_command == "close door d3") { mp_game_manager->CloseDoor(ESpawnZone::R3); }
+
 	else
 	{
 		LogMessage("ERROR : COMMAND NOT FOUND");

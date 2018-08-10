@@ -7,7 +7,7 @@
 #include "Game/Floppy/S_GameManager.hpp"
 #include "Game/Floppy/Asset/S_ConveyorAsset.hpp"
 #include "Game/Floppy/Prompt/S_CommandPrompt.hpp"
-#include "Game/Floppy/Util/S_ConveyorAudioController.hpp"
+#include "Game/Floppy/Controller/S_ConveyorController.hpp"
 
 /*virtual */ void S_GameManager::Awake()
 {
@@ -90,7 +90,7 @@ void S_GameManager::StartConveyorBelt(ESpawnZone zone)
 			spawner->SetActive(true);
 
 		if (controller)
-			controller->GetComponent<S_ConveyorAudioController>()->ActivateConveyor();
+			controller->GetComponent<S_ConveyorController>()->ActivateConveyor();
 
 		for (auto* p_conveyor : conveyors)
 		{
@@ -144,7 +144,7 @@ void S_GameManager::StopConveyorBelt(ESpawnZone zone)
 		spawner->SetActive(false);
 
 	if (controller)
-		controller->GetComponent<S_ConveyorAudioController>()->DesactivateConveyor();
+		controller->GetComponent<S_ConveyorController>()->DesactivateConveyor();
 
 	for(auto* p_conveyor : conveyors)
 	{
@@ -153,4 +153,14 @@ void S_GameManager::StopConveyorBelt(ESpawnZone zone)
 	}
 
 	mp_prompt->LogMessage("> Warning : Conveyor " + tag_spawner + " stopped");
+}
+
+void S_GameManager::OpenDoor(ESpawnZone zone)
+{
+	// TODO
+}
+
+void S_GameManager::CloseDoor(ESpawnZone zone)
+{
+	// TODO
 }

@@ -12,7 +12,8 @@
 #include "Game/Floppy/Player/S_Player.hpp"
 #include "Game/Floppy/Asset/S_SpawnerManager.hpp"
 #include "Game/Floppy/Prompt/S_CommandPrompt.hpp"
-#include "Game/Floppy/Util/S_ConveyorAudioController.hpp"
+#include "Game/Floppy/Controller/S_DoorController.hpp"
+#include "Game/Floppy/Controller/S_ConveyorController.hpp"
 
 namespace Prefab
 {
@@ -41,6 +42,7 @@ void CreateStaticEnvironment()
 {	
 	auto* p_plane       = Sdk::GameObject::CreateGameObjectFromMesh("Plane");
 	auto* p_panels      = Sdk::GameObject::CreateGameObjectFromMesh("Panels");
+	auto* p_row_plane   = Sdk::GameObject::CreateGameObjectFromMesh("Rows_Plane");
 	auto* p_grey_chips  = Sdk::GameObject::CreateGameObjectFromMesh("Grey_Chips");
 	auto* p_center_zone = Sdk::GameObject::CreateGameObjectFromMesh("CenterZone");
 	auto* p_static_trim = Sdk::GameObject::CreateGameObjectFromMesh("Static_Trim");
@@ -49,12 +51,14 @@ void CreateStaticEnvironment()
 	// their true name change withing the .obj file
 	p_plane->SetName      ("Plane");
 	p_panels->SetName     ("Panels");
+	p_row_plane->SetName  ("Row_Plane");
 	p_grey_chips->SetName ("Grey_Chips");
 	p_center_zone->SetName("Center_Zone");
 	p_static_trim->SetName("Static_Zone");
 
 	p_plane->SetTag      ("Static");
 	p_panels->SetTag     ("Static");
+	p_row_plane->SetTag  ("Static");
 	p_grey_chips->SetTag ("Static");
 	p_center_zone->SetTag("Static");
 	p_static_trim->SetTag("Static");
@@ -86,6 +90,10 @@ void CreateDoors()
 	p_door_block_1->SetTag("Door_Block");
 	p_door_block_2->SetTag("Door_Block");
 	p_door_block_3->SetTag("Door_Block");
+
+	p_door_block_1->AddComponent<S_DoorController>();
+	p_door_block_2->AddComponent<S_DoorController>();
+	p_door_block_3->AddComponent<S_DoorController>();
 
 	// Door frames on
 	auto* p_door_01_on = Sdk::GameObject::CreateGameObjectFromMesh("Porte_01_ON");
@@ -155,10 +163,10 @@ void CreateConveyors()
 	p_conveyor_03->SetTag("Conveyor");
 	p_conveyor_04->SetTag("Conveyor");
 
-	p_conveyor_01->AddComponent<S_ConveyorAudioController>();
-	p_conveyor_02->AddComponent<S_ConveyorAudioController>();
-	p_conveyor_03->AddComponent<S_ConveyorAudioController>();
-	p_conveyor_04->AddComponent<S_ConveyorAudioController>();
+	p_conveyor_01->AddComponent<S_ConveyorController>();
+	p_conveyor_02->AddComponent<S_ConveyorController>();
+	p_conveyor_03->AddComponent<S_ConveyorController>();
+	p_conveyor_04->AddComponent<S_ConveyorController>();
 }
 
 void CreateGameManager()

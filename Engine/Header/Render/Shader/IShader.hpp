@@ -32,6 +32,7 @@ public:
     GLuint              GetTexture      () const;
     const glm::vec3&    GetColor        () const;
 
+	void SetUVOffset	(const glm::vec2& offset);
     void SetColor       (const glm::vec3& color);
     void SetInt         (const char* p_name, int data);
     void SetFloat       (const char* p_name, float data);
@@ -47,6 +48,8 @@ protected:
 
     GLuint      m_shader_id  = 0;
     GLuint      m_texture_id = 0;
+
+	glm::vec2   m_uv_offset;
     glm::vec3   m_shader_color;
 };
 

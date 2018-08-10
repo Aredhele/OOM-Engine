@@ -26,6 +26,8 @@ public:
 
 	void StartConveyorBelt(ESpawnZone zone);
 	void StopConveyorBelt (ESpawnZone zone);
+	void OpenDoor	      (ESpawnZone zone);
+	void CloseDoor		  (ESpawnZone zone);
 
 private:
 

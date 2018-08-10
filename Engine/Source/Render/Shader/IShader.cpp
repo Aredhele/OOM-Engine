@@ -34,6 +34,11 @@ const glm::vec3& IShader::GetColor() const
     return m_shader_color;
 }
 
+void IShader::SetUVOffset(const glm::vec2& offset)
+{
+	m_uv_offset = offset;
+}
+
 void IShader::SetColor(const glm::vec3& color)
 {
     m_shader_color = color;

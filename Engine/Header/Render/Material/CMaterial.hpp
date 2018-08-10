@@ -32,7 +32,9 @@ public:
 
 public:
 
+	
     void SetColor       (const glm::vec3& color);
+	void SetUVOffset    (const glm::vec2& offset);
     void SetInt         (const char* p_name, int data);
     void SetFloat       (const char* p_name, float data);
     void SetColor       (const char* p_name, const glm::vec3& color);

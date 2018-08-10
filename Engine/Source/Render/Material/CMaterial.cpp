@@ -85,6 +85,9 @@ const glm::vec3& CMaterial::GetColor() const
 void CMaterial::SetColor(const glm::vec3 &color)
 { mp_shader->SetColor(color); }
 
+void CMaterial::SetUVOffset(const glm::vec2& offset)
+{ mp_shader->SetUVOffset(offset); }
+
 void CMaterial::SetInt(const char* p_name, int data)
 { mp_shader->SetInt(p_name, data); }
 
