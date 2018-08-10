@@ -7,6 +7,7 @@
 #include <cstdlib>
 #include <cstring>
 #include "Core/Standard/CString.hpp"
+#include <locale>
 
 namespace Oom
 {
@@ -310,7 +311,25 @@ uint32_t CString::Find(char character, uint32_t pos) const noexcept
     return s_npos;
 }
 
-uint32_t CString::GetNextPow2(uint32_t size) const
+void CString::toUpper()
+{
+	char *s = Data();
+	while (*s) {
+		*s = toupper((unsigned char)*s);
+		s++;
+	}
+}
+
+void CString::toLower()
+{
+	char *s = Data();
+	while (*s) {
+		*s = tolower((unsigned char)*s);
+		s++;
+	}
+}
+
+	uint32_t CString::GetNextPow2(uint32_t size) const
 {
     uint32_t pow2 = 2;
     while(pow2 < size) { pow2 *= 2; }
