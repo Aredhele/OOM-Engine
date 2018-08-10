@@ -16,6 +16,8 @@ class CString
 {
 public:
 
+	using		 iterator        = char*;
+	using  const_iterator        = const char*;
     static const uint32_t s_npos = 0xFFFFFFFF;
 
 public:
@@ -26,6 +28,7 @@ public:
     CString  (const char* c_string);                            // NOLINT
     CString  (const CString& string);
     CString  (CString&& string) noexcept;
+	CString  (iterator begin, iterator end);
 
     // Destructor
     ~CString ();
@@ -37,10 +40,10 @@ public:
     CString& operator= (CString&& string) noexcept;
 
     // Iterators
-    char*       begin  ();
-    char*       end    ();
-    const char* cbegin () const;
-    const char* cend   () const;
+	iterator       begin  ();
+	iterator       end    ();
+    const_iterator cbegin () const;
+	const_iterator cend   () const;
 
     // Accessors
     uint32_t    Size()      const;
@@ -49,6 +52,7 @@ public:
     const char* Data     () const noexcept;
 
     void Clear();
+	void Resize(uint32_t size);
     bool Empty();
 
     // Array operator

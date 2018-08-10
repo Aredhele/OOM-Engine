@@ -60,6 +60,19 @@ CString::CString(CString&& string) noexcept
     string.m_capacity = 0;
 }
 
+CString::CString(iterator begin, iterator end)
+{
+	const auto char_count = end - begin;
+	const uint32_t pow2 = GetNextPow2(char_count + 1);
+
+	mp_data = static_cast<char*>(malloc(pow2));
+	memcpy(mp_data, begin, char_count);
+
+	mp_data[char_count] = '\0';
+	m_size = char_count;
+	m_capacity = pow2;
+}
+
 CString::~CString()
 {
     free(mp_data);
@@ -185,6 +198,15 @@ void CString::Clear()
         mp_data[0] = '\0';
         m_size = 0;
     }
+}
+
+void CString::Resize(uint32_t size)
+{
+	if(m_size > size)
+	{
+		m_size = size;
+		mp_data[m_size] = '\0';
+	}
 }
 
 bool CString::Empty()
