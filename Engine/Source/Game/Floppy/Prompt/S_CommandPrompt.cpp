@@ -123,7 +123,7 @@ void S_CommandPrompt::ProcessCharacter(unsigned int codepoint)
 {
 	if(IsOpen())
 	{
-		m_command += (char)codepoint;
+		m_command += toupper((char)codepoint);
 		UpdateCommandText();
 	}
 }
@@ -149,8 +149,10 @@ bool S_CommandPrompt::IsOpen() const
 	return (m_state == EPromptState::Open);
 }
 
-void S_CommandPrompt::LogMessage(const CString& message)
+void S_CommandPrompt::LogMessage(const CString& _message)
 {
+	CString message = CString(_message.Data());
+	message.toUpper();
 	if(m_free_texts.empty())
 	{
 		auto* p_front_go       = m_used_texts.front();
@@ -242,27 +244,29 @@ void S_CommandPrompt::UpdateCommandText()
 	p_text->SetText(m_command.Data());
 }
 
-void S_CommandPrompt::ProcessCommand(const CString& command)
+void S_CommandPrompt::ProcessCommand(const CString& _command)
 {
+	CString command = CString(_command.Data());
+	command.toUpper();
 	if (command.Size() < 3)
 		return;
 
 	const CString true_command = &command[2];
-	if		(true_command == "start conveyor belt c1") { mp_game_manager->StartConveyorBelt(ESpawnZone::C1); }
-	else if (true_command == "start conveyor belt c2") { mp_game_manager->StartConveyorBelt(ESpawnZone::C2); }
-	else if (true_command == "start conveyor belt c3") { mp_game_manager->StartConveyorBelt(ESpawnZone::C3); }
-	else if (true_command == "start conveyor belt c4") { mp_game_manager->StartConveyorBelt(ESpawnZone::C4); }
-	else if (true_command == "stop conveyor belt c1" ) { mp_game_manager->StopConveyorBelt (ESpawnZone::C1); }
-	else if (true_command == "stop conveyor belt c2" ) { mp_game_manager->StopConveyorBelt (ESpawnZone::C2); }
-	else if (true_command == "stop conveyor belt c3" ) { mp_game_manager->StopConveyorBelt (ESpawnZone::C3); }
-	else if (true_command == "stop conveyor belt c4" ) { mp_game_manager->StopConveyorBelt (ESpawnZone::C4); }
+	if		(true_command == "START CB1") { mp_game_manager->StartConveyorBelt(ESpawnZone::C1); }
+	else if (true_command == "START CB2") { mp_game_manager->StartConveyorBelt(ESpawnZone::C2); }
+	else if (true_command == "START CB3") { mp_game_manager->StartConveyorBelt(ESpawnZone::C3); }
+	else if (true_command == "START CB4") { mp_game_manager->StartConveyorBelt(ESpawnZone::C4); }
+	else if (true_command == "STOP CB1" ) { mp_game_manager->StopConveyorBelt (ESpawnZone::C1); }
+	else if (true_command == "STOP CB2" ) { mp_game_manager->StopConveyorBelt (ESpawnZone::C2); }
+	else if (true_command == "STOP CB3" ) { mp_game_manager->StopConveyorBelt (ESpawnZone::C3); }
+	else if (true_command == "STOP CB4" ) { mp_game_manager->StopConveyorBelt (ESpawnZone::C4); }
 
-	else if (true_command == "open door d1" ) { mp_game_manager->OpenDoor (ESpawnZone::R1); }
-	else if (true_command == "open door d2" ) { mp_game_manager->OpenDoor (ESpawnZone::R2); }
-	else if (true_command == "open door d3" ) { mp_game_manager->OpenDoor (ESpawnZone::R3); }
-	else if (true_command == "close door d1") { mp_game_manager->CloseDoor(ESpawnZone::R1); }
-	else if (true_command == "close door d2") { mp_game_manager->CloseDoor(ESpawnZone::R2); }
-	else if (true_command == "close door d3") { mp_game_manager->CloseDoor(ESpawnZone::R3); }
+	else if (true_command == "OPEN D1" ) { mp_game_manager->OpenDoor (ESpawnZone::R1); }
+	else if (true_command == "OPEN D2" ) { mp_game_manager->OpenDoor (ESpawnZone::R2); }
+	else if (true_command == "OPEN D3" ) { mp_game_manager->OpenDoor (ESpawnZone::R3); }
+	else if (true_command == "CLOSE D1") { mp_game_manager->CloseDoor(ESpawnZone::R1); }
+	else if (true_command == "CLOSE D2") { mp_game_manager->CloseDoor(ESpawnZone::R2); }
+	else if (true_command == "CLOSE D3") { mp_game_manager->CloseDoor(ESpawnZone::R3); }
 
 	else if (true_command == "activate firewall") { mp_game_manager->ActivateFireWall(); }
 
