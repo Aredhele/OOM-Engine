@@ -15,12 +15,14 @@ public:
 
 	void Awake		() final;
 	void Start		() final;
+	void OnDestroy  () final;
 	void SetSound	(const char* path);
 
 private:
 
-	CString      m_path;
-	CAudioBuffer m_audio_buffer;
+	CString         m_path;
+	CAudioBuffer    m_audio_buffer;
+	CAudioSource3D* mp_source;
 };
 
 #endif // !OOM_ENGINE_S_SOUND_SOURCE_HPP__

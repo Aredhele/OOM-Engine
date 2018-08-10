@@ -84,7 +84,12 @@ void CAudioSource3D::SetAudioBuffer(CAudioBuffer* p_audio_buffer)
 void CAudioSource3D::Play(bool must_loop)
 {
 	if (mp_audio_buffer)
-		mp_audio_buffer->mp_secondary_buffer->Play(0, 0, must_loop);
+	{
+		if (must_loop)
+			mp_audio_buffer->mp_secondary_buffer->Play(0, 0, DSBPLAY_LOOPING);
+		else
+			mp_audio_buffer->mp_secondary_buffer->Play(0, 0, DSBPLAY_TERMINATEBY_TIME);
+	}
 }
 
 void CAudioSource3D::Stop()

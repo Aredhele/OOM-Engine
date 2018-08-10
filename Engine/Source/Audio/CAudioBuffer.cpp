@@ -97,7 +97,7 @@ bool CAudioBuffer::LoadFromFile(const CString& path)
 
 	// Set the buffer description of the secondary sound buffer that the wave file will be loaded onto.
 	buffer_description.dwSize          = sizeof(DSBUFFERDESC);
-	buffer_description.dwFlags         = DSBCAPS_CTRLVOLUME | DSBCAPS_CTRL3D | DSBCAPS_GLOBALFOCUS | DSBCAPS_STATIC;
+	buffer_description.dwFlags         = DSBCAPS_CTRLVOLUME | DSBCAPS_CTRL3D | DSBCAPS_GLOBALFOCUS | DSBCAPS_STATIC | DSBCAPS_CTRLFREQUENCY | DSBCAPS_LOCDEFER;
 	buffer_description.dwBufferBytes   = m_pcm_data.wave_header.m_data_size - 44; // ?
 	buffer_description.dwReserved      = 0;
 	buffer_description.lpwfxFormat     = &wave_format;
