@@ -15,6 +15,20 @@
 	mp_floppy     = nullptr;
 	m_key_delay   = 0.3f;
 	m_key_elapsed = 0.1f;
+
+	m_door_state[0] = true;
+	m_door_state[1] = true;
+	m_door_state[2] = true;
+
+	m_conveyor_state[0] = true;
+	m_conveyor_state[1] = true;
+	m_conveyor_state[2] = true;
+	m_conveyor_state[3] = true;
+
+	m_firewall_cooldown  = 30.0f;
+	m_firewall_elapsed   = 30.0f;
+	m_firewall_activated = false;
+	m_firewall_duration  = 10.0f;
 }
 
 /*virtual */ void S_GameManager::Start()
@@ -28,15 +42,6 @@
 
 	if(p_prompt_go)
 		mp_prompt = p_prompt_go->GetComponent<S_CommandPrompt>();
-
-	m_door_state[0] = true;
-	m_door_state[1] = true;
-	m_door_state[2] = true;
-
-	m_conveyor_state[0] = true;
-	m_conveyor_state[1] = true;
-	m_conveyor_state[2] = true;
-	m_conveyor_state[3] = true;
 }
 
 /*virtual */ void S_GameManager::Update()
@@ -58,6 +63,17 @@
 			mp_camera->SetEnabled(false);
 		}
 	}
+
+	// Firewall update
+	if(m_firewall_activated)
+	{
+		m_firewall_elapsed += CTime::delta_time;
+
+		if(m_firewall_elapsed >= m_firewall_duration)
+			DeactivateFireWall();
+	}
+
+	m_firewall_elapsed += CTime::delta_time;
 }
 
 /*virtual */ void S_GameManager::OnDestroy()
@@ -228,4 +244,61 @@ void S_GameManager::CloseDoor(ESpawnZone zone)
 		p_door->GetComponent<S_DoorController>()->CloseDoor();
 
 	mp_prompt->LogMessage("> Warning : Door " + door_type + " closed");
+}
+
+void S_GameManager::ActivateFireWall()
+{
+	// Case 1 : Already activated
+	if (m_firewall_activated)
+	{
+		mp_prompt->LogMessage("> Firewall already activated");
+		return;
+	}
+
+	// Case 2 : Cooldow left
+	if(m_firewall_elapsed < m_firewall_cooldown)
+	{
+		CString message = "> Firewall not ready (";
+		const int time_left = m_firewall_cooldown - m_firewall_elapsed;
+
+		// String to int
+		char buffer[8] = { '\0' };
+		sprintf(buffer, "%d", time_left);
+
+		message += buffer;
+		message += " s left)";
+
+		mp_prompt->LogMessage(message.Data());
+		return;
+	}
+
+	// Case 3 : Allowed
+	m_firewall_elapsed   = 0.0f;
+	m_firewall_activated = true;
+
+	// Gets all door
+	auto* p_door_1 = CGameObject::Find("Door_Block_R1");
+	auto* p_door_2 = CGameObject::Find("Door_Block_R2");
+	auto* p_door_3 = CGameObject::Find("Door_Block_R3");
+
+	if (p_door_1) p_door_1->GetComponent<S_DoorController>()->CloseDoor();
+	if (p_door_2) p_door_2->GetComponent<S_DoorController>()->CloseDoor();
+	if (p_door_3) p_door_3->GetComponent<S_DoorController>()->CloseDoor();
+}
+
+void S_GameManager::DeactivateFireWall()
+{
+	m_firewall_elapsed   = 0.0f;
+	m_firewall_activated = false;
+
+	mp_prompt->LogMessage("> Firewall desactivated");
+
+	// Gets all door
+	auto* p_door_1 = CGameObject::Find("Door_Block_R1");
+	auto* p_door_2 = CGameObject::Find("Door_Block_R2");
+	auto* p_door_3 = CGameObject::Find("Door_Block_R3");
+
+	if (p_door_1) p_door_1->GetComponent<S_DoorController>()->OpenDoor();
+	if (p_door_2) p_door_2->GetComponent<S_DoorController>()->OpenDoor();
+	if (p_door_3) p_door_3->GetComponent<S_DoorController>()->OpenDoor();
 }

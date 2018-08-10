@@ -264,6 +264,8 @@ void S_CommandPrompt::ProcessCommand(const CString& command)
 	else if (true_command == "close door d2") { mp_game_manager->CloseDoor(ESpawnZone::R2); }
 	else if (true_command == "close door d3") { mp_game_manager->CloseDoor(ESpawnZone::R3); }
 
+	else if (true_command == "activate firewall") { mp_game_manager->ActivateFireWall(); }
+
 	else
 	{
 		LogMessage("ERROR : COMMAND NOT FOUND");
