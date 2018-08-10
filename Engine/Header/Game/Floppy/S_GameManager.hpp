@@ -9,6 +9,7 @@
 
 #include "SDK/SDK.hpp"
 #include "Game/Floppy/Asset/S_AssetSpawner.hpp"
+#include "Prompt/Capcha.hpp"
 
 // Forward declaration
 class S_CommandPrompt;
@@ -36,6 +37,11 @@ public:
 
 private:
 
+	void DoCapcha			();
+	bool CapchaTestPassed	(CString answer);
+
+private:
+
 	CGameObject*        mp_floppy = nullptr;
 	S_CommandPrompt*    mp_prompt = nullptr;
 	S_CameraController* mp_camera = nullptr;
@@ -58,6 +64,13 @@ private:
 	float m_clean_up_cooldown;
 	float m_clean_up_duration;
 	float m_clean_up_elapsed;
+
+	// Flags
+	bool m_tried_activate_firewall = false;
+	bool m_tried_clean_all_CB = false;
+	bool m_on_capcha = false;
+
+	Game::Capcha m_current_capcha;
 };
 
 #endif // !OOM_ENGINE_S_GAME_MANAGER_HPP__

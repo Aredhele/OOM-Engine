@@ -9,6 +9,7 @@
 #include "Game/Floppy/Prompt/S_CommandPrompt.hpp"
 #include "Game/Floppy/Controller/S_ConveyorController.hpp"
 #include "Game/Floppy/Controller/S_DoorController.hpp"
+#include "Game/Floppy/Prompt/Capcha.hpp"
 
 /*virtual */ void S_GameManager::Awake()
 {
@@ -263,7 +264,8 @@ void S_GameManager::CloseDoor(ESpawnZone zone)
 
 void S_GameManager::TryActivateFirewall()
 {
-	ActivateFireWall();
+	m_tried_activate_firewall = true;
+	DoCapcha();
 }
 
 void S_GameManager::ActivateFireWall()
@@ -271,14 +273,14 @@ void S_GameManager::ActivateFireWall()
 	// Case 1 : Already activated
 	if (m_firewall_activated)
 	{
-		mp_prompt->LogMessage("> Firewall already activated");
+		mp_prompt->LogMessage("FIREWALL ALREADY ACTIVATED");
 		return;
 	}
 
 	// Case 2 : Cooldow left
 	if(m_firewall_elapsed < m_firewall_cooldown)
 	{
-		CString message = "> Firewall not ready (";
+		CString message = "FIREWALL NOT READY (";
 		const int time_left = m_firewall_cooldown - m_firewall_elapsed;
 
 		// String to int
@@ -286,12 +288,14 @@ void S_GameManager::ActivateFireWall()
 		sprintf(buffer, "%d", time_left);
 
 		message += buffer;
-		message += " s left)";
+		message += " SECONDS LEFT)";
 
 		mp_prompt->LogMessage(message.Data());
 		return;
 	}
 
+	mp_prompt->LogMessage("ACTIVATING FIREWALL...");
+	mp_prompt->LogMessage("FIREWALL ACTIVATED");
 	// Case 3 : Allowed
 	m_firewall_elapsed   = 0.0f;
 	m_firewall_activated = true;
@@ -308,7 +312,8 @@ void S_GameManager::ActivateFireWall()
 
 void S_GameManager::TryCleanAllCB()
 {
-	CleanAllCB();
+	m_tried_clean_all_CB = true;
+	DoCapcha();
 }
 
 void S_GameManager::DeactivateFireWall()
@@ -316,7 +321,7 @@ void S_GameManager::DeactivateFireWall()
 	m_firewall_elapsed   = 0.0f;
 	m_firewall_activated = false;
 
-	mp_prompt->LogMessage("> Firewall desactivated");
+	mp_prompt->LogMessage("FIREWALL DEACTIVATED");
 
 	// Gets all door
 	auto* p_door_1 = CGameObject::Find("Door_Block_R1");
@@ -424,7 +429,40 @@ void S_GameManager::StopCleanAllCB()
 	mp_prompt->LogMessage("> Clean up finished");
 }
 
-void S_GameManager::ProcessUnknownCommand(CString command)
+void S_GameManager::ProcessUnknownCommand(const CString command)
 {
-	mp_prompt->LogMessage("ERROR : COMMAND NOT FOUND");
+	if (m_on_capcha)
+	{
+		if (CapchaTestPassed(command)) {
+			m_on_capcha = false;
+			mp_prompt->LogMessage("TEST PASSED");
+			if (m_tried_activate_firewall) { m_tried_activate_firewall = false; ActivateFireWall(); }
+			else if (m_tried_clean_all_CB) { m_tried_clean_all_CB = false; CleanAllCB(); }
+		}
+		else
+		{
+			mp_prompt->LogMessage("BAD ANSWER");
+			mp_prompt->LogMessage("THE ANSWER WAS : " + m_current_capcha.answer);
+			mp_prompt->LogMessage("GENERATING NEW SECURITY TEST");
+			DoCapcha();
+		}
+	}
+	else
+	{
+		mp_prompt->LogMessage("ERROR : COMMAND NOT FOUND");
+	}
+}
+
+void S_GameManager::DoCapcha()
+{
+	mp_prompt->LogMessage("SENSITIVE COMMAND SUBMITTED");
+	mp_prompt->LogMessage("PLEASE PASS THIS TEST TO CONFIRM YOU ARE NOT A BOT");
+	m_on_capcha = true;
+	m_current_capcha = Game::Capcha::generateCapcha();
+	mp_prompt->LogMessage(m_current_capcha.question);
+}
+
+bool S_GameManager::CapchaTestPassed(CString answer)
+{
+	return answer == m_current_capcha.answer;
 }

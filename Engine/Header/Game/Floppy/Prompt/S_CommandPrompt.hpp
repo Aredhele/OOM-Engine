@@ -38,7 +38,7 @@ public:
 	void OpenPrompt  ();
 	void ClosePrompt ();
 	bool IsOpen      () const;
-	void LogMessage	 (const CString& message);
+	void LogMessage	 (const CString& message, bool isSystem = true);
 
 public:
 

@@ -55,7 +55,7 @@ namespace Game {
 				res = a + b;
 			}
 			char c_q[50];
-			snprintf(c_q, 20, "%i %c %i = ?", a, _operator, b);
+			snprintf(c_q, 20, "%i %c %i = ____", a, _operator, b);
 			char c_a[20];
 			snprintf(c_a, 20, "%i", res);
 			c.answer = CString(c_a);
