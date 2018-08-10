@@ -33,9 +33,11 @@ private:
 	uint32_t m_limit_size;
 	uint32_t m_current_size;
 
-	S_Text*		 mp_text;
-	CGameObject* mp_floppy_text;
-	CGameObject* mp_floppy_sprite;
+	S_Text*		    mp_text;
+	CGameObject*    mp_floppy_text;
+	CGameObject*    mp_floppy_sprite;
+	CAudioSource3D* mp_source_floppy;
+	CAudioBuffer    m_audio_buffer_floppy;
 };
 
 #endif // !OOM_ENGINE_S_FLOPPY_HPP__

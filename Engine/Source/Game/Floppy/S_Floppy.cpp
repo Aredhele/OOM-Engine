@@ -14,6 +14,7 @@
 	mp_text		     = nullptr;
 	mp_floppy_text   = nullptr;
 	mp_floppy_sprite = nullptr;
+	mp_source_floppy = nullptr;
 }
 
 /*virtual */ void S_Floppy::Start()
@@ -24,7 +25,8 @@
 	mp_text          = mp_floppy_text->GetComponent  <S_Text>();
 	auto* p_material = mp_floppy_sprite->GetComponent<CMaterial>();
 	auto* p_renderer = mp_floppy_sprite->GetComponent<CUISpriteRenderer>();
-	
+	mp_source_floppy = GetGameObject()->AddComponent<CAudioSource3D>();
+
 	p_renderer->SetSortingLayer(0);
 	p_material->SetTexture(Sdk::Import::ImportTexture("Resources/Texture/T_Floppy_ui.jpg"));
 
@@ -33,6 +35,13 @@
 	mp_text->SetText("0 / 1440 KB");
 	mp_floppy_text->GetTransform().SetScale(0.4f, 0.4f, 0.4f);
 	mp_floppy_text->GetTransform().SetPosition(0.75f, 0.04f, 0.0f);
+
+	// Audio
+	m_audio_buffer_floppy.LoadFromFile("Resources/Sound/sound_floppy_filling.ogg");
+	mp_source_floppy->SetAudioBuffer(&m_audio_buffer_floppy);
+
+	mp_source_floppy->SetMinDistance(15.0f);
+	mp_source_floppy->SetMaxDistance(30.0f);
 }
 
 /*virtual */ void S_Floppy::Update()
@@ -53,6 +62,7 @@ void S_Floppy::AddKiloByte(uint32_t kilo_bytes)
 	sprintf(text_buffer, "%d / 1440 KB", m_current_size);
 
 	mp_text->SetText(text_buffer);
+	mp_source_floppy->Play();
 }
 
 uint32_t S_Floppy::GetLimitSize() const
