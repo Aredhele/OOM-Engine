@@ -13,10 +13,10 @@ class S_DoorController : public CBehavior
 {
 public:
 
-	void Awake    () final;
-	void Start    () final;
-	void Update   () final;
-	void OnDestroy() final;
+	void Awake		()	 final;
+	void Start		()	 final;
+	void Update		()	 final;
+	void OnDestroy	()	 final;
 
 public:
 

@@ -23,7 +23,8 @@
 	auto* p_body = p_game_object->AddComponent<CRigidBody>();
 	auto* p_box = p_game_object->AddComponent<CBoxCollider>();
 
-	p_body->SetBodyType(CRigidBody::EBodyType::Kinematic);
+	p_body->SetGravityScale(0.0f);
+	p_body->SetBodyType(CRigidBody::EBodyType::Dynamic);
 	p_body->SetOrientationZ(GetTransform()->GetEulerAngles().z);
 
 	p_box->SetExtent(glm::vec3(4.0f, 4.0f, 4.0f));
@@ -65,4 +66,16 @@
 /* virtual */ void S_BusAsset::OnDestroy()
 {
 	// None
+}
+
+void S_BusAsset::OnCollisionEnter(const CCollision& collision)
+{
+	if(collision.p_game_object)
+	{
+		if(collision.p_game_object->GetTag() == "Door_Block")
+		{
+			printf("DESTROYED\n");
+			Destroy(GetGameObject());
+		}
+	}
 }
