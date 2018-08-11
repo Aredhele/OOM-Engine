@@ -68,13 +68,17 @@ private:
 	float			m_key_delay;
 	float			m_key_elapsed;
 
-	glm::tvec2<int> m_command_position;
 	glm::vec3		m_prompt_scale_open;
 	glm::vec3		m_prompt_scale_close;
 	glm::vec3		m_prompt_position_open;
 	glm::vec3		m_prompt_position_close;
 
-	
+	glm::vec3		m_text_scale;
+	glm::vec3		m_command_scale;
+	glm::vec3		m_command_position;
+	uint32_t		m_log_count;
+	uint32_t		m_max_char;
+
 	Texts	       m_used_texts;
 	Texts	       m_free_texts;
 	CString        m_command;

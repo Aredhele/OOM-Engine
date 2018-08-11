@@ -425,7 +425,7 @@ void CEngine::GameObjectUpdate(GLFWwindow* p_window, const float delta_time)
 
 /* static */ void CEngine::Exit()
 {
-	m_running = false;
+	sp_instance->m_running = false;
 }
 
 /* static */ void CEngine::RegisterBehavior(CBehavior* p_behavior)
