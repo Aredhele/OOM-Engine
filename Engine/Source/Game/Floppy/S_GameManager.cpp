@@ -50,6 +50,8 @@
 
 	if(p_prompt_go)
 		mp_prompt = p_prompt_go->GetComponent<S_CommandPrompt>();
+
+	Sdk::Mouse::HideMouse();
 }
 
 /*virtual */ void S_GameManager::Update()

@@ -22,7 +22,7 @@ CVignetteEffect::CVignetteEffect() : IPostEffect(IPostEffect::EType::Vignette, "
     m_center_id        = glGetUniformLocation(m_shader_id, "center");
     m_opacity_id       = glGetUniformLocation(m_shader_id, "opacity");
 
-    m_radius   = 0.60f;
+    m_radius   = 0.80f;
     m_softness = 0.45f;
     m_center   = glm::vec2(0.5f, 0.5f);
     m_opacity  = 0.8f;

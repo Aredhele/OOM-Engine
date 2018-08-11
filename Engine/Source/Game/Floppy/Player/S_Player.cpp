@@ -43,6 +43,14 @@
 	 if(Sdk::Input::IsMouseButtonPressed(GLFW_MOUSE_BUTTON_1) &&  m_shoot_elapsed >= m_shoot_delay)
 	 {
 		 const auto& transform = *GetTransform();
+
+		 // Camera to forward ray
+		 Sdk::Debug::DrawRay(
+			 transform.GetPosition() -
+			 (transform.GetUp()      * 0.9f) +
+			 (transform.GetRight()   * 1.0f),
+			 transform.GetForward() * 100.0f, glm::vec3(0.0f, 1.0f, 0.1f));
+
 		 mp_shoot_source->Play();
 
 		 CRayCast ray_cast = Sdk::Physic::RayCast(transform.GetPosition(), transform.GetForward() * 100.0f);
@@ -68,7 +76,7 @@
 
 /* virtual */ void S_Player::OnDrawGizmos()
 {
-	const auto& transform = *GetTransform();
+	/*const auto& transform = *GetTransform();
 
 	// Camera to forward ray
 	Sdk::Debug::DrawRay(
@@ -76,7 +84,7 @@
 		(transform.GetUp()      * 0.5f) + 
 		(transform.GetRight()   * 2.0f) + 
 		(transform.GetForward() * 2.0f),
-		 transform.GetForward() * 100.0f, glm::vec3(1.0f, 0.0f, 0.5f));
+		 transform.GetForward() * 100.0f, glm::vec3(1.0f, 0.0f, 0.5f));*/
 }
 
 void S_Player::SetShootDelay(float delay)

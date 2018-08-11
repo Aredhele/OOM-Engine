@@ -99,18 +99,18 @@ void CEngine::ReadConfiguration()
 	SLogger::LogInfo("Reading engine configuration...");
 
 	// Rendering
-	const bool b_enable_post_processing = GetPrivateProfileInt("Rendering", "enable_post_processing", 1, "Resources/Engine.ini");
-	const bool b_enable_anti_aliasing   = GetPrivateProfileInt("Rendering", "enable_anti_aliasing",   1, "Resources/Engine.ini");
-		  int  opengl_version_major     = GetPrivateProfileInt("Rendering", "opengl_version_major",   3, "Resources/Engine.ini");
-		  int  opengl_version_minor     = GetPrivateProfileInt("Rendering", "opengl_version_minor",   3, "Resources/Engine.ini");
+	const bool b_enable_post_processing = GetPrivateProfileInt("Rendering", "enable_post_processing", 1, "./Engine.ini");
+	const bool b_enable_anti_aliasing   = GetPrivateProfileInt("Rendering", "enable_anti_aliasing",   1, "./Engine.ini");
+		  int  opengl_version_major     = GetPrivateProfileInt("Rendering", "opengl_version_major",   3, "./Engine.ini");
+		  int  opengl_version_minor     = GetPrivateProfileInt("Rendering", "opengl_version_minor",   3, "./Engine.ini");
 
 	// Window
-	int        window_size_width  = GetPrivateProfileInt("Window", "window_size_width",  1600, "Resources/Engine.ini");
-	int        window_size_height = GetPrivateProfileInt("Window", "window_size_height",  900, "Resources/Engine.ini");
-	const bool window_full_screen = GetPrivateProfileInt("Window", "window_full_screen",    0, "Resources/Engine.ini");
-	
+	int        window_size_width  = GetPrivateProfileInt("Window", "window_size_width",  1600, "./Engine.ini");
+	int        window_size_height = GetPrivateProfileInt("Window", "window_size_height",  900, "./Engine.ini");
+	const bool window_full_screen = GetPrivateProfileInt("Window", "window_full_screen",    0, "./Engine.ini");
+
 	// Logic
-	int update_per_second   = GetPrivateProfileInt("Logic", "update_per_second", 60, "Resources/Engine.ini");
+	int update_per_second   = GetPrivateProfileInt("Logic", "update_per_second", 60, "./Engine.ini");
 
 	// Checking arguments
 	if(opengl_version_major < 3 || opengl_version_minor < 3)

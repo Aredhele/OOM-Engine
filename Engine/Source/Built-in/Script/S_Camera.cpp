@@ -10,26 +10,31 @@
 #include "Composite/CGameObject.hpp"
 #include "Built-in/Script/S_Camera.hpp"
 
-void S_Camera::Start()
+void S_Camera::Awake()
 {
-    m_clear_color         = glm::vec3(0.51f, 0.56, 0.60f);
-    m_projection_mode     = EProjectionMode::Perspective;
-    m_field_of_view       = 45;
-    m_clipping_plane_near = 0.3f;
-    m_clipping_plane_far  = 1000;
+	m_clear_color = glm::vec3(0.51f, 0.56, 0.60f);
+	m_projection_mode = EProjectionMode::Perspective;
+	m_field_of_view = 45;
+	m_clipping_plane_near = 0.3f;
+	m_clipping_plane_far = 1000;
 
 	// TMP
-	m_test        = glm::vec3(0.0f);
-	m_scale       = glm::vec3(1.0f);
-	m_position    = glm::vec3(0.0f);
+	m_test = glm::vec3(0.0f);
+	m_scale = glm::vec3(1.0f);
+	m_position = glm::vec3(0.0f);
 	m_orientation = glm::vec3(0.0f);
-	m_up          = glm::vec3(0.0f, 0.0f, 1.0f);
-	m_right       = glm::vec3(1.0f, 0.0f, 0.0f);
-	m_forward     = glm::vec3(0.0f, 1.0f, 0.0f);
+	m_up = glm::vec3(0.0f, 0.0f, 1.0f);
+	m_right = glm::vec3(1.0f, 0.0f, 0.0f);
+	m_forward = glm::vec3(0.0f, 1.0f, 0.0f);
 	UpdateVector();
 
-    UpdateViewMatrix();
-    UpdateProjectionMatrix();
+	UpdateViewMatrix();
+	UpdateProjectionMatrix();
+}
+
+void S_Camera::Start()
+{
+   
 }
 
 void S_Camera::Update()

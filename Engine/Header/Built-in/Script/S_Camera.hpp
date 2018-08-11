@@ -15,6 +15,7 @@ class S_Camera : public Oom::CBehavior
 public:
 
     // Behavior
+	void Awake() override;
     void Start()  override;
     void Update() override;
 

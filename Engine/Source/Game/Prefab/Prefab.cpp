@@ -27,6 +27,12 @@ void CreatePlayer()
 
 	p_game_object->SetTag ("MainCamera"); ///< Required by the camera
 	p_game_object->SetName("Player");     ///< Required to find the player
+
+	p_game_object->GetTransform().SetPosition   (15.0f, 0.0f, 16.0f);
+	p_game_object->GetTransform().SetEulerAngles(0.0f, 0.0f,  90.0f);
+
+	auto* p_camera_script = p_game_object->GetComponent<S_Camera>();
+	p_camera_script->SetClearColor(glm::vec3(0.05f, 0.0f, 0.0f));
 }
 
 void CreateGlobalLighting()
@@ -36,6 +42,15 @@ void CreateGlobalLighting()
 	p_game_object->SetTag ("Light");
 	p_game_object->SetName("Directional_Light");
 	p_game_object->GetTransform().SetPosition(0.0f, 0.0f, 10.0f);
+
+	auto* p_light = p_game_object->GetComponent<S_DirectionalLight>();
+
+	p_light->SetLightIntensity(0.3f);
+	p_light->SetAmbientIntensity(0.2f);
+	p_light->SetLightColor(glm::vec3(0.8f, 0.6f, 0.6f));
+
+	Sdk::Render::EnablePostEffect(EPostEffect::Fog);
+	Sdk::Render::EnablePostEffect(EPostEffect::Vignette);
 }
 
 void CreateStaticEnvironment()

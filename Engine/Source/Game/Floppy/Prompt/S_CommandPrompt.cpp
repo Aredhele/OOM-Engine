@@ -285,7 +285,7 @@ void S_CommandPrompt::ProcessCommand(const CString& _command)
 	else if (true_command == "ACTIVATE FIREWALL") { mp_game_manager->TryActivateFirewall(); }
 	else if (true_command == "CLEAN ALL CB") { mp_game_manager->TryCleanAllCB(); }
 	else if (true_command == "HELP") { mp_game_manager->ShowHelp(); }
-	else if (true_command == "START HACKING") { mp_game_manager->ShowHelp(); }
+	else if (true_command == "START HACKING") { mp_game_manager->StartHacking(); }
 	else if (true_command == "LOGOUT") { mp_game_manager->Logout(); }
 
 	else
