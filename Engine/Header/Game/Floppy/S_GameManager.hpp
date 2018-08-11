@@ -10,6 +10,7 @@
 #include "SDK/SDK.hpp"
 #include "Game/Floppy/Asset/S_AssetSpawner.hpp"
 #include "Prompt/Capcha.hpp"
+#include "S_Floppy.hpp"
 
 // Forward declaration
 class S_CommandPrompt;
@@ -48,7 +49,7 @@ private:
 
 private:
 
-	CGameObject*        mp_floppy = nullptr;
+	S_Floppy*        mp_floppy = nullptr;
 	S_CommandPrompt*    mp_prompt = nullptr;
 	S_CameraController* mp_camera = nullptr;
 

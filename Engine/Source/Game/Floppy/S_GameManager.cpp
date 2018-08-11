@@ -10,6 +10,7 @@
 #include "Game/Floppy/Controller/S_ConveyorController.hpp"
 #include "Game/Floppy/Controller/S_DoorController.hpp"
 #include "Game/Floppy/Prompt/Capcha.hpp"
+#include "Game/Floppy/S_Floppy.hpp"
 
 /*virtual */ void S_GameManager::Awake()
 {
@@ -39,7 +40,7 @@
 
 /*virtual */ void S_GameManager::Start()
 {
-	mp_floppy         = CGameObject::Find("Floppy");
+	mp_floppy         = CGameObject::Find("Floppy")->GetComponent<S_Floppy>();
 	auto* p_prompt_go = CGameObject::Find("Prompt");
 	auto* p_camera_go = CGameObject::FindWithTag("MainCamera");
 
@@ -86,6 +87,11 @@
 
 		if (m_clean_up_elapsed >= m_clean_up_duration)
 			StopCleanAllCB();
+	}
+
+	if (mp_floppy->GetCurrentSize() > mp_floppy->GetLimitSize())
+	{
+		GameOver();
 	}
 
 	m_clean_up_elapsed += CTime::delta_time;
