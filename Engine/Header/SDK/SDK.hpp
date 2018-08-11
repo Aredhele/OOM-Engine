@@ -164,6 +164,11 @@ namespace Sdk
         GLuint ImportTexture(const char* p_path);
         void   ImportMesh   (const char* p_path);
     }
+
+	namespace Application
+    {
+		void Exit();
+    }
 }
 
 #endif // !OOM_ENGINE_SDK_HPP__

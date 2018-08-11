@@ -42,6 +42,9 @@
 
 	mp_source_floppy->SetMinDistance(15.0f);
 	mp_source_floppy->SetMaxDistance(30.0f);
+
+	// Moving away this anoying floppy
+	GetTransform()->Translate(-20.0f, 0.0f, 0.0f);
 }
 
 /*virtual */ void S_Floppy::Update()

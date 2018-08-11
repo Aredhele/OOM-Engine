@@ -21,11 +21,17 @@ void character_callback(GLFWwindow* window, unsigned int codepoint)
 
 /* virtual */ void S_CommandPrompt::Awake()
 {
-	m_prompt_scale_open     = glm::vec3(6.0f, 7.0f, 1.0f);
-	m_prompt_scale_close    = glm::vec3(6.0f, 1.3f, 1.0f);
+	m_prompt_scale_open     = glm::vec3(6.5f, 7.0f,  1.0f);
+	m_prompt_scale_close    = glm::vec3(6.5f, 1.35f, 1.0f);
 
-	m_prompt_position_open  = glm::vec3(0.195f, 0.598f,   0.0f);
-	m_prompt_position_close = glm::vec3(0.195f, 0.915f, 0.0f);
+	m_prompt_position_open  = glm::vec3(0.208f, 0.598f, 0.0f);
+	m_prompt_position_close = glm::vec3(0.208f, 0.915f, 0.0f);
+
+	m_text_scale            = glm::vec3(0.2f,  0.2f,  0.2f);
+	m_command_scale         = glm::vec3(0.25f, 0.25f, 0.25f);
+	m_command_position      = glm::vec3(0.02f, 0.25f, 0.0f);
+	m_log_count             = 20;
+	m_max_char				= 42;
 
 	m_key_delay   = 0.2f;
 	m_key_elapsed = 0.0f;
@@ -44,8 +50,8 @@ void character_callback(GLFWwindow* window, unsigned int codepoint)
 	m_command_text = Sdk::GameObject::CreateUIText();
 	auto* p_text   = m_command_text->GetComponent<S_Text>();
 
-	m_command_text->GetTransform().SetScale   (0.4f, 0.4f, 0.4f);
-	m_command_text->GetTransform().SetPosition(0.02f, 0.25f, 0.0f);
+	m_command_text->GetTransform().SetScale   (m_command_scale);
+	m_command_text->GetTransform().SetPosition(m_command_position);
 
 	m_username = getenv("USERNAME");
 	m_username.Resize(10);
@@ -56,11 +62,11 @@ void character_callback(GLFWwindow* window, unsigned int codepoint)
 	glfwSetCharCallback(CRenderer::GetRenderWindow()->GetHandle(), character_callback);
 
 	// Initializing prompt texts
-	for(int i = 0; i < 20; ++i)
+	for(uint32_t i = 0; i < m_log_count; ++i)
 	{
 		auto* p_text_go = Sdk::GameObject::CreateUIText();
 
-		p_text_go->GetTransform().SetScale(0.3f, 0.3f, 0.3f);
+		p_text_go->GetTransform().SetScale(m_text_scale);
 		p_text_go->GetComponent<CTextRenderer>()->SetVisible(false);
 		p_text_go->GetComponent<CMaterial>()->SetColor(glm::vec3(0.0f, 1.0f, 0.0f));
 
@@ -85,7 +91,7 @@ void character_callback(GLFWwindow* window, unsigned int codepoint)
 		{
 			m_key_elapsed = 0.0f;
 
-			if(m_command.Size() > 2)
+			if(m_command.Size() > m_username.Size() + 3)
 			{
 				m_command.PopBack();
 				UpdateCommandText();
@@ -124,8 +130,11 @@ void S_CommandPrompt::ProcessCharacter(unsigned int codepoint)
 {
 	if(IsOpen())
 	{
-		m_command += toupper((char)codepoint);
-		UpdateCommandText();
+		if(m_command.Size() < m_max_char)
+		{
+			m_command += toupper((char)codepoint);
+			UpdateCommandText();
+		}
 	}
 }
 
@@ -152,7 +161,6 @@ bool S_CommandPrompt::IsOpen() const
 
 void S_CommandPrompt::LogMessage(const CString& _message, bool isSystem)
 {
-
 	CString message = CString(_message.Data());
 	message.toUpper();
 	if (isSystem)
@@ -193,7 +201,7 @@ void S_CommandPrompt::LogMessage(const CString& _message, bool isSystem)
 
 void S_CommandPrompt::HideLogText()
 {
-	for (auto i = 3; i < m_used_texts.size(); ++i)
+	for (auto i = 4; i < m_used_texts.size(); ++i)
 	{
 		m_used_texts[i]->GetComponent<CTextRenderer>()->SetVisible(false);
 	}	
@@ -238,7 +246,7 @@ void S_CommandPrompt::UpdatePromptLogs()
 		auto* p_renderer       = p_text->GetComponent<CTextRenderer>();
 
 		p_renderer->SetVisible(true);
-		p_text->GetTransform().SetPosition(0.02f, 0.93f - n_pos * 0.03f, 0.0f);
+		p_text->GetTransform().SetPosition(0.02f, 0.95f - n_pos * 0.03f, 0.0f);
 
 		n_pos++;
 	}

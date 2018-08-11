@@ -332,5 +332,10 @@ namespace Sdk
 			return ray_cast;
 		}
     }
+
+	void Application::Exit()
+	{
+		CEngine::Exit();
+	}
 }
 

@@ -66,6 +66,7 @@ public:
     static bool               IsKeyReleased			(int key_code);
 	static bool				  IsMouseButtonPressed	(int button);
 	static bool				  IsMouseButtonReleased	(int button);
+	static void				  Exit					();
 
 private:
 
@@ -84,6 +85,8 @@ private:
     static CEngine* sp_instance;
 
 private:
+
+	bool					  m_running;
 
     CRenderer*                mp_renderer     = nullptr;
     CPhysicWorld*             mp_physic_world = nullptr;

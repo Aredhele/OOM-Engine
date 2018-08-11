@@ -43,10 +43,10 @@
     }
 
     // Keyboard Inputs
-    int y_direction   = (Sdk::Input::IsKeyPressed(GLFW_KEY_W)) ? 1 : 0;
-        y_direction  -= (Sdk::Input::IsKeyPressed(GLFW_KEY_S)) ? 1 : 0;
-    int x_direction   = (Sdk::Input::IsKeyPressed(GLFW_KEY_D)) ? 1 : 0;
-        x_direction  -= (Sdk::Input::IsKeyPressed(GLFW_KEY_A)) ? 1 : 0;
+    int y_direction   = (Sdk::Input::IsKeyPressed(GLFW_KEY_W) || Sdk::Input::IsKeyPressed(GLFW_KEY_UP)    ) ? 1 : 0;
+        y_direction  -= (Sdk::Input::IsKeyPressed(GLFW_KEY_S) || Sdk::Input::IsKeyPressed(GLFW_KEY_DOWN)  ) ? 1 : 0;
+    int x_direction   = (Sdk::Input::IsKeyPressed(GLFW_KEY_D) || Sdk::Input::IsKeyPressed(GLFW_KEY_RIGHT) ) ? 1 : 0;
+        x_direction  -= (Sdk::Input::IsKeyPressed(GLFW_KEY_A) || Sdk::Input::IsKeyPressed(GLFW_KEY_LEFT)  ) ? 1 : 0;
 
     auto angleX = static_cast<float>(-deltaMouse.x * m_sensitivity);
     auto angleY = static_cast<float>(-deltaMouse.y * m_sensitivity);
