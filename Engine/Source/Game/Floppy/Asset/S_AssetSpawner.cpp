@@ -169,21 +169,6 @@ void S_AssetSpawner::SpawnConveyorAsset(uint32_t size)
 
 void S_AssetSpawner::TriggerAlarm(ESpawnZone zone, EAsset type)
 {
-	// Spawning the sound
-	CString sound;
-	switch(type)
-	{
-		case BigAsset:		sound = "Resources/Sound/sound_big_alarm.ogg";   break;
-		case BusAsset:		sound = "Resources/Sound/sound_small_alarm.ogg"; break;
-		case ConveyorAsset: sound = "Resources/Sound/sound_small_alarm.ogg"; break;
-	}
-
-	auto* p_alarm  = Instantiate(GetTransform());
-	auto* p_source = p_alarm->AddComponent<S_SoundSource>();
-
-	p_source->SetSound(sound.Data());
-	Destroy(p_alarm, 5.0f);
-
 	CGameObject* p_alarm_controller = nullptr;
 	if(type == EAsset::BigAsset)
 	{

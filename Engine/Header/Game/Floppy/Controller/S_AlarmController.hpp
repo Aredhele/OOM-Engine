@@ -29,6 +29,7 @@ private:
 	float		   m_elapsed;
 	float		   m_duration;
 	bool		   m_triggered;
+	S_PointLight*  mp_point_light;
 	CMeshRenderer* mp_renderer_on;
 	CMeshRenderer* mp_renderer_off;
 };

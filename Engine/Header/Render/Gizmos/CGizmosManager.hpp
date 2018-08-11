@@ -68,8 +68,8 @@ private:
     static void Draw (glm::mat4 const& PV);
 
     uint32_t   m_vertexCount;
-    glm::vec3 m_vertices[5000];
-    glm::vec3 m_colors  [5000];
+    glm::vec3 m_vertices[8000];
+    glm::vec3 m_colors  [8000];
 
     GLuint m_vao;
     GLuint m_vbo;

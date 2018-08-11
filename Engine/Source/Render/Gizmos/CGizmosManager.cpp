@@ -33,12 +33,12 @@ CGizmosManager::CGizmosManager()
 
     glGenBuffers          (1, &m_vbo);
     glBindBuffer          (GL_ARRAY_BUFFER, m_vbo);
-    glBufferData          (GL_ARRAY_BUFFER, 5000 * sizeof(glm::vec3), &m_vertices[0], GL_DYNAMIC_DRAW);
+    glBufferData          (GL_ARRAY_BUFFER, 8000 * sizeof(glm::vec3), &m_vertices[0], GL_DYNAMIC_DRAW);
     glVertexAttribPointer (0, 3, GL_FLOAT, GL_FALSE, 0, (void*)nullptr);
 
     glGenBuffers          (1, &m_cbo);
     glBindBuffer          (GL_ARRAY_BUFFER, m_cbo);
-    glBufferData          (GL_ARRAY_BUFFER, 5000 * sizeof(glm::vec3), &m_colors[0], GL_DYNAMIC_DRAW);
+    glBufferData          (GL_ARRAY_BUFFER, 8000 * sizeof(glm::vec3), &m_colors[0], GL_DYNAMIC_DRAW);
     glVertexAttribPointer (1, 3, GL_FLOAT, GL_FALSE, 0, (void*)nullptr);
 
     glEnableVertexAttribArray(0);
@@ -77,7 +77,7 @@ CGizmosManager::~CGizmosManager() // NOLINT
                                           const glm::vec3 &end,
                                           const glm::vec3 &color)
 {
-    if(s_pInstance->m_vertexCount + 2 >= 5000)
+    if(s_pInstance->m_vertexCount + 2 >= 8000)
     {
         // Too many debug lines, ignoring current line
         return;

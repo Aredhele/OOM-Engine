@@ -192,6 +192,14 @@ void CreateDoors()
 	auto* p_controller_5 = p_alarm_controller_5->AddComponent<S_AlarmController>();
 	auto* p_controller_7 = p_alarm_controller_7->AddComponent<S_AlarmController>();
 
+	p_alarm_controller_1->GetTransform().SetPosition(-27.0f, -19.0f,  4.0f);
+	p_alarm_controller_2->GetTransform().SetPosition(-27.0f,  19.0f,  4.0f);
+	p_alarm_controller_4->GetTransform().SetPosition( 26.0f,  20.0f,  4.0f);
+	p_alarm_controller_6->GetTransform().SetPosition( 20.0f, -26.0f,  4.0f);
+	p_alarm_controller_3->GetTransform().SetPosition( 0.0f,   30.0f,  4.0f);
+	p_alarm_controller_5->GetTransform().SetPosition( 0.0f,  -30.0f,  4.0f);
+	p_alarm_controller_7->GetTransform().SetPosition( 30.0f,   0.0f,  4.0f);
+
 	p_controller_1->SetTargetRenderer(p_door_01_on->GetComponent<CMeshRenderer>(), p_door_01_off->GetComponent<CMeshRenderer>());
 	p_controller_2->SetTargetRenderer(p_door_02_on->GetComponent<CMeshRenderer>(), p_door_02_off->GetComponent<CMeshRenderer>());
 	p_controller_4->SetTargetRenderer(p_door_04_on->GetComponent<CMeshRenderer>(), p_door_04_off->GetComponent<CMeshRenderer>());

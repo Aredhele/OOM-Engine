@@ -25,6 +25,10 @@ CGameObject::CGameObject(CTransform* parent)
     m_destroy_delay   = 0.0f;
     m_destroy_elapsed = 0.0f;
 
+	m_transform.m_position      = parent->m_position;
+	m_transform.m_scale         = parent->m_scale;
+	m_transform.m_q_orientation = parent->m_q_orientation;
+
     m_transform.mp_game_object = this;
 }
 
