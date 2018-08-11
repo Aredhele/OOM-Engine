@@ -208,11 +208,14 @@ void CRenderer::Render()
 
         for(auto i = 0; i < size; ++i)
         {
-            render_data.point_lights.push_back({
-                point_behaviors[i]->GetRange(),
-                point_behaviors[i]->GetIntensity(),
-                point_behaviors[i]->GetColor(),
-                p_game_object->GetTransform().GetPosition()});
+			if(point_behaviors[i]->IsEnabled())
+			{
+				render_data.point_lights.push_back({
+					point_behaviors[i]->GetRange(),
+					point_behaviors[i]->GetIntensity(),
+					point_behaviors[i]->GetColor(),
+					p_game_object->GetTransform().GetPosition() });
+			}
         }
 
         if(direc_behaviors != nullptr)

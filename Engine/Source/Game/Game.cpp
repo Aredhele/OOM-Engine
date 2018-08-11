@@ -22,16 +22,16 @@ void LoadGameScene()
 {
 	// Enabling debug gizmos
 	Sdk::Debug::EnableGizmo(EGizmo::Ray);
-	// Sdk::Debug::EnableGizmo(EGizmo::Box);
-	// Sdk::Debug::EnableGizmo(EGizmo::Axis);
-	// Sdk::Debug::EnableGizmo(EGizmo::Line);
-	// Sdk::Debug::EnableGizmo(EGizmo::Grid);
-	// 
-	// Sdk::Debug::EnableGizmo(EGizmo::AllColliders);
-	// Sdk::Debug::EnableGizmo(EGizmo::AllTransforms);
-	// Sdk::Debug::EnableGizmo(EGizmo::AllPointLights);
-	// Sdk::Debug::EnableGizmo(EGizmo::AllAudioSources);
-	// Sdk::Debug::EnableGizmo(EGizmo::AllDirectionalLights);
+    Sdk::Debug::EnableGizmo(EGizmo::Box);
+    Sdk::Debug::EnableGizmo(EGizmo::Axis);
+    Sdk::Debug::EnableGizmo(EGizmo::Line);
+    Sdk::Debug::EnableGizmo(EGizmo::Grid);
+    
+    Sdk::Debug::EnableGizmo(EGizmo::AllColliders);
+    Sdk::Debug::EnableGizmo(EGizmo::AllTransforms);
+    Sdk::Debug::EnableGizmo(EGizmo::AllPointLights);
+    Sdk::Debug::EnableGizmo(EGizmo::AllAudioSources);
+    Sdk::Debug::EnableGizmo(EGizmo::AllDirectionalLights);
 
 	// Importing 3D assets
 	Sdk::Import::ImportMesh("Resources/Mesh/Mesh_Asset.obj");
