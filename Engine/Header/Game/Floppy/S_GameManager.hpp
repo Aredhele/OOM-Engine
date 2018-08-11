@@ -35,9 +35,11 @@ public:
 	void StopCleanAllCB();
 	void ShowHelp();
 	void StartHacking();
+	void Logout();
 	void ProcessUnknownCommand(const CString& command);
 
 	void GameOver();
+	void GameWon();
 
 private:
 

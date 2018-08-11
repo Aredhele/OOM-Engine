@@ -460,6 +460,8 @@ void S_GameManager::ShowHelp()
 	mp_prompt->LogMessage("STOP [CB CODE]");
 	mp_prompt->LogMessage("ACTIVATE FIREWALL");
 	mp_prompt->LogMessage("CLEAN ALL CB");
+	mp_prompt->LogMessage("START HACKING");
+	mp_prompt->LogMessage("LOGOUT");
 	mp_prompt->LogMessage("DOOR CODES : D1, D2, D3");
 	mp_prompt->LogMessage("CB CODES : CB1, CB2, CB3, CB4");
 	mp_prompt->LogMessage("USE \"START HACKING\" TO START");
@@ -474,6 +476,11 @@ void S_GameManager::StartHacking()
 	// TODO start spawning waves
 	mp_prompt->LogMessage("STARTING HACKING");
 	m_startedHacking = true;
+}
+
+void S_GameManager::Logout()
+{
+	Sdk::Application::Exit();
 }
 
 void S_GameManager::ProcessUnknownCommand(const CString& command)
@@ -507,6 +514,17 @@ void S_GameManager::GameOver()
 	mp_prompt->LogMessage("SY[STèM CRAAA'A{SHI@NG");
 	//TODO wait for 2 seconds and crash the game
 	while (true) {} // OR CRASH THE GAME LIKE THAT YEAH !
+}
+
+void S_GameManager::GameWon()
+{
+	mp_prompt->OpenPrompt();
+	mp_prompt->LogMessage("INCOMING EXTERNal MESSAGE :");
+	mp_prompt->LogMessage("WELL DONE DUDE !");
+	mp_prompt->LogMessage("THE PRODUCTION IS OVER AND THE FLOPPY IS FINE");
+	mp_prompt->LogMessage("YOU CAN USE  \"LOGOUT\" TO DISCONNECT FROM THE SYSTEM");
+	mp_prompt->LogMessage("SEE YOU !");
+	mp_prompt->LogMessage("[END OF MESSAGE]");
 }
 
 void S_GameManager::DoCapcha()
