@@ -15,7 +15,7 @@ struct PointLightOut
    vec3  point_light_pos;
 };
 
-in PointLightOut lights_out[4];
+in PointLightOut lights_out[5];
 
 // Out
 out vec3 color;
@@ -67,5 +67,4 @@ void main(void)
     }
 
     color = worldLighting + pointLighting;
-	// color = lights_out[0].point_light_color;
 }

@@ -20,7 +20,7 @@ struct PointLightOut
    vec3  point_light_pos;
 };
 
-out PointLightOut lights_out[4];
+out PointLightOut lights_out[5];
 
 // Uniforms
 uniform mat4 M;
@@ -39,7 +39,7 @@ struct PointLight
 };
 
 uniform int        lightCount;
-uniform PointLight lights[4];
+uniform PointLight lights[5];
 
 void main()
 {
@@ -86,5 +86,14 @@ void main()
         lights_out[3].point_light_color     = lights[3].color;
         lights_out[3].point_light_pos       = lights[3].position;
         lights_out[3].point_light_vector    = lights[3].position - vertex_world;
+    }
+
+	if(lightCount > 4)
+    {
+        lights_out[4].point_light_range     = lights[4].range;
+        lights_out[4].point_light_intensity = lights[4].intensity;
+        lights_out[4].point_light_color     = lights[4].color;
+        lights_out[4].point_light_pos       = lights[4].position;
+        lights_out[4].point_light_vector    = lights[4].position - vertex_world;
     }
 }

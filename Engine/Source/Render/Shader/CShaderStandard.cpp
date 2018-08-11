@@ -31,7 +31,7 @@ void CShaderStandard::Begin(const SRenderData& render_data)
     SetFloat ("ambientIntensity", render_data.directional.m_ambient_intensity);
 
     const auto  true_count  = static_cast<GLint>(render_data.point_lights.size());
-	const GLint light_count = (true_count > 4) ? 4 : true_count;
+	const GLint light_count = (true_count > 5) ? 5 : true_count;
 
     // Lighting
     SetInt("lightCount", light_count);

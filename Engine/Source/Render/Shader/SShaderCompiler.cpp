@@ -43,6 +43,7 @@ GLuint SShaderCompiler::CreateProgram(const char* p_shader_name,
     if (info_log_lenght > 0)
     {
         auto* p_buffer = (char*)malloc(static_cast<size_t>(info_log_lenght + 1));
+		glGetShaderInfoLog(program_id, info_log_lenght, nullptr, p_buffer);
 
         SLogger::LogError("glLinkProgram failed (%s) : %", p_shader_name, p_buffer);
         free(p_buffer);
