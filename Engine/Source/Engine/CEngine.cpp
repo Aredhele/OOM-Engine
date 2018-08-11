@@ -170,10 +170,10 @@ void CEngine::Run()
 
     // Setting up the scene
     LoadScene();
-
+	
     while (m_running && 
 		   glfwWindowShouldClose(p_handle) == 0 &&
-           glfwGetKey(p_handle, GLFW_KEY_ESCAPE) != GLFW_PRESS)
+           glfwGetKey(p_handle, GLFW_KEY_F4) != GLFW_PRESS)
     {
         const double current = glfwGetTime();
 		const double elapsed = current - previous;
