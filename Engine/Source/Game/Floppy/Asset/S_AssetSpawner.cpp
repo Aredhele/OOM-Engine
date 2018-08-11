@@ -124,7 +124,7 @@ void S_AssetSpawner::SpawnAsset(EAsset type, unsigned size)
 void S_AssetSpawner::SpawnBigAsset(uint32_t size)
 {
 	// Creating the big asset
-	auto* p_game_object = CGameObject::Instantiate(GetTransform()->GetPosition() + glm::vec3(0.0f, 0.0f, 7.0f));
+	auto* p_game_object = CGameObject::Instantiate(GetTransform()->GetPosition() + glm::vec3(0.0f, 0.0f, 12.0f));
 	auto* p_big_asset = p_game_object->AddComponent<S_BigAsset>();
 
 	p_big_asset->SetKiloBytes(S_BigAsset::s_cost);
