@@ -21,9 +21,8 @@ CFogEffect::CFogEffect() : IPostEffect(IPostEffect::EType::Fog, "Fog")
     m_fogColorID   = glGetUniformLocation(m_shader_id, "fogColor");
     m_fogDensityID = glGetUniformLocation(m_shader_id, "fogDensity");
 
-    m_fogDensity = 80.0f;
-    m_fogColor   = glm::vec3(0.5f, 0.5f, 0.7f); 
- // m_fogColor   = glm::vec3(0.1f, 0.05f, 0.05f);
+    m_fogDensity = 70.0f;
+	m_fogColor   = glm::vec3(0.1f, 0.05f, 0.05f);
 
     glUseProgram(m_shader_id);
     glUniform3f (m_fogColorID,   m_fogColor.x, m_fogColor.y, m_fogColor.z);

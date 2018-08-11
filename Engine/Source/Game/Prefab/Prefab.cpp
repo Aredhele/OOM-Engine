@@ -50,8 +50,8 @@ void CreateGlobalLighting()
 	p_light->SetAmbientIntensity(0.2f);
 	p_light->SetLightColor(glm::vec3(0.8f, 0.6f, 0.6f));
 
-	//Sdk::Render::EnablePostEffect(EPostEffect::Fog);
-	//Sdk::Render::EnablePostEffect(EPostEffect::Vignette);
+	Sdk::Render::EnablePostEffect(EPostEffect::Fog);
+	Sdk::Render::EnablePostEffect(EPostEffect::Vignette);
 }
 
 void CreateStaticEnvironment()
