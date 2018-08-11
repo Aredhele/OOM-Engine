@@ -22,6 +22,10 @@ public:
 
 public:
 
+	void Hit();
+
+public:
+
 	static const constexpr uint32_t s_cost = 10;
 };
 

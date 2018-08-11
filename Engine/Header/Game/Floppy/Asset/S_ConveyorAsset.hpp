@@ -22,6 +22,7 @@ public:
 public:
 
 	void Clean	  ();
+	void Hit	  ();
 
 public:
 

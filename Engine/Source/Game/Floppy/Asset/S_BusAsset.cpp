@@ -83,3 +83,11 @@ void S_BusAsset::OnCollisionEnter(const CCollision& collision)
 		}
 	}
 }
+
+void S_BusAsset::Hit()
+{
+	m_hit_point--;
+
+	if (m_hit_point == 0)
+		Destroy(GetGameObject());
+}

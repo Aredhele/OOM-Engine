@@ -87,3 +87,11 @@ void S_ConveyorAsset::Clean()
 	m_is_being_cleaned = true;
 	Destroy(GetGameObject(), 3.0f);
 }
+
+void S_ConveyorAsset::Hit()
+{
+	m_hit_point--;
+
+	if (m_hit_point == 0)
+		Destroy(GetGameObject());
+}

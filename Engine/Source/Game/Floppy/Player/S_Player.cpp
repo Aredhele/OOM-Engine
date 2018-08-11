@@ -61,8 +61,9 @@
 			 auto* p_super_asset    = p_hit->GetComponent<S_BigAsset>();
 			 auto* p_conveyor_asset = p_hit->GetComponent<S_ConveyorAsset>();
 
-			 if(p_bus_asset || p_super_asset || p_conveyor_asset)
-				 Destroy(p_hit);
+			 if (p_bus_asset)      { p_bus_asset->Hit();      }
+			 if (p_super_asset)    { p_super_asset->Hit();    }
+			 if (p_conveyor_asset) { p_conveyor_asset->Hit(); }
 		 }
 
 		 m_shoot_elapsed = 0.0f;

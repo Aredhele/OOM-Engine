@@ -21,20 +21,25 @@ class IAsset
 public:
 
 	void SetSpeed     (float speed);
+	void SetHitPoint  (uint32_t hit_point);
 	void SetAssetType (EAsset asset_type);
 	void SetKiloBytes (uint32_t kilo_bytes);
 
 public:
 
 	float	 GetSpeed     () const;
+	uint32_t GetHitPoint  () const;
 	EAsset   GetAssetType () const;
 	uint32_t GetKiloBytes () const;
 
 protected:
 
+	
 	float     m_speed;
 	EAsset    m_asset_type;
 	uint32_t  m_kilo_bytes;
+
+	uint32_t  m_hit_point;
 	glm::vec3 m_direction;
 };
 

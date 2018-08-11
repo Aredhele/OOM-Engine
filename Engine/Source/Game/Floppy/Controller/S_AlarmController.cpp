@@ -26,8 +26,8 @@
 		mp_point_light = GetGameObject()->AddComponent<S_PointLight>();
 
 		mp_point_light->SetRange(10.0f);
-		mp_point_light->SetIntensity(2.0f);
-		mp_point_light->SetColor(glm::vec3(0.8f, 0.6f, 0.1f));
+		mp_point_light->SetIntensity(3.0f);
+		mp_point_light->SetColor(glm::vec3(0.8f, 0.2f, 0.1f));
 		mp_point_light->SetEnabled(false);
 	}
 }

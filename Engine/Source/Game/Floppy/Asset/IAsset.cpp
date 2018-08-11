@@ -11,6 +11,16 @@ void IAsset::SetSpeed(float speed)
 	m_speed = speed;
 }
 
+void IAsset::SetHitPoint(uint32_t hit_point)
+{
+	m_hit_point = hit_point;
+}
+
+uint32_t IAsset::GetHitPoint() const
+{
+	return m_hit_point;
+}
+
 void IAsset::SetAssetType(EAsset asset_type)
 {
 	m_asset_type = asset_type;

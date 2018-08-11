@@ -74,3 +74,11 @@
 	p_sound_compo->SetSound("Resources/Sound/sound_bigasset_killed.ogg");
 	Destroy(p_death_sound, 2.0f);
 }
+
+void S_BigAsset::Hit()
+{
+	m_hit_point--;
+
+	if (m_hit_point == 0)
+		Destroy(GetGameObject());
+}
