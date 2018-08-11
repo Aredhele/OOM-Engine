@@ -38,6 +38,8 @@ private:
 	void SpawnBusAsset      (uint32_t size);
 	void SpawnConveyorAsset (uint32_t size);
 
+	void TriggerAlarm		(ESpawnZone zone, EAsset type);
+
 private:
 
 	bool					 m_is_cleaning;

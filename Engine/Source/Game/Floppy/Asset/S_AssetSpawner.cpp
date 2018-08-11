@@ -9,6 +9,7 @@
 // Assets
 #include "Game/Floppy/Asset/S_BigAsset.hpp"
 #include "Game/Floppy/Asset/S_BusAsset.hpp"
+#include "Game/Floppy/Util/S_SoundSource.hpp"
 #include "Game/Floppy/Asset/S_ConveyorAsset.hpp"
 
 /*virtual */ void S_AssetSpawner::Awake()
@@ -57,6 +58,11 @@ void S_AssetSpawner::ProcessWaitingList()
 
 			m_waves_to_process[i] = m_waves_to_process.back();
 			m_waves_to_process.pop_back();
+
+			// Enemies incommmmmingggg
+			TriggerAlarm(
+				m_processing_waves.back()->m_zone, 
+				m_processing_waves.back()->m_type);
 		}
 		else
 		{
@@ -158,6 +164,23 @@ void S_AssetSpawner::SpawnConveyorAsset(uint32_t size)
 	p_game_object->SetTag(GetGameObject()->GetTag() + "_Conveyor");
 
 	p_game_object->GetTransform().SetOrientation(GetTransform()->GetOrientation());
+}
+
+void S_AssetSpawner::TriggerAlarm(ESpawnZone zone, EAsset type)
+{
+	CString sound;
+	switch(type)
+	{
+		case BigAsset:		sound = "Resources/Sound/sound_big_alarm.ogg";   break;
+		case BusAsset:		sound = "Resources/Sound/sound_small_alarm.ogg"; break;
+		case ConveyorAsset: sound = "Resources/Sound/sound_small_alarm.ogg"; break;
+	}
+
+	auto* p_alarm  = Instantiate(GetTransform());
+	auto* p_source = p_alarm->AddComponent<S_SoundSource>();
+
+	p_source->SetSound(sound.Data());
+	Destroy(p_alarm, 5.0f);
 }
 
 void S_AssetSpawner::RegisterAssetWave(CAssetWave* p_asset_wave)
