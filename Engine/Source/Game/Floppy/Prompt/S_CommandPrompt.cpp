@@ -290,7 +290,7 @@ void S_CommandPrompt::ShowStartingText()
 	CString username = getenv("USERNAME");
 	LogMessage(username + " CONNECTED WITH SUCCESS");
 	LogMessage("RIGHT CLICK TO SHOOT");
-	LogMessage("PRESS ZQSD KEYS TO MOVE AROUND");
+	LogMessage("PRESS WASD or ARROW KEYS TO MOVE AROUND");
 	LogMessage("PRESS CTRL KEY TO OPEN OR CLOSE THE TERMINAL");
 	LogMessage("INCOMING EXTERNAL MESSAGE :");
 	LogMessage("HEY ! IT'S JEAN HENRI.");
