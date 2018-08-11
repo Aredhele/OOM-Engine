@@ -13,6 +13,7 @@
 #include "Game/Floppy/Asset/S_SpawnerManager.hpp"
 #include "Game/Floppy/Prompt/S_CommandPrompt.hpp"
 #include "Game/Floppy/Controller/S_DoorController.hpp"
+#include "Game/Floppy/Controller/S_AlarmController.hpp"
 #include "Game/Floppy/Controller/S_ConveyorController.hpp"
 
 namespace Prefab
@@ -159,6 +160,39 @@ void CreateDoors()
 	p_door_05_off->SetTag("Door_Off");
 	p_door_06_off->SetTag("Door_Off");
 	p_door_07_off->SetTag("Door_Off");
+
+	auto* p_alarm_controller_1 = Sdk::GameObject::CreateEmpty();
+	auto* p_alarm_controller_2 = Sdk::GameObject::CreateEmpty();
+	auto* p_alarm_controller_3 = Sdk::GameObject::CreateEmpty();
+	auto* p_alarm_controller_4 = Sdk::GameObject::CreateEmpty();
+	auto* p_alarm_controller_5 = Sdk::GameObject::CreateEmpty();
+	auto* p_alarm_controller_6 = Sdk::GameObject::CreateEmpty();
+	auto* p_alarm_controller_7 = Sdk::GameObject::CreateEmpty();
+
+	p_alarm_controller_1->SetTag("Alarm_controller_CB1");
+	p_alarm_controller_2->SetTag("Alarm_controller_CB2");
+	p_alarm_controller_4->SetTag("Alarm_controller_CB3");
+	p_alarm_controller_6->SetTag("Alarm_controller_CB4");
+
+	p_alarm_controller_3->SetTag("Alarm_controller_D2");
+	p_alarm_controller_5->SetTag("Alarm_controller_D3");
+	p_alarm_controller_7->SetTag("Alarm_controller_D1");
+
+	auto* p_controller_1 = p_alarm_controller_1->AddComponent<S_AlarmController>();
+	auto* p_controller_2 = p_alarm_controller_2->AddComponent<S_AlarmController>();
+	auto* p_controller_4 = p_alarm_controller_4->AddComponent<S_AlarmController>();
+	auto* p_controller_6 = p_alarm_controller_6->AddComponent<S_AlarmController>();
+	auto* p_controller_3 = p_alarm_controller_3->AddComponent<S_AlarmController>();
+	auto* p_controller_5 = p_alarm_controller_5->AddComponent<S_AlarmController>();
+	auto* p_controller_7 = p_alarm_controller_7->AddComponent<S_AlarmController>();
+
+	p_controller_1->SetTargetRenderer(p_door_01_on->GetComponent<CMeshRenderer>(), p_door_01_off->GetComponent<CMeshRenderer>());
+	p_controller_2->SetTargetRenderer(p_door_02_on->GetComponent<CMeshRenderer>(), p_door_02_off->GetComponent<CMeshRenderer>());
+	p_controller_4->SetTargetRenderer(p_door_04_on->GetComponent<CMeshRenderer>(), p_door_04_off->GetComponent<CMeshRenderer>());
+	p_controller_6->SetTargetRenderer(p_door_06_on->GetComponent<CMeshRenderer>(), p_door_06_off->GetComponent<CMeshRenderer>());
+	p_controller_3->SetTargetRenderer(p_door_03_on->GetComponent<CMeshRenderer>(), p_door_03_off->GetComponent<CMeshRenderer>());
+	p_controller_5->SetTargetRenderer(p_door_05_on->GetComponent<CMeshRenderer>(), p_door_05_off->GetComponent<CMeshRenderer>());
+	p_controller_7->SetTargetRenderer(p_door_07_on->GetComponent<CMeshRenderer>(), p_door_07_off->GetComponent<CMeshRenderer>());
 }
 
 void CreateConveyors()

@@ -11,6 +11,7 @@
 #include "Game/Floppy/Asset/S_BusAsset.hpp"
 #include "Game/Floppy/Util/S_SoundSource.hpp"
 #include "Game/Floppy/Asset/S_ConveyorAsset.hpp"
+#include "Game/Floppy/Controller/S_AlarmController.hpp"
 
 /*virtual */ void S_AssetSpawner::Awake()
 {
@@ -168,6 +169,7 @@ void S_AssetSpawner::SpawnConveyorAsset(uint32_t size)
 
 void S_AssetSpawner::TriggerAlarm(ESpawnZone zone, EAsset type)
 {
+	// Spawning the sound
 	CString sound;
 	switch(type)
 	{
@@ -181,6 +183,28 @@ void S_AssetSpawner::TriggerAlarm(ESpawnZone zone, EAsset type)
 
 	p_source->SetSound(sound.Data());
 	Destroy(p_alarm, 5.0f);
+
+	// Switching on the door alarm
+	CGameObject* p_alarm_controller = nullptr;
+	switch(zone)
+	{
+		case R1: p_alarm_controller = CGameObject::FindWithTag("Alarm_controller_D1");  break;
+		case R2: p_alarm_controller = CGameObject::FindWithTag("Alarm_controller_D2");  break;
+		case R3: p_alarm_controller = CGameObject::FindWithTag("Alarm_controller_D3");  break;
+		case C1: p_alarm_controller = CGameObject::FindWithTag("Alarm_controller_CB1"); break;
+		case C2: p_alarm_controller = CGameObject::FindWithTag("Alarm_controller_CB2"); break;
+		case C3: p_alarm_controller = CGameObject::FindWithTag("Alarm_controller_CB3"); break;
+		case C4: p_alarm_controller = CGameObject::FindWithTag("Alarm_controller_CB4"); break;
+	}
+
+	if(p_alarm_controller)
+	{
+		auto* p_controller = p_alarm_controller->GetComponent<S_AlarmController>();
+		if(p_controller)
+		{
+			p_controller->TriggerAlarm();
+		}
+	}
 }
 
 void S_AssetSpawner::RegisterAssetWave(CAssetWave* p_asset_wave)
