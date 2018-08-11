@@ -58,7 +58,8 @@
 {
 	m_key_elapsed += CTime::delta_time;
 
-	if (Sdk::Input::IsKeyPressed(GLFW_KEY_LEFT_CONTROL) && m_key_elapsed >= m_key_delay)
+	if ((Sdk::Input::IsKeyPressed(GLFW_KEY_LEFT_CONTROL) || 
+		 Sdk::Input::IsKeyPressed(GLFW_KEY_ESCAPE)     ) && m_key_elapsed >= m_key_delay)
 	{
 		m_key_elapsed = 0.0f;
 
