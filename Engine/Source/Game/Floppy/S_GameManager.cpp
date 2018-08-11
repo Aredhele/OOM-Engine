@@ -481,6 +481,7 @@ void S_GameManager::StartHacking()
 	if (m_startedHacking)
 	{
 		mp_prompt->LogMessage("ALREADY HACKING");
+		return;
 	}
 	
 	auto* p_manager_go = CGameObject::FindWithTag("Spawner_manager");
@@ -496,6 +497,7 @@ void S_GameManager::StartHacking()
 
 	mp_prompt->LogMessage("STARTING HACKING");
 	m_startedHacking = true;
+	CTime::time = 0.0f;
 }
 
 void S_GameManager::Logout()
