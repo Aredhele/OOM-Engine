@@ -56,6 +56,7 @@
 
 /*virtual */ void S_GameManager::Update()
 {
+	while(m_game_over) {}
 	m_key_elapsed += CTime::delta_time;
 
 	if ((Sdk::Input::IsKeyPressed(GLFW_KEY_LEFT_CONTROL) || 
@@ -535,8 +536,7 @@ void S_GameManager::GameOver()
 	mp_prompt->OpenPrompt();
 	mp_prompt->LogMessage("F#TA‡AL E&RORR : FLOÁPY DI˘K OOV\\RFLO|ING");
 	mp_prompt->LogMessage("SY[STËM CRAAA'A{SHI@NG");
-	//TODO wait for 2 seconds and crash the game
-	while (true) {} // OR CRASH THE GAME LIKE THAT YEAH !
+	m_game_over = true;
 }
 
 void S_GameManager::GameWon()

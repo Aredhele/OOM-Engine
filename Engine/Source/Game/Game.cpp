@@ -53,6 +53,13 @@ void LoadGameScene()
 	Prefab::CreateGameManager();
 	Prefab::CreateCommandPrompt();
 	Prefab::CreateSpawnerManager();
+
+
+	// Create the crosshair
+	auto& crosshairSprite = *Sdk::GameObject::CreateUISprite();
+	auto* p_material = crosshairSprite.GetComponent<CMaterial>();
+	p_material->SetTexture(Sdk::Import::ImportTexture("Resources/Texture/crosshair.png"));
+	crosshairSprite.GetTransform().SetPosition(0.5f, 0.5f, 0.0f);
 }
 
 void LoadDemoSceneAudio()

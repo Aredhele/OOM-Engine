@@ -311,10 +311,10 @@ void CreateSpawnerManager()
 	p_manager->RegisterAssetWave(138.0f, 2.0f, EAsset::ConveyorAsset, ESpawnZone::C4, "121213");
 	// 160s
 
-	p_manager->RegisterAssetWave(162.0f, 2.0f, EAsset::BigAsset, ESpawnZone::R1, "1");
+	p_manager->RegisterAssetWave(165.0f, 2.0f, EAsset::BigAsset, ESpawnZone::R1, "1");
 	// 168s
 
-	p_manager->RegisterAssetWave(168.0f, 2.0f, EAsset::ConveyorAsset, ESpawnZone::C3, "12131213");
+	p_manager->RegisterAssetWave(170.0f, 2.0f, EAsset::ConveyorAsset, ESpawnZone::C3, "12131213");
 	p_manager->RegisterAssetWave(174.0, 2.0f, EAsset::BusAsset, ESpawnZone::R1, "12131213");
 	p_manager->RegisterAssetWave(177.0f, 2.0f, EAsset::BigAsset, ESpawnZone::R2, "1");
 	p_manager->RegisterAssetWave(180.0f, 2.0f, EAsset::ConveyorAsset, ESpawnZone::C1, "12131213");

@@ -77,6 +77,7 @@ private:
 	bool m_tried_clean_all_CB = false;
 	bool m_on_capcha = false;
 	bool m_startedHacking = false;
+	bool m_game_over = false;
 
 	Game::Capcha m_current_capcha;
 };
