@@ -184,8 +184,24 @@ void S_AssetSpawner::TriggerAlarm(ESpawnZone zone, EAsset type)
 	p_source->SetSound(sound.Data());
 	Destroy(p_alarm, 5.0f);
 
-	// Switching on the door alarm
 	CGameObject* p_alarm_controller = nullptr;
+	if(type == EAsset::BigAsset)
+	{
+		p_alarm_controller = CGameObject::FindWithTag("Super_alarm_controller");
+
+		if(p_alarm_controller)
+		{
+			auto* p_controller = p_alarm_controller->GetComponent<S_AlarmController>();
+			if (p_controller)
+			{
+				p_controller->TriggerAlarm();
+			}
+		}
+
+		return;
+	}
+
+	// Switching on the door alarm
 	switch(zone)
 	{
 		case R1: p_alarm_controller = CGameObject::FindWithTag("Alarm_controller_D1");  break;

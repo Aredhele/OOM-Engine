@@ -82,14 +82,20 @@ void CreateStaticEnvironment()
 
 void CreateAlarms()
 {
-	auto* p_alarm_on  = Sdk::GameObject::CreateGameObjectFromMesh("SuperAsset_Alarm_ON" );
-	auto* p_alarm_off = Sdk::GameObject::CreateGameObjectFromMesh("SuperAsset_Alarm_OFF");
+	auto* p_super_alarm = Sdk::GameObject::CreateEmpty();
+	auto* p_alarm_on    = Sdk::GameObject::CreateGameObjectFromMesh("SuperAsset_Alarm_ON" );
+	auto* p_alarm_off   = Sdk::GameObject::CreateGameObjectFromMesh("SuperAsset_Alarm_OFF");
 
 	p_alarm_on->SetName ("Alarm_On");
 	p_alarm_off->SetName("Alarm_Off");
 
 	p_alarm_on->SetTag ("Alarm");
 	p_alarm_off->SetTag("Alarm");
+
+	p_super_alarm->SetTag("Super_alarm_controller");
+	auto* p_super_alarm_controller = p_super_alarm->AddComponent<S_AlarmController>();
+
+	p_super_alarm_controller->SetTargetRenderer(p_alarm_on->GetComponent<CMeshRenderer>(), p_alarm_off->GetComponent<CMeshRenderer>());
 }
 
 void CreateDoors()
