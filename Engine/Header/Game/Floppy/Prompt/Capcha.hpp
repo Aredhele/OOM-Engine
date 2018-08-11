@@ -11,7 +11,7 @@ namespace Game {
 		static Capcha generateCapcha()
 		{
 			srand(time(nullptr)); // initialisation de rand
-			int choice = rand_a_b(0, 2);
+			int choice = rand_a_b(0, 1);
 			switch (choice)
 			{
 			case 0:
@@ -19,9 +19,6 @@ namespace Game {
 				break;
 			case 1:
 				return generateOperationCapcha('-');
-				break;
-			case 2:
-				return generateOperationCapcha('*');
 				break;
 			default:
 				return generateOperationCapcha('+');
