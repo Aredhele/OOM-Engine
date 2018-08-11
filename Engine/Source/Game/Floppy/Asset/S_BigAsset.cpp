@@ -61,7 +61,9 @@
 	}
 
 	// Translating the asset toward the center
-	transform.Translate(transform.GetForward() * m_speed * CTime::delta_time);
+	transform.Translate(
+		(transform.GetForward() * m_speed * CTime::delta_time) +
+		 transform.GetUp()      * sin(CTime::time * 1.5f) * CTime::delta_time * 2.0f);
 }
 
 /* virtual */ void S_BigAsset::OnDestroy()
