@@ -14,7 +14,6 @@
 /*virtual */ void S_SpawnerManager::Start()
 {
 	CreateSpawners();
-	DispatchWaves ();
 }
 
 /*virtual */ void S_SpawnerManager::Update()

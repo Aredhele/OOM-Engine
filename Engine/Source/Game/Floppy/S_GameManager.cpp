@@ -4,13 +4,14 @@
 /// \package    Built-in/Script
 /// \author     Vincent STEHLY--CALISTO
 
+#include "Game/Floppy/S_Floppy.hpp"
+#include "Game/Floppy/Prompt/Capcha.hpp"
 #include "Game/Floppy/S_GameManager.hpp"
 #include "Game/Floppy/Asset/S_ConveyorAsset.hpp"
 #include "Game/Floppy/Prompt/S_CommandPrompt.hpp"
-#include "Game/Floppy/Controller/S_ConveyorController.hpp"
+#include "Game/Floppy/Asset/S_SpawnerManager.hpp"
 #include "Game/Floppy/Controller/S_DoorController.hpp"
-#include "Game/Floppy/Prompt/Capcha.hpp"
-#include "Game/Floppy/S_Floppy.hpp"
+#include "Game/Floppy/Controller/S_ConveyorController.hpp"
 
 /*virtual */ void S_GameManager::Awake()
 {
@@ -479,7 +480,18 @@ void S_GameManager::StartHacking()
 	{
 		mp_prompt->LogMessage("ALREADY HACKING");
 	}
-	// TODO start spawning waves
+	
+	auto* p_manager_go = CGameObject::FindWithTag("Spawner_manager");
+
+	if (p_manager_go)
+	{
+		auto* p_manager = p_manager_go->GetComponent<S_SpawnerManager>();
+		if (p_manager)
+		{
+			p_manager->DispatchWaves();
+		}
+	}
+
 	mp_prompt->LogMessage("STARTING HACKING");
 	m_startedHacking = true;
 }

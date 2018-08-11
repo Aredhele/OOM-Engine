@@ -20,15 +20,15 @@ public:
 	void OnDestroy() final;
 
 public:
-
+		
+	void DispatchWaves	  ();
 	void RegisterAssetWave(float time, ESpawnZone zone);
 	void RegisterAssetWave(float time, float delay, EAsset type, ESpawnZone zone, const CString& pattern);
 
 private:
 
 	void CreateSpawners ();
-	void DispatchWaves  ();
-
+	
 private:
 
 	std::vector<CAssetWave*>   m_waves_to_dispatch;
