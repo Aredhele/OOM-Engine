@@ -57,8 +57,10 @@ void LoadGameScene()
 
 	// Create the crosshair
 	auto& crosshairSprite = *Sdk::GameObject::CreateUISprite();
-	auto* p_material = crosshairSprite.GetComponent<CMaterial>();
-	p_material->SetTexture(Sdk::Import::ImportTexture("Resources/Texture/crosshair.png"));
+	auto* p_material      = crosshairSprite.GetComponent<CMaterial>();
+
+	p_material->SetColor(glm::vec3(0.0f, 1.0f, 0.0f));
+	p_material->SetTexture(Sdk::Import::ImportTexture("Resources/Texture/Crosshair.png"));
 	crosshairSprite.GetTransform().SetPosition(0.5f, 0.5f, 0.0f);
 }
 
