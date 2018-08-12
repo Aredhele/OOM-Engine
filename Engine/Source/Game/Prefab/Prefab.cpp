@@ -46,8 +46,8 @@ void CreateGlobalLighting()
 
 	auto* p_light = p_game_object->GetComponent<S_DirectionalLight>();
 
-	p_light->SetLightIntensity(0.3f);
-	p_light->SetAmbientIntensity(0.2f);
+	p_light->SetLightIntensity(0.6f);
+	p_light->SetAmbientIntensity(0.35f);
 	p_light->SetLightColor(glm::vec3(0.8f, 0.6f, 0.6f));
 
 	Sdk::Render::EnablePostEffect(EPostEffect::Fog);
