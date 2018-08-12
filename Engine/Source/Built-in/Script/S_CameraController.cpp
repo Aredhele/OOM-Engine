@@ -47,6 +47,7 @@
         y_direction  -= (Sdk::Input::IsKeyPressed(GLFW_KEY_S) || Sdk::Input::IsKeyPressed(GLFW_KEY_DOWN)  ) ? 1 : 0;
     int x_direction   = (Sdk::Input::IsKeyPressed(GLFW_KEY_D) || Sdk::Input::IsKeyPressed(GLFW_KEY_RIGHT) ) ? 1 : 0;
         x_direction  -= (Sdk::Input::IsKeyPressed(GLFW_KEY_A) || Sdk::Input::IsKeyPressed(GLFW_KEY_LEFT)  ) ? 1 : 0;
+	int z_direction   =  Sdk::Input::IsKeyPressed(GLFW_KEY_SPACE) ? 1 : 0;
 
     auto angleX = static_cast<float>(-deltaMouse.x * m_sensitivity);
     auto angleY = static_cast<float>(-deltaMouse.y * m_sensitivity);
@@ -54,6 +55,7 @@
 
 	GetTransform()->Translate(GetTransform()->GetForward() * static_cast<float>(y_direction) * CTime::delta_time * m_speed * speed_coefficient);
 	GetTransform()->Translate(GetTransform()->GetRight  () * static_cast<float>(x_direction) * CTime::delta_time * m_speed * speed_coefficient);
+	GetTransform()->Translate(glm::vec3(0.0f, 0.0f, 1.0f)  * static_cast<float>(z_direction) * CTime::delta_time * m_speed * speed_coefficient);
 
 	float x = glm::clamp(GetTransform()->GetPosition().x, -13.0f, 13.0f);
 	float y = glm::clamp(GetTransform()->GetPosition().y, -13.0f, 13.0f);
