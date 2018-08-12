@@ -55,6 +55,11 @@
 	GetTransform()->Translate(GetTransform()->GetForward() * static_cast<float>(y_direction) * CTime::delta_time * m_speed * speed_coefficient);
 	GetTransform()->Translate(GetTransform()->GetRight  () * static_cast<float>(x_direction) * CTime::delta_time * m_speed * speed_coefficient);
 
+	float x = glm::clamp(GetTransform()->GetPosition().x, -13.0f, 13.0f);
+	float y = glm::clamp(GetTransform()->GetPosition().y, -13.0f, 13.0f);
+	float z = glm::clamp(GetTransform()->GetPosition().z,   1.0f, 20.0f);
+	GetTransform()->SetPosition(x, y, z);
+
 	if(GetTransform()->GetEulerAngles().x >= 89.0f && angleY > 0.0f) {
 		angleY = 0.0f;
 	}
