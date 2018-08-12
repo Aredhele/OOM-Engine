@@ -28,10 +28,11 @@
 	mp_source_floppy = GetGameObject()->AddComponent<CAudioSource3D>();
 
 	p_renderer->SetSortingLayer(0);
-	p_material->SetTexture(Sdk::Import::ImportTexture("Resources/Texture/T_Floppy_ui.jpg"));
+	p_material->SetTexture(Sdk::Import::ImportTexture("Resources/Texture/T_Floppy_UI.png"));
 
+	mp_floppy_sprite->GetTransform().SetScale(0.8f, 0.8f, 0.8f);
 	mp_floppy_sprite->GetTransform().SetPosition(0.96f, 0.06f, 0.0f);
-
+	
 	mp_text->SetText("0 / 1440 KB");
 	mp_floppy_text->GetTransform().SetScale(0.4f, 0.4f, 0.4f);
 	mp_floppy_text->GetTransform().SetPosition(0.75f, 0.04f, 0.0f);

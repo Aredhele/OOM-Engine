@@ -80,5 +80,12 @@ void S_BigAsset::Hit()
 	m_hit_point--;
 
 	if (m_hit_point == 0)
+	{
 		Destroy(GetGameObject());
+	}
+	else
+	{
+		GetTransform()->SetScale(GetTransform()->GetScale() * 0.9f);
+	}
+		
 }
