@@ -118,7 +118,7 @@ void CTransform::LookAt(const CTransform& target)
 void CTransform::LookAt(const glm::vec3& target)
 {
 	// Safe look at
-	glm::vec3   direction        = target - m_position;
+	glm::vec3   direction        = m_position - target;
 	const float direction_length = glm::length(direction);
 
 	// Normalizing

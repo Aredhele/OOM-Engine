@@ -114,7 +114,7 @@ void LoadDemoScenePhysics()
 	Sdk::Debug::EnableGizmo(EGizmo::AllTransforms);
 
 	Sdk::GameObject::CreateDirectionalLight();
-	Sdk::Import::ImportMesh("Resources/Mesh/Cube.obj");
+	Sdk::Import::ImportMesh("Resources/Mesh/Mesh_Cube.obj");
 
 	auto* p_camera = Sdk::GameObject::CreateFreeCamera();
 
@@ -124,7 +124,7 @@ void LoadDemoScenePhysics()
 	auto* p_ground_go_4 = Sdk::GameObject::CreateGameObjectFromMesh("Cube");
 
 	// Static
-	p_ground_go_1->GetTransform().SetPosition( 0.8f, 0.0f,  3.0f);
+	p_ground_go_1->GetTransform().SetPosition( 0.8f, 0.0f,  2.0f);
 	p_ground_go_2->GetTransform().SetPosition( 2.8f, 0.0f,  5.0f);
 	p_ground_go_3->GetTransform().SetPosition(-0.8f, 0.0f, 10.0f);
 	p_ground_go_4->GetTransform().SetPosition(-1.8f, 0.0f,  2.0f);
@@ -145,8 +145,8 @@ void LoadDemoScenePhysics()
 	p_ground_body_3->SetBodyType(CRigidBody::EBodyType::Static);
 	p_ground_body_4->SetBodyType(CRigidBody::EBodyType::Static);
 
-	p_ground_body_2->SetOrientationX(45.0f);
-
+	p_ground_body_2->SetOrientationY(55.0f);
+	p_ground_body_4->SetOrientationY(-50.0f);
 	// Controller
 	auto* p_controller = Sdk::GameObject::CreateEmpty();
 	p_controller->AddComponent<S_Spawner>();
@@ -219,7 +219,7 @@ void LoadDemoSceneTransformation()
 	Sdk::GameObject::CreateFreeCamera();
 	Sdk::GameObject::CreateDirectionalLight();
 
-	Sdk::Import::ImportMesh("Resources/Mesh/Cube.obj");
+	Sdk::Import::ImportMesh("Resources/Mesh/Mesh_Cube.obj");
 
 	auto* p_scale_go     = Sdk::GameObject::CreateGameObjectFromMesh("Cube");
 	auto* p_translate_go = Sdk::GameObject::CreateGameObjectFromMesh("Cube");
@@ -271,8 +271,10 @@ void LoadDemoSceneRendering()
 	Sdk::Debug::EnableGizmo(EGizmo::AllPointLights);
 	Sdk::Debug::EnableGizmo(EGizmo::AllDirectionalLights);
 
-	Sdk::GameObject::CreateFreeCamera();
-	Sdk::Import::ImportMesh("Resources/Mesh/Cube.obj");
+	auto* p_camera = Sdk::GameObject::CreateFreeCamera();
+	p_camera->GetTransform().SetPosition(-10.0f, -10.0f, 3.0f);
+
+	Sdk::Import::ImportMesh("Resources/Mesh/Mesh_Cube.obj");
 
 	auto* p_point_go       = Sdk::GameObject::CreatePointLight();
 	auto* p_directional_go = Sdk::GameObject::CreateDirectionalLight();

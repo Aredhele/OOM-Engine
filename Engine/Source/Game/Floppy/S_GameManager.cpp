@@ -120,7 +120,7 @@ void S_GameManager::StartConveyorBelt(ESpawnZone zone)
 		CString code_CB;
 		switch (zone)
 		{
-			case C1: code_CB = "CB1";  tag_spawner = "C1"; tag_conveyor = "C1_Conveyor"; break;
+			case C1: code_CB = "CB1"; tag_spawner = "C1"; tag_conveyor = "C1_Conveyor"; break;
 			case C2: code_CB = "CB2"; tag_spawner = "C2"; tag_conveyor = "C2_Conveyor"; break;
 			case C3: code_CB = "CB3"; tag_spawner = "C3"; tag_conveyor = "C3_Conveyor"; break;
 			case C4: code_CB = "CB4"; tag_spawner = "C4"; tag_conveyor = "C4_Conveyor"; break;
@@ -164,14 +164,22 @@ void S_GameManager::StopConveyorBelt(ESpawnZone zone)
 		return;
 	}
 
-	// Case 2 : There is already a conveyor stopped
-	// Unauthorized action
-	for (bool state : m_conveyor_state)
+	for(int i = 0; i < 4; ++i)
 	{
-		if (!state)
+		if(!m_conveyor_state[i])
 		{
-			mp_prompt->LogMessage("YOU CAN'T STOP SEVERAL CB AT THE SAME TIME");
-			return;
+			// Re-open this door
+			ESpawnZone activate_zone;
+			switch (i)
+			{
+				case 0: activate_zone = ESpawnZone::C1; break;
+				case 1: activate_zone = ESpawnZone::C2; break;
+				case 2: activate_zone = ESpawnZone::C3; break;
+				case 3: activate_zone = ESpawnZone::C4; break;
+				default: { return; }
+			}
+
+			StartConveyorBelt(activate_zone);
 		}
 	}
 
@@ -183,7 +191,7 @@ void S_GameManager::StopConveyorBelt(ESpawnZone zone)
 	CString code_CB;
 	switch(zone)
 	{
-		case C1: code_CB = "CB1";  tag_spawner = "C1"; tag_conveyor = "C1_Conveyor"; break;
+		case C1: code_CB = "CB1"; tag_spawner = "C1"; tag_conveyor = "C1_Conveyor"; break;
 		case C2: code_CB = "CB2"; tag_spawner = "C2"; tag_conveyor = "C2_Conveyor"; break;
 		case C3: code_CB = "CB3"; tag_spawner = "C3"; tag_conveyor = "C3_Conveyor"; break;
 		case C4: code_CB = "CB4"; tag_spawner = "C4"; tag_conveyor = "C4_Conveyor"; break;
@@ -224,7 +232,7 @@ void S_GameManager::OpenDoor(ESpawnZone zone)
 		CString code_door;
 		switch (zone)
 		{
-			case R1: code_door = "D1";  door_name = "Door_Block_R1"; door_type = "R1"; break;
+			case R1: code_door = "D1"; door_name = "Door_Block_R1"; door_type = "R1"; break;
 			case R2: code_door = "D2"; door_name = "Door_Block_R2"; door_type = "R2"; break;
 			case R3: code_door = "D3"; door_name = "Door_Block_R3"; door_type = "R3"; break;
 
@@ -258,12 +266,21 @@ void S_GameManager::CloseDoor(ESpawnZone zone)
 
 	// Case 2 : There is already a door closed
 	// Unauthorized action
-	for (bool state : m_door_state)
+	for(int i = 0; i < 3; ++i)
 	{
-		if (!state)
+		if(!m_door_state[i])
 		{
-			mp_prompt->LogMessage("YOU CAN'T CLOSE SEVERAL DOORS AT THE SAME TIME");
-			return;
+			// Re-open this door
+			ESpawnZone activate_zone;
+			switch (i)
+			{
+				case 0: activate_zone = ESpawnZone::R1; break;
+				case 1: activate_zone = ESpawnZone::R2; break;
+				case 2: activate_zone = ESpawnZone::R3; break;
+				default: { return; }
+			}
+
+			OpenDoor(activate_zone);
 		}
 	}
 
@@ -275,7 +292,7 @@ void S_GameManager::CloseDoor(ESpawnZone zone)
 	CString code_door;
 	switch (zone)
 	{
-		case R1: code_door = "D1";  door_name = "Door_Block_R1"; door_type = "R1"; break;
+		case R1: code_door = "D1"; door_name = "Door_Block_R1"; door_type = "R1"; break;
 		case R2: code_door = "D2"; door_name = "Door_Block_R2"; door_type = "R2"; break;
 		case R3: code_door = "D3"; door_name = "Door_Block_R3"; door_type = "R3"; break;
 
