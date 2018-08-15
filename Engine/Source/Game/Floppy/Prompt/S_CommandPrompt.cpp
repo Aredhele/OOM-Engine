@@ -194,6 +194,14 @@ void S_CommandPrompt::LogMessage(const CString& _message, bool isSystem)
 	UpdatePromptLogs();
 }
 
+void S_CommandPrompt::CleanTerminal()
+{
+	for (int i = 0; i < 50; i++)
+	{
+		LogMessage("");
+	}
+}
+
 /* static */ void S_CommandPrompt::OnCharacterCallback(unsigned int codepoint)
 {
 	sp_instance->ProcessCharacter(codepoint);
@@ -298,15 +306,22 @@ void S_CommandPrompt::ShowStartingText()
 {
 	CString username = getenv("USERNAME");
 	LogMessage(username + " CONNECTED WITH SUCCESS");
-	LogMessage("RIGHT CLICK TO SHOOT");
+	LogMessage("RIGHT CLICK TO SHOOT every 4 seconds when hacking");
 	LogMessage("PRESS WASD or ARROW KEYS TO MOVE AROUND");
 	LogMessage("PRESS CTRL KEY TO OPEN OR CLOSE THE TERMINAL");
-	LogMessage("INCOMING EXTERNAL MESSAGE :");
+	LogMessage("[INCOMING EXTERNAL MESSAGE]");
 	LogMessage("HEY ! IT'S JEAN HENRI.");
 	LogMessage("YOU HAVE TO DESTROY THE ARTISTS ASSETS");
 	LogMessage("IF YOU DON'T THE FLOPPY WILL OVERTROW");
 	LogMessage("YOU CAN TYPE IN COMMANDS IN THE TERMINAL");
-	LogMessage("USE THE \"HELP\" COMMAND TO SHOW ALL COMMANDS");
-	LogMessage("THE STUDIO'S FUTURE IS IN YOUR HANDS");
+	LogMessage("Try using \"Close D2\" to close Door 2");
+	LogMessage("\"Stop CB4\" to stop conveyor 4");
+	LogMessage("\"Activate firewall\" to close all doors !");
+	LogMessage("\"Clean all cb\" to destroy assets on all conveyors");
+	LogMessage("Firewall and clean remain just a few seconds");
+	LogMessage("And they have a cooldown (obviously)");
+	LogMessage("Try the commands now, while the floppy is safe");
+	LogMessage("If you don't remember the commands, use \"Help\"");
+	LogMessage("Use \"START HACKING\" when you're ready !");
 	LogMessage("[END OF MESSAGE]");
 }

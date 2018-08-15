@@ -39,7 +39,7 @@
 	m_clean_up_duration  = 6.0f;
 
 	m_victory_timer = 0;
-	m_time_for_victory = 10.0f;
+	m_time_for_victory = 315.0f;
 }
 
 /*virtual */ void S_GameManager::Start()
@@ -524,8 +524,6 @@ void S_GameManager::ShowHelp()
 	mp_prompt->LogMessage("STOP [CB CODE]");
 	mp_prompt->LogMessage("AVAILABLE COMMANDS : ");
 	mp_prompt->LogMessage("OPEN [DOOR CODE]");
-	mp_prompt->LogMessage("CLOSE [DOOR CODE]");
-	mp_prompt->LogMessage("START [CB CODE]");
 	mp_prompt->LogMessage("STOP [CB CODE]");
 	mp_prompt->LogMessage("ACTIVATE FIREWALL");
 	mp_prompt->LogMessage("CLEAN ALL CB");
@@ -533,7 +531,6 @@ void S_GameManager::ShowHelp()
 	mp_prompt->LogMessage("LOGOUT");
 	mp_prompt->LogMessage("DOOR CODES : D1, D2, D3");
 	mp_prompt->LogMessage("CB CODES : CB1, CB2, CB3, CB4");
-	mp_prompt->LogMessage("USE \"START HACKING\" TO START");
 }
 
 void S_GameManager::StartHacking()
@@ -594,15 +591,23 @@ void S_GameManager::ProcessUnknownCommand(const CString& command)
 
 void S_GameManager::GameOver()
 {
+	m_pplayer->mp_music_source->Stop();
 	mp_prompt->OpenPrompt();
+	mp_prompt->CleanTerminal();
 	mp_prompt->LogMessage("F#TAàAL E&RORR : FLOçPY DIùK OOV\\RFLO|ING");
 	mp_prompt->LogMessage("SY[STèM CRAAA'A{SHI@NG");
+	mp_prompt->LogMessage("@DVICé ||: SHùTdO~~N CO$PPP$TER ^# NOW");
+	mp_prompt->LogMessage("d_d@qa àeçé dq\hè_e q#shdéè");
+	mp_prompt->LogMessage("qsqqqqqqqqqqq [[|]~#' -( #]");
+	mp_prompt->LogMessage("@ ^^ % *$;: dqgshy#{[ \-k");
 	m_game_over = true;
 }
 
 void S_GameManager::GameWon()
 {
+	m_pplayer->mp_music_source->Stop();
 	mp_prompt->OpenPrompt();
+	mp_prompt->CleanTerminal();
 	mp_prompt->LogMessage("INCOMING EXTERNal MESSAGE :");
 	mp_prompt->LogMessage("WELL DONE DUDE !");
 	mp_prompt->LogMessage("THE PRODUCTION IS OVER AND THE FLOPPY IS FINE");

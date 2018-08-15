@@ -39,6 +39,7 @@ public:
 	void ClosePrompt ();
 	bool IsOpen      () const;
 	void LogMessage	 (const CString& message, bool isSystem = true);
+	void CleanTerminal();
 
 public:
 
