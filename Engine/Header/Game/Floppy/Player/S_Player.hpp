@@ -23,17 +23,21 @@ public:
 
 	void	SetShootDelay	(float delay);
 	float	GetShootDelay	(float delay);
+	CGameObject* m_crosshair;
+	CAudioSource3D* mp_music_source;
 
 private:
 
 	CAudioBuffer    m_shoot_buffer;
 	CAudioBuffer	m_music_buffer;
 
-	CAudioSource3D* mp_music_source;
+
 	CAudioSource3D* mp_shoot_source;
 
 	float			m_shoot_delay;
 	float			m_shoot_elapsed;
+
+
 };
 
 #endif // !OOM_ENGINE_S_PLAYER_HPP__

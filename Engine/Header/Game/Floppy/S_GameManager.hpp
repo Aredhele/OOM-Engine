@@ -11,6 +11,7 @@
 #include "Game/Floppy/Asset/S_AssetSpawner.hpp"
 #include "Prompt/Capcha.hpp"
 #include "S_Floppy.hpp"
+#include "Player/S_Player.hpp"
 
 // Forward declaration
 class S_CommandPrompt;
@@ -72,12 +73,17 @@ private:
 	float m_clean_up_duration;
 	float m_clean_up_elapsed;
 
+	float m_victory_timer;
+	float m_time_for_victory;
+
 	// Flags
 	bool m_tried_activate_firewall = false;
 	bool m_tried_clean_all_CB = false;
 	bool m_on_capcha = false;
 	bool m_startedHacking = false;
 	bool m_game_over = false;
+
+	S_Player* m_pplayer;
 
 	Game::Capcha m_current_capcha;
 };

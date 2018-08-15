@@ -29,14 +29,17 @@
 	m_conveyor_state[3] = true;
 
 	m_firewall_activated = false;
-	m_firewall_cooldown  = 30.0f;
+	m_firewall_cooldown  = 60.0f;
 	m_firewall_elapsed   = 30.0f;
-	m_firewall_duration  = 10.0f;
+	m_firewall_duration  = 23.0f;
 
 	m_clean_up_activated = false;
 	m_clean_up_cooldown  = 30.0f;
 	m_clean_up_elapsed   = 30.0f;
-	m_clean_up_duration  = 2.0f;
+	m_clean_up_duration  = 6.0f;
+
+	m_victory_timer = 0;
+	m_time_for_victory = 10.0f;
 }
 
 /*virtual */ void S_GameManager::Start()
@@ -52,11 +55,18 @@
 		mp_prompt = p_prompt_go->GetComponent<S_CommandPrompt>();
 
 	Sdk::Mouse::HideMouse();
+	m_pplayer = CGameObject::Find("Player")->GetComponent<S_Player>();
 }
 
 /*virtual */ void S_GameManager::Update()
 {
 	while(m_game_over) {}
+
+	if (m_startedHacking) m_victory_timer += CTime::delta_time;
+	if(m_victory_timer >= m_time_for_victory)
+	{
+		GameWon();
+	}
 	m_key_elapsed += CTime::delta_time;
 
 	if ((Sdk::Input::IsKeyPressed(GLFW_KEY_LEFT_CONTROL) || 
@@ -312,6 +322,22 @@ void S_GameManager::CloseDoor(ESpawnZone zone)
 
 void S_GameManager::TryActivateFirewall()
 {
+	// Case 2 : Cooldow left
+	if (m_firewall_elapsed < m_firewall_cooldown)
+	{
+		CString message = "FIREWALL NOT READY (";
+		const int time_left = m_firewall_cooldown - m_firewall_elapsed;
+
+		// String to int
+		char buffer[8] = { '\0' };
+		sprintf(buffer, "%d", time_left);
+
+		message += buffer;
+		message += " SECONDS LEFT)";
+
+		mp_prompt->LogMessage(message.Data());
+		return;
+	}
 	m_tried_activate_firewall = true;
 	DoCapcha();
 }
@@ -360,6 +386,21 @@ void S_GameManager::ActivateFireWall()
 
 void S_GameManager::TryCleanAllCB()
 {
+	if (m_clean_up_elapsed < m_clean_up_cooldown)
+	{
+		CString message = "CLEANUP NOT READY (";
+		const int time_left = m_firewall_cooldown - m_firewall_elapsed;
+
+		// String to int
+		char buffer[8] = { '\0' };
+		sprintf(buffer, "%d", time_left);
+
+		message += buffer;
+		message += " SECONDS LEFT)";
+
+		mp_prompt->LogMessage(message.Data());
+		return;
+	}
 	m_tried_clean_all_CB = true;
 	DoCapcha();
 }
@@ -502,6 +543,9 @@ void S_GameManager::StartHacking()
 		mp_prompt->LogMessage("ALREADY HACKING");
 		return;
 	}
+
+	m_victory_timer = 0;
+	m_pplayer->mp_music_source->Play(true);
 	
 	auto* p_manager_go = CGameObject::FindWithTag("Spawner_manager");
 

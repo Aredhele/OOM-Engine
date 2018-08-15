@@ -197,8 +197,8 @@ void CreateDoors()
 	p_alarm_controller_4->GetTransform().SetPosition( 26.0f,  20.0f,  4.0f);
 	p_alarm_controller_6->GetTransform().SetPosition( 20.0f, -26.0f,  4.0f);
 	p_alarm_controller_3->GetTransform().SetPosition( 0.0f,   30.0f,  4.0f);
-	p_alarm_controller_5->GetTransform().SetPosition( 0.0f,  -30.0f,  4.0f);
-	p_alarm_controller_7->GetTransform().SetPosition( 30.0f,   0.0f,  4.0f);
+	p_alarm_controller_7->GetTransform().SetPosition( 0.0f,  -30.0f,  4.0f);
+	p_alarm_controller_5->GetTransform().SetPosition( 30.0f,   0.0f,  4.0f);
 
 	p_controller_1->SetTargetRenderer(p_door_01_on->GetComponent<CMeshRenderer>(), p_door_01_off->GetComponent<CMeshRenderer>());
 	p_controller_2->SetTargetRenderer(p_door_02_on->GetComponent<CMeshRenderer>(), p_door_02_off->GetComponent<CMeshRenderer>());
@@ -258,79 +258,41 @@ void CreateSpawnerManager()
 	p_game_object->SetTag("Spawner_manager");
 	p_game_object->SetName("Spawner_manager");
 
-	// Test
-	//p_manager->RegisterAssetWave(5.0f, 8.0f, EAsset::BigAsset,      ESpawnZone::R2, "1111");
-	//p_manager->RegisterAssetWave(6.0f, 5.0f, EAsset::BusAsset,		ESpawnZone::R3, "122112123");
-	//p_manager->RegisterAssetWave(0.0f, 7.0f, EAsset::BusAsset,		ESpawnZone::R1, "111123123");
-	//p_manager->RegisterAssetWave(3.0f, 3.0f, EAsset::ConveyorAsset, ESpawnZone::C1, "111222211");
-	//p_manager->RegisterAssetWave(3.0f, 3.0f, EAsset::ConveyorAsset, ESpawnZone::C2, "111222211");
-	//p_manager->RegisterAssetWave(3.0f, 3.0f, EAsset::ConveyorAsset, ESpawnZone::C3, "111222211");
-	//p_manager->RegisterAssetWave(3.0f, 3.0f, EAsset::ConveyorAsset, ESpawnZone::C4, "111222211");
-	//
-	//p_manager->RegisterAssetWave(5.0f, 4.0f, EAsset::ConveyorAsset, ESpawnZone::C2, "212112113");
-	//p_manager->RegisterAssetWave(7.0f, 2.0f, EAsset::ConveyorAsset, ESpawnZone::C3, "111211112");
-	//p_manager->RegisterAssetWave(4.0f, 2.5f, EAsset::ConveyorAsset, ESpawnZone::C4, "111122311");
+	// Notes
+	// Big assets put 35 s to arrive on floppy
+	// A normal wave make 24s to spawn
+	// The first arrives after 22s in a normal wave
+
+	CString normal_wave = "1121223231";
 
 	// Introduction with small waves
-	p_manager->RegisterAssetWave(1.0f, 2.0f, EAsset::BusAsset, ESpawnZone::R2, "112233");
-	p_manager->RegisterAssetWave(13.0f, 2.0f, EAsset::ConveyorAsset, ESpawnZone::C1, "112233"); 
-	// 25 s
+	p_manager->RegisterAssetWave(1.0f, 3.0f, EAsset::BusAsset, ESpawnZone::R1, normal_wave);
+	p_manager->RegisterAssetWave(15.0f, 3.0f, EAsset::ConveyorAsset, ESpawnZone::C1, normal_wave);
 
-	p_manager->RegisterAssetWave(25.0f, 2.0f, EAsset::BusAsset, ESpawnZone::R1, "12131213");
-	p_manager->RegisterAssetWave(30.0f, 2.0f, EAsset::BusAsset, ESpawnZone::R3, "1212113");
-	p_manager->RegisterAssetWave(33.0f, 2.0f, EAsset::BusAsset, ESpawnZone::R2, "121213");
-	// 39s
+	p_manager->RegisterAssetWave(46.0f, 3.0f, EAsset::BusAsset, ESpawnZone::R2, normal_wave);
+	p_manager->RegisterAssetWave(60.0f, 3.0f, EAsset::ConveyorAsset, ESpawnZone::C2, normal_wave);
 
-	p_manager->RegisterAssetWave(39.0f, 2.0f, EAsset::ConveyorAsset, ESpawnZone::C2, "12131213");
-	p_manager->RegisterAssetWave(44.0f, 2.0f, EAsset::ConveyorAsset, ESpawnZone::C1, "12131213");
-	p_manager->RegisterAssetWave(48.0f, 2.0f, EAsset::ConveyorAsset, ESpawnZone::C3, "12131213");
-	p_manager->RegisterAssetWave(52.0f, 2.0f, EAsset::ConveyorAsset, ESpawnZone::C4, "12131213");
-	// 70s
+	p_manager->RegisterAssetWave(68.0f, 3.0f, EAsset::BusAsset, ESpawnZone::R3, normal_wave);
+	p_manager->RegisterAssetWave(72.0f, 3.0f, EAsset::ConveyorAsset, ESpawnZone::C3, normal_wave);
 
-	p_manager->RegisterAssetWave(70.0f, 2.0f, EAsset::ConveyorAsset, ESpawnZone::C2, "12131213");
-	p_manager->RegisterAssetWave(74.0F, 2.0f, EAsset::BusAsset, ESpawnZone::R1, "12131213");
-	p_manager->RegisterAssetWave(78.0f, 2.0f, EAsset::ConveyorAsset, ESpawnZone::C1, "12131213");
-	p_manager->RegisterAssetWave(83.0f, 2.0f, EAsset::BusAsset, ESpawnZone::R3, "1212113");
-	// 97s
+	p_manager->RegisterAssetWave(104.0f, 3.0f, EAsset::BigAsset, ESpawnZone::R3, "1");
 
-	p_manager->RegisterAssetWave(97.0f, 2.0f, EAsset::ConveyorAsset, ESpawnZone::C1, "1213112131");
-	p_manager->RegisterAssetWave(103.0F, 2.0f, EAsset::BusAsset, ESpawnZone::R2, "1211312131");
-	p_manager->RegisterAssetWave(107.0f, 2.0f, EAsset::ConveyorAsset, ESpawnZone::C3, "121131213");
-	p_manager->RegisterAssetWave(113.0f, 2.0f, EAsset::BusAsset, ESpawnZone::R1, "12121213");
-	p_manager->RegisterAssetWave(118.0f, 2.0f, EAsset::BusAsset, ESpawnZone::R3, "121321213");
-	p_manager->RegisterAssetWave(123.0f, 2.0f, EAsset::ConveyorAsset, ESpawnZone::C2, "1213213");
-	p_manager->RegisterAssetWave(127.0f, 2.0f, EAsset::ConveyorAsset, ESpawnZone::C4, "12213");
-	// 137s
+	p_manager->RegisterAssetWave(120.0f, 3.0f, EAsset::BusAsset, ESpawnZone::R1, normal_wave);
+	p_manager->RegisterAssetWave(130.0f, 3.0f, EAsset::BigAsset, ESpawnZone::R1, "1");
+	p_manager->RegisterAssetWave(137.0f, 3.0f, EAsset::ConveyorAsset, ESpawnZone::C1, normal_wave);
 
-	p_manager->RegisterAssetWave(138, 2.0f, EAsset::ConveyorAsset, ESpawnZone::C1, "12131121231");
-	p_manager->RegisterAssetWave(138, 2.0f, EAsset::BusAsset, ESpawnZone::R2, "1211312131");
-	p_manager->RegisterAssetWave(138.0f, 2.0f, EAsset::ConveyorAsset, ESpawnZone::C3, "121131213");
-	p_manager->RegisterAssetWave(138.0f, 2.0f, EAsset::BusAsset, ESpawnZone::R1, "1132113");
-	p_manager->RegisterAssetWave(138.0f, 2.0f, EAsset::BusAsset, ESpawnZone::R3, "1213212131");
-	p_manager->RegisterAssetWave(138.0f, 2.0f, EAsset::ConveyorAsset, ESpawnZone::C2, "121321213");
-	p_manager->RegisterAssetWave(138.0f, 2.0f, EAsset::ConveyorAsset, ESpawnZone::C4, "121213");
-	// 160s
+	p_manager->RegisterAssetWave(142.0f, 3.0f, EAsset::BusAsset, ESpawnZone::R3, normal_wave);
+	p_manager->RegisterAssetWave(148.0f, 3.0f, EAsset::BigAsset, ESpawnZone::R2, "1");
+	p_manager->RegisterAssetWave(155.0f, 3.0f, EAsset::ConveyorAsset, ESpawnZone::C2, normal_wave);
 
-	p_manager->RegisterAssetWave(165.0f, 2.0f, EAsset::BigAsset, ESpawnZone::R1, "1");
-	// 168s
-
-	p_manager->RegisterAssetWave(170.0f, 2.0f, EAsset::ConveyorAsset, ESpawnZone::C3, "12131213");
-	p_manager->RegisterAssetWave(174.0, 2.0f, EAsset::BusAsset, ESpawnZone::R1, "12131213");
-	p_manager->RegisterAssetWave(177.0f, 2.0f, EAsset::BigAsset, ESpawnZone::R2, "1");
-	p_manager->RegisterAssetWave(180.0f, 2.0f, EAsset::ConveyorAsset, ESpawnZone::C1, "12131213");
-	p_manager->RegisterAssetWave(183.0f, 2.0f, EAsset::BusAsset, ESpawnZone::R3, "1212113");
-	// 197s
-	
-	p_manager->RegisterAssetWave(197.0f, 2.0f, EAsset::ConveyorAsset, ESpawnZone::C1, "1213112131");
-	p_manager->RegisterAssetWave(200.0F, 2.0f, EAsset::BusAsset, ESpawnZone::R2, "1211312131");
-	p_manager->RegisterAssetWave(203.0f, 2.0f, EAsset::ConveyorAsset, ESpawnZone::C3, "121131213");
-	p_manager->RegisterAssetWave(205.0f, 2.0f, EAsset::BigAsset, ESpawnZone::R3, "1");
-	p_manager->RegisterAssetWave(208.0f, 2.0f, EAsset::BusAsset, ESpawnZone::R1, "12121213");
-	p_manager->RegisterAssetWave(211.0f, 2.0f, EAsset::BusAsset, ESpawnZone::R3, "121321213");
-	p_manager->RegisterAssetWave(214.0f, 2.0f, EAsset::BigAsset, ESpawnZone::R2, "1");
-	p_manager->RegisterAssetWave(217.0f, 2.0f, EAsset::ConveyorAsset, ESpawnZone::C2, "1213213");
-	p_manager->RegisterAssetWave(220.0f, 2.0f, EAsset::ConveyorAsset, ESpawnZone::C4, "12213");
-	// 230s
+	p_manager->RegisterAssetWave(180.0f, 3.0f, EAsset::BusAsset, ESpawnZone::R1, normal_wave);
+	p_manager->RegisterAssetWave(185.0f, 3.0f, EAsset::ConveyorAsset, ESpawnZone::C2, normal_wave);
+	p_manager->RegisterAssetWave(190.0f, 3.0f, EAsset::BusAsset, ESpawnZone::R3, normal_wave);
+	p_manager->RegisterAssetWave(195.0f, 3.0f, EAsset::BigAsset, ESpawnZone::R2, "1");
+	p_manager->RegisterAssetWave(200.0f, 3.0f, EAsset::ConveyorAsset, ESpawnZone::C1, normal_wave);
+	p_manager->RegisterAssetWave(205.0f, 3.0f, EAsset::BusAsset, ESpawnZone::R2, normal_wave);
+	p_manager->RegisterAssetWave(210.0f, 3.0f, EAsset::ConveyorAsset, ESpawnZone::C3, normal_wave);
+	p_manager->RegisterAssetWave(215.0f, 3.0f, EAsset::ConveyorAsset, ESpawnZone::C4, normal_wave);
 
 }
 

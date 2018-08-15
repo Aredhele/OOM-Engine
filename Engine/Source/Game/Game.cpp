@@ -8,6 +8,7 @@
 #include "Scene/Hook.hpp"
 #include "Scene/CScene.hpp"
 #include "Game/Prefab/Prefab.hpp"
+#include "Game/Floppy/Player/S_Player.hpp"
 
 // Temporary
 CAudioBuffer buffer_1;
@@ -55,13 +56,8 @@ void LoadGameScene()
 	Prefab::CreateSpawnerManager();
 
 
-	// Create the crosshair
-	auto& crosshairSprite = *Sdk::GameObject::CreateUISprite();
-	auto* p_material      = crosshairSprite.GetComponent<CMaterial>();
 
-	p_material->SetColor(glm::vec3(0.0f, 1.0f, 0.0f));
-	p_material->SetTexture(Sdk::Import::ImportTexture("Resources/Texture/Crosshair.png"));
-	crosshairSprite.GetTransform().SetPosition(0.5f, 0.5f, 0.0f);
+	//CGameObject::FindWithTag("Player")->GetComponent<S_Player>()->m_crosshair = m_crosshair;
 }
 
 void LoadDemoSceneAudio()

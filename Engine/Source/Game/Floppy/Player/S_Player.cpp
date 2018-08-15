@@ -12,7 +12,7 @@
 
 /* virtual */ void S_Player::Awake()
 {
-	m_shoot_delay   = 1.0f;
+	m_shoot_delay   = 4.0f;
 	m_shoot_elapsed = 0.0f;
 }
 
@@ -34,12 +34,31 @@
 	 mp_shoot_source->SetMaxDistance(10.0f);
 	 mp_music_source->SetMaxDistance(10.0f);
 
-	 mp_music_source->Play(true);
+	 // Create the crosshair
+	 m_crosshair = Sdk::GameObject::CreateUISprite();
+	 auto* p_material = m_crosshair->GetComponent<CMaterial>();
+
+	 p_material->SetColor(glm::vec3(0.0f, 1.0f, 0.0f));
+	 p_material->SetTexture(Sdk::Import::ImportTexture("Resources/Texture/Crosshair.png"));
+	 m_crosshair->GetTransform().SetPosition(0.5f, 0.5f, 0.0f);
+
+
+	 
 }
 
  /* virtual */ void S_Player::Update()
 {
 	 m_shoot_elapsed += CTime::delta_time;
+	if (m_shoot_elapsed >= m_shoot_delay)
+	{
+		//m_crosshair->SetActive(true);
+		m_crosshair->GetTransform().SetPosition(0.5f, 0.5f, 0.0f);
+	}
+	else
+	{
+		//m_crosshair->SetActive(false);
+		m_crosshair->GetTransform().SetPosition(1.0f, 1.0f, 1.0f);
+	}
 	 if(Sdk::Input::IsMouseButtonPressed(GLFW_MOUSE_BUTTON_1) &&  m_shoot_elapsed >= m_shoot_delay)
 	 {
 		 const auto& transform = *GetTransform();

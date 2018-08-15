@@ -85,7 +85,7 @@ void S_BigAsset::Hit()
 	}
 	else
 	{
-		GetTransform()->SetScale(GetTransform()->GetScale() * 0.9f);
+		GetTransform()->SetScale(GetTransform()->GetScale() * 0.75f);
 	}
 		
 }

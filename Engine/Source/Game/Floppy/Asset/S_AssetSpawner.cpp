@@ -135,7 +135,7 @@ void S_AssetSpawner::SpawnBigAsset(uint32_t size)
 	auto* p_big_asset = p_game_object->AddComponent<S_BigAsset>();
 
 	p_big_asset->SetSpeed(1.0f);
-	p_big_asset->SetHitPoint(5);
+	p_big_asset->SetHitPoint(3);
 	p_big_asset->SetKiloBytes(S_BigAsset::s_cost);
 
 	p_game_object->SetTag("Big_Asset");
@@ -149,12 +149,23 @@ void S_AssetSpawner::SpawnBusAsset(uint32_t size)
 	auto* p_game_object = CGameObject::Instantiate(GetTransform()->GetPosition());
 	auto* p_bus_asset = p_game_object->AddComponent<S_BusAsset>();
 
-	p_bus_asset->SetSpeed(2.0f);
+	p_bus_asset->SetSpeed(1.5f);
 	p_bus_asset->SetHitPoint(1);
 	p_bus_asset->SetKiloBytes(S_BusAsset::s_cost * size);
 
 	p_game_object->SetTag("Bus_Asset");
-	p_game_object->GetTransform().SetScale(size * 0.75, size * 0.75, size * 0.75);
+	if(size == 1)
+	{
+		p_game_object->GetTransform().SetScale(1, 1, 1);
+	} else if (size == 2)
+	{
+		p_game_object->GetTransform().SetScale(1.35, 1.35, 1.35);
+	}
+	else
+	{
+		p_game_object->GetTransform().SetScale(1.60, 1.60, 1.60);
+	}
+	
 	p_game_object->GetTransform().SetOrientation(GetTransform()->GetOrientation());
 }
 
@@ -164,11 +175,21 @@ void S_AssetSpawner::SpawnConveyorAsset(uint32_t size)
 	auto* p_game_object = CGameObject::Instantiate(GetTransform()->GetPosition());
 	auto* p_conveyor_asset = p_game_object->AddComponent<S_ConveyorAsset>();
 
-	p_conveyor_asset->SetSpeed(2.0f);
+	p_conveyor_asset->SetSpeed(1.3f);
 	p_conveyor_asset->SetHitPoint(1);
 	p_conveyor_asset->SetKiloBytes(S_ConveyorAsset::s_cost * size);
-
-	p_game_object->GetTransform().SetScale(size * 0.75, size * 0.75, size * 0.75);
+	if (size == 1)
+	{
+		p_game_object->GetTransform().SetScale(1, 1, 1);
+	}
+	else if (size == 2)
+	{
+		p_game_object->GetTransform().SetScale(1.35, 1.35, 1.35);
+	}
+	else
+	{
+		p_game_object->GetTransform().SetScale(1.60, 1.60, 1.60);
+	}
 	p_game_object->SetTag(GetGameObject()->GetTag() + "_Conveyor");
 	p_game_object->GetTransform().SetOrientation(GetTransform()->GetOrientation());
 }
