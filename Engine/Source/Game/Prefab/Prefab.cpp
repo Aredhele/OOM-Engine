@@ -263,7 +263,7 @@ void CreateSpawnerManager()
 	// A normal wave make 24s to spawn
 	// The first arrives after 22s in a normal wave
 
-	CString normal_wave = "1112223333";
+	CString normal_wave = "1112123333";
 
 	// Introduction with small waves
 	p_manager->RegisterAssetWave(1.0f, 3.0f, EAsset::BusAsset, ESpawnZone::R1, normal_wave);
