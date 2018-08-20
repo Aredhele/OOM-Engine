@@ -31,10 +31,6 @@ The project is under CMake 3.2 and is compatible (tested) with Microsoft
 Visual Studio 2017 (CMake support). The engine is no more compatible with GCC
 since DirectX headers have missing definitions.
 
-You can find <a href="https://www.youtube.com/watch?v=wQ5CTL_yWNIs">here</a> the teaser
-of the project and <a href="https://www.youtube.com/watch?v=B6xjwc-0cTM">here</a> a video of all
-engine features.
-
 **Scene example preview**
 
 <p align="center">
