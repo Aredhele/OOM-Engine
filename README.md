@@ -4,8 +4,8 @@
 The game was created by :
 * <a href="https://darennkeller.wordpress.com/">Darenn Keller</a> - Game designer
 * <a href="https://vincentcalisto.com/">Vincent Stehly--Calisto</a> - Engine/Gameplay programmer
-* <a href="https://www.artstation.com/thomaslukegarcia"> Thomas Garcia </a> - 3D/2D Game Artist
-* <a href="demeyaurelien.wixsite.com/aureliendemey"> Thomas Garcia </a> - Game Sound Designer / Composer
+* <a href="https://www.artstation.com/thomaslukegarcia">Thomas Garcia</a> - 3D/2D Game Artist
+* <a href="demeyaurelien.wixsite.com/aureliendemey">Aurélien Demey</a> - Game Sound Designer / Composer
 
 The game won the design and the quality prices and the second place in gameplay :
 
@@ -38,7 +38,7 @@ engine features.
 **Scene example preview**
 
 <p align="center">
-  <img src="https://zupimages.net/up/18/34/7r0q.gif" width="600" height="338" />
+  <a href="http://zupimages.net/viewer.php?id=18/34/7r0q.gif"><img src="https://zupimages.net/up/18/34/7r0q.gif" alt="" /></a>
 </p>
 
 ### Features
